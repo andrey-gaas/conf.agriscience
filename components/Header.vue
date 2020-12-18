@@ -1,5 +1,5 @@
 <template>
-  <h1>HEADER</h1>
+  <h1>Header</h1>
 </template>
 
 <script>
@@ -11,5 +11,6 @@ export default {
 <style scoped>
   h1 {
     color: red;
+    font-family: 'Roboto';
   }
 </style>
