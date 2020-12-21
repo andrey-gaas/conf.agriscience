@@ -14,7 +14,8 @@ export default {
   
   css: [
     { src: 'vue-material/dist/vue-material.min.css', lang: 'css' },
-    { src: '~/assets/theme.scss', lang: 'scss' }
+    { src: '~/assets/style/theme.scss', lang: 'scss' },
+    { src: '~/assets/style/main.scss', lang: 'scss' }
   ],
   
   plugins: [
