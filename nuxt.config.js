@@ -13,9 +13,12 @@ export default {
   },
   
   css: [
+    'bootstrap-css-only/css/bootstrap.min.css',
+    'mdbvue/lib/css/mdb.min.css',
     { src: 'vue-material/dist/vue-material.min.css', lang: 'css' },
     { src: '~/assets/style/theme.scss', lang: 'scss' },
     { src: '~/assets/style/main.scss', lang: 'scss' }
+    
   ],
   
   plugins: [
@@ -30,6 +33,32 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    ['nuxt-i18n', {
+      detectBrowserLanguage: {
+          useCookie: true,
+          cookieKey: 'i18n_redirected',
+          alwaysRedirect: false,
+          fallbackLocale: 'ru'
+        },
+      locales: [
+        {
+          name: 'Russian',
+          code: 'ru',
+          iso: 'ru-RU',
+          file: 'ru.js'
+        },
+        {
+          name: 'English',
+          code: 'ends',
+          iso: 'en-US',
+          file: 'en.js'
+        },
+      ],
+      lazy: true,
+      langDir: 'i18n/',
+      defaultLocale: 'ru',
+    }]
+
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
@@ -46,6 +75,10 @@ export default {
           exclude: /(node_modules)/
         })
       }
-    }
+    },
+    extend(config, ctx) {},
+    transpile: [
+      'mdbvue/lib/components'
+    ]
   }
 }
