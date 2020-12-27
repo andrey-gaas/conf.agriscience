@@ -22,10 +22,16 @@ export default {
   ],
   
   plugins: [
-    { src: '~/plugins/vue-material' }
+    { src: '~/plugins/vue-material' },
+    { src: '~/plugins/Vuelidate' },
   ],
   
   components: true,
+  
+  loading: {
+    color: 'blue',
+    height: '5px'
+  },
 
   buildModules: [
   ],
@@ -57,6 +63,7 @@ export default {
       lazy: true,
       langDir: 'lang/',
       defaultLocale: 'ru',
+      strategy: 'prefix_except_default',
     }]
 
   ],

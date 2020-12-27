@@ -1,24 +1,23 @@
 <template>
-  <div class="main_layout_wrap min-h-100">
+  <div class="empty_layout_wrap min-h-100">
     <Header />
     <Nuxt />
-    <Footer/>
   </div>
 </template>
 
 <script>
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Header from '@/components/Header-empty';
+
 
 export default {
   components: {
-    Header, Footer
+    Header
   },
 }
 </script>
 
 <style>
-.main_layout_wrap{
+.empty_layout_wrap{
   display: flex;
   flex-direction: column;
   flex-grow: 1;
