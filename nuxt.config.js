@@ -38,7 +38,7 @@ export default {
           useCookie: true,
           cookieKey: 'i18n_redirected',
           alwaysRedirect: false,
-          fallbackLocale: 'ru'
+          fallbackLocale: 'en'
         },
       locales: [
         {
@@ -49,13 +49,13 @@ export default {
         },
         {
           name: 'English',
-          code: 'ends',
+          code: 'en',
           iso: 'en-US',
           file: 'en.js'
         },
       ],
       lazy: true,
-      langDir: 'i18n/',
+      langDir: 'lang/',
       defaultLocale: 'ru',
     }]
 

@@ -1,5 +1,5 @@
 export default{
-  header_language: "English",
+  "header_language": "English",
 
   "reg_readerRegistrationCard": "Registration",
   "reg_remoteReaderEntry": "Remote reader entry",

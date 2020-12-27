@@ -1,5 +1,5 @@
 export default{
-  header_language: "Русский",
+  "header_language": "Русский",
 
   "reg_readerRegistrationCard": "Регистрация",
   "reg_remoteReaderEntry": "Удалённая запись читателей",

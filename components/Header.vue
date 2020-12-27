@@ -5,8 +5,8 @@
       <dropdown>
         <dropdown-toggle color="primary" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
         <dropdown-menu>
-          <dropdown-item @click="setLocale(RU)">Русский</dropdown-item>
-          <dropdown-item @click="setLocale(EN)">English</dropdown-item>
+          <dropdown-item ><nuxt-link :to="switchLocalePath(RU)">Русский</nuxt-link></dropdown-item>
+          <dropdown-item ><nuxt-link :to="switchLocalePath(EN)">English</nuxt-link></dropdown-item>
         </dropdown-menu>
       </dropdown>
     </container>
