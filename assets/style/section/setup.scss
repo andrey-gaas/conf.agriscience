@@ -1,5 +1,28 @@
+*::selection {
+  background: #3244ec; /* Safari */
+}
+
 body, #__nuxt, #__layout{
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
+
+.container{
+  @include size(lg){
+    max-width: 1900px;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+
+  @include size(xl){
+    max-width: 1900px;
+  }
+}
+
+li{
+  list-style: none;
+}
+
+
+

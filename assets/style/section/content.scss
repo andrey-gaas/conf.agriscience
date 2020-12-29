@@ -1,0 +1,112 @@
+.main__img{
+  height: 610px;
+  background: linear-gradient(rgba(rgb(19, 19, 19), 0.8),
+                              rgba(rgb(19, 19, 19), 0.8)) , 
+              url(/assets/img/main_img.jpg);
+  
+  background-size: cover, cover;
+  background-position: center, center;
+  color: #fff;
+  text-align: center;
+}
+.main__title_sm{
+  font-size: 2vw;
+
+  @include size(xl){
+    font-size: 38px;
+  }
+}
+.main__title_lg{
+  font-size: 5.42vw;
+
+  @include size(xl){
+    font-size: 103px;
+  }
+}
+.section_top{
+  height: 475px;
+}
+.menu__list, .conteiner__left{
+  min-height: 475px;
+  width: 475px;
+  min-width: 475px;
+  flex-wrap: wrap;
+}
+.descrption, .conteiner__middle{
+  flex-grow: 2;
+  max-width: 950px;
+  font-size: 28px;
+  line-height: 28px;
+  font-weight: 300;
+}
+.menu__item{
+  height: 33.33333333333%;
+  width: 33.33333333333%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+}
+.organizetion{
+  background-color: #A7C728;
+  max-width: 475px;
+  font-size: 18px;
+}
+.conteiner__right{
+  max-width: 475px;
+}
+.reg__block{
+  background: linear-gradient(rgba(rgb(19, 19, 19), 0.8),
+                              rgba(rgb(19, 19, 19), 0.8)) , 
+              url(/assets/img/reg_img.jpg);
+  height: 520px;
+  background-size: cover, cover;
+  background-position: center, center 65%;
+  
+  color: white;
+  font-size: 40px;
+}
+
+.md-theme-default a.btn__move-reg:not(.md-button){
+  color: white;
+}
+.md-theme-default a.btn__move-reg.unactiv:not(.md-button){
+  text-decoration: none;
+}
+.btn__move-reg{
+  display: block;
+  background-color: #F84134;
+  height: 75px;
+  border-radius: 37px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  font-size: 32px;
+
+  &.unactiv{
+    background-color: #e49a95;
+    cursor: default;
+    text-decoration: none;
+  }
+}
+.announcement{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.announcement__title{
+  width: 100%;
+  text-align: center;
+}
+.ad__left, .ad__right{
+  width: 445px;
+  height: 90px;
+  margin: 15px;
+}
+.ad__left{
+  background-color: #A7C728;
+}
+.ad__right{
+  background-color: #48AF56;
+}

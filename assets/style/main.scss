@@ -1,2 +1,12 @@
+//font
+@import "_misc/font.scss";
+
+//mixins
+@import "_misc/mixims.scss";
+
+//style
 @import "section/header.scss";
 @import "section/setup.scss";
+@import "section/content.scss";
+
+@import "section/footer.scss";

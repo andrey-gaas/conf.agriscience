@@ -3,3 +3,8 @@ export function setLocale(locale) {
   this.$i18n.locale = locale;
   localStorage.setItem('language', locale);
 }
+
+export function localeRout(path){
+  if(this.$i18n.locale == 'ru') return path
+  return ('/' + this.$i18n.locale + path)
+}
