@@ -87,5 +87,9 @@ export default {
     transpile: [
       'mdbvue/lib/components'
     ]
-  }
+  },
+  serverMiddleware: [
+    /* { path: '/api/auth/registration', handler: '~/api/auth/registration.js' }, */
+    { path: '/api', handler: '~/api' },
+  ],
 }
