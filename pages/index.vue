@@ -1,8 +1,8 @@
 <template>
   <main class="main">
     <container class="main__img d-flex justify-content-center align-items-center flex-column">
-      <h1 class="main__title_sm">III Международный библиографический конгресс</h1>
-      <h2 class="main__title_lg">Библиографическая информация в цифровой культуре</h2>
+      <h1 class="main__title_sm">{{$t('main_header_subtitle')}}</h1>
+      <h2 class="main__title_lg">{{$t('main_header_title')}}</h2>
     </container>
     <container  class="p-0">
       <section class="section section_top d-flex">
@@ -125,15 +125,15 @@ import {localeRout} from '@/assets/utils'
 export default {
   data:()=>({
     menuData:[
-      {title:'участники', bgColor:'58B0B1'},
-      {title:'', bgColor:'A1D3D2'},
-      {title:'события', bgColor:'89C6C4'},
-      {title:'', bgColor:'6BBBB8'},
-      {title:'материалы', bgColor:'74C0C0'},
-      {title:'', bgColor:'63B8B5'},
-      {title:'участники', bgColor:'4FADAD'},
-      {title:'', bgColor:'80C4C3'},
-      {title:'участники', bgColor:'6DBBBB'},
+      { title: $t('main_menu_participants'), bgColor: '58B0B1' },
+      { title: '', bgColor: 'A1D3D2' },
+      { title: $t('main_menu_events'), bgColor: '89C6C4' },
+      { title: '', bgColor: '6BBBB8' },
+      { title: $t('main_menu_materials'), bgColor: '74C0C0' },
+      { title: '', bgColor: '63B8B5' },
+      { title: $t('main_menu_participants'), bgColor: '4FADAD' },
+      { title: '', bgColor: '80C4C3' },
+      { title: $t('main_menu_participants'), bgColor: '6DBBBB' },
     ]
   }),
   methods:{

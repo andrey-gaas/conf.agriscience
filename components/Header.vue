@@ -6,9 +6,9 @@
       </nuxt-link>
       <div class="hader_left d-flex align-items-center pt-4 ml-3">
         <div class="login__wrap mr-3">
-          <nuxt-link :to="localeRout('/Register')">Регестрация</nuxt-link>
+          <nuxt-link :to="localeRout('/Register')">{{$t('header_registration')}}</nuxt-link>
           <span>/</span>
-          <nuxt-link :to="localeRout('/Register')">Вход</nuxt-link>
+          <nuxt-link :to="localeRout('/Register')">{{$t('header_login')}}</nuxt-link>
         </div>
         <div class="locale_btn_wrap d-flex">
           <nuxt-link :to="switchLocalePath(RU)" class="m-2 d-block locale_btn">
