@@ -95,18 +95,33 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
 .announcement__title{
   width: 100%;
   text-align: center;
+  font-size: 34px;
 }
 .ad__left, .ad__right{
   width: 445px;
+  min-width: 300px;
   height: 90px;
   margin: 15px;
+  text-align: center;
 }
 .ad__left{
   background-color: #A7C728;
 }
 .ad__right{
   background-color: #48AF56;
+}
+.congress-topic__title{
+  font-size: 36px;
+  
+}
+
+.congress-topic__list{
+  list-style-type: disc;
+}
+.congress-topic__item{
+  list-style-type: disc;
 }

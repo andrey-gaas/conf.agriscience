@@ -43,19 +43,70 @@
 1
         </div>
         <div class="conteiner__middle">
-          <div class="reg__block d-flex justify-content-around align-items-center flex-column">
-            <span>Регестрация будет открыта с 15 января</span>
+          <div class="reg__block mb-3 d-flex justify-content-around align-items-center flex-column">
+            <span class="reg__text-info">Регестрация будет открыта с 15 января</span>
             <nuxt-link class="btn__move-reg unactiv" :to="localeRout('/')">Зарегистрироваться</nuxt-link>
           </div>
           <div class="announcement">
             <h4 class="announcement__title">Уважаемые коллеги, мы принимаем заявки: </h4>
-            <div class="ad__left">
+            <div class="ad__left d-flex justify-content-around align-items-center">
               для участия с докладом<br>до 15 марта 2020 года
             </div>
-            <div class="ad__right">
+            <div class="ad__right d-flex justify-content-around align-items-center">
               для участия без доклада<br>до 26 апреля 2020 года
             </div>
           </div>
+          <div class="congress-topics">
+            <h3 class="congress-topic__title">Темы Конгресса</h3>
+            <ul class="congress-topic__list">
+              <li class="congress-topic__item">
+                Трансформация библиографии в цифровую эпоху. Роль библиографической информации в меняющейся системе научных коммуникаций. Стратегия развития библиографической деятельности на международном уровне. Проблемы взаимоиспользования ресурсов.
+              </li>
+              <li class="congress-topic__item">
+                Координация и кооперация библиографической деятельности на международном и национальном уровнях.
+              </li>
+              <li class="congress-topic__item">
+                Создание, распространение и продвижение библиографической информации. Формы и форматы представления библиографических данных в Сети и электронных информационных системах.
+              </li>
+              <li class="congress-topic__item">
+                Разработка и внедрение новых международных и отечественных норм библиографического описания.
+              </li>
+              <li class="congress-topic__item">
+                Библиографирование электронных ресурсов локального и удаленного доступа. Современные ресурсы национальной библиографии. Совершенствование законодательства об обязательном экземпляре (электронный обязательный экземпляр).
+              </li>
+              <li class="congress-topic__item">
+                Корпоративная каталогизация как форма библиографического взаимодействия библиотек.
+              </li>
+              <li class="congress-topic__item">
+                Библиометрическая информация в открытой науке.
+              </li>
+              <li class="congress-topic__item">
+                Лингвистические аспекты представления метаданных в Сети: «предметные входы», семантический веб.
+              </li>
+              <li class="congress-topic__item">
+                Нормативное обеспечение библиографирования на современном этапе.
+              </li>
+              <li class="congress-topic__item">
+                Модели функциональных требований к библиографическим и авторитетным данным.
+              </li>
+              <li class="congress-topic__item">
+                Библиографическая информация для пользователей: продукты и сервисы.
+              </li>
+              <li class="congress-topic__item">
+                Качество библиографической информации: критерии оценки.
+              </li>
+              <li class="congress-topic__item">
+                Компетенции библиографов: подготовка, переподготовка, повышение квалификации.
+              </li>
+              <li class="congress-topic__item">
+                Краеведческая библиографическая информация в цифровую эпоху.
+              </li>
+              <li class="congress-topic__item">
+                История библиографии в Сибири.
+              </li>
+            </ul>
+          </div>
+
         </div>
         <div class="conteiner__right">
 3
