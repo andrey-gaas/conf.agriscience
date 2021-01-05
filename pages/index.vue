@@ -39,8 +39,19 @@
         </div>
       </section>
       <section class="section d-flex">
-        <div class="conteiner__left">
-1
+        <div class="conteiner__left p-4">
+          <div class="card-user">
+            <div class="card-user_head">
+              <div class="card-user_photo shadow">
+                <img src="assets/img/reg_img.jpg" alt="user photo" class="card-user__img_user">
+              </div>
+            </div>
+            <div class="ucard-user_main text-center">
+              <h6 class="card-user__user-position font-weight-light">Веб программист</h6>
+              <h5 class="card-user__user-name font-weight-bold">Alex Nuzhdin</h5>
+              <p class="card-user__user-desc">Мне 23 года, я деалю крутые сайты. Надо ещё текста добить, а то как-то маловато выходит. Нужно чтобы было хотя бы несколкьо строк.</p>
+            </div>
+          </div>
         </div>
         <div class="conteiner__middle">
           <div class="reg__block mb-3 d-flex justify-content-around align-items-center flex-column">
@@ -109,7 +120,15 @@
 
         </div>
         <div class="conteiner__right">
-3
+          <div class="card card-biblio m-4 rounded"
+            v-for="(item, ind ) in bibCardData" :key="ind"
+          >
+            <img class="card-img-top" src="/assets/img/reg_img.jpg" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title text-info text-uppercase">{{item.title}}</h5>
+              <p class="card-text">{{item.text}}</p>
+            </div>
+          </div>
         </div>
       </section>
     </container>
@@ -125,15 +144,25 @@ import {localeRout} from '@/assets/utils'
 export default {
   data:()=>({
     menuData:[
-      { title: $t('main_menu_participants'), bgColor: '58B0B1' },
+      { title: 'main_menu_participants', bgColor: '58B0B1' },
       { title: '', bgColor: 'A1D3D2' },
-      { title: $t('main_menu_events'), bgColor: '89C6C4' },
+      { title: 'main_menu_events', bgColor: '89C6C4' },
       { title: '', bgColor: '6BBBB8' },
-      { title: $t('main_menu_materials'), bgColor: '74C0C0' },
+      { title: 'main_menu_materials', bgColor: '74C0C0' },
       { title: '', bgColor: '63B8B5' },
-      { title: $t('main_menu_participants'), bgColor: '4FADAD' },
+      { title: 'main_menu_participants', bgColor: '4FADAD' },
       { title: '', bgColor: '80C4C3' },
-      { title: $t('main_menu_participants'), bgColor: '6DBBBB' },
+      { title: 'main_menu_participants', bgColor: '6DBBBB' },
+    ],
+    bibCardData:[
+      { title:'Государственная публичная научно-техническая библиотека Сибирского отделения Российской академии наук',
+        text:'Крупнейшая библиотека России за Уралом, государственный универсальный депозитарий Сибири.'},
+      { title:'Российская национальная библиотека',
+        text:'Старейшая публичная и первая национальная библиотека России, одна из крупнейших в мире и вторая по величине фондов в Российской Федерации'},
+      { title:'Российская государственная библиотека',
+        text:'Крупнейшая публичная библиотека в России и континентальной Европе и одна из крупнейших библиотек мира.'},
+      { title:'Государственная публичная научно-техническая библиотека России',
+        text:'Крупнейшая научно-техническая библиотека страны, научно-исследовательский институт и информационный центр федерального значения.'},
     ]
   }),
   methods:{
@@ -141,6 +170,11 @@ export default {
   },
   components: {
     'container': mdbContainer,
+  },
+  created(){
+    let menuData = this.menuData.map(el =>{
+      el.title = this.$t(el.title)
+    })
   },
 };
 
