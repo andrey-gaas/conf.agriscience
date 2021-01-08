@@ -5,6 +5,14 @@
       <h2 class="main__title_lg">{{$t('main_header_title')}}</h2>
     </container>
     <container  class="p-0">
+      <menu class="menu__list_sm d-flex p-0 m-0">
+          <li
+            v-for="(item, ind ) in menuDataSm" :key="ind"
+            class='menu__item_sm'
+          >
+          {{item.title}}
+          </li>
+      </menu>
       <section class="section section_top d-flex">
         <menu class="menu__list d-flex p-0 m-0">
           <li
@@ -154,6 +162,17 @@ export default {
       { title: '', bgColor: '80C4C3' },
       { title: 'main_menu_participants', bgColor: '6DBBBB' },
     ],
+    menuDataSm:[
+      { title: 'main_menu_participants' },
+      
+      { title: 'main_menu_events' },
+
+      { title: 'main_menu_materials'},
+      
+      { title: 'main_menu_participants' },
+      
+      { title: 'main_menu_participants'},
+    ],
     bibCardData:[
       { title:'Государственная публичная научно-техническая библиотека Сибирского отделения Российской академии наук',
         text:'Крупнейшая библиотека России за Уралом, государственный универсальный депозитарий Сибири.'},
@@ -172,7 +191,10 @@ export default {
     'container': mdbContainer,
   },
   created(){
-    let menuData = this.menuData.map(el =>{
+    this.menuData.map(el =>{
+      el.title = this.$t(el.title)
+    })
+    this.menuDataSm.map(el =>{
       el.title = this.$t(el.title)
     })
   },

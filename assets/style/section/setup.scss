@@ -18,6 +18,9 @@ body, #__nuxt, #__layout{
   @include size(xl){
     max-width: 1900px;
   }
+  @include size(xm){
+    max-width: 1900px;
+  }
 }
 
 li{

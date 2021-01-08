@@ -26,18 +26,54 @@
 .section_top{
   height: 475px;
 }
+.menu__list_sm{
+  width: 100%;
+  background-color: #70ccc9;
+}
+
+.menu__item_sm{
+  padding: 15px 20px;
+  margin: 5px 10px;
+  border-radius: 10px;
+  font-size: 20px;
+
+  &:hover{
+    background-color: #58B0B1;
+    cursor: pointer;
+  }
+}
 .menu__list, .conteiner__left{
   min-height: 475px;
   width: 475px;
   min-width: 475px;
   flex-wrap: wrap;
+
+  @include size(xs){
+    display: none !important;
+  }
+  @include size(sl){
+    display: none !important;
+  }
+  @include size(sm){
+    display: none !important;
+  }
+  @include size(md){
+    display: none !important;
+  }
 }
 .descrption, .conteiner__middle{
   flex-grow: 2;
-  max-width: 950px;
+  
   font-size: 28px;
   line-height: 28px;
   font-weight: 300;
+
+  @include size(xm){
+    max-width: 950px;
+  }
+  @include size(xl){
+    max-width: 950px;
+  }
 }
 .menu__item{
   height: 33.33333333333%;
@@ -51,9 +87,25 @@
   background-color: #A7C728;
   max-width: 475px;
   font-size: 18px;
+  display: none;
+
+  @include size(xm){
+    display: block;
+  }
+  @include size(xl){
+    display: block;
+  }
 }
 .conteiner__right{
   max-width: 475px;
+  display: none;
+
+  @include size(xm){
+    display: block;
+  }
+  @include size(xl){
+    display: block;
+  }
 }
 .reg__block{
   background: linear-gradient(rgba(rgb(19, 19, 19), 0.8),
