@@ -9,6 +9,7 @@ body, #__nuxt, #__layout{
 }
 
 .container{
+  min-width: 360px;
   @include size(lg){
     max-width: 1900px;
     padding: 0 20px;

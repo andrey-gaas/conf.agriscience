@@ -1,9 +1,10 @@
 <template>
   <header class="header">
-    <container class="h-100 d-flex justify-content-between align-items-center">
-      <nuxt-link :to="localeRout('/')">
+    <container class="h-100 d-flex justify-content-between align-items-center head__conteiner">
+      <nuxt-link :to="localeRout('/')" class="header__logo-linck">
         <img src="@/assets/img/logo_color.png" alt="logo international bibliographic congress" class="header__logo">
       </nuxt-link>
+      
       <div class="hader_left d-flex align-items-center pt-4 ml-3">
         <div class="login__wrap mr-3">
           <nuxt-link :to="localeRout('/Register')">{{$t('header_registration')}}</nuxt-link>
@@ -18,6 +19,10 @@
             <img src="@/assets/img/flag_en.svg" alt="flag brit" class="header__img-flag h-100">
           </nuxt-link>
         </div>
+      </div>
+      <div class="login__wrap_sm">
+          <nuxt-link :to="localeRout('/Register')">{{$t('header_registration')}}</nuxt-link>
+          <nuxt-link :to="localeRout('/Register')">{{$t('header_login')}}</nuxt-link>
       </div> 
     </container>
   </header>

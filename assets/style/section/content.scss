@@ -8,12 +8,25 @@
   background-position: center, center;
   color: #fff;
   text-align: center;
+
+  @include size(xs){
+    height: 400px;
+  }
+  @include size(sl){
+    height: 450px;
+  }
 }
 .main__title_sm{
   font-size: 2vw;
 
   @include size(xl){
     font-size: 38px;
+  }
+  @include size(xs){
+    font-size: 16px;
+  }
+  @include size(sl){
+    font-size: 16px;
   }
 }
 .main__title_lg{
@@ -22,15 +35,80 @@
   @include size(xl){
     font-size: 103px;
   }
+  @include size(xs){
+    font-size: 35px;
+  }
+  @include size(sl){
+    font-size: 35px;
+  }
 }
 .section_top{
   height: 475px;
+  @include size(xs){
+    height: unset;
+  }
 }
 .menu__list_sm{
   width: 100%;
-  background-color: #70ccc9;
-}
+  //background-color: #70ccc9;
+  display: flex;
+  flex-direction: column;
 
+  @include size(lg){
+    display: none !important;
+  }
+  @include size(xm){
+    display: none !important;
+  }
+  @include size(xl){
+    display: none !important;
+  }
+
+  @include size(xs){
+    position: fixed;
+    top: 0;
+  }
+  @include size(sl){
+    position: fixed;
+    top: 0;
+  }
+}
+.container_menu{
+  background-color: #70ccc9;
+  display: flex;
+
+  @include size(xs){
+    flex-direction: column;
+    display: none;
+
+    &.active{
+      display: flex;
+    }
+  }
+  @include size(sl){
+    flex-direction: column;
+    display: none;
+
+    &.active{
+      display: flex;
+    }
+  }
+}
+.toggle-drop-menu{
+  background-color: #70ccc9;
+  display: none;
+  height: 60px;
+  @include size(xs){
+    display: flex;
+  }
+  @include size(sl){
+    display: flex;
+  }
+}
+.toggle{
+  width: 100%;
+  height: 100%;
+}
 .menu__item_sm{
   padding: 15px 20px;
   margin: 5px 10px;
@@ -40,6 +118,11 @@
   &:hover{
     background-color: #58B0B1;
     cursor: pointer;
+  }
+
+  @include size(sm){
+    padding: 15px 17px;
+    margin: 5px 2px;
   }
 }
 .menu__list, .conteiner__left{
@@ -74,7 +157,27 @@
   @include size(xl){
     max-width: 950px;
   }
+  @include size(lg){
+    font-size: 25px;
+  }
+  @include size(xs){
+    font-size: 17px;
+    line-height: 18px;
+    height: unset;
+  }
+  @include size(sl){
+    font-size: 21px;
+    line-height: 22px;
+    height: unset;
+  }
+  min-width: 360px;
 }
+.reg__text-info{
+  text-align: center;
+  line-height: 40px;
+  padding: 10px 20px;
+}
+
 .menu__item{
   height: 33.33333333333%;
   width: 33.33333333333%;

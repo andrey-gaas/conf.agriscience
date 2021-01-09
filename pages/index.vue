@@ -5,13 +5,22 @@
       <h2 class="main__title_lg">{{$t('main_header_title')}}</h2>
     </container>
     <container  class="p-0">
-      <menu class="menu__list_sm d-flex p-0 m-0">
+      <menu class="menu__list_sm p-0 m-0">
+        <container class="m-0 toggle-drop-menu">
+          <div class="toggle"
+            @click="isMenuDrop = !isMenuDrop"
+          ></div>
+        </container>
+        <container class="m-0 overflow-hidden container_menu"
+          :class="{ active: isMenuDrop }"
+        >
           <li
             v-for="(item, ind ) in menuDataSm" :key="ind"
             class='menu__item_sm'
           >
           {{item.title}}
           </li>
+        </container>
       </menu>
       <section class="section section_top d-flex">
         <menu class="menu__list d-flex p-0 m-0">
@@ -76,8 +85,8 @@
             </div>
           </div>
           <div class="congress-topics">
-            <h3 class="congress-topic__title">Темы Конгресса</h3>
-            <ul class="congress-topic__list">
+            <h3 class="congress-topic__title px-4">Темы Конгресса</h3>
+            <ul class="congress-topic__list px-4">
               <li class="congress-topic__item">
                 Трансформация библиографии в цифровую эпоху. Роль библиографической информации в меняющейся системе научных коммуникаций. Стратегия развития библиографической деятельности на международном уровне. Проблемы взаимоиспользования ресурсов.
               </li>
@@ -182,7 +191,8 @@ export default {
         text:'Крупнейшая публичная библиотека в России и континентальной Европе и одна из крупнейших библиотек мира.'},
       { title:'Государственная публичная научно-техническая библиотека России',
         text:'Крупнейшая научно-техническая библиотека страны, научно-исследовательский институт и информационный центр федерального значения.'},
-    ]
+    ],
+    isMenuDrop:false,
   }),
   methods:{
     localeRout,
