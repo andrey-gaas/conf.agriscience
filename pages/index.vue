@@ -7,11 +7,17 @@
     <container  class="p-0">
       <menu class="menu__list_sm p-0 m-0">
         <container class="m-0 toggle-drop-menu">
-          <div class="toggle"
-            @click="isMenuDrop = !isMenuDrop"
-          ></div>
+          <div class="toggle">
+            <div class="ham__btn"
+              @click="isMenuDrop = !isMenuDrop"
+            >
+              <div class="ham_line"></div>
+              <div class="ham_line"></div>
+              <div class="ham_line"></div>
+            </div>
+          </div>
         </container>
-        <container class="m-0 overflow-hidden container_menu"
+        <container class="m-0 py-2 overflow-hidden container_menu"
           :class="{ active: isMenuDrop }"
         >
           <li
