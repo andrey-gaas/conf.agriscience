@@ -10,22 +10,14 @@ body, #__nuxt, #__layout{
 
 .container{
   min-width: 360px;
-  @include size(lg){
-    max-width: 1900px;
-    padding: 0 20px;
-    margin: 0 auto;
-  }
-
-  @include size(xl){
-    max-width: 1900px;
-  }
-  @include size(xm){
-    max-width: 1900px;
-  }
 }
 
 li{
   list-style: none;
+}
+
+.gggfd{
+  background-color: #a3f;
 }
 
 

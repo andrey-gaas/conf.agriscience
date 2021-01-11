@@ -17,29 +17,35 @@
   }
 }
 .main__title_sm{
-  font-size: 2vw;
+  font-size: 1.5rem;
 
-  @include size(xl){
-    font-size: 38px;
-  }
   @include size(xs){
-    font-size: 16px;
+    
   }
-  @include size(sl){
-    font-size: 16px;
+  @include size(sm){
+    
+  }
+  @include size(md){
+  
+  }
+  @include size(lg){
+    
   }
 }
 .main__title_lg{
-  font-size: 5.42vw;
+  font-size: 3.5rem;
 
-  @include size(xl){
-    font-size: 103px;
-  }
   @include size(xs){
-    font-size: 35px;
+    
   }
-  @include size(sl){
-    font-size: 35px;
+  @include size(sm){
+    
+  }
+  @include size(md){
+  
+  }
+  @include size(lg){
+    
   }
 }
 .section_top{
@@ -49,10 +55,6 @@
   }
 }
 .menu__list_sm{
-  width: 100%;
-  //background-color: #70ccc9;
-  display: flex;
-  flex-direction: column;
 
   @include size(lg){
     display: none !important;
@@ -148,51 +150,58 @@
   }
 }
 .menu__list, .conteiner__left{
-  min-height: 475px;
-  width: 475px;
-  min-width: 475px;
-  flex-wrap: wrap;
+  height: 300px;
 
   @include size(xs){
-    display: none !important;
-  }
-  @include size(sl){
     display: none !important;
   }
   @include size(sm){
     display: none !important;
   }
   @include size(md){
-    display: none !important;
+    height: 192px;
+  }
+  @include size(lg){
+    height: 248px;
+  }
+}
+.menu__row{
+  height: 33%;
+
+  @include size(xs){
+    
+  }
+  @include size(sm){
+    
+  }
+  @include size(md){
+  
+  }
+  @include size(lg){
+    
   }
 }
 .descrption, .conteiner__middle{
-  flex-grow: 2;
-  
-  font-size: 28px;
-  line-height: 28px;
-  font-weight: 300;
+  font-size: 18px;
+  line-height: 20px;
 
-  @include size(xm){
-    max-width: 950px;
+  @include size(xs){
+    
   }
-  @include size(xl){
-    max-width: 950px;
+  @include size(sm){
+    
+  }
+  @include size(md){
+  
   }
   @include size(lg){
-    font-size: 25px;
+    font-size: 13px;
   }
-  @include size(xs){
-    font-size: 17px;
-    line-height: 18px;
-    height: unset;
+
+  &>p:last-child{
+    margin-bottom: 0;
   }
-  @include size(sl){
-    font-size: 21px;
-    line-height: 22px;
-    height: unset;
-  }
-  min-width: 360px;
+
 }
 .reg__text-info{
   text-align: center;
@@ -210,15 +219,31 @@
 }
 .organizetion{
   background-color: #A7C728;
-  max-width: 475px;
-  font-size: 18px;
-  display: none;
+  line-height: 0.9rem;
+  font-size: 13px;
+  height: 100%;
 
-  @include size(xm){
-    display: block;
+  @include size(xs){
+    display: none !important;
   }
-  @include size(xl){
-    display: block;
+  @include size(sm){
+    display: none !important;
+  }
+  @include size(md){
+  
+  }
+  @include size(lg){
+    font-size: 13px;
+  }
+  &>h3{
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  &>p{
+    margin-bottom: 8px;
+    &:last-child{
+      margin-bottom: 0;
+    }
   }
 }
 .conteiner__right{
