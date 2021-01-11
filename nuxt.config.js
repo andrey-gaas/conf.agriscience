@@ -92,4 +92,7 @@ export default {
     /* { path: '/api/auth/registration', handler: '~/api/auth/registration.js' }, */
     { path: '/api', handler: '~/api' },
   ],
+  server: {
+    host: '0.0.0.0',
+  },
 }

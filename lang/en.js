@@ -1,5 +1,19 @@
 export default{
   "header_language": "English",
+  "header_registration": "Registration",
+  "header_login": "Login",
+
+  "main_header_subtitle": "III International Bibliographic Congress",
+  "main_header_title": "Bibliographic information in digital culture",
+  "main_menu_participants": "Participants",
+  "main_menu_events": "Events",
+  "main_menu_materials": "Materials",
+
+
+
+
+
+
 
   "reg_readerRegistrationCard": "Registration",
   "reg_remoteReaderEntry": "Remote reader entry",

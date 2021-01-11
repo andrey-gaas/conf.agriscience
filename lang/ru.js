@@ -1,5 +1,18 @@
 export default{
   "header_language": "Русский",
+  "header_registration": "Регистрация",
+  "header_login": "Вход",
+
+  "main_header_subtitle": "III Международный библиографический конгресс",
+  "main_header_title": "Библиографическая информация в цифровой культуре",
+  "main_menu_participants": "Участники",
+  "main_menu_events": "События",
+  "main_menu_materials": "Материалы",
+
+
+
+
+
 
   "reg_readerRegistrationCard": "Регистрация",
   "reg_remoteReaderEntry": "Удалённая запись читателей",
