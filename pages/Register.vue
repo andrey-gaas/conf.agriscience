@@ -241,15 +241,29 @@ export default {
     }
   },
   methods:{
+
+
+
+
+
     async formSubmit(){
       await this.validYmap();
       this.$v.formSet.$touch()
       if(this.$v.formSet.$invalid){
         return
       }
-      console.log(this.formSet);
-      this.clearLacalStorage()
+      /* this.clearLacalStorage() */
+
+      const result = await this.$axios.post('/api/auth/registration', this.formSet);
+
+      console.log(result);
     },
+
+
+
+
+
+
     saveInLocalStorage(){
       //Сохроняем данные в localStorage,
       //Чтобы не потерять их если что-то пойдёт не так
