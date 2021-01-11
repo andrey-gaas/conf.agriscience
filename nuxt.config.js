@@ -87,5 +87,8 @@ export default {
     transpile: [
       'mdbvue/lib/components'
     ]
-  }
+  },
+  server: {
+    host: '0.0.0.0',
+  },
 }
