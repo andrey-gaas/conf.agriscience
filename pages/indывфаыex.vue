@@ -6,21 +6,19 @@
     </container>
     <container  class="p-0">
       <mdb-row>
-        <mdb-col col="3" class='pr-0 menu__list'>
-          <mdb-row class='mx-0 menu__row'
-            v-for="(arr, ind ) in menuData" :key="ind"
-
-          >
-            <mdb-col class=' gggfd'
-              v-for="(item, ind ) in arr" :key="ind"
+        <mdb-col col="3">
+          <menu class="menu__list d-flex p-0 m-0">
+            <li
+              v-for="(item, ind ) in menuData" :key="ind"
+              class='menu__item'
               :style="{ backgroundColor:'#'+item.bgColor }"
             >
-              {{item.title}}
-            </mdb-col>
-          </mdb-row>
+            {{item.title}}
+            </li>
+          </menu>
         </mdb-col>
-        <mdb-col col="6"  class='px-0'>
-          <div class="descrption px-3 pb-0 pt-3 ">
+        <mdb-col col="6">
+          <div class="descrption p-4 ">
             <p>Приглашаем вас принять участие в III Международном библиографическом конгрессе, который состоится 27 – 29 апреля 2021 года. Впервые Конгресс пройдет в онлайн-формате. Участие бесплатное.</p>
             <p>Конгресс состоится на базе Государственной публичной научно-технической библиотеки Сибирского отделения Российской академии наук (ГПНТБ СО РАН), Новосибирск. Это будет уже третий международный библиографический конгресс: первый прошел в 2010 году в 
               Российской государственной библиотеке, а второй — 
@@ -29,8 +27,8 @@
             </p>
           </div>
         </mdb-col>
-        <mdb-col col="3" class='pl-0'>
-          <div class="organizetion flex-grow-1 p-3">
+        <mdb-col col="3">
+          <div class="organizetion flex-grow-1 p-4">
             <h3>Координаторы программного комитета</h3>
             <p>
               Лаврик Ольга Львовна<br>
@@ -47,8 +45,7 @@
         </mdb-col>
       </mdb-row>
       <mdb-row>
-        <mdb-col col="3" class='pr-0'>
-
+        <mdb-col col="3">
           <div class="card-user">
             <div class="card-user_head">
               <div class="card-user_photo shadow">
@@ -61,16 +58,95 @@
               <p class="card-user__user-desc">Мне 23 года, я деалю крутые сайты. Надо ещё текста добить, а то как-то маловато выходит. Нужно чтобы было хотя бы несколкьо строк.</p>
             </div>
           </div>
-
         </mdb-col>
-        <mdb-col col="6" class='px-0'>
-
+        <mdb-col col="6">
+          
+          
+        </mdb-col>
+        <mdb-col col="3">One of three columns</mdb-col>
+      </mdb-row>
+      <menu class="menu__list_sm p-0 m-0">
+        <container class="m-0 toggle-drop-menu">
+          <div class="toggle">
+            <div class="ham__btn"
+              @click="isMenuDrop = !isMenuDrop"
+            >
+              <div class="ham_line"></div>
+              <div class="ham_line"></div>
+              <div class="ham_line"></div>
+            </div>
+          </div>
+        </container>
+        <container class="m-0 py-2 overflow-hidden container_menu"
+          :class="{ active: isMenuDrop }"
+        >
+          <li
+            v-for="(item, ind ) in menuDataSm" :key="ind"
+            class='menu__item_sm'
+          >
+          {{item.title}}
+          </li>
+        </container>
+      </menu>
+      <section class="section section_top d-flex">
+        <menu class="menu__list d-flex p-0 m-0">
+          <li
+            v-for="(item, ind ) in menuData" :key="ind"
+            class='menu__item'
+            :style="{ backgroundColor:'#'+item.bgColor }"
+          >
+          {{item.title}}
+          </li>
+        </menu>
+        <div class="descrption p-4 ">
+          <p>Приглашаем вас принять участие в III Международном библиографическом конгрессе, который состоится 27 – 29 апреля 2021 года. Впервые Конгресс пройдет в онлайн-формате. Участие бесплатное.</p>
+          <p>Конгресс состоится на базе Государственной публичной научно-технической библиотеки Сибирского отделения Российской академии наук (ГПНТБ СО РАН), Новосибирск. Это будет уже третий международный библиографический конгресс: первый прошел в 2010 году в 
+            Российской государственной библиотеке, а второй — 
+            в 2015 году в Российской национальной библиотеке. (даём ссылки на сайты) <br>
+            Рабочие языки конгресса: русский и английский.
+          </p>
+        </div>
+        <div class="organizetion flex-grow-1 p-4">
+          <h3>Координаторы программного комитета</h3>
+          <p>
+            Лаврик Ольга Львовна<br>
+            доктор педагогических наук, профессор, главный научный сотрудник, заведующий лабораторией информационно-системного анализа, <br>
+            ГПНТБ СО РАН, Новосибирск, Россия<br>
+            тел. +7 383 373 06 31, lavrik@spsl.nsc.ru
+          </p>
+          <p>
+            Леликова Наталья Константиновна<br>
+            доктор исторических наук, Российская национальная библиотека, С-Петербург, председатель секции библиографии и информационно-библиографического обслуживания Российской библиотечной ассоциации<br>
+            e-mail: nklelikova@ya.ru
+          </p>
+        </div>
+      </section>
+      <section class="section d-flex">
+        <div class="conteiner__left p-4">
+          <div class="card-user">
+            <div class="card-user_head">
+              <div class="card-user_photo shadow">
+                <img src="assets/img/reg_img.jpg" alt="user photo" class="card-user__img_user">
+              </div>
+            </div>
+            <div class="ucard-user_main text-center">
+              <h6 class="card-user__user-position font-weight-light">Веб программист</h6>
+              <h5 class="card-user__user-name font-weight-bold">Alex Nuzhdin</h5>
+              <p class="card-user__user-desc">Мне 23 года, я деалю крутые сайты. Надо ещё текста добить, а то как-то маловато выходит. Нужно чтобы было хотя бы несколкьо строк.</p>
+            </div>
+          </div>
+        </div>
+        <div class="conteiner__middle">
           <div class="card bg-dark text-white text-center">
             <img src="assets/img/reg_img.jpg" class="card-img" alt="...">
             <div class="card-img-overlay">
               <h5 class="card-title">Регестрация будет открыта с 15 января</h5>
               <nuxt-link class="btn btn-primary" :to="localeRout('/')">Зарегистрироваться</nuxt-link>
             </div>
+          </div>
+          <div class="reg__block mb-3 d-flex justify-content-around align-items-center flex-column">
+            <span class="reg__text-info">Регестрация будет открыта с 15 января</span>
+            <nuxt-link class="btn__move-reg unactiv" :to="localeRout('/')">Зарегистрироваться</nuxt-link>
           </div>
           <div class="announcement">
             <h4 class="announcement__title">Уважаемые коллеги, мы принимаем заявки: </h4>
@@ -132,9 +208,8 @@
             </ul>
           </div>
 
-        </mdb-col>
-        <mdb-col col="3" class='pl-0'>
-          
+        </div>
+        <div class="conteiner__right">
           <mdb-card 
             v-for="(item, ind ) in bibCardData" :key="ind"
             class='m-4'
@@ -152,32 +227,8 @@
               <mdb-card-text>{{item.text}}</mdb-card-text>
             </mdb-card-body>
           </mdb-card>
-          
-        </mdb-col>
-      </mdb-row>
-      <menu class="menu__list_sm p-0 m-0">
-        <container class="m-0 toggle-drop-menu">
-          <div class="toggle">
-            <div class="ham__btn"
-              @click="isMenuDrop = !isMenuDrop"
-            >
-              <div class="ham_line"></div>
-              <div class="ham_line"></div>
-              <div class="ham_line"></div>
-            </div>
-          </div>
-        </container>
-        <container class="m-0 py-2 overflow-hidden container_menu"
-          :class="{ active: isMenuDrop }"
-        >
-          <li
-            v-for="(item, ind ) in menuDataSm" :key="ind"
-            class='menu__item_sm'
-          >
-          {{item.title}}
-          </li>
-        </container>
-      </menu>
+        </div>
+      </section>
     </container>
   </main>
 </template>
@@ -191,22 +242,15 @@ import {localeRout} from '@/assets/utils'
 export default {
   data:()=>({
     menuData:[
-      [
-        { title: 'main_menu_participants', bgColor: '58B0B1' },
-        { title: '', bgColor: 'A1D3D2' },
-        { title: 'main_menu_events', bgColor: '89C6C4' },
-      ],
-      [
-        { title: '', bgColor: '6BBBB8' },
-        { title: 'main_menu_materials', bgColor: '74C0C0' },
-        { title: '', bgColor: '63B8B5' },
-      ],
-
-      [
-        { title: 'main_menu_participants', bgColor: '4FADAD' },
-        { title: '', bgColor: '80C4C3' },
-        { title: 'main_menu_participants', bgColor: '6DBBBB' },
-      ]
+      { title: 'main_menu_participants', bgColor: '58B0B1' },
+      { title: '', bgColor: 'A1D3D2' },
+      { title: 'main_menu_events', bgColor: '89C6C4' },
+      { title: '', bgColor: '6BBBB8' },
+      { title: 'main_menu_materials', bgColor: '74C0C0' },
+      { title: '', bgColor: '63B8B5' },
+      { title: 'main_menu_participants', bgColor: '4FADAD' },
+      { title: '', bgColor: '80C4C3' },
+      { title: 'main_menu_participants', bgColor: '6DBBBB' },
     ],
     menuDataSm:[
       { title: 'main_menu_participants' },
@@ -239,11 +283,8 @@ export default {
     mdbCard, mdbRow, mdbCol, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbBtn, mdbView, mdbMask
   },
   created(){
-    this.menuData.map(arr =>{
-      arr.map(el =>{
-        el.title = this.$t(el.title)
-        console.log(el);
-      })
+    this.menuData.map(el =>{
+      el.title = this.$t(el.title)
     })
     this.menuDataSm.map(el =>{
       el.title = this.$t(el.title)
