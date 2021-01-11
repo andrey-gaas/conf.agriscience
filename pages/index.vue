@@ -6,8 +6,20 @@
     </container>
     <container  class="p-0">
       <mdb-row class="mx-sm-0">
-        <mdb-col col="3" class='px-0 menu__list col_l'>
-          <mdb-row class='mx-0 menu__row'
+
+        <mdb-col col="3" class='px-0 col_l'>
+          <menu class='nav__menu h-100 w-100 m-0 p-0'>
+            <ul class='menu__l m-0 p-0'>
+              <li class='menu__i'
+                v-for="(item, ind ) in menuDataSm" :key="ind"
+              >
+                {{item.title}}
+              </li>
+            </ul>
+          </menu>
+
+
+          <!-- <mdb-row class='mx-0 menu__row'
             v-for="(arr, ind ) in menuData" :key="ind"
 
           >
@@ -17,10 +29,10 @@
             >
               {{item.title}}
             </mdb-col>
-          </mdb-row>
+          </mdb-row> -->
         </mdb-col>
         <mdb-col md="6" sm='12' class='px-0 col_m'>
-          <div class="descrption px-3 pb-md-0 pb-sm-3 pt-md-2 pt-sm-3 ">
+          <div class="descrption px-3 pb-md-0 pb-sm-3 pt-md-2 pt-sm-3 pt-xs-3">
             <p>Приглашаем вас принять участие в III Международном библиографическом конгрессе, который состоится 27 – 29 апреля 2021 года. Впервые Конгресс пройдет в онлайн-формате. Участие бесплатное.</p>
             <p>Конгресс состоится на базе Государственной публичной научно-технической библиотеки Сибирского отделения Российской академии наук (ГПНТБ СО РАН), Новосибирск. Это будет уже третий международный библиографический конгресс: первый прошел в 2010 году в 
               Российской государственной библиотеке, а второй — 
@@ -155,7 +167,7 @@
           
         </mdb-col>
       </mdb-row>
-      <menu class="menu__list_sm p-0 m-0">
+      <!-- <menu class="menu__list_sm p-0 m-0">
         <container class="m-0 toggle-drop-menu">
           <div class="toggle">
             <div class="ham__btn"
@@ -177,7 +189,7 @@
           {{item.title}}
           </li>
         </container>
-      </menu>
+      </menu> -->
     </container>
   </main>
 </template>
@@ -210,13 +222,9 @@ export default {
     ],
     menuDataSm:[
       { title: 'main_menu_participants' },
-      
       { title: 'main_menu_events' },
-
       { title: 'main_menu_materials'},
-      
       { title: 'main_menu_participants' },
-      
       { title: 'main_menu_participants'},
     ],
     bibCardData:[

@@ -19,5 +19,9 @@ li{
 .container{
   min-width: 360px;
 }
-
+.row{
+  @include size(xs){
+    margin: 0 !important;
+  }
+}
 

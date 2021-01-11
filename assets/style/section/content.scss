@@ -12,40 +12,46 @@
   @include size(xs){
     height: 400px;
   }
-  @include size(sl){
+  @include size(sm){
     height: 450px;
+  }
+  @include size(md){
+    height: 500px;
+  }
+  @include size(lg){
+    height: 550px;
   }
 }
 .main__title_sm{
   font-size: 1.5rem;
 
   @include size(xs){
-    
+    font-size: 0.98rem;
   }
   @include size(sm){
-    
+    font-size: 1.1rem;
   }
   @include size(md){
-  
+    font-size: 1.22rem;
   }
   @include size(lg){
-    
+    font-size: 1.35rem;
   }
 }
 .main__title_lg{
   font-size: 3.5rem;
 
   @include size(xs){
-    
+    font-size: 2.1rem;
   }
   @include size(sm){
-    
+    font-size: 2.58rem;
   }
   @include size(md){
-  
+    font-size: 2.86rem;
   }
   @include size(lg){
-    
+    font-size: 3.15rem;
   }
 }
 .col_l, .col_r{
@@ -165,6 +171,21 @@
     margin: 5px 2px;
   }
 }
+
+.menu__l{
+  height: 100%;
+  width: 100%;
+  background-color: #70ccc9;
+}
+.menu__i{
+  padding: 15px 20px;
+  font-size: 20px;
+
+  &:hover{
+    background-color: #58B0B1;
+    cursor: pointer;
+  }
+}
 .menu__list, .conteiner__left{
   height: 300px;
 
@@ -202,7 +223,7 @@
   line-height: 20px;
 
   @include size(xs){
-    
+    padding: 10px !important;
   }
   @include size(sm){
     
@@ -368,6 +389,10 @@
 
 .congress-topic__list{
   list-style-type: disc;
+
+  @include size(xs){
+    //padding: 0px 35px !important;
+  }
 }
 .congress-topic__item{
   list-style-type: disc;
