@@ -1,14 +1,4 @@
-header{
-  height: 235px;
-  background-color: #FEFEFE;
 
-  @include size(xs){
-    padding-top: 62px;
-  }
-  @include size(sl){
-    padding-top: 62px;
-  }
-}
 .head__conteiner{
 
   @include size(xs){

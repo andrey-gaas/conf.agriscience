@@ -1,29 +1,25 @@
 <template>
-  <header class="header">
-    <container class="h-100 d-flex justify-content-between align-items-center head__conteiner">
-      <nuxt-link :to="localeRout('/')" class="header__logo-linck">
-        <img src="@/assets/img/logo_color.png" alt="logo international bibliographic congress" class="header__logo">
+  <header>
+    <container class="d-flex justify-content-between align-items-center">
+      <nuxt-link :to="localeRout('/')">
+        <img src="@/assets/img/logo_color.png" alt="logo international bibliographic congress" class="logo">
       </nuxt-link>
-      
-      <div class="hader_left d-flex align-items-center pt-4 ml-3">
-        <div class="login__wrap mr-3">
-          <nuxt-link :to="localeRout('/Register')">{{$t('header_registration')}}</nuxt-link>
-          <span>/</span>
-          <nuxt-link :to="localeRout('/Register')">{{$t('header_login')}}</nuxt-link>
+
+      <div class="d-flex align-items-center">
+        <div class="auth">
+          <nuxt-link :to="localeRout('/registration')" class="link">{{$t('header_registration')}}</nuxt-link>
+          <nuxt-link :to="localeRout('/registration')" class="link">{{$t('header_login')}}</nuxt-link>
         </div>
-        <div class="locale_btn_wrap d-flex">
+
+        <div class="d-flex align-items-center flags">
           <nuxt-link :to="switchLocalePath(RU)" class="m-2 d-block locale_btn">
-            <img src="@/assets/img/flag_ru.svg" alt="flar rus" class="header__img-flag">
+            <img src="@/assets/img/flag_ru.svg" alt="flar rus" class="flag">
           </nuxt-link>
           <nuxt-link :to="switchLocalePath(EN)" class="m-2 d-block locale_btn">
-            <img src="@/assets/img/flag_en.svg" alt="flag brit" class="header__img-flag h-100">
+            <img src="@/assets/img/flag_en.svg" alt="flag brit" class="flag">
           </nuxt-link>
         </div>
       </div>
-      <div class="login__wrap_sm">
-          <nuxt-link :to="localeRout('/Register')">{{$t('header_registration')}}</nuxt-link>
-          <nuxt-link :to="localeRout('/Register')">{{$t('header_login')}}</nuxt-link>
-      </div> 
     </container>
   </header>
 </template>
@@ -46,7 +42,34 @@ export default {
   data: () => ({ RU, EN }),
 }
 </script>
-<style>
 
 
+
+
+
+<style lang="scss" scoped>
+  header {
+    padding: 10px 0;
+  }
+  .logo {
+    height: 80px !important;
+  }
+  .link {
+    color: #212529 !important;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &:last-child {
+      margin-left: 5px;
+    }
+  }
+  .flags {
+    margin-left: 16px;
+  }
+  .flag {
+    height: 45px;
+    border: 1px solid #eee;
+  }
 </style>
