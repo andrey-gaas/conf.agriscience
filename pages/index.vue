@@ -5,8 +5,8 @@
       <h2 class="main__title_lg">{{$t('main_header_title')}}</h2>
     </container>
     <container  class="p-0">
-      <mdb-row>
-        <mdb-col col="3" class='pr-0 menu__list'>
+      <mdb-row class="mx-sm-0">
+        <mdb-col col="3" class='px-0 menu__list col_l'>
           <mdb-row class='mx-0 menu__row'
             v-for="(arr, ind ) in menuData" :key="ind"
 
@@ -19,8 +19,8 @@
             </mdb-col>
           </mdb-row>
         </mdb-col>
-        <mdb-col col="6"  class='px-0'>
-          <div class="descrption px-3 pb-0 pt-3 ">
+        <mdb-col md="6" sm='12' class='px-0 col_m'>
+          <div class="descrption px-3 pb-md-0 pb-sm-3 pt-md-2 pt-sm-3 ">
             <p>Приглашаем вас принять участие в III Международном библиографическом конгрессе, который состоится 27 – 29 апреля 2021 года. Впервые Конгресс пройдет в онлайн-формате. Участие бесплатное.</p>
             <p>Конгресс состоится на базе Государственной публичной научно-технической библиотеки Сибирского отделения Российской академии наук (ГПНТБ СО РАН), Новосибирск. Это будет уже третий международный библиографический конгресс: первый прошел в 2010 году в 
               Российской государственной библиотеке, а второй — 
@@ -29,7 +29,7 @@
             </p>
           </div>
         </mdb-col>
-        <mdb-col col="3" class='pl-0'>
+        <mdb-col col="3" class='px-0 col_r'>
           <div class="organizetion flex-grow-1 p-3">
             <h3>Координаторы программного комитета</h3>
             <p>
@@ -46,8 +46,8 @@
           </div>
         </mdb-col>
       </mdb-row>
-      <mdb-row>
-        <mdb-col col="3" class='pr-0'>
+      <mdb-row class="mx-sm-0">
+        <mdb-col col="3" class='px-0 col_l'>
 
           <div class="card-user">
             <div class="card-user_head">
@@ -63,13 +63,13 @@
           </div>
 
         </mdb-col>
-        <mdb-col col="6" class='px-0'>
+        <mdb-col md="6" sm='12' class='px-0 col_m c0l'>
 
           <div class="card bg-dark text-white text-center">
             <img src="assets/img/reg_img.jpg" class="card-img" alt="...">
-            <div class="card-img-overlay">
-              <h5 class="card-title">Регестрация будет открыта с 15 января</h5>
-              <nuxt-link class="btn btn-primary" :to="localeRout('/')">Зарегистрироваться</nuxt-link>
+            <div class="card-img-overlay reg-card__overlay d-flex flex-column justify-content-around">
+              <h5 class="card-title reg-card__title">Регестрация будет открыта с 15 января</h5>
+              <nuxt-link class="btn btn-danger reg-card__btn text-white" :to="localeRout('/')">Зарегистрироваться</nuxt-link>
             </div>
           </div>
           <div class="announcement">
@@ -133,11 +133,11 @@
           </div>
 
         </mdb-col>
-        <mdb-col col="3" class='pl-0'>
+        <mdb-col col="3" class='px-0 col_r'>
           
           <mdb-card 
             v-for="(item, ind ) in bibCardData" :key="ind"
-            class='m-4'
+            class='m-sm-2 m-lg-3'
           >
             <mdb-view hover>
               <a href="#!">
@@ -148,7 +148,7 @@
               </a>
             </mdb-view>
             <mdb-card-body>
-              <mdb-card-title class='text-info text-uppercase'>{{item.title}}</mdb-card-title>
+              <mdb-card-title class='text-info text-uppercase bib__card-title'>{{item.title}}</mdb-card-title>
               <mdb-card-text>{{item.text}}</mdb-card-text>
             </mdb-card-body>
           </mdb-card>
@@ -242,7 +242,6 @@ export default {
     this.menuData.map(arr =>{
       arr.map(el =>{
         el.title = this.$t(el.title)
-        console.log(el);
       })
     })
     this.menuDataSm.map(el =>{

@@ -33,3 +33,38 @@ img:not(.md-image).card-user__img_user{
   font-size: 1.1rem;
   color: rgb(59, 59, 59);
 }
+
+.card-body{
+
+  @include size(xs){
+    
+  }
+  @include size(sm){
+    
+  }
+  @include size(md){
+    padding: 0.45rem;
+  }
+  @include size(lg){
+    padding: 0.55rem;
+  }
+}
+.reg-card__overlay{
+  background-color: rgba(0, 0, 0, 0.75);
+}
+.reg-card__title{
+  font-size: 1.5rem;
+}
+.reg-card__btn{
+  border-radius: 40px;
+}
+
+.bib__card-title{
+  font-size: 0.9rem;
+  @include size(md){
+    font-size: 0.8rem;
+  }
+  @include size(lg){
+    font-size: 0.8rem;
+  }
+}

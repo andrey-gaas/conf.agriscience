@@ -48,6 +48,22 @@
     
   }
 }
+.col_l, .col_r{
+  @include size(xs){
+    display: none !important;
+  }
+  @include size(sm){
+    display: none !important;
+  }
+}
+.col_m{
+  @include size(xs){
+    
+  }
+  @include size(sm){
+    
+  }
+}
 .section_top{
   height: 475px;
   @include size(xs){
@@ -217,6 +233,8 @@
   align-items: center;
   font-size: 28px;
 }
+
+
 .organizetion{
   background-color: #A7C728;
   line-height: 0.9rem;
@@ -304,15 +322,31 @@
   font-size: 34px;
 }
 .ad__left, .ad__right{
-  width: 445px;
-  min-width: 300px;
+  font-size: 18px;
+  line-height: 23px;
+  width: 45%;
   height: 90px;
-  margin: 15px;
+  margin: 9px;
   text-align: center;
 
+  
   @include size(xs){
+    width: 90%;
     font-size: 22px;
     line-height: 30px;
+  }
+  @include size(sm){
+    width: 90%;
+    font-size: 22px;
+    line-height: 30px;
+  }
+  @include size(md){
+    font-size: 16px;
+    line-height: 19px;
+  }
+  @include size(lg){
+    font-size: 17px;
+    line-height: 21px;
   }
 }
 .ad__left{
@@ -323,7 +357,13 @@
 }
 .congress-topic__title{
   font-size: 36px;
-  
+
+  @include size(lg){
+    font-size: 28px;
+  }
+  @include size(md){
+    font-size: 28px;
+  }
 }
 
 .congress-topic__list{
