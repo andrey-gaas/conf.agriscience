@@ -256,7 +256,7 @@ export default {
 
       const result = await this.$axios.post('/api/auth/registration', this.formSet);
 
-      console.log(result);
+      
     },
 
 
@@ -279,6 +279,7 @@ export default {
         await ymaps.geocode(request).then((res) => {
         try {
           let result = res.geoObjects.get(0).properties.get('metaDataProperty.GeocoderMetaData.kind')
+          
           // locality - город
           // province - область/край
           // country - страна

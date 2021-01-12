@@ -25,3 +25,9 @@ li{
   }
 }
 
+.d-xs-none{
+  @include size(xs){
+    display: none !important;
+  }
+}
+

@@ -7,7 +7,7 @@
     <container  class="p-0">
       <mdb-row class="mx-sm-0">
 
-        <mdb-col col="3" class='px-0 col_l'>
+        <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
           <menu class='nav__menu h-100 w-100 m-0 p-0'>
             <ul class='menu__l m-0 p-0'>
               <li class='menu__i px-lg-4 py-lg-3 px-md-3 py-md-2 border-bottom border-dark'
@@ -17,11 +17,8 @@
               </li>
             </ul>
           </menu>
-
-
           <!-- <mdb-row class='mx-0 menu__row'
             v-for="(arr, ind ) in menuData" :key="ind"
-
           >
             <mdb-col class=' gggfd'
               v-for="(item, ind ) in arr" :key="ind"
@@ -33,33 +30,31 @@
         </mdb-col>
         <mdb-col md="6" sm='12' class='px-0 col_m'>
           <div class="descrption px-3 pb-md-0 pb-sm-3 pt-md-2 pt-sm-3 pt-xs-3">
-            <p>Приглашаем вас принять участие в III Международном библиографическом конгрессе, который состоится 27 – 29 апреля 2021 года. Впервые Конгресс пройдет в онлайн-формате. Участие бесплатное.</p>
-            <p>Конгресс состоится на базе Государственной публичной научно-технической библиотеки Сибирского отделения Российской академии наук (ГПНТБ СО РАН), Новосибирск. Это будет уже третий международный библиографический конгресс: первый прошел в 2010 году в 
-              Российской государственной библиотеке, а второй — 
-              в 2015 году в Российской национальной библиотеке. (даём ссылки на сайты) <br>
-              Рабочие языки конгресса: русский и английский.
+            <p>{{$t('main_descrption_text_1')}}</p>
+            <p>{{$t('main_descrption_text_2')}}<br>
+              {{$t('main_descrption_text_3')}}
             </p>
           </div>
         </mdb-col>
-        <mdb-col col="3" class='px-0 col_r'>
+        <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
           <div class="organizetion flex-grow-1 p-3">
-            <h3>Координаторы программного комитета</h3>
+            <h3>{{$t('main_сoordinators_text_1')}}</h3>
             <p>
-              Лаврик Ольга Львовна<br>
-              доктор педагогических наук, профессор, главный научный сотрудник, заведующий лабораторией информационно-системного анализа, <br>
-              ГПНТБ СО РАН, Новосибирск, Россия<br>
-              тел. +7 383 373 06 31, lavrik@spsl.nsc.ru
+              {{$t('main_сoordinators_text_2')}}<br>
+              {{$t('main_сoordinators_text_3')}}<br>
+              {{$t('main_сoordinators_text_4')}}<br>
+              {{$t('main_сoordinators_text_5')}}
             </p>
             <p>
-              Леликова Наталья Константиновна<br>
-              доктор исторических наук, Российская национальная библиотека, С-Петербург, председатель секции библиографии и информационно-библиографического обслуживания Российской библиотечной ассоциации<br>
+              {{$t('main_сoordinators_text_6')}}<br>
+              {{$t('main_сoordinators_text_7')}}<br>
               e-mail: nklelikova@ya.ru
             </p>
           </div>
         </mdb-col>
       </mdb-row>
       <mdb-row class="mx-sm-0">
-        <mdb-col col="3" class='px-0 col_l'>
+        <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
 
           <div class="card-user m-md-2 m-lg-3">
             <div class="person-card_img rounded-circle shadow-lg" style="background-image: url(assets/img/reg_img.jpg);">
@@ -68,17 +63,6 @@
             <p class="text-uppercase blue-grey-text text-center mt-3 mb-0">Веб программист</p>
             <h5 class="font-weight-bold mt-1 mb-2  text-center">Alex Nuzhdin</h5>
             <p class="grey-text  text-center">Мне 23 года, я деалю крутые сайты. Надо ещё текста добить, а то как-то маловато выходит. Нужно чтобы было хотя бы несколкьо строк.</p>
-            <!-- <div class="card-user_head">
-              <mdb-avatar tag="img" src="assets/img/reg_img.jpg" circle class="z-depth-1" alt="Sample avatar"/>
-              <div class="card-user_photo shadow">
-                <img src="assets/img/reg_img.jpg" alt="user photo" class="card-user__img_user">
-              </div>
-            </div>
-            <div class="ucard-user_main text-center">
-              <h6 class="card-user__user-position font-weight-light">Веб программист</h6>
-              <h5 class="card-user__user-name font-weight-bold">Alex Nuzhdin</h5>
-              <p class="card-user__user-desc">Мне 23 года, я деалю крутые сайты. Надо ещё текста добить, а то как-то маловато выходит. Нужно чтобы было хотя бы несколкьо строк.</p>
-            </div> -->
           </div>
 
         </mdb-col>
@@ -87,72 +71,33 @@
           <div class="card bg-dark text-white text-center">
             <img src="assets/img/reg_img.jpg" class="card-img" alt="...">
             <div class="card-img-overlay reg-card__overlay d-flex flex-column justify-content-around">
-              <h5 class="card-title reg-card__title">Регестрация будет открыта с 15 января</h5>
-              <nuxt-link class="btn btn-danger reg-card__btn text-white" :to="localeRout('/')">Зарегистрироваться</nuxt-link>
+              <h5 class="card-title reg-card__title">{{$t('main_cardreg_text_1')}}</h5>
+              <nuxt-link class="btn btn-danger reg-card__btn text-white" :to="localeRout('/')">{{$t('main_cardreg_register')}}</nuxt-link>
             </div>
           </div>
           <div class="announcement">
-            <h4 class="announcement__title">Уважаемые коллеги, мы принимаем заявки: </h4>
+            <h4 class="announcement__title">{{$t('main_announcement_text_1')}}</h4>
             <div class="ad__left d-flex justify-content-around align-items-center">
-              для участия с докладом<br>до 15 марта 2020 года
+              {{$t('main_announcement_text_2')}}<br>{{$t('main_announcement_text_3')}}
             </div>
             <div class="ad__right d-flex justify-content-around align-items-center">
-              для участия без доклада<br>до 26 апреля 2020 года
+              {{$t('main_announcement_text_4')}}<br>{{$t('main_announcement_text_5')}}
             </div>
           </div>
           <div class="congress-topics">
-            <h3 class="congress-topic__title px-4">Темы Конгресса</h3>
+            <h3 class="congress-topic__title px-4 ">{{$t('main_congress_title')}}</h3>
             <ul class="congress-topic__list px-4">
-              <li class="congress-topic__item">
-                Трансформация библиографии в цифровую эпоху. Роль библиографической информации в меняющейся системе научных коммуникаций. Стратегия развития библиографической деятельности на международном уровне. Проблемы взаимоиспользования ресурсов.
+              <li class="congress-topic__item mb-2"
+                v-for="(item,ind ) in topicData" :key="ind"
+              >
+                {{item}}
               </li>
-              <li class="congress-topic__item">
-                Координация и кооперация библиографической деятельности на международном и национальном уровнях.
-              </li>
-              <li class="congress-topic__item">
-                Создание, распространение и продвижение библиографической информации. Формы и форматы представления библиографических данных в Сети и электронных информационных системах.
-              </li>
-              <li class="congress-topic__item">
-                Разработка и внедрение новых международных и отечественных норм библиографического описания.
-              </li>
-              <li class="congress-topic__item">
-                Библиографирование электронных ресурсов локального и удаленного доступа. Современные ресурсы национальной библиографии. Совершенствование законодательства об обязательном экземпляре (электронный обязательный экземпляр).
-              </li>
-              <li class="congress-topic__item">
-                Корпоративная каталогизация как форма библиографического взаимодействия библиотек.
-              </li>
-              <li class="congress-topic__item">
-                Библиометрическая информация в открытой науке.
-              </li>
-              <li class="congress-topic__item">
-                Лингвистические аспекты представления метаданных в Сети: «предметные входы», семантический веб.
-              </li>
-              <li class="congress-topic__item">
-                Нормативное обеспечение библиографирования на современном этапе.
-              </li>
-              <li class="congress-topic__item">
-                Модели функциональных требований к библиографическим и авторитетным данным.
-              </li>
-              <li class="congress-topic__item">
-                Библиографическая информация для пользователей: продукты и сервисы.
-              </li>
-              <li class="congress-topic__item">
-                Качество библиографической информации: критерии оценки.
-              </li>
-              <li class="congress-topic__item">
-                Компетенции библиографов: подготовка, переподготовка, повышение квалификации.
-              </li>
-              <li class="congress-topic__item">
-                Краеведческая библиографическая информация в цифровую эпоху.
-              </li>
-              <li class="congress-topic__item">
-                История библиографии в Сибири.
-              </li>
+              
             </ul>
           </div>
 
         </mdb-col>
-        <mdb-col col="3" class='px-0 col_r'>
+        <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
           
           <mdb-card 
             v-for="(item, ind ) in bibCardData" :key="ind"
@@ -235,15 +180,17 @@ export default {
       { title: 'main_menu_participants'},
     ],
     bibCardData:[
-      { title:'Государственная публичная научно-техническая библиотека Сибирского отделения Российской академии наук',
-        text:'Крупнейшая библиотека России за Уралом, государственный универсальный депозитарий Сибири.'},
-      { title:'Российская национальная библиотека',
-        text:'Старейшая публичная и первая национальная библиотека России, одна из крупнейших в мире и вторая по величине фондов в Российской Федерации'},
-      { title:'Российская государственная библиотека',
-        text:'Крупнейшая публичная библиотека в России и континентальной Европе и одна из крупнейших библиотек мира.'},
-      { title:'Государственная публичная научно-техническая библиотека России',
-        text:'Крупнейшая научно-техническая библиотека страны, научно-исследовательский институт и информационный центр федерального значения.'},
+      { title:'main_card_organizetion_title_1',
+        text:'main_card_organizetion_text_1'},
+      { title:'main_card_organizetion_title_2',
+        text:'main_card_organizetion_text_2'},
+      { title:'main_card_organizetion_title_3',
+        text:'main_card_organizetion_text_3'},
+      { title:'main_card_organizetion_title_4',
+        text:'main_card_organizetion_text_4'},
+      
     ],
+    topicData:['main_congress_topic_1','main_congress_topic_2','main_congress_topic_3','main_congress_topic_4','main_congress_topic_5','main_congress_topic_6','main_congress_topic_7','main_congress_topic_8','main_congress_topic_9','main_congress_topic_10','main_congress_topic_11','main_congress_topic_12','main_congress_topic_13','main_congress_topic_14','main_congress_topic_15',],
     isMenuDrop:false,
   }),
   methods:{
@@ -261,6 +208,14 @@ export default {
     })
     this.menuDataSm.map(el =>{
       el.title = this.$t(el.title)
+    })
+    this.topicData = this.topicData.map(el =>{
+      return this.$t(el)
+      
+    })
+    this.bibCardData.map(el =>{
+      el.title = this.$t(el.title)
+      el.text = this.$t(el.text)
     })
   },
 };

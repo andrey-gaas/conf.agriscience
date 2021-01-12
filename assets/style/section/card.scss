@@ -1,22 +1,3 @@
-.card-user_head{
-  padding-top: 100px;
-}
-.card-user_head{
-  position: relative;
-}
-.card-user_photo{
-  border-radius: 50%;
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  overflow: hidden;
-  top: 0;
-  left: calc(50% - 100px);
-}
-img:not(.md-image).card-user__img_user{
-  width: 100%;
-  height: 100%;
-}
 .person-card_img{
   width: 50%;
   margin: auto;
@@ -29,22 +10,6 @@ img:not(.md-image).card-user__img_user{
     padding-top: 100%;
     float: left;
   }
-}
-.ucard-user_main{
-  margin-top: 100px;
-  padding: 10px;
-}
-.card-user__user-position{
-  color: rgb(121, 121, 121);
-  font-size: 1.5rem;
-}
-.card-user__user-name{
-  font-size: 2.5rem;
-  color: rgb(31, 30, 30);
-}
-.card-user__user-desc{
-  font-size: 1.1rem;
-  color: rgb(59, 59, 59);
 }
 
 .card-body{
