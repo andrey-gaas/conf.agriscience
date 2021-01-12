@@ -279,6 +279,7 @@ export default {
         await ymaps.geocode(request).then((res) => {
         try {
           let result = res.geoObjects.get(0).properties.get('metaDataProperty.GeocoderMetaData.kind')
+          console.log(result);
           // locality - город
           // province - область/край
           // country - страна

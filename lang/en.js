@@ -8,10 +8,42 @@ export default{
   "main_menu_participants": "Participants",
   "main_menu_events": "Events",
   "main_menu_materials": "Materials",
+  "main_descrption_text_1": "We invite you to take part in the III International Bibliographic Congress, which will be held on April 27 - 29, 2021. For the first time, the Congress will be held online. Participation is free.",
+  "main_descrption_text_2": "The Congress will take place on the basis of the State Public Scientific and Technical Library of the Siberian Branch of the Russian Academy of Sciences (NPLST SB RAS), Novosibirsk. This will be the third international bibliographic congress: the first was held in 2010 at the Russian State Library, and the second in 2015 at the Russian National Library.",
+  "main_descrption_text_3": "Working languages of the Congress: Russian and English.",
+  "main_сoordinators_text_1": "Program Committee Coordinators",
+  "main_сoordinators_text_2": "Lavrik Olga Lvovna",
+  "main_сoordinators_text_3": "Doctor of Pedagogy, Professor, Chief Researcher, Head of the Laboratory of Information and System Analysis,",
+  "main_сoordinators_text_4": "NPLST SB RAS, Novosibirsk, Russia",
+  "main_сoordinators_text_5": "phone +7 383 373 06 31, lavrik@spsl.nsc.ru",
+  "main_сoordinators_text_6": "Lelikova Natalia Konstantinovna",
+  "main_сoordinators_text_7": "Doctor of Historical Sciences, The National Library of Russia, St. Petersburg, Chairman of the Section of Bibliography and Information and Bibliographic Services of the Russian Library Association",
 
+  "main_cardreg_text_1": "Registration will be open from January 15",
+  "main_cardreg_register": "Register",
+  "main_announcement_text_1": "Dear colleagues, we accept applications:",
+  "main_announcement_text_2": "to participate with the report",
+  "main_announcement_text_3": "until March 15, 2020",
+  "main_announcement_text_4": "to participate without a report",
+  "main_announcement_text_5": "until April 26, 2020",
+  "main_congress_title": "Themes of the Congress",
+  "main_congress_topic_1": "Transforming bibliography in the digital age. The role of bibliographic information in the changing system of scientific communication. Strategy for the development of bibliographic activities at the international level. Problems of mutual use of resources.",
+  "main_congress_topic_2": "Coordination and cooperation of bibliographic activities at the international and national levels.",
+  "main_congress_topic_3": "Creation, distribution and promotion of bibliographic information. Forms and formats of presentation of bibliographic data on the Web and electronic information systems.",
+  "main_congress_topic_4": "Development and implementation of new international and domestic standards for bibliographic description.",
+  "main_congress_topic_5": "Bibliography of electronic resources of local and remote access. Modern resources of the national bibliography. Improvement of legal deposit legislation (electronic legal deposit).",
+  "main_congress_topic_6": "Corporate cataloging as a form of bibliographic interaction between libraries.",
+  "main_congress_topic_7": "Bibliometric information in open science.",
+  "main_congress_topic_8": "Linguistic aspects of metadata presentation on the Web: “subject inputs”, the semantic web.",
+  "main_congress_topic_9": "Normative support of bibliography at the present stage.",
+  "main_congress_topic_10": "Models of functional requirements for bibliographic and authority data.",
+  "main_congress_topic_11": "Bibliographic information for users: products and services.",
+  "main_congress_topic_12": "The quality of bibliographic information: evaluation criteria.",
+  "main_congress_topic_13": "Competencies of bibliographers: training, retraining, advanced training.",
+  "main_congress_topic_14": "Local lore bibliographic information in the digital age",
+  "main_congress_topic_15": "History of bibliography in Siberia.",
 
-
-
+  
 
 
 
