@@ -57,10 +57,7 @@ export default {
     }
   }
   .logo {
-    height: 60px !important;
-    @media (min-width: 768px) {
-      height: 80px !important;
-    }
+    height: 80px !important;
   }
 
   .auth {
