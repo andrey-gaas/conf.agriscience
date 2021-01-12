@@ -2,13 +2,17 @@
   <header class="header">
     <div class="top-container">
       <img src="@/assets/img/logo_color.png" alt="logo international bibliographic congress" class="logo">
-      <button class="button">
+      <button class="button"
+        @click="isOpen = !isOpen"
+      >
         <div></div>
         <div></div>
         <div></div>
       </button>
     </div>
-    <div class="nav-container">
+    <div class="nav-container" 
+      :class="{open: isOpen}"
+    >
       <div class="section">
         <h4>Меню</h4>
         <a href="#" class="link">Ссылка 1</a>
@@ -33,9 +37,18 @@
 </template>
 
 <script>
+import { RU, EN } from '@/constants/language';
+import {localeRout} from '@/assets/utils'
 
 export default {
+  data:()=>({
+    isOpen: false,
+    RU, EN,
+  }),
   components: {},
+  methods:{
+    localeRout,
+  },
 }
 </script>
 
@@ -87,7 +100,7 @@ export default {
     overflow: hidden;
 
     &.open {
-      height: auto;
+      height: 419px;
       padding-bottom: 14px;
       border-top: 1px solid #ccc;
       border-bottom: 1px solid #ccc;
