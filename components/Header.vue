@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="header">
     <container class="d-flex justify-content-between align-items-center">
       <nuxt-link :to="localeRout('/')">
         <img src="@/assets/img/logo_color.png" alt="logo international bibliographic congress" class="logo">
@@ -18,14 +18,6 @@
           <nuxt-link :to="switchLocalePath(EN)" class="m-2 d-block locale_btn">
             <img src="@/assets/img/flag_en.svg" alt="flag brit" class="flag">
           </nuxt-link>
-        </div>
-
-        <div class="burger-container">
-          <button class="burger">
-            <div class="1"></div>
-            <div class="2"></div>
-            <div class="3"></div>
-          </button>
         </div>
       </div>
     </container>
@@ -57,12 +49,17 @@ export default {
 
 <style lang="scss" scoped>
   header {
+    display: none;
     padding: 10px 0;
+
+    @media (min-width: 768px) {
+      display: block;
+    }
   }
   .logo {
     height: 60px !important;
     @media (min-width: 768px) {
-    height: 80px !important;
+      height: 80px !important;
     }
   }
 
