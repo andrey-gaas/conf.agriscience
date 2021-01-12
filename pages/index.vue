@@ -10,7 +10,7 @@
         <mdb-col col="3" class='px-0 col_l'>
           <menu class='nav__menu h-100 w-100 m-0 p-0'>
             <ul class='menu__l m-0 p-0'>
-              <li class='menu__i'
+              <li class='menu__i px-lg-4 py-lg-3 px-md-3 py-md-2 border-bottom border-dark'
                 v-for="(item, ind ) in menuDataSm" :key="ind"
               >
                 {{item.title}}
@@ -61,8 +61,15 @@
       <mdb-row class="mx-sm-0">
         <mdb-col col="3" class='px-0 col_l'>
 
-          <div class="card-user">
-            <div class="card-user_head">
+          <div class="card-user m-md-2 m-lg-3">
+            <div class="person-card_img rounded-circle shadow-lg" style="background-image: url(assets/img/reg_img.jpg);">
+              <!-- <img src="assets/img/reg_img.jpg" class="rounded-circle h-100 w-100" alt="person image"> -->
+            </div>
+            <p class="text-uppercase blue-grey-text text-center mt-3 mb-0">Веб программист</p>
+            <h5 class="font-weight-bold mt-1 mb-2  text-center">Alex Nuzhdin</h5>
+            <p class="grey-text  text-center">Мне 23 года, я деалю крутые сайты. Надо ещё текста добить, а то как-то маловато выходит. Нужно чтобы было хотя бы несколкьо строк.</p>
+            <!-- <div class="card-user_head">
+              <mdb-avatar tag="img" src="assets/img/reg_img.jpg" circle class="z-depth-1" alt="Sample avatar"/>
               <div class="card-user_photo shadow">
                 <img src="assets/img/reg_img.jpg" alt="user photo" class="card-user__img_user">
               </div>
@@ -71,7 +78,7 @@
               <h6 class="card-user__user-position font-weight-light">Веб программист</h6>
               <h5 class="card-user__user-name font-weight-bold">Alex Nuzhdin</h5>
               <p class="card-user__user-desc">Мне 23 года, я деалю крутые сайты. Надо ещё текста добить, а то как-то маловато выходит. Нужно чтобы было хотя бы несколкьо строк.</p>
-            </div>
+            </div> -->
           </div>
 
         </mdb-col>
@@ -196,7 +203,7 @@
 
 <script>
 import {
-  mdbContainer, mdbRow, mdbCol, mdbCard, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbBtn, mdbView, mdbMask
+  mdbContainer, mdbRow, mdbCol, mdbCard, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbBtn, mdbView, mdbMask, mdbAvatar
 } from 'mdbvue';
 import {localeRout} from '@/assets/utils'
 
@@ -244,7 +251,7 @@ export default {
   },
   components: {
     'container': mdbContainer,
-    mdbCard, mdbRow, mdbCol, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbBtn, mdbView, mdbMask
+    mdbCard, mdbRow, mdbCol, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbBtn, mdbView, mdbMask, mdbAvatar
   },
   created(){
     this.menuData.map(arr =>{

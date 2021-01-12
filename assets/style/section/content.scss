@@ -13,10 +13,10 @@
     height: 400px;
   }
   @include size(sm){
-    height: 450px;
+    height: 400px;
   }
   @include size(md){
-    height: 500px;
+    height: 450px;
   }
   @include size(lg){
     height: 550px;
@@ -232,7 +232,7 @@
   
   }
   @include size(lg){
-    font-size: 13px;
+    font-size: 18px;
   }
 
   &>p:last-child{
