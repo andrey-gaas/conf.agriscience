@@ -42,6 +42,14 @@ export default{
   "main_congress_topic_13": "Competencies of bibliographers: training, retraining, advanced training.",
   "main_congress_topic_14": "Local lore bibliographic information in the digital age",
   "main_congress_topic_15": "History of bibliography in Siberia.",
+  "main_card_organizetion_title_1":"State Public Scientific and Technical Library of the Siberian Branch of the Russian Academy of Sciences",
+  "main_card_organizetion_text_1":"The largest library in Russia beyond the Urals, the state universal depository of Siberia",
+  "main_card_organizetion_title_2":"National Library of Russia",
+  "main_card_organizetion_text_2":"The oldest public and first national library in Russia, one of the largest in the world and the second largest collection in the Russian Federation",
+  "main_card_organizetion_title_3":"Russian State Library",
+  "main_card_organizetion_text_3":"The largest public library in Russia and continental Europe and one of the largest libraries in the world.",
+  "main_card_organizetion_title_4":"State Public Scientific and Technical Library of Russia",
+  "main_card_organizetion_text_4":"The largest scientific and technical library in the country, research institute and information center of federal significance.",
 
   
 

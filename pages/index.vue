@@ -7,7 +7,7 @@
     <container  class="p-0">
       <mdb-row class="mx-sm-0">
 
-        <mdb-col col="3" class='px-0 col_l'>
+        <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
           <menu class='nav__menu h-100 w-100 m-0 p-0'>
             <ul class='menu__l m-0 p-0'>
               <li class='menu__i px-lg-4 py-lg-3 px-md-3 py-md-2 border-bottom border-dark'
@@ -17,11 +17,8 @@
               </li>
             </ul>
           </menu>
-
-
           <!-- <mdb-row class='mx-0 menu__row'
             v-for="(arr, ind ) in menuData" :key="ind"
-
           >
             <mdb-col class=' gggfd'
               v-for="(item, ind ) in arr" :key="ind"
@@ -39,7 +36,7 @@
             </p>
           </div>
         </mdb-col>
-        <mdb-col col="3" class='px-0 col_r'>
+        <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
           <div class="organizetion flex-grow-1 p-3">
             <h3>{{$t('main_сoordinators_text_1')}}</h3>
             <p>
@@ -57,7 +54,7 @@
         </mdb-col>
       </mdb-row>
       <mdb-row class="mx-sm-0">
-        <mdb-col col="3" class='px-0 col_l'>
+        <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
 
           <div class="card-user m-md-2 m-lg-3">
             <div class="person-card_img rounded-circle shadow-lg" style="background-image: url(assets/img/reg_img.jpg);">
@@ -66,17 +63,6 @@
             <p class="text-uppercase blue-grey-text text-center mt-3 mb-0">Веб программист</p>
             <h5 class="font-weight-bold mt-1 mb-2  text-center">Alex Nuzhdin</h5>
             <p class="grey-text  text-center">Мне 23 года, я деалю крутые сайты. Надо ещё текста добить, а то как-то маловато выходит. Нужно чтобы было хотя бы несколкьо строк.</p>
-            <!-- <div class="card-user_head">
-              <mdb-avatar tag="img" src="assets/img/reg_img.jpg" circle class="z-depth-1" alt="Sample avatar"/>
-              <div class="card-user_photo shadow">
-                <img src="assets/img/reg_img.jpg" alt="user photo" class="card-user__img_user">
-              </div>
-            </div>
-            <div class="ucard-user_main text-center">
-              <h6 class="card-user__user-position font-weight-light">Веб программист</h6>
-              <h5 class="card-user__user-name font-weight-bold">Alex Nuzhdin</h5>
-              <p class="card-user__user-desc">Мне 23 года, я деалю крутые сайты. Надо ещё текста добить, а то как-то маловато выходит. Нужно чтобы было хотя бы несколкьо строк.</p>
-            </div> -->
           </div>
 
         </mdb-col>
@@ -99,9 +85,9 @@
             </div>
           </div>
           <div class="congress-topics">
-            <h3 class="congress-topic__title px-4">{{$t('main_congress_title')}}</h3>
+            <h3 class="congress-topic__title px-4 ">{{$t('main_congress_title')}}</h3>
             <ul class="congress-topic__list px-4">
-              <li class="congress-topic__item"
+              <li class="congress-topic__item mb-2"
                 v-for="(item,ind ) in topicData" :key="ind"
               >
                 {{item}}
@@ -111,7 +97,7 @@
           </div>
 
         </mdb-col>
-        <mdb-col col="3" class='px-0 col_r'>
+        <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
           
           <mdb-card 
             v-for="(item, ind ) in bibCardData" :key="ind"
@@ -194,14 +180,15 @@ export default {
       { title: 'main_menu_participants'},
     ],
     bibCardData:[
-      { title:'Государственная публичная научно-техническая библиотека Сибирского отделения Российской академии наук',
-        text:'Крупнейшая библиотека России за Уралом, государственный универсальный депозитарий Сибири.'},
-      { title:'Российская национальная библиотека',
-        text:'Старейшая публичная и первая национальная библиотека России, одна из крупнейших в мире и вторая по величине фондов в Российской Федерации'},
-      { title:'Российская государственная библиотека',
-        text:'Крупнейшая публичная библиотека в России и континентальной Европе и одна из крупнейших библиотек мира.'},
-      { title:'Государственная публичная научно-техническая библиотека России',
-        text:'Крупнейшая научно-техническая библиотека страны, научно-исследовательский институт и информационный центр федерального значения.'},
+      { title:'main_card_organizetion_title_1',
+        text:'main_card_organizetion_text_1'},
+      { title:'main_card_organizetion_title_2',
+        text:'main_card_organizetion_text_2'},
+      { title:'main_card_organizetion_title_3',
+        text:'main_card_organizetion_text_3'},
+      { title:'main_card_organizetion_title_4',
+        text:'main_card_organizetion_text_4'},
+      
     ],
     topicData:['main_congress_topic_1','main_congress_topic_2','main_congress_topic_3','main_congress_topic_4','main_congress_topic_5','main_congress_topic_6','main_congress_topic_7','main_congress_topic_8','main_congress_topic_9','main_congress_topic_10','main_congress_topic_11','main_congress_topic_12','main_congress_topic_13','main_congress_topic_14','main_congress_topic_15',],
     isMenuDrop:false,
@@ -225,6 +212,10 @@ export default {
     this.topicData = this.topicData.map(el =>{
       return this.$t(el)
       
+    })
+    this.bibCardData.map(el =>{
+      el.title = this.$t(el.title)
+      el.text = this.$t(el.text)
     })
   },
 };
