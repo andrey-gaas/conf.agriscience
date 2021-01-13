@@ -52,6 +52,9 @@ export default{
   "main_card_organizetion_title_4":"State Public Scientific and Technical Library of Russia",
   "main_card_organizetion_text_4":"The largest scientific and technical library in the country, research institute and information center of federal significance.",
 
+  "footer_title": "Program Committee Coordinators",
+  "footer_phone": "Phone",
+  "footer_gpntb": "GPNTB",
   
 
 
