@@ -8,7 +8,7 @@
       <div class="d-flex align-items-center">
         <div class="auth">
           <nuxt-link :to="localeRout('/registration')" class="link">{{$t('header_registration')}}</nuxt-link>
-          <nuxt-link :to="localeRout('/registration')" class="link">{{$t('header_login')}}</nuxt-link>
+          <nuxt-link :to="localeRout('/login')" class="link">{{$t('header_login')}}</nuxt-link>
         </div>
 
         <div class="flags">

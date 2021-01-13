@@ -167,7 +167,12 @@
                 <mdb-btn class="mt-4 mb-0" type="submit"
                   color='primary'
                   :class="{'btn-light-blue':this.$v.formSet.$invalid , 'btn-primary':!this.$v.formSet.$invalid }"
-                >{{$t('reg_create')}}</mdb-btn>
+                >{{$t('main_cardreg_register')}}</mdb-btn>
+                <nuxt-link :to="localeRout('/login')" 
+                  class="mt-4 mb-0 btn btn-primary text-decoration-none ripple-parent btn-outline-primary text-white"
+                >
+                  {{$t('log_login')}}
+                </nuxt-link>
               </div>
             </div>
           </form>
@@ -178,6 +183,8 @@
 </template>
 
 <script>
+import { RU, EN } from '@/constants/language';
+import {localeRout} from '@/assets/utils'
 
 import { loadYmap } from 'vue-yandex-maps'
 import { helpers, required, numeric, email, minLength } from 'vuelidate/lib/validators'
@@ -194,10 +201,11 @@ const passwordValid = helpers.regex('alpha', /^[a-zA-Z0-9]*$/)
 
 
 export default {
-  name: "Form",
+  name: "Registration",
   layout: 'EmptyLayout',
   data: () => ({
     step: 1,
+    RU, EN,
     formSet:{ 
       surname: '',
       name: '',
@@ -241,10 +249,7 @@ export default {
     }
   },
   methods:{
-
-
-
-
+    localeRout,
 
     async formSubmit(){
       await this.validYmap();
@@ -252,11 +257,10 @@ export default {
       if(this.$v.formSet.$invalid){
         return
       }
-      /* this.clearLacalStorage() */
+      this.clearLacalStorage()
 
       const result = await this.$axios.post('/api/auth/registration', this.formSet);
 
-      
     },
 
 

@@ -104,5 +104,9 @@ export default{
   "reg_text_5":"Sunday, Monday - days off.",
   "reg_text_6":"Our contact phone number is (383) 266-75-71.",
   "reg_text_7":"Please fill out the registration card",
-  "reg_text_8":"Fields marked with an asterisk are required"
+  "reg_text_8":"Fields marked with an asterisk are required",
+
+  'log_login':"Log In",
+  'log_reg':"Register",
+  'log_authorization':"Authorization",
 }

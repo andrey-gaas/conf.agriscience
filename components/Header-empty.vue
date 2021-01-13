@@ -1,7 +1,11 @@
 <template>
   <nav class="navbar primary-color navbar-expand-lg">
     <container>
-      <logo href="#" class="logo">header_logo</logo>
+      <logo href="#" class="logo">
+        <nuxt-link :to="localeRout('/')">
+          <img src="assets/img/logo_white.png" alt="Logo" class='logo_white'>
+        </nuxt-link>
+      </logo>
       <dropdown>
         <dropdown-toggle color="primary" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
         <dropdown-menu>
@@ -23,10 +27,13 @@ import {
   mdbDropdownMenu,
   mdbDropdownToggle,
 } from 'mdbvue';
-import { setLocale } from '@/assets/utils';
+import { setLocale, localeRout} from '@/assets/utils';
 import { RU, EN } from '@/constants/language';
 
 export default {
+  data:()=>({
+    RU,EN
+  }),
   components: {
     'container': mdbContainer,
     'navbar': mdbNavbar,
@@ -37,8 +44,13 @@ export default {
     'dropdown-toggle': mdbDropdownToggle,
   },
   methods:{
-    setLocale,
+    setLocale, localeRout
   },
   data: () => ({ RU, EN }),
 }
 </script>
+<style scoped>
+.logo_white{
+  height: 60px;
+}
+</style>
