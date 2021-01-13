@@ -6,9 +6,13 @@ export default{
 
   "main_header_subtitle": "III International Bibliographic Congress",
   "main_header_title": "Bibliographic information in digital culture",
+
+  "main_menu_organising_committee": "Organising Committee",
+  "main_menu_program_committee": "Program committee",
+  "main_menu_publication_materials": "Publication of materials",
   "main_menu_participants": "Participants",
-  "main_menu_events": "Events",
-  "main_menu_materials": "Materials",
+  "main_menu_programma": "Programma",
+
   "main_descrption_text_1": "We invite you to take part in the III International Bibliographic Congress, which will be held on April 27 - 29, 2021. For the first time, the Congress will be held online. Participation is free.",
   "main_descrption_text_2": "The Congress will take place on the basis of the State Public Scientific and Technical Library of the Siberian Branch of the Russian Academy of Sciences (SPSTL SB RAS), Novosibirsk. This will be the third international bibliographic congress: the first was held in 2010 at the Russian State Library, and the second in 2015 at the Russian National Library.",
   "main_descrption_text_3": "Working languages of the Congress: Russian and English.",

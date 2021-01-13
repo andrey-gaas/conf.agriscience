@@ -10,7 +10,7 @@
         <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
           <menu class='nav__menu h-100 w-100 m-0 p-0'>
             <ul class='menu__l m-0 p-0'>
-              <li class='menu__i px-lg-4 py-lg-3 px-md-3 py-md-2 border-bottom border-dark'
+              <li class='menu__i px-lg-4 py-lg-3 px-md-2 py-md-3 border-bottom border-dark'
                 v-for="(item, ind ) in menuDataSm" :key="ind"
               >
                 {{item.title}}
@@ -40,13 +40,13 @@
           <div class="organizetion flex-grow-1 p-3">
             <h3>{{$t('main_сoordinators_text_1')}}</h3>
             <p>
-              {{$t('main_сoordinators_text_2')}}<br>
+              <span class='font-weight-bold'>{{$t('main_сoordinators_text_2')}}</span><br>
               {{$t('main_сoordinators_text_3')}}<br>
               {{$t('main_сoordinators_text_4')}}<br>
               {{$t('main_сoordinators_text_5')}}
             </p>
             <p>
-              {{$t('main_сoordinators_text_6')}}<br>
+              <span class='font-weight-bold'>{{$t('main_сoordinators_text_6')}}</span><br>
               {{$t('main_сoordinators_text_7')}}<br>
               e-mail: nklelikova@ya.ru
             </p>
@@ -77,12 +77,12 @@
           </div>
           <div class="announcement">
             <h4 class="announcement__title">{{$t('main_announcement_text_1')}}</h4>
-            <div class="ad__left d-flex justify-content-around align-items-center">
-              {{$t('main_announcement_text_2')}}<br>{{$t('main_announcement_text_3')}}
-            </div>
-            <div class="ad__right d-flex justify-content-around align-items-center">
+            <nuxt-link :to="localeRout('/registration')" class="ad__left text-decoration-none text-dark d-flex justify-content-around align-items-center">
+                {{$t('main_announcement_text_2')}}<br>{{$t('main_announcement_text_3')}}
+            </nuxt-link>
+            <nuxt-link :to="localeRout('/registration')" class="ad__right text-decoration-none text-dark d-flex justify-content-around align-items-center">
               {{$t('main_announcement_text_4')}}<br>{{$t('main_announcement_text_5')}}
-            </div>
+            </nuxt-link>
           </div>
           <div class="congress-topics">
             <h3 class="congress-topic__title px-4 ">{{$t('main_congress_title')}}</h3>
@@ -173,11 +173,11 @@ export default {
       ]
     ],
     menuDataSm:[
+      { title: 'main_menu_organising_committee' },
+      { title: 'main_menu_program_committee' },
+      { title: 'main_menu_publication_materials'},
       { title: 'main_menu_participants' },
-      { title: 'main_menu_events' },
-      { title: 'main_menu_materials'},
-      { title: 'main_menu_participants' },
-      { title: 'main_menu_participants'},
+      { title: 'main_menu_programma'},
     ],
     bibCardData:[
       { title:'main_card_organizetion_title_1',

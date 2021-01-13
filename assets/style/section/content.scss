@@ -73,6 +73,10 @@
   padding: 15px 20px;
   font-size: 20px;
 
+  @include size(md){
+    font-size: 18px;
+  }
+
   &:hover{
     background-color: #58B0B1;
     cursor: pointer;
@@ -139,7 +143,7 @@
   height: 90px;
   margin: 9px;
   text-align: center;
-
+  color: #000;
   
   @include size(xs){
     width: 90%;
