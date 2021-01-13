@@ -14,15 +14,11 @@
       :class="{open: isOpen}"
     >
       <div class="section">
-        <h4>Меню</h4>
-        <a href="#" class="link">Ссылка 1</a>
-        <a href="#" class="link">Ссылка 2</a>
-        <a href="#" class="link">Ссылка 3</a>
-        <a href="#" class="link">Регистрация</a>
-        <a href="#" class="link">Вход</a>
+        <a href="#" class="link">{{$t('header_registration')}}</a>
+        <a href="#" class="link">{{$t('header_login')}}</a>
       </div>
       <div class="section">
-        <h4>Язык</h4>
+        <h4>{{$t('mobile_menu_language')}}</h4>
         <div class="flags">
           <nuxt-link :to="switchLocalePath(RU)" class="m-2 d-block locale_btn">
             <img src="@/assets/img/flag_ru.svg" alt="flar rus" class="flag">

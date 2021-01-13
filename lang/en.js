@@ -2,6 +2,7 @@ export default{
   "header_language": "English",
   "header_registration": "Registration",
   "header_login": "Login",
+  "mobile_menu_language": "Language",
 
   "main_header_subtitle": "III International Bibliographic Congress",
   "main_header_title": "Bibliographic information in digital culture",
