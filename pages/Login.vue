@@ -71,7 +71,7 @@ export default {
   methods:{
     localeRout,
     formSubmit(){
-      console.log(LOGIN);
+      console.log('LOGIN');
     },
   },
   components:{

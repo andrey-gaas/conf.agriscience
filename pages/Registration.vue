@@ -257,9 +257,12 @@ export default {
       if(this.$v.formSet.$invalid){
         return
       }
-      this.clearLacalStorage()
+      //this.clearLacalStorage()
 
+
+      console.log(this.$store.getters.getUserData);
       const result = await this.$axios.post('/api/auth/registration', this.formSet);
+      //this.$router.push({ path: '/personarea' });
 
     },
 
