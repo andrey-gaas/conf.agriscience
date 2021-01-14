@@ -154,24 +154,24 @@ import {localeRout} from '@/assets/utils'
 
 export default {
   data:()=>({
-    menuData:[
-      [
-        { title: 'main_menu_participants', bgColor: '58B0B1' },
-        { title: '', bgColor: 'A1D3D2' },
-        { title: 'main_menu_events', bgColor: '89C6C4' },
-      ],
-      [
-        { title: '', bgColor: '6BBBB8' },
-        { title: 'main_menu_materials', bgColor: '74C0C0' },
-        { title: '', bgColor: '63B8B5' },
-      ],
+    // menuData:[
+    //   [
+    //     { title: 'main_menu_participants', bgColor: '58B0B1' },
+    //     { title: '', bgColor: 'A1D3D2' },
+    //     { title: 'main_menu_events', bgColor: '89C6C4' },
+    //   ],
+    //   [
+    //     { title: '', bgColor: '6BBBB8' },
+    //     { title: 'main_menu_materials', bgColor: '74C0C0' },
+    //     { title: '', bgColor: '63B8B5' },
+    //   ],
 
-      [
-        { title: 'main_menu_participants', bgColor: '4FADAD' },
-        { title: '', bgColor: '80C4C3' },
-        { title: 'main_menu_participants', bgColor: '6DBBBB' },
-      ]
-    ],
+    //   [
+    //     { title: 'main_menu_participants', bgColor: '4FADAD' },
+    //     { title: '', bgColor: '80C4C3' },
+    //     { title: 'main_menu_participants', bgColor: '6DBBBB' },
+    //   ]
+    // ],
     menuDataSm:[
       { title: 'main_menu_organising_committee' },
       { title: 'main_menu_program_committee' },
@@ -201,11 +201,11 @@ export default {
     mdbCard, mdbRow, mdbCol, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbBtn, mdbView, mdbMask, mdbAvatar
   },
   created(){
-    this.menuData.map(arr =>{
-      arr.map(el =>{
-        el.title = this.$t(el.title)
-      })
-    })
+    // this.menuData.map(arr =>{
+    //   arr.map(el =>{
+    //     el.title = this.$t(el.title)
+    //   })
+    // })
     this.menuDataSm.map(el =>{
       el.title = this.$t(el.title)
     })

@@ -39,7 +39,7 @@
     </mdb-container>
     <div class="footer-copyright text-center py-3 mt-4">
       <mdb-container fluid>
-        {{$t('footer_gpntb')}} &copy; 2021
+        {{$t('footer_spslt')}} &copy; 2021
       </mdb-container>
     </div>
   </mdb-footer>

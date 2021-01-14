@@ -1,6 +1,6 @@
 <template>
-  <nav class="navbar primary-color navbar-expand-lg">
-    <container>
+  <nav class="navbar primary-color navbar-expand-lg p-0">
+    <container p='2'>
       <logo href="#" class="logo">
         <nuxt-link :to="localeRout('/')">
           <img src="assets/img/logo_white.png" alt="Logo" class='logo_white'>

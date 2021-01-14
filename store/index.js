@@ -1,14 +1,16 @@
 export const state = () => ({
-  userData:{user:'masdf'},
+  personData:{},
 })
 
 export const mutations = {
-  
+  setPersonData(state, userData){
+    state.personData = userData
+  },
 }
 
 export const getters = {
-  getUserData(state){
-    return state.userData
+  getPersonData(state){
+    return state.personData
   }
 }
 

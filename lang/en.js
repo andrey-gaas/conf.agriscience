@@ -81,6 +81,7 @@ export default{
   "reg_empty_organization_field_error": "Please enter an organization",
   "reg_position": "Position",
   "reg_empty_position_field_error": "Indicate your position",
+  "reg_place": "Сity",
   "reg_country_city": "Country, city",
   "reg_empty_country_city_field_error": "Enter your country and city",
   "reg_invalid_country_city_field_error": "Check or specify a country or city",

@@ -258,11 +258,11 @@ export default {
         return
       }
       //this.clearLacalStorage()
+      this.$store.commit('setPersonData', this.formSet)
 
-
-      console.log(this.$store.getters.getUserData);
+      console.log(this.$store.getters.getPersonData);
       const result = await this.$axios.post('/api/auth/registration', this.formSet);
-      //this.$router.push({ path: '/personarea' });
+      this.$router.push({ path: '/personarea' });
 
     },
 
