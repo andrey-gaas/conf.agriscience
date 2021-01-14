@@ -19,7 +19,7 @@ li{
 .container{
   min-width: 360px;
 }
-.row{
+.m-xs-0{
   @include size(xs){
     margin: 0 !important;
   }
@@ -30,4 +30,10 @@ li{
     display: none !important;
   }
 }
+
+// .custom-file-label{
+//   &::after{
+//     content:'Обзор...'
+//   }
+// }
 

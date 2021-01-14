@@ -5,7 +5,7 @@
       <h1 class="title">{{$t('main_header_title')}}</h1>
     </container>
     <container  class="p-0">
-      <mdb-row class="mx-sm-0">
+      <mdb-row class="mx-sm-0 m-xs-0">
 
         <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
           <menu class='nav__menu w-100 m-0 p-0'>
@@ -53,7 +53,7 @@
           </div>
         </mdb-col>
       </mdb-row>
-      <mdb-row class="mx-sm-0">
+      <mdb-row class="mx-sm-0 m-xs-0">
         <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
 
           <!-- <div class="card-user m-md-2 m-lg-3">
