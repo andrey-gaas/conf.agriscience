@@ -258,6 +258,8 @@ export default {
         return
       }
       //this.clearLacalStorage()
+      
+      //this.$router.push('/personarea')
       this.$store.commit('setPersonData', this.formSet);
 
       this.$axios.post('/api/auth/registration', this.formSet)
