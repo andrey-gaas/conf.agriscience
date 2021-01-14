@@ -29,20 +29,25 @@
 }
 .reg-card__overlay{
   background-color: rgba(0, 0, 0, 0.75);
-}
-.reg-card__title{
-  font-size: 1.5rem;
+  padding: 6rem;
 }
 .reg-card__btn{
   border-radius: 40px;
 }
 
 .bib__card-title{
-  font-size: 0.9rem;
+  font-family: Ubuntu !important;
+  font-size: 12px;
   @include size(md){
     font-size: 0.8rem;
   }
   @include size(lg){
     font-size: 0.8rem;
   }
+}
+
+.bib__card_text {
+  font-family: Ubuntu;
+  font-size: 12px;
+  line-height: 15px;
 }

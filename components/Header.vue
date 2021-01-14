@@ -50,14 +50,15 @@ export default {
 <style lang="scss" scoped>
   header {
     display: none;
-    padding: 10px 0;
+    padding: 20px 0;
 
     @media (min-width: 768px) {
       display: block;
     }
   }
   .logo {
-    height: 80px !important;
+    margin-left: 14px;
+    height: 60px !important;
   }
 
   .auth {
@@ -87,7 +88,7 @@ export default {
     }
   }
   .flag {
-    height: 45px;
+    height: 24px;
     border: 1px solid #eee;
   }
   .burger-container {
