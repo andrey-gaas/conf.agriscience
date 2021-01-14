@@ -1,0 +1,11 @@
+.form{
+  @include size(md){
+    max-width: 540px
+  }
+  @include size(lg){
+    max-width: 540px;
+  }
+  @include size(xl){
+    max-width: 720px;
+  }
+} 

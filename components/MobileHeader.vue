@@ -14,8 +14,9 @@
       :class="{open: isOpen}"
     >
       <div class="section">
-        <a href="#" class="link">{{$t('header_registration')}}</a>
-        <a href="#" class="link">{{$t('header_login')}}</a>
+        <nuxt-link :to="localeRout('/registration')" class="link">{{$t('header_registration')}}</nuxt-link>
+        <nuxt-link :to="localeRout('/login')" class="link">{{$t('header_login')}}</nuxt-link>
+        
       </div>
       <div class="section">
         <h4>{{$t('mobile_menu_language')}}</h4>
@@ -53,6 +54,9 @@ export default {
     position: fixed;
     width: 100%;
     z-index: 9999;
+    @media (min-width: 768px) {
+      display: none;
+    }
   }
   .top-container {
     display: flex;

@@ -40,13 +40,13 @@
           <div class="organizetion flex-grow-1 p-3">
             <h3 class="title">{{$t('main_сoordinators_text_1')}}</h3>
             <p class="font-ubuntu">
-              {{$t('main_сoordinators_text_2')}}<br>
+              <span class='font-weight-bold'>{{$t('main_сoordinators_text_2')}}</span><br>
               {{$t('main_сoordinators_text_3')}}<br>
               {{$t('main_сoordinators_text_4')}}<br>
               {{$t('main_сoordinators_text_5')}}
             </p>
             <p class="font-ubuntu">
-              {{$t('main_сoordinators_text_6')}}<br>
+              <span class='font-weight-bold'>{{$t('main_сoordinators_text_6')}}</span><br>
               {{$t('main_сoordinators_text_7')}}<br>
               e-mail: nklelikova@ya.ru
             </p>
@@ -56,14 +56,14 @@
       <mdb-row class="mx-sm-0">
         <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
 
-          <div class="card-user m-md-2 m-lg-3">
+          <!-- <div class="card-user m-md-2 m-lg-3">
             <div class="person-card_img rounded-circle shadow-lg" style="background-image: url(assets/img/reg_img.jpg);">
-              <!-- <img src="assets/img/reg_img.jpg" class="rounded-circle h-100 w-100" alt="person image"> -->
+              <img src="assets/img/reg_img.jpg" class="rounded-circle h-100 w-100" alt="person image">
             </div>
             <p class="text-uppercase blue-grey-text text-center mt-3 mb-0">Веб программист</p>
             <h5 class="font-weight-bold mt-1 mb-2  text-center">Alex Nuzhdin</h5>
             <p class="grey-text  text-center">Мне 23 года, я деалю крутые сайты. Надо ещё текста добить, а то как-то маловато выходит. Нужно чтобы было хотя бы несколкьо строк.</p>
-          </div>
+          </div> -->
 
         </mdb-col>
         <mdb-col md="6" sm='12' class='px-0 col_m c0l'>
@@ -77,12 +77,12 @@
           </div>
           <div class="announcement">
             <h4 class="announcement__title">{{$t('main_announcement_text_1')}}</h4>
-            <div class="ad__left d-flex justify-content-around align-items-center">
-              {{$t('main_announcement_text_2')}}<br>{{$t('main_announcement_text_3')}}
-            </div>
-            <div class="ad__right d-flex justify-content-around align-items-center">
+            <nuxt-link :to="localeRout('/registration')" class="ad__left text-decoration-none text-dark d-flex justify-content-around align-items-center">
+                {{$t('main_announcement_text_2')}}<br>{{$t('main_announcement_text_3')}}
+            </nuxt-link>
+            <nuxt-link :to="localeRout('/registration')" class="ad__right text-decoration-none text-dark d-flex justify-content-around align-items-center">
               {{$t('main_announcement_text_4')}}<br>{{$t('main_announcement_text_5')}}
-            </div>
+            </nuxt-link>
           </div>
           <div class="congress-topics">
             <h2 class="congress-topic__title">{{$t('main_congress_title')}}</h2>
@@ -173,11 +173,11 @@ export default {
       ]
     ],
     menuDataSm:[
+      { title: 'main_menu_organising_committee' },
+      { title: 'main_menu_program_committee' },
+      { title: 'main_menu_publication_materials'},
       { title: 'main_menu_participants' },
-      { title: 'main_menu_events' },
-      { title: 'main_menu_materials'},
-      { title: 'main_menu_participants' },
-      { title: 'main_menu_participants'},
+      { title: 'main_menu_programma'},
     ],
     bibCardData:[
       { title:'main_card_organizetion_title_1',

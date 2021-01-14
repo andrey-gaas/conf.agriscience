@@ -6,16 +6,20 @@ export default{
 
   "main_header_subtitle": "III International Bibliographic Congress",
   "main_header_title": "Bibliographic information in digital culture",
+
+  "main_menu_organising_committee": "Organising Committee",
+  "main_menu_program_committee": "Program committee",
+  "main_menu_publication_materials": "Publication of materials",
   "main_menu_participants": "Participants",
-  "main_menu_events": "Events",
-  "main_menu_materials": "Materials",
+  "main_menu_programma": "Programma",
+
   "main_descrption_text_1": "We invite you to take part in the III International Bibliographic Congress, which will be held on April 27 - 29, 2021. For the first time, the Congress will be held online. Participation is free.",
-  "main_descrption_text_2": "The Congress will take place on the basis of the State Public Scientific and Technical Library of the Siberian Branch of the Russian Academy of Sciences (NPLST SB RAS), Novosibirsk. This will be the third international bibliographic congress: the first was held in 2010 at the Russian State Library, and the second in 2015 at the Russian National Library.",
+  "main_descrption_text_2": "The Congress will take place on the basis of the State Public Scientific and Technical Library of the Siberian Branch of the Russian Academy of Sciences (SPSTL SB RAS), Novosibirsk. This will be the third international bibliographic congress: the first was held in 2010 at the Russian State Library, and the second in 2015 at the Russian National Library.",
   "main_descrption_text_3": "Working languages of the Congress: Russian and English.",
   "main_сoordinators_text_1": "Program Committee Coordinators",
   "main_сoordinators_text_2": "Lavrik Olga Lvovna",
   "main_сoordinators_text_3": "Doctor of Pedagogy, Professor, Chief Researcher, Head of the Laboratory of Information and System Analysis,",
-  "main_сoordinators_text_4": "NPLST SB RAS, Novosibirsk, Russia",
+  "main_сoordinators_text_4": "SPSTL SB RAS, Novosibirsk, Russia",
   "main_сoordinators_text_5": "phone +7 383 373 06 31, lavrik@spsl.nsc.ru",
   "main_сoordinators_text_6": "Lelikova Natalia Konstantinovna",
   "main_сoordinators_text_7": "Doctor of Historical Sciences, The National Library of Russia, St. Petersburg, Chairman of the Section of Bibliography and Information and Bibliographic Services of the Russian Library Association",
@@ -52,6 +56,11 @@ export default{
   "main_card_organizetion_title_4":"State Public Scientific and Technical Library of Russia",
   "main_card_organizetion_text_4":"The largest scientific and technical library in the country, research institute and information center of federal significance.",
 
+  "footer_title": "Program Committee Coordinators",
+  "footer_phone": "Phone",
+  "footer_spslt": "SPSTL",
+  "footer_text_1": "Doctor of Pedagogy, Professor, Chief Researcher, Head of the Laboratory of Information and System Analysis, SPSTL SB RAS, Novosibirsk, Russia",
+  "footer_text_2": "Doctor of Historical Sciences, The National Library of Russia, St. Petersburg, Chairman of the Section of Bibliography and Information and Bibliographic Services of the Russian library association",
   
 
 
@@ -104,5 +113,9 @@ export default{
   "reg_text_5":"Sunday, Monday - days off.",
   "reg_text_6":"Our contact phone number is (383) 266-75-71.",
   "reg_text_7":"Please fill out the registration card",
-  "reg_text_8":"Fields marked with an asterisk are required"
+  "reg_text_8":"Fields marked with an asterisk are required",
+
+  'log_login':"Log In",
+  'log_reg':"Register",
+  'log_authorization':"Authorization",
 }

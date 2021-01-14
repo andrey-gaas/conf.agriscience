@@ -1,3 +1,12 @@
+.main{
+  @include size(xs){
+    padding-top: 70px;
+  }
+  @include size(sm){
+    padding-top: 70px;
+  }
+}
+
 .main__img{
   height: 610px;
   background: linear-gradient(rgba(rgb(19, 19, 19), 0.8),
@@ -26,7 +35,7 @@
   font-size: 1.5rem;
 
   @include size(xs){
-    font-size: 0.98rem;
+    font-size: 0.96rem;
   }
   @include size(sm){
     font-size: 1.1rem;
@@ -42,7 +51,7 @@
   font-size: 3.5rem;
 
   @include size(xs){
-    font-size: 2.1rem;
+    font-size: 2rem;
   }
   @include size(sm){
     font-size: 2.58rem;
@@ -62,6 +71,10 @@
 }
 .menu__i{
   padding: 15px 20px;
+
+  @include size(md){
+    font-size: 18px;
+  }
 
   &:hover{
     background-color: #58B0B1;
@@ -133,7 +146,7 @@
   font-size: 18px;
   line-height: 23px;
   text-align: center;
-
+  color: #000;
   
   @include size(xs){
     width: 90%;
