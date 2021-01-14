@@ -1,10 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+app.use(cookieParser());
+app.use(passport.initialize());
 
 app.use('/auth', require('./auth/registration'));
 

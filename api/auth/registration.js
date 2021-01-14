@@ -1,8 +1,9 @@
 const { Router } = require('express');
 const { MongoClient } = require('mongodb');
+const authMiddleware = require('../../middleware/auth');
 const router = Router();
 
-router.use('/registration', (req, res) => {
+router.use('/registration', authMiddleware, (req, res) => {
   const regexp = /^[a-zA-Zа-яёА-ЯЁ]*$/;
   const {
     name,

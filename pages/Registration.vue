@@ -262,7 +262,7 @@ export default {
 
       this.$axios.post('/api/auth/registration', this.formSet)
         .then(res => console.log(res))
-        .catch(error => alert(error.response.data));
+        .catch(error => console.log(error.response.data));
     },
 
 

@@ -1,0 +1,1 @@
+module.exports.JWT = 'SuperSlojniyJWT-3123123123123';
