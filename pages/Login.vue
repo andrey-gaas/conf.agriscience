@@ -14,10 +14,37 @@
             <div class="p-4">
               <mdb-input class="my-0" size="sm"
                 :label="$t('reg_email')"
+                v-model="formSet.email"
               />
+                <span class="red-text"
+                  v-if="(!this.$v.formSet.email.required && this.$v.formSet.email.$dirty)"
+                >
+                  {{$t('reg_empty_email_field_error')}}
+                </span>
+                <span class="red-text"
+                  v-else-if="(!this.$v.formSet.email.email && this.$v.formSet.email.$dirty)"
+                >
+                  {{$t('reg_invalid_email_error')}}
+                </span>
               <mdb-input class="mt-4 mb-0" type='password' size="sm"
-                :label="$t('reg_password')" 
+                :label="$t('reg_password')"
+                v-model="formSet.password"
               />
+                <span class="red-text"
+                  v-if="(!this.$v.formSet.password.required && this.$v.formSet.password.$dirty)"
+                >
+                  {{$t('reg_empty_password_field_error')}}
+                </span>
+                <span class="red-text"
+                  v-else-if="(!this.$v.formSet.password.minLength && this.$v.formSet.password.$dirty)"
+                >
+                  {{$tc('reg_length_password_error', 1, { count: $v.formSet.password.$params.minLength.min })}}
+                </span>
+                <span class="red-text"
+                  v-else-if="(!this.$v.formSet.password.passwordValid && this.$v.formSet.password.$dirty)"
+                >
+                  {{$t('reg_invalid_password_error')}}
+                </span>
               <div>
                 <mdb-btn class="mt-4 mb-0" type="submit"
                   color='primary'
@@ -42,15 +69,9 @@
 import { RU, EN } from '@/constants/language';
 import {localeRout} from '@/assets/utils'
 
-import { helpers } from 'vuelidate/lib/validators'
+
+import { helpers, email, minLength, required } from 'vuelidate/lib/validators'
 import { mdbContainer, mdbInput,  mdbBtn } from 'mdbvue';
-//Валидатор для русского алфавита
-const alphaValid = helpers.regex('alpha', /^[a-zA-Zа-яёА-ЯЁ]*$/)
-//Валидатор истенности
-const isBoolean = helpers.withParams(
-  { type: 'isTrue' },
-  v => v
-)
 //Валидатор пароля
 const passwordValid = helpers.regex('alpha', /^[a-zA-Z0-9]*$/)
 
@@ -60,18 +81,35 @@ export default {
   layout: 'EmptyLayout',
   data: () => ({
     RU, EN,
-
+    formSet: {
+      email: '',
+      password: '',
+    },
   }),
   computed:{
     
   },
   validations:{
-    
+    formSet: {
+      email: {email, required},
+      password: {
+        required,
+        minLength: minLength(6),
+        passwordValid,
+      },
+    },
   },
   methods:{
     localeRout,
     formSubmit(){
-      console.log('LOGIN');
+      this.$v.formSet.$touch();
+      if(this.$v.formSet.$invalid){
+        return;
+      }
+
+      this.$axios.post('/api/auth/login', this.formSet)
+        .then(res => console.log(res))
+        .catch(error => alert(error.response.data));
     },
   },
   components:{

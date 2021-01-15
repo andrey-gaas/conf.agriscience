@@ -23,7 +23,7 @@ app.use(session({
   saveUninitialized: false,
 }));
 
-app.use('/auth', require('./auth/registration'));
+app.use('/auth', require('./auth'));
 
 if (require.main === module) {
   const port = 3001
