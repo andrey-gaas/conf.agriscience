@@ -11,7 +11,7 @@
             @keypress.enter.prevent
           >
             <div class="blue darken-1 px-4 py-3">
-              <h2 class="form__title mb-0  white-text"><strong>{{$t('reg_readerRegistrationCard')}}</strong></h2>
+              <h2 class="form__title mb-0  white-text"><strong>Изменине данных профиляы</strong></h2>
             </div>
             <div class="pt-4 pb-4 px-4">
               <mdb-input class="my-0" size="sm"
@@ -116,62 +116,21 @@
                 >
                   {{$t('reg_invalid_telephone_error')}}
                 </span>
-              <mdb-input class="mt-4 mb-0" type='email' size="sm" 
-                :label="$t('reg_email')" 
-                v-model="formSet.email" 
-                @blur="saveInLocalStorage()"
-                :wrapperClass="(this.$v.formSet.email.$invalid && this.$v.formSet.email.$dirty) ? 'invalid' : '' "
-              />
-                <span class="red-text"
-                  v-if="(!this.$v.formSet.email.required && this.$v.formSet.email.$dirty)"
-                >
-                  {{$t('reg_empty_email_field_error')}}
-                </span>
-                <span class="red-text"
-                  v-else-if="(!this.$v.formSet.email.email && this.$v.formSet.email.$dirty)"
-                >
-                  {{$t('reg_invalid_email_error')}}
-                </span>
-              <mdb-input class="mt-4 mb-0" type='password' size="sm"
-                :label="$t('reg_password')" 
-                v-model="formSet.password"
-                :wrapperClass="(this.$v.formSet.password.$invalid && this.$v.formSet.password.$dirty) ? 'invalid' : '' "
-              />
-                <span class="red-text"
-                  v-if="(!this.$v.formSet.password.required && this.$v.formSet.password.$dirty)"
-                >
-                  {{$t('reg_empty_password_field_error')}}
-                </span>
-                <span class="red-text"
-                  v-else-if="(!this.$v.formSet.password.minLength && this.$v.formSet.password.$dirty)"
-                >
-                  {{$tc('reg_length_password_error', 1, { count: $v.formSet.password.$params.minLength.min })}}
-                </span>
-                <span class="red-text"
-                  v-else-if="(!this.$v.formSet.password.passwordValid && this.$v.formSet.password.$dirty)"
-                >
-                  {{$t('reg_invalid_password_error')}}
-                </span>
-              <div class="custom-control custom-checkbox mt-4 mb-0">
-                <input type="checkbox" class="custom-control-input" id="defaultUnchecked" v-model="formSet.isConsent"
-                  @blur="saveInLocalStorage()"
-                >
-                <label class="custom-control-label" for="defaultUnchecked">{{$t('reg_consent')}}</label>
-              </div>
-              <span class="red-text"
-                v-if="(!this.$v.formSet.isConsent.isBoolean && this.$v.formSet.password.$dirty)"
-              >
-                {{$t('reg_consent_required')}}
-              </span>
+                <mdb-input type="textarea" 
+                  :label="'О себе'" 
+                  :rows="5" 
+                  v-model="aboutMe"
+                  @focus="saveInLocalStorage()"
+                />
               <div>
                 <mdb-btn class="mt-4 mb-0" type="submit"
                   color='primary'
                   :class="{'btn-light-blue':this.$v.formSet.$invalid , 'btn-primary':!this.$v.formSet.$invalid }"
-                >{{$t('main_cardreg_register')}}</mdb-btn>
-                <nuxt-link :to="localeRout('/login')" 
+                >Сохранить изменения</mdb-btn>
+                <nuxt-link :to="localeRout('/personarea')" 
                   class="mt-4 mb-0 btn btn-primary text-decoration-none ripple-parent btn-outline-primary text-white"
                 >
-                  {{$t('log_login')}}
+                  Отмена
                 </nuxt-link>
               </div>
             </div>
@@ -213,12 +172,10 @@ export default {
       organization: '',
       position: '',
       place: '',
-      email: '',
       telephone: '',
-      password: '',
-      isConsent: '',
       locality: '',
     },
+    aboutMe:'',
     ymapSettings:{
       apiKey: '0b996b3e-08d1-4eb5-87dd-edff5bcbeff7',
       lang: 'ru_RU',
@@ -237,14 +194,7 @@ export default {
       organization: {required},
       position: {required},
       place: {required},
-      email: {email, required},
       telephone: {numeric, required},
-      password: {
-        required,
-        minLength: minLength(6),
-        passwordValid
-      },
-      isConsent:{isBoolean},
       locality:{isBoolean}
     }
   },
@@ -257,28 +207,22 @@ export default {
       if(this.$v.formSet.$invalid){
         return
       }
-      //this.clearLacalStorage()
+      this.clearLacalStorage()
       
       this.$router.push('/personarea')
       this.$store.commit('setPersonData', this.formSet);
-
-      // this.$axios.post('/api/auth/registration', this.formSet)
-      //   .then(res => console.log(res))
-      //   .catch(error => console.log(error.response.data));
+      this.$store.commit('setPersonAboutMe', {aboutMe:this.aboutMe, locale:this.$i18n.locale});
     },
-
-
-
-
-
 
     saveInLocalStorage(){
       //Сохроняем данные в localStorage,
       //Чтобы не потерять их если что-то пойдёт не так
-      localStorage.formSet = JSON.stringify(this.formSet)
+      localStorage.editProfile = JSON.stringify(this.formSet)
+      localStorage.aboutMe = JSON.stringify(this.aboutMe)
     },
     clearLacalStorage(){
-      localStorage.formSet = ''
+      localStorage.editProfile = ''
+      localStorage.aboutMe = ''
     },
     
     async validYmap(){
@@ -321,8 +265,14 @@ export default {
     }
   },
   async mounted(){
-    //Загружаем сохраннёные введёны данные
-    if(localStorage.formSet) this.formSet = JSON.parse(localStorage.formSet)
+    //Загружаем данные
+    this.formSet = {...this.formSet ,...this.$store.getters.getPersonData}
+    if(this.$i18n.locale == 'ru'){
+      this.aboutMe = this.$store.getters.getPersonAboutMeRu
+    }else{
+      this.aboutMe = this.$store.getters.getPersonAboutMeEn
+    }
+    
     //Инициализируем лоадер яндекс карт
     await loadYmap({ ...this.ymapSettings, debug: true })
     ymaps.ready(this.ymapInit);

@@ -5,7 +5,7 @@
         <h2 class="mb-0  white-text"><strong>Личный кабинет</strong></h2>
       </mdb-row>
       <mdb-row class="m-0" p='2'>
-        <mdb-row class="mb-4">
+        <mdb-row class="mb-4 col-12 mx-0 px-0">
           <mdb-col col="12" sm='12' md='6' lg='6' class='mb-sm-4 mb-4 mb-lg-0 mb-md-0'>
             <div class="person__img">
               <div class="person-card_img rounded-circle shadow-lg my-3 mx-0" style=""></div>
@@ -29,27 +29,42 @@
             <mdb-btn class="m-0"
               color='primary'
             >{{$t('personarea_download')}}</mdb-btn>
+            <h4 class="mb-2 mt-4">Профиль</h4>
+            <nuxt-link :to="localeRout('/editprofile')" 
+              class="mt-0 mb-0 mx-0 btn btn-primary text-decoration-none ripple-parent text-white"
+            >
+              Редактировать профиль
+            </nuxt-link>
+            
           </mdb-col>
           <mdb-col col="12" sm='12' md='6' lg='6' class=''>
-            
-            <h4 class="mt-4">Доклад</h4>
+            <mdb-tbl responsiveSm bordered>
+              <mdb-tbl-head color="blue" textWhite class="rounded">
+                <tr>
+                  <th colspan="2"><h5 class="mb-0">Заявки на доклад</h5></th>
+                </tr>
+              </mdb-tbl-head>
+              <mdb-tbl-body>
+                <tr>
+                  <th>Название Доклада</th>
+                  <th>Редактировать</th>
+                </tr>
+                <tr
+                  v-for="(item, key) in personReport" :key='key'
+                >
+                  <th>{{item.title}}</th>
+                  <th>{{item.linc}}</th>
+                </tr>
+              </mdb-tbl-body>
+            </mdb-tbl>
             <nuxt-link :to="localeRout('/login')" 
               class="mt-0 mb-4 mx-0 btn btn-primary text-decoration-none ripple-parent btn-outline-primary text-white"
             >
-              Подать заявку на доклад
+              Подать заявку
             </nuxt-link>
-            <span>Профиль</span>
-            <mdb-btn-group>
-              <mdb-btn class="m-0"
-                color='primary'
-              >Редактировать профиль</mdb-btn>
-              <mdb-btn class="m-0"
-                color='primary'
-              >Добавить о себе</mdb-btn>
-            </mdb-btn-group>
           </mdb-col>
         </mdb-row>
-        <mdb-row class="mb-4">
+        <mdb-row class="mb-0 col-12 mx-0 px-0" >
           <mdb-col col="12" sm='12' md='6' lg='6' class=''>
             <mdb-tbl responsiveSm>
               <mdb-tbl-head color="blue" textWhite class="rounded">
@@ -64,10 +79,17 @@
                   <th>{{$t('personarea_'+key+'_'+RU)+':'}}</th>
                   <th>{{item}}</th>
                 </tr>
+                <tr>
+                  <th>О себе</th>
+                  <th v-if="personAboutMeRu != ''">{{personAboutMeRu}}</th>
+                  <th v-else class="p-0">
+                    <mdb-btn class="m-1 px-3 py-2" color='primary'>Добавить о себе</mdb-btn>
+                  </th>
+                </tr>
               </mdb-tbl-body>
             </mdb-tbl>
           </mdb-col>
-          <mdb-col col="12" sm='12' md='6' lg='6' class=''>
+          <mdb-col col="12" sm='12' md='6' lg='6' p='' class=''>
             <mdb-tbl responsiveSm>
               <mdb-tbl-head color="blue" textWhite>
                 <tr>
@@ -80,6 +102,13 @@
                 >
                   <th>{{$t('personarea_'+key+'_'+EN)+':'}}</th>
                   <th>{{item}}</th>
+                </tr>
+                <tr>
+                  <th>О себе</th>
+                  <th v-if="personAboutMeEn != ''">{{personAboutMeEn}}</th>
+                  <th v-else class="p-0">
+                    <mdb-btn class="m-1 px-3 py-2" color='primary'>Добавить о себе</mdb-btn>
+                  </th>
                 </tr>
               </mdb-tbl-body>
             </mdb-tbl>
@@ -106,8 +135,11 @@ export default {
   data: () => ({
     RU, EN,
     personData:{},
+    personAboutMeRu:'',
+    personAboutMeEn:'',
     personDataRu:[],
     personDataEn:[],
+    personReport:[{title:'Нет активных заявок', linck:''}],
     fileName: '',
 
   }),
@@ -115,18 +147,10 @@ export default {
     
   },
   created(){
-    //console.log(this.$store.getters.getPersonData);
-    this.personData = this.$store.getters.getPersonData
-    delete this.personData.locality; 
-    delete this.personData.isConsent;
-    delete this.personData.password;
-    //this.setPersonDate()
-
-    this.fileName = this.$t('personarea_select_file')
+    this.setData()
     
   },
   mounted(){
-    
     
   },
   validations:{
@@ -139,29 +163,26 @@ export default {
     },
     setPersonDate(){
       let personData = this.$store.getters.getPersonData
-      let personDataKey = Object.keys(personData)
-  
-
       delete personData.locality; 
       delete personData.isConsent;
       delete personData.password;
 
-      personDataKey.map(key =>{
-        this.personDataRu.push({
-          title: this.$t('reg_'+key, RU),
-          val: personData[key]
-        })
-        this.personDataEn.push({
-          title: this.$t('reg_'+key, EN),
-          val: personData[key]
-        })
-      })
+    },
+    setAboutMe(){
+      this.$store.commit('setPersonAboutMe', this.personAboutMe);
+    },
+    setData(){
+      //console.log(this.$store.getters.getPersonData);
+      this.personAboutMeRu = this.$store.getters.getPersonAboutMeRu
+      this.personAboutMeEn = this.$store.getters.getPersonAboutMeEn
+      this.personData = this.$store.getters.getPersonData
+      delete this.personData.locality; 
+      delete this.personData.isConsent;
+      delete this.personData.password;
+      //this.setPersonDate()
 
-      
-      
-
-
-    }
+      this.fileName = this.$t('personarea_select_file')
+    },
   },
   components:{
     mdbContainer, mdbInput, mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody
