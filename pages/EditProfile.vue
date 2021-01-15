@@ -11,13 +11,12 @@
             @keypress.enter.prevent
           >
             <div class="blue darken-1 px-4 py-3">
-              <h2 class="form__title mb-0  white-text"><strong>Изменине данных профиляы</strong></h2>
+              <h2 class="form__title mb-0  white-text"><strong>{{$t('editprofile_modifying_profile')}}</strong></h2>
             </div>
             <div class="pt-4 pb-4 px-4">
               <mdb-input class="my-0" size="sm"
                 v-model="formSet.surname"
                 :label="$t('reg_surname')"
-                @blur="saveInLocalStorage()"
                 :wrapperClass="(this.$v.formSet.surname.$invalid && this.$v.formSet.surname.$dirty) ? 'invalid' : '' "
                 
               />
@@ -34,7 +33,6 @@
               <mdb-input class="mt-4 mb-0 " size="sm" 
                 :label="$t('reg_name')" 
                 v-model="formSet.name"
-                @blur="saveInLocalStorage()"
                 :wrapperClass="(this.$v.formSet.name.$invalid && this.$v.formSet.name.$dirty) ? 'invalid' : '' "
               />
                 <span class="red-text"
@@ -50,7 +48,6 @@
               <mdb-input class="mt-4 mb-0" size="sm"
                 :label="$t('reg_patronymic')" 
                 v-model="formSet.patronymic"
-                @blur="saveInLocalStorage()"
                 :wrapperClass="(this.$v.formSet.patronymic.$invalid && this.$v.formSet.patronymic.$dirty) ? 'invalid' : '' "
               />
                 <span class="red-text"
@@ -62,7 +59,6 @@
               <mdb-input class="mt-4 mb-0" size="sm" 
                 :label="$t('reg_organization')" 
                 v-model="formSet.organization"
-                @blur="saveInLocalStorage()"
                 :wrapperClass="(this.$v.formSet.organization.$invalid && this.$v.formSet.organization.$dirty) ? 'invalid' : '' "
               />
                 <span class="red-text"
@@ -73,7 +69,6 @@
               <mdb-input class="mt-4 mb-0" size="sm" 
                 :label="$t('reg_position')" 
                 v-model="formSet.position"
-                @blur="saveInLocalStorage()"
                 :wrapperClass="(this.$v.formSet.position.$invalid && this.$v.formSet.position.$dirty) ? 'invalid' : '' "
               />
                 <span class="red-text"
@@ -85,7 +80,7 @@
               <mdb-input class="mt-4 mb-0" id='idPlace' size="sm"
                 :label="$t('reg_country_city')"
                 v-model="formSet.place"
-                @blur="saveInLocalStorage(), setPlase()"
+                @blur="setPlase()"
                 :wrapperClass="((this.$v.formSet.place.$invalid && this.$v.formSet.place.$dirty) || (!this.$v.formSet.locality.isBoolean && this.$v.formSet.locality.$dirty)) ? 'invalid' : '' "
                 ref="suggest"
               />
@@ -103,7 +98,6 @@
               <mdb-input class="mt-4 mb-0" size="sm" 
                 :label="$t('reg_telephone')"
                 v-model="formSet.telephone"
-                @blur="saveInLocalStorage()"
                 :wrapperClass="(this.$v.formSet.telephone.$invalid && this.$v.formSet.telephone.$dirty) ? 'invalid' : '' "
               />
                 <span class="red-text"
@@ -117,20 +111,19 @@
                   {{$t('reg_invalid_telephone_error')}}
                 </span>
                 <mdb-input type="textarea" 
-                  :label="'О себе'" 
+                  :label="$t('editprofile_about_me')" 
                   :rows="5" 
                   v-model="aboutMe"
-                  @focus="saveInLocalStorage()"
                 />
               <div>
                 <mdb-btn class="mt-4 mb-0" type="submit"
                   color='primary'
                   :class="{'btn-light-blue':this.$v.formSet.$invalid , 'btn-primary':!this.$v.formSet.$invalid }"
-                >Сохранить изменения</mdb-btn>
+                >{{$t('editprofile_save_changes')}}</mdb-btn>
                 <nuxt-link :to="localeRout('/personarea')" 
                   class="mt-4 mb-0 btn btn-primary text-decoration-none ripple-parent btn-outline-primary text-white"
                 >
-                  Отмена
+                  {{$t('editprofile_cancel')}}
                 </nuxt-link>
               </div>
             </div>
@@ -209,20 +202,9 @@ export default {
       }
       this.clearLacalStorage()
       
-      this.$router.push('/personarea')
+      this.$router.push(this.localeRout('/personarea'))
       this.$store.commit('setPersonData', this.formSet);
       this.$store.commit('setPersonAboutMe', {aboutMe:this.aboutMe, locale:this.$i18n.locale});
-    },
-
-    saveInLocalStorage(){
-      //Сохроняем данные в localStorage,
-      //Чтобы не потерять их если что-то пойдёт не так
-      localStorage.editProfile = JSON.stringify(this.formSet)
-      localStorage.aboutMe = JSON.stringify(this.aboutMe)
-    },
-    clearLacalStorage(){
-      localStorage.editProfile = ''
-      localStorage.aboutMe = ''
     },
     
     async validYmap(){

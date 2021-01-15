@@ -2,7 +2,7 @@
   <div class="d-flex align-items-center blue lighten-5 min-h-100 flex-grow-1">
     <mdb-container class="rounded-lg grey lighten-5 z-depth-1 my-0 my-sm-1 my-md-1 my-lg-1" p="0" >
       <mdb-row class="m-0 bg-primary" p='3'>
-        <h2 class="mb-0  white-text"><strong>Личный кабинет</strong></h2>
+        <h2 class="mb-0  white-text"><strong>{{$t('personarea_person_area')}}</strong></h2>
       </mdb-row>
       <mdb-row class="m-0" p='2'>
         <mdb-row class="mb-4 col-12 mx-0 px-0">
@@ -29,11 +29,11 @@
             <mdb-btn class="m-0"
               color='primary'
             >{{$t('personarea_download')}}</mdb-btn>
-            <h4 class="mb-2 mt-4">Профиль</h4>
+            <h4 class="mb-2 mt-4">{{$t('personarea_profile')}}</h4>
             <nuxt-link :to="localeRout('/editprofile')" 
               class="mt-0 mb-0 mx-0 btn btn-primary text-decoration-none ripple-parent text-white"
             >
-              Редактировать профиль
+              {{$t('personarea_edit_profile')}}
             </nuxt-link>
             
           </mdb-col>
@@ -41,13 +41,14 @@
             <mdb-tbl responsiveSm bordered>
               <mdb-tbl-head color="blue" textWhite class="rounded">
                 <tr>
-                  <th colspan="2"><h5 class="mb-0">Заявки на доклад</h5></th>
+                  <th colspan="4"><h5 class="mb-0">{{$t('personarea_report_requests')}}</h5></th>
                 </tr>
               </mdb-tbl-head>
               <mdb-tbl-body>
                 <tr>
-                  <th>Название Доклада</th>
-                  <th>Редактировать</th>
+                  <th>{{$t('personarea_title_report')}}</th>
+                  <th>{{$t('personarea_edit')}}</th>
+                  <th>{{$t('personarea_status')}}</th>
                 </tr>
                 <tr
                   v-for="(item, key) in personReport" :key='key'
@@ -57,15 +58,17 @@
                 </tr>
               </mdb-tbl-body>
             </mdb-tbl>
-            <nuxt-link :to="localeRout('/login')" 
+            <nuxt-link :to="localeRout('/addreport')" 
               class="mt-0 mb-4 mx-0 btn btn-primary text-decoration-none ripple-parent btn-outline-primary text-white"
             >
-              Подать заявку
+              {{$t('personarea_apply')}}
             </nuxt-link>
           </mdb-col>
         </mdb-row>
         <mdb-row class="mb-0 col-12 mx-0 px-0" >
-          <mdb-col col="12" sm='12' md='6' lg='6' class=''>
+          <mdb-col col="12" sm='12' md='6' lg='6' class=''
+            :class="{'order-3':($i18n.locale == EN)}"
+          >
             <mdb-tbl responsiveSm>
               <mdb-tbl-head color="blue" textWhite class="rounded">
                 <tr>
@@ -80,10 +83,18 @@
                   <th>{{item}}</th>
                 </tr>
                 <tr>
-                  <th>О себе</th>
+                  <th>{{$t('personarea_about_me_ru')}}</th>
                   <th v-if="personAboutMeRu != ''">{{personAboutMeRu}}</th>
+                  <th v-else-if="isEditAboutMeRu">
+                    <mdb-input type="textarea" class="m-0 p-0" outline
+                      :rows="5" 
+                      v-model="aboutMeRu"
+                      ref='textareaRu'
+                    />
+                    <mdb-btn class="m-1 px-3 py-2" color='primary' @click="setPersonAboutMe(RU)">{{$t('personarea_save_ru')}}</mdb-btn>
+                  </th>
                   <th v-else class="p-0">
-                    <mdb-btn class="m-1 px-3 py-2" color='primary'>Добавить о себе</mdb-btn>
+                    <mdb-btn class="m-1 px-3 py-2" color='primary' @click="startEditAboutMe(RU)">{{$t('personarea_add_about_me_ru')}}</mdb-btn>
                   </th>
                 </tr>
               </mdb-tbl-body>
@@ -104,10 +115,18 @@
                   <th>{{item}}</th>
                 </tr>
                 <tr>
-                  <th>О себе</th>
+                  <th>{{$t('personarea_about_me_en')}}</th>
                   <th v-if="personAboutMeEn != ''">{{personAboutMeEn}}</th>
+                  <th v-else-if="isEditAboutMeEn">
+                    <mdb-input type="textarea" class="m-0 p-0" outline
+                      :rows="5" 
+                      v-model="aboutMeEn"
+                      ref='textareaEn'
+                    />
+                    <mdb-btn class="m-1 px-3 py-2" color='primary' @click="setPersonAboutMe(EN)">{{$t('personarea_save_en')}}</mdb-btn>
+                  </th>
                   <th v-else class="p-0">
-                    <mdb-btn class="m-1 px-3 py-2" color='primary'>Добавить о себе</mdb-btn>
+                    <mdb-btn class="m-1 px-3 py-2" color='primary' @click="startEditAboutMe(EN)">{{$t('personarea_add_about_me_en')}}</mdb-btn>
                   </th>
                 </tr>
               </mdb-tbl-body>
@@ -141,6 +160,10 @@ export default {
     personDataEn:[],
     personReport:[{title:'Нет активных заявок', linck:''}],
     fileName: '',
+    isEditAboutMeRu: false,
+    isEditAboutMeEn: false,
+    aboutMeRu:'',
+    aboutMeEn:'',
 
   }),
   computed:{
@@ -148,7 +171,7 @@ export default {
   },
   created(){
     this.setData()
-    
+    this.setReport()
   },
   mounted(){
     
@@ -158,6 +181,9 @@ export default {
   },
   methods:{
     localeRout,
+    setReport(){
+      this.personReport[0].title = this.$t('personarea_no_apply')
+    },
     setFileName(){
       this.fileName = this.$refs.fileInput.files[0].name
     },
@@ -183,6 +209,34 @@ export default {
 
       this.fileName = this.$t('personarea_select_file')
     },
+    startEditAboutMe(loc){
+      if(loc == 'ru'){
+        this.isEditAboutMeRu = true
+        
+        setTimeout(() => {
+          this.$refs.textareaRu.focus()
+        }, 1);
+      }
+      else{ 
+        this.isEditAboutMeEn = true
+        
+        setTimeout(() => {
+          this.$refs.textareaEn.focus()
+        }, 1);
+        
+      }
+    },
+    setPersonAboutMe(loc){
+      if(loc == 'ru'){ this.personAboutMeRu = this.aboutMeRu
+        this.$store.commit('setPersonAboutMe', {aboutMe: this.aboutMeRu, locale:loc});
+        this.isEditAboutMeRu = false
+      }
+      else{ this.personAboutMeEn = this.aboutMeEn
+        this.$store.commit('setPersonAboutMe', {aboutMe: this.aboutMeEn, locale:loc});
+        this.isEditAboutMeEn = false
+      }
+      
+    }
   },
   components:{
     mdbContainer, mdbInput, mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody
