@@ -9,14 +9,11 @@ export const mutations = {
     state.personData = userData
   },
   setPersonAboutMe(state, data){
-    console.log(data);
     if(data.locale == 'ru'){
       state.personAboutMeRu = data.aboutMe
     }else{
       state.personAboutMeEn = data.aboutMe
     }
-
-    console.log(state);
     
   },
 }
