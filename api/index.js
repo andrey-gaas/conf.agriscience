@@ -1,14 +1,27 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
 const passport = require('passport');
-const cookieParser = require('cookie-parser');
 
+require('./passport');
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(session({
+  secret: 'A--8grg43#f-SFfV4g-kyu$a',
+  store: new FileStore(),
+  cookie: {
+    path: '/',
+    httpOnly: true,
+    maxAge: 60 * 60 * 1000,
+  },
+  resave: false,
+  saveUninitialized: false,
+}));
 
 app.use('/auth', require('./auth/registration'));
 

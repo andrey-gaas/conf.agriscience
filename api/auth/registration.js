@@ -1,10 +1,8 @@
 const { Router } = require('express');
-const { MongoClient } = require('mongodb');
-const authMiddleware = require('../../middleware/auth');
+const mongoClient = require('../mongoClient');
 const router = Router();
 
-router.use('/registration', authMiddleware, (req, res) => {
-  const regexp = /^[a-zA-Zа-яёА-ЯЁ]*$/;
+router.use('/registration', (req, res) => {
   const {
     name,
     surname,
@@ -29,10 +27,6 @@ router.use('/registration', authMiddleware, (req, res) => {
     password,
   };
 
-  const mongoClient = new MongoClient(
-    'mongodb://svc:hf^gjhd7jas@mongodb:27017/bibcongress',
-    {useNewUrlParser: true, useUnifiedTopology: true }
-  );
   mongoClient.connect(function(err, database) {
     if (err) {
       res.status(500).send('Server Error');
