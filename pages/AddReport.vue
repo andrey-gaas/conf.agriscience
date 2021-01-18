@@ -59,6 +59,7 @@
             <label for="Annotations" class="h5">Аннотации</label>
             <mdb-input outline type="textarea" rows="5" id='Annotations' class='mt-0'/>
           </div>
+          
         </mdb-col>
         <mdb-col col="12" sm='12' md='6' lg='6' class=''>
           23
@@ -93,7 +94,8 @@ import { RU, EN } from '@/constants/language';
 import {localeRout} from '@/assets/utils'
 
 import FormEditAuthor from '@/components/FormEditAuthor';
-import { mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody } from 'mdbvue';
+// import { BIcon, BIconArrowUp, BIconArchive,  } from 'bootstrap-vue'
+import { mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody, mdbIcon  } from 'mdbvue';
 
 
 
@@ -182,7 +184,7 @@ export default {
     }
   },
   components:{
-    FormEditAuthor,
+    FormEditAuthor,mdbIcon ,
     mdbContainer, mdbInput, mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody
   }
 };
