@@ -58,7 +58,9 @@
                 </tr>
               </mdb-tbl-body>
             </mdb-tbl>
-            <nuxt-link :to="localeRout('/addreport')" 
+            <!-- Поменять на кнопку -->
+            <nuxt-link :to="localeRout('/addreport')"
+              @click="addReport()"
               class="mt-0 mb-4 mx-0 btn btn-primary text-decoration-none ripple-parent btn-outline-primary text-white"
             >
               {{$t('personarea_apply')}}
@@ -181,6 +183,24 @@ export default {
   },
   methods:{
     localeRout,
+    addReport(){
+      console.log('httlosadf');
+      const speacerPerson = {
+        surname:this.personData.surname,
+        name:this.personData.name,
+        patronymic:this.personData.patronymic,
+        position:this.personData.position,
+        organization:this.personData.organization,
+        email:this.personData.email,
+        num: 0,
+        isSpeaker: true,
+      }
+      //this.$store.commit('addSpeaker', speacerPerson);
+      //this.$store.commit('logState');
+    },
+    editReport(){
+
+    },
     setReport(){
       this.personReport[0].title = this.$t('personarea_no_apply')
     },

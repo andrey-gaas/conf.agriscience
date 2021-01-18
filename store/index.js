@@ -82,6 +82,9 @@ export const mutations = {
   },
   deletSpeaker(state, ind){
     state.speakerList.splice(ind, 1)
+  },
+  logState(state){
+    console.log(state)
   }
 }
 

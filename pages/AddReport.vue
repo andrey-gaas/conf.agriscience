@@ -19,7 +19,7 @@
                 <th>№</th>
                 <th>ФИО</th>
                 <th>Док</th>
-                <th>Пор.</th>
+                <th class='m-0 p-0'></th>
                 <th>Ред./ Удал.</th>
               </tr>
               <tr
@@ -36,12 +36,22 @@
                   </div>
                 </th>
                 <th class="p-0">
-                  <mdb-btn class="m-0 px-1 py-1" color='primary' @click="upAuthor(ind)">Up</mdb-btn>
-                  <mdb-btn class="m-0 px-1 py-1" color='primary' @click="downAuthor(ind)">Down</mdb-btn>
+                  <mdb-btn-group vertical>
+                    <mdb-btn class="m-0 px-2 py-1" color='primary' @click="upAuthor(ind)">
+                      <BIconCaretUpFill/>
+                    </mdb-btn>
+                    <mdb-btn class="m-0 px-2 py-1" color='primary' @click="downAuthor(ind)">
+                      <BIconCaretDownFill/>
+                    </mdb-btn>
+                  </mdb-btn-group>
                 </th>
                 <th class="p-0">
-                  <mdb-btn class="m-0 px-1 py-1" color='primary' @click="startEditAuthor(ind)">Ed</mdb-btn>
-                  <mdb-btn class="m-0 px-1 py-1" color='primary' @click="deletAuthor(ind)">Dl</mdb-btn>
+                  <mdb-btn class="m-0 px-1 py-1" color='primary' @click="startEditAuthor(ind)">
+                    <BIconPencilSquare/>
+                  </mdb-btn>
+                  <mdb-btn class="m-0 px-1 py-1" color='primary' @click="deletAuthor(ind)">
+                    <BIconTrashFill/>
+                  </mdb-btn>
                 </th>
               </tr>
               <tr>
@@ -57,7 +67,7 @@
           </div>
           <div class="form-group">
             <label for="Annotations" class="h5">Аннотации</label>
-            <mdb-input outline type="textarea" rows="5" id='Annotations' class='mt-0'/>
+            <mdb-input outline type="textarea" :rows='5' id='Annotations' class='mt-0'/>
           </div>
           
         </mdb-col>
@@ -94,7 +104,7 @@ import { RU, EN } from '@/constants/language';
 import {localeRout} from '@/assets/utils'
 
 import FormEditAuthor from '@/components/FormEditAuthor';
-// import { BIcon, BIconArrowUp, BIconArchive,  } from 'bootstrap-vue'
+import { BIcon, BIconCaretDownFill, BIconCaretUpFill, BIconTrashFill, BIconPencilSquare  } from 'bootstrap-vue'
 import { mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody, mdbIcon  } from 'mdbvue';
 
 
@@ -184,7 +194,8 @@ export default {
     }
   },
   components:{
-    FormEditAuthor,mdbIcon ,
+    FormEditAuthor, 
+    BIcon, BIconCaretDownFill, BIconCaretUpFill, BIconTrashFill, BIconPencilSquare,
     mdbContainer, mdbInput, mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody
   }
 };
@@ -196,5 +207,6 @@ export default {
   width: 0;
   padding: 0;
   margin: 0;
+  z-index: 1010;
 }
 </style>
