@@ -60,6 +60,7 @@
           </form>
         </div>
       </div>
+      <button @click="testFetch">Тестовый запрос</button>
     </mdb-container>
   </div>
 </template>
@@ -111,6 +112,11 @@ export default {
         .then(res => console.log(res))
         .catch(error => alert(error.response.data));
     },
+    testFetch() {
+      this.$axios.get('/api/test/')
+        .then(res => console.log(res))
+        .catch(error => console.log(error.response.data));
+    }
   },
   components:{
     mdbContainer, mdbInput,  mdbBtn

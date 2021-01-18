@@ -24,6 +24,7 @@ app.use(session({
 }));
 
 app.use('/auth', require('./auth'));
+app.use('/test', require('./test'));
 
 if (require.main === module) {
   const port = 3001
