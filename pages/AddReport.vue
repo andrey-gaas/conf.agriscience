@@ -18,9 +18,9 @@
               <tr>
                 <th>№</th>
                 <th>ФИО</th>
-                <th>Докладчик</th>
-                <th>Изм. пор.</th>
-                <th>Ред./Удал.</th>
+                <th>Док</th>
+                <th>Пор.</th>
+                <th>Ред./ Удал.</th>
               </tr>
               <tr
                 v-for="(item, ind) of author" :key='ind'
@@ -46,11 +46,19 @@
               </tr>
               <tr>
                 <th colspan="5" class="p-0">
-                  <mdb-btn class="m-0 px-3 py-2" color='primary' @click="createAuthor(ind)">Добавить автора</mdb-btn>
+                  <mdb-btn class="m-1 px-3 py-2" color='primary' @click="createAuthor()">Добавить автора</mdb-btn>
                 </th>
               </tr>
             </mdb-tbl-body>
           </mdb-tbl>
+          <div class="form-group">
+            <label for="nameReport" class="h5">Название доклада</label>
+            <input type="text" id="nameReport" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="Annotations" class="h5">Аннотации</label>
+            <mdb-input outline type="textarea" rows="5" id='Annotations' class='mt-0'/>
+          </div>
         </mdb-col>
         <mdb-col col="12" sm='12' md='6' lg='6' class=''>
           23
@@ -58,10 +66,23 @@
       </mdb-row>
     </mdb-container>
     <mdb-container
-      v-if="isAuthorCrate"
+      v-if="isAuthorEdit"
+      :class="{editShow: isAuthorEdit}"
     >
       <FormEditAuthor
         :editAuthor='editAuthor'
+        :closeEdit='closeEdit'
+        :textBtn='"Сохранить"'
+      />
+    </mdb-container>
+    <mdb-container
+      v-if="isAuthorCrate"
+      :class="{editShow: isAuthorCrate}"
+    >
+      <FormEditAuthor
+        :editAuthor='crateAuthor'
+        :closeEdit='closeCreate'
+        :textBtn='"Добавить"'
       />
     </mdb-container>
   </div>
@@ -81,45 +102,36 @@ export default {
   layout: 'EmptyLayout',
   data: () => ({
     RU, EN,
-
-    docladchiki:[
-      {
-        sulrname:'Нуждин',
-        name:'Алесей',
-        patronymic:'Иванович',
-        position:'Программист',
-        organization:'ГПТНБ',
-        email:'forsah34@gmail.com',
-      },{
-        sulrname:'Гаас',
-        name:'Андрей',
-        patronymic:'Хэзэвович',
-        position:'Программист',
-        organization:'ГПТНБ',
-        email:'gaasы777@gmail.com',
-      },{
-        sulrname:'Наас',
-        name:'Вндрей',
-        patronymic:'Тэзэвович',
-        position:'Программист',
-        organization:'ГПТНБ',
-        email:'gaaвs777@gmail.com',
-      },{
-        sulrname:'Иаас',
-        name:'Ондрей',
-        patronymic:'Ыэзэвович',
-        position:'Программист',
-        organization:'ГПТНБ',
-        email:'gaaавs777@gmail.com',
-      },
-    ],
     author:[],
     isAuthorCrate: false,
-    editAuthor: {},
+    isAuthorEdit: false,
+    editAuthor: { 
+      surname: '',
+      name: '',
+      patronymic: '',
+      organization: '',
+      position: '',
+      email: '',
+    },
+    crateAuthor: { 
+      surname: '',
+      name: '',
+      patronymic: '',
+      organization: '',
+      position: '',
+      email: '',
+    },
 
   }),
   computed:{
-    
+    speakers(){
+      return this.$store.getters.getSpeakers
+    },
+  },
+  watch:{
+    speakers(){
+      this.setAuthor()
+    }
   },
   created(){
     this.setAuthor()
@@ -132,33 +144,34 @@ export default {
   },
   methods:{
     localeRout,
+    closeEdit(){
+      this.isAuthorEdit = false
+    },
+    closeCreate(){
+      this.isAuthorCrate = false
+    },
     setAuthor(){
-      this.author = this.docladchiki.map((el, ind)=>{
+      
+      this.author = this.speakers.map((el, ind)=>{
         return {
-          DOB: `${el.sulrname} ${el.name[0]}. ${el.patronymic[0]}.`,
-          num: ind,
-          isSpeaker: false,
+          DOB: `${el.surname} ${el.name[0]}. ${el.patronymic[0] ? el.patronymic[0]+'.': ''}`,
+          isSpeaker: el.isSpeaker,
         }
     })},
     startEditAuthor(ind){
-      this.isAuthorCrate = true
-      this.editAuthor = this.docladchiki[ind]
+      const speakers = this.$store.getters.getSpeakers
+      this.editAuthor = speakers[ind]
+      this.isAuthorEdit = true
+      
     },
     deletAuthor(ind){
-      this.author.splice(ind, 1)
+      this.$store.commit('deletSpeaker', ind)
     },
     upAuthor(ind){
-      if(ind == 0) return
-      const el = {...this.author[ind]}
-      this.author.splice(ind-1, 0, el)
-      this.author.splice(ind+1, 1)
+      this.$store.commit('upSpeaker', ind)
     },
     downAuthor(ind){
-      if(ind + 1 == this.author.length) return
-      const el = {...this.author[ind]}
-      //el.DOB = 'cope'+ind
-      this.author.splice(ind+2, 0, el)
-      this.author.splice(ind, 1)
+      this.$store.commit('downSpeaker', ind)
     },
     createAuthor(){
       this.isAuthorCrate = true
@@ -174,3 +187,12 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.editShow{
+  min-width: 0px;
+  width: 0;
+  padding: 0;
+  margin: 0;
+}
+</style>

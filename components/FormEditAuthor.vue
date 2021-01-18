@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-items-center blue lighten-5 min-h-100 flex-grow-1">
+  <div class="wrap__edit-author d-flex align-items-center min-h-100 flex-grow-1">
     <mdb-container class="form grey lighten-5 d-flex justify-content-center rounded-lg overflow-hidden" p="0" m='t5'>
       <div class="d-flex w-100" >
 
@@ -8,7 +8,6 @@
         >
           <form class="needs-validation" novalidate 
             @submit.prevent='formSubmit'
-            @keypress.enter.prevent
           >
             <div class="blue darken-1 px-4 py-3">
               <h2 class="form__title mb-0  white-text"><strong>Докладчик</strong></h2>
@@ -27,7 +26,7 @@
                 <span class="red-text"
                   v-else-if="(!this.$v.formSet.surname.required && this.$v.formSet.surname.$dirty)"
                 >
-                  {{$t('reg_empty_surname_field_error')}}
+                  Укажите фамилию
                 </span>
               <mdb-input class="mt-4 mb-0 " size="sm" 
                 :label="$t('reg_name')" 
@@ -42,7 +41,7 @@
                 <span class="red-text"
                   v-else-if="(!this.$v.formSet.name.required && this.$v.formSet.name.$dirty)"
                 >
-                  {{$t('reg_empty_name_field_error')}}
+                  Укажите имя
                 </span>
               <mdb-input class="mt-4 mb-0" size="sm"
                 :label="$t('reg_patronymic')" 
@@ -77,12 +76,14 @@
                 <mdb-btn class="mt-4 mb-0" type="submit"
                   color='primary'
                   :class="{'btn-light-blue':this.$v.formSet.$invalid , 'btn-primary':!this.$v.formSet.$invalid }"
-                >Сохранить</mdb-btn>
-                <nuxt-link :to="localeRout('/personarea')" 
-                  class="mt-4 mb-0 btn btn-primary text-decoration-none ripple-parent btn-outline-primary text-white"
+                >{{textBtn}}</mdb-btn>
+                <mdb-btn
+                  @click="closeEdit"
+                  outline="primary"
+                  class="mt-4 mb-0"
                 >
                   Отмена
-                </nuxt-link>
+                </mdb-btn>
               </div>
             </div>
           </form>
@@ -106,7 +107,7 @@ const alphaValid = helpers.regex('alpha', /^[a-zA-Zа-яёА-ЯЁ]*$/)
 export default {
   name: "Registration",
   layout: 'EmptyLayout',
-  props: ['editAuthor'],
+  props: ['editAuthor','closeEdit','textBtn'],
   data: () => ({
     step: 1,
     RU, EN,
@@ -117,12 +118,6 @@ export default {
       organization: '',
       position: '',
       email: '',
-    },
-    ymapSettings:{
-      apiKey: '0b996b3e-08d1-4eb5-87dd-edff5bcbeff7',
-      lang: 'ru_RU',
-      coordorder: 'latlong',
-      version: '2.1'
     },
   }),
   computed:{
@@ -139,15 +134,30 @@ export default {
   methods:{
     localeRout,
     formSubmit(){
+      console.log('form');
       this.$v.formSet.$touch()
       if(this.$v.formSet.$invalid){
         return
       }
       
+      if(this.formSet.num != undefined){
+        console.log('set');
+        this.$store.commit('setSpeaker', {speaker:this.formSet, ind: this.formSet.num})
+      }else{
+        console.log('add');
+        this.$store.commit('addSpeaker', this.formSet)
+      }
+      
+      
+      this.closeEdit()
     },
+    
   },
   mounted(){
     
+  },
+  created(){
+    this.formSet = {...this.editAuthor}
   },
   components:{
     mdbContainer, mdbInput, mdbBtn , mdbBtnGroup, mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon
@@ -169,6 +179,16 @@ export default {
   & label{
     color: red !important;
   }
+}
+
+.wrap__edit-author{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 </style>

@@ -17,16 +17,6 @@
               </li>
             </ul>
           </menu>
-          <!-- <mdb-row class='mx-0 menu__row'
-            v-for="(arr, ind ) in menuData" :key="ind"
-          >
-            <mdb-col class=' gggfd'
-              v-for="(item, ind ) in arr" :key="ind"
-              :style="{ backgroundColor:'#'+item.bgColor }"
-            >
-              {{item.title}}
-            </mdb-col>
-          </mdb-row> -->
         </mdb-col>
         <mdb-col md="6" sm='12' class='px-0 col_m'>
           <div class="descrption px-3 pb-md-0 pb-sm-3 pt-md-2 pt-sm-3 pt-xs-3">
@@ -119,29 +109,6 @@
           
         </mdb-col>
       </mdb-row>
-      <!-- <menu class="menu__list_sm p-0 m-0">
-        <container class="m-0 toggle-drop-menu">
-          <div class="toggle">
-            <div class="ham__btn"
-              @click="isMenuDrop = !isMenuDrop"
-            >
-              <div class="ham_line"></div>
-              <div class="ham_line"></div>
-              <div class="ham_line"></div>
-            </div>
-          </div>
-        </container>
-        <container class="m-0 py-2 overflow-hidden container_menu"
-          :class="{ active: isMenuDrop }"
-        >
-          <li
-            v-for="(item, ind ) in menuDataSm" :key="ind"
-            class='menu__item_sm'
-          >
-          {{item.title}}
-          </li>
-        </container>
-      </menu> -->
     </container>
   </main>
 </template>
@@ -154,24 +121,7 @@ import {localeRout} from '@/assets/utils'
 
 export default {
   data:()=>({
-    // menuData:[
-    //   [
-    //     { title: 'main_menu_participants', bgColor: '58B0B1' },
-    //     { title: '', bgColor: 'A1D3D2' },
-    //     { title: 'main_menu_events', bgColor: '89C6C4' },
-    //   ],
-    //   [
-    //     { title: '', bgColor: '6BBBB8' },
-    //     { title: 'main_menu_materials', bgColor: '74C0C0' },
-    //     { title: '', bgColor: '63B8B5' },
-    //   ],
 
-    //   [
-    //     { title: 'main_menu_participants', bgColor: '4FADAD' },
-    //     { title: '', bgColor: '80C4C3' },
-    //     { title: 'main_menu_participants', bgColor: '6DBBBB' },
-    //   ]
-    // ],
     menuDataSm:[
       { title: 'main_menu_organising_committee' },
       { title: 'main_menu_program_committee' },
@@ -188,6 +138,8 @@ export default {
         text:'main_card_organizetion_text_3'},
       { title:'main_card_organizetion_title_4',
         text:'main_card_organizetion_text_4'},
+      { title:'main_card_organizetion_title_5',
+        text:'main_card_organizetion_text_5'},
       
     ],
     topicData:['main_congress_topic_1','main_congress_topic_2','main_congress_topic_3','main_congress_topic_4','main_congress_topic_5','main_congress_topic_6','main_congress_topic_7','main_congress_topic_8','main_congress_topic_9','main_congress_topic_10','main_congress_topic_11','main_congress_topic_12','main_congress_topic_13','main_congress_topic_14','main_congress_topic_15',],
