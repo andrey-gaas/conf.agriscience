@@ -260,12 +260,17 @@ export default {
       //this.clearLacalStorage()
       
       // this.$store.commit('setPersonData', this.formSet);
-      this.$store.commit('setPersonData', this.formSet);
-      this.$router.push(this.localeRout('/personarea'))
+      // this.$store.commit('setPersonData', this.formSet);
+      // this.$router.push(this.localeRout('/personarea'))
 
-      // this.$axios.post('/api/auth/registration', this.formSet)
-      //   .then(res => console.log(res))
-      //   .catch(error => alert(error.response.data));
+      this.$axios.post('/api/auth/registration', this.formSet)
+        .then(res => {
+          if (res.data === 'OK') {
+            this.$store.commit('setPersonData', this.formSet);
+            this.$router.push(this.localeRout('/personarea'));
+          }
+        })
+        .catch(error => console.log(error.response.data));
     },
 
 

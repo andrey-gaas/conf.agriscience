@@ -1,7 +1,10 @@
 const { Router } = require('express');
 const router = Router();
-const authMiddleware = require('../middleware/auth');
+const Mongo = require('./db/Mongo');
+// const authMiddleware = require('../middleware/auth');
 
-router.get('/', authMiddleware, (req, res) => {
+router.get('/', (req, res) => {
   res.send('Тест пройден');
 });
+
+module.exports = router;

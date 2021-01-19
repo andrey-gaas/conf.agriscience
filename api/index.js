@@ -2,10 +2,13 @@ const express = require('express');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const passport = require('passport');
+const Mongo = require('./db/Mongo');
 
-require('./passport');
 const app = express();
 
+Mongo.connect();
+
+require('./passport');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
