@@ -54,7 +54,21 @@
                   v-for="(item, key) in personReport" :key='key'
                 >
                   <th>{{item.title}}</th>
-                  <th>{{item.status}}</th>
+                  
+                  <th>
+                    <BIconXSquareFill
+                      class="report__status_icon red-text"
+                      v-if="item.status == -1"
+                    />
+                    <BIconCheckSquare
+                      class="report__status_icon green-text"
+                      v-if="item.status == 1"
+                    />
+                    <BIconQuestionSquare
+                      class="report__status_icon amber-text"
+                      v-if="item.status == 0"
+                    />
+                  </th>
                   <th>
                     <mdb-btn class="m-1 px-3 py-2" color='primary' @click="editReport(item.ind)">
                       <BIconPencilSquare/>
@@ -150,7 +164,7 @@ import { RU, EN } from '@/constants/language';
 import {localeRout} from '@/assets/utils'
 
 import { mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody } from 'mdbvue';
-import { BIcon, BIconPencilSquare  } from 'bootstrap-vue'
+import { BIcon, BIconPencilSquare, BIconXSquareFill, BIconCheckSquare, BIconQuestionSquare,   } from 'bootstrap-vue'
 
 
 export default {
@@ -198,7 +212,7 @@ export default {
         isSpeaker: true,
       }
       this.$store.commit('cleanDataReport')
-      this.$store.commit('setEditReport', this.$store.reportList.length);
+      this.$store.commit('setEditReport', this.$store.getters.getReportList.length);
       this.$store.commit('addSpeaker', speakerPerson);
       this.$store.commit('logState');
       this.$router.push(this.localeRout('/addreport'))
@@ -276,7 +290,7 @@ export default {
     }
   },
   components:{
-    BIconPencilSquare,
+    BIconPencilSquare, BIconXSquareFill, BIconCheckSquare, BIconQuestionSquare, 
     mdbContainer, mdbInput, mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody
   }
 };
@@ -295,5 +309,10 @@ export default {
     &::after{
       content:'Survey...'
     }
+  }
+  .report__status_icon{
+    height: 25px;
+    width: 25px;
+    
   }
 </style>
