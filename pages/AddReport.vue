@@ -18,8 +18,8 @@
               <tr>
                 <th>№</th>
                 <th>ФИО</th>
-                <th>Док</th>
-                <th class='m-0 p-0'></th>
+                <th class='m-0 px-0'>Докладчик</th>
+                <th class='m-0 px-0'></th>
                 <th>Ред./ Удал.</th>
               </tr>
               <tr
@@ -31,6 +31,7 @@
                   <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" :id="ind"
                       v-model="item.isSpeaker"
+                      @click="toggleSpeaker(ind)"
                     >
                     <label class="custom-control-label" :for="ind"></label>
                   </div>
@@ -46,10 +47,10 @@
                   </mdb-btn-group>
                 </th>
                 <th class="p-0">
-                  <mdb-btn class="m-0 px-1 py-1" color='primary' @click="startEditAuthor(ind)">
+                  <mdb-btn class="m-0 px-1 py-1" color="warning" @click="startEditAuthor(ind)">
                     <BIconPencilSquare/>
                   </mdb-btn>
-                  <mdb-btn class="m-0 px-1 py-1" color='primary' @click="deletAuthor(ind)">
+                  <mdb-btn class="m-0 px-1 py-1" color="danger" @click="deletAuthor(ind)">
                     <BIconTrashFill/>
                   </mdb-btn>
                 </th>
@@ -63,16 +64,30 @@
           </mdb-tbl>
           <div class="form-group">
             <label for="nameReport" class="h5">Название доклада</label>
-            <input type="text" id="nameReport" class="form-control">
+            <input type="text" id="nameReport" class="form-control"
+              v-model="reportName"
+            >
           </div>
           <div class="form-group">
             <label for="Annotations" class="h5">Аннотации</label>
-            <mdb-input outline type="textarea" :rows='5' id='Annotations' class='mt-0'/>
+            <mdb-input outline type="textarea" :rows='5' id='Annotations' class='mt-0'
+              v-model="reportText"
+            />
           </div>
           
         </mdb-col>
         <mdb-col col="12" sm='12' md='6' lg='6' class=''>
           23
+        </mdb-col>
+      </mdb-row>
+      <mdb-row class="m-0" p='2'>
+        <mdb-col col="12" sm='12' md='6' lg='6' class=''>
+          <mdb-btn class="" color="primary" @click="saveReport()">
+            Сохранить
+          </mdb-btn>
+          <mdb-btn class="" outline="primary" @click="cancelReport()">
+            Отмена
+          </mdb-btn>
         </mdb-col>
       </mdb-row>
     </mdb-container>
@@ -133,6 +148,8 @@ export default {
       position: '',
       email: '',
     },
+    reportText:'',
+    reportName:'',
 
   }),
   computed:{
@@ -147,6 +164,7 @@ export default {
   },
   created(){
     this.setAuthor()
+    this.setReport()
   },
   mounted(){
     
@@ -156,6 +174,28 @@ export default {
   },
   methods:{
     localeRout,
+    cancelReport(){
+      this.$store.commit('cleanDataReport')
+      this.$router.push(this.localeRout('/personarea'))
+    },
+    saveReport(){
+      const ind = this.$store.getters.getReportInd
+      const speakerList = this.$store.getters.getSpeakers
+      const report = {
+        title: this.reportName,
+        annotations: this.reportText,
+        status: 0,
+        speakerList
+      }
+      
+      this.$store.commit('saveReport', {report, ind})
+
+      this.$router.push(this.localeRout('/personarea'))
+    },
+    toggleSpeaker(ind){
+      this.$store.commit('toggleSpeaker', ind)
+      //this.author[ind].isSpeaker = !this.author[ind].isSpeaker
+    },
     closeEdit(){
       this.isAuthorEdit = false
     },
@@ -163,13 +203,18 @@ export default {
       this.isAuthorCrate = false
     },
     setAuthor(){
-      
+      //console.log(this.speakers);
+      //this.speakers = this.$store.getters.getSpeakers
       this.author = this.speakers.map((el, ind)=>{
         return {
           DOB: `${el.surname} ${el.name[0]}. ${el.patronymic[0] ? el.patronymic[0]+'.': ''}`,
           isSpeaker: el.isSpeaker,
         }
     })},
+    setReport(){
+      this.reportText = this.$store.getters.getReportText
+      this.reportName = this.$store.getters.getReportName
+    },
     startEditAuthor(ind){
       const speakers = this.$store.getters.getSpeakers
       this.editAuthor = speakers[ind]

@@ -96,7 +96,7 @@
             <mdb-view hover>
               <a href="#!">
                 <mdb-card-image
-                  src="/assets/img/reg_img.jpg"
+                  :src="'/assets/img/'+item.img"
                   alt="Card image cap"/>
                 <mdb-mask flex-center waves overlay="white-slight"></mdb-mask>
               </a>
@@ -131,15 +131,20 @@ export default {
     ],
     bibCardData:[
       { title:'main_card_organizetion_title_1',
-        text:'main_card_organizetion_text_1'},
+        text:'main_card_organizetion_text_1',
+        img:'GPNTB_SO_RAN.jpg'},
       { title:'main_card_organizetion_title_2',
-        text:'main_card_organizetion_text_2'},
+        text:'main_card_organizetion_text_2',
+        img:'RBA.jpg'},
       { title:'main_card_organizetion_title_3',
-        text:'main_card_organizetion_text_3'},
+        text:'main_card_organizetion_text_3',
+        img:'RNB.jpg'},
       { title:'main_card_organizetion_title_4',
-        text:'main_card_organizetion_text_4'},
+        text:'main_card_organizetion_text_4',
+        img:'RGB.jpg'},
       { title:'main_card_organizetion_title_5',
-        text:'main_card_organizetion_text_5'},
+        text:'main_card_organizetion_text_5',
+        img:'GPNTB_Rossii.jpg'},
       
     ],
     topicData:['main_congress_topic_1','main_congress_topic_2','main_congress_topic_3','main_congress_topic_4','main_congress_topic_5','main_congress_topic_6','main_congress_topic_7','main_congress_topic_8','main_congress_topic_9','main_congress_topic_10','main_congress_topic_11','main_congress_topic_12','main_congress_topic_13','main_congress_topic_14','main_congress_topic_15',],

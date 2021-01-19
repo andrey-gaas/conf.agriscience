@@ -47,24 +47,27 @@
               <mdb-tbl-body>
                 <tr>
                   <th>{{$t('personarea_title_report')}}</th>
-                  <th>{{$t('personarea_edit')}}</th>
                   <th>{{$t('personarea_status')}}</th>
+                  <th>{{$t('personarea_edit')}}</th>
                 </tr>
                 <tr
                   v-for="(item, key) in personReport" :key='key'
                 >
                   <th>{{item.title}}</th>
-                  <th>{{item.linc}}</th>
+                  <th>{{item.status}}</th>
+                  <th>
+                    <mdb-btn class="m-1 px-3 py-2" color='primary' @click="editReport(item.ind)">
+                      <BIconPencilSquare/>
+                    </mdb-btn>
+                  </th>
                 </tr>
               </mdb-tbl-body>
             </mdb-tbl>
-            <!-- Поменять на кнопку -->
-            <nuxt-link :to="localeRout('/addreport')"
+            <mdb-btn class="mt-0 mb-4 mx-0" outline="primary"
               @click="addReport()"
-              class="mt-0 mb-4 mx-0 btn btn-primary text-decoration-none ripple-parent btn-outline-primary text-white"
             >
               {{$t('personarea_apply')}}
-            </nuxt-link>
+            </mdb-btn>
           </mdb-col>
         </mdb-row>
         <mdb-row class="mb-0 col-12 mx-0 px-0" >
@@ -147,7 +150,7 @@ import { RU, EN } from '@/constants/language';
 import {localeRout} from '@/assets/utils'
 
 import { mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody } from 'mdbvue';
-
+import { BIcon, BIconPencilSquare  } from 'bootstrap-vue'
 
 
 export default {
@@ -160,7 +163,7 @@ export default {
     personAboutMeEn:'',
     personDataRu:[],
     personDataEn:[],
-    personReport:[{title:'Нет активных заявок', linck:''}],
+    personReport:[{title:'Нет активных заявок', ind:''}],
     fileName: '',
     isEditAboutMeRu: false,
     isEditAboutMeEn: false,
@@ -184,8 +187,7 @@ export default {
   methods:{
     localeRout,
     addReport(){
-      console.log('httlosadf');
-      const speacerPerson = {
+      const speakerPerson = {
         surname:this.personData.surname,
         name:this.personData.name,
         patronymic:this.personData.patronymic,
@@ -195,14 +197,29 @@ export default {
         num: 0,
         isSpeaker: true,
       }
-      //this.$store.commit('addSpeaker', speacerPerson);
-      //this.$store.commit('logState');
+      this.$store.commit('cleanDataReport')
+      this.$store.commit('setEditReport', this.$store.reportList.length);
+      this.$store.commit('addSpeaker', speakerPerson);
+      this.$store.commit('logState');
+      this.$router.push(this.localeRout('/addreport'))
     },
-    editReport(){
-
+    editReport(ind){
+      this.$store.commit('setEditReport', ind);
+      this.$router.push(this.localeRout('/addreport'))
     },
     setReport(){
-      this.personReport[0].title = this.$t('personarea_no_apply')
+      const reportList = this.$store.getters.getReportList
+      
+      if( reportList.length == 0){this.personReport[0].title = this.$t('personarea_no_apply') }
+      else{
+        this.personReport = reportList.map((el, ind) => {
+          return {
+            title: el.title,
+            status: el.status,
+            ind,
+          }
+        })
+      }
     },
     setFileName(){
       this.fileName = this.$refs.fileInput.files[0].name
@@ -259,6 +276,7 @@ export default {
     }
   },
   components:{
+    BIconPencilSquare,
     mdbContainer, mdbInput, mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody
   }
 };
