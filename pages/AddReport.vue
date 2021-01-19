@@ -119,7 +119,7 @@ import { RU, EN } from '@/constants/language';
 import {localeRout} from '@/assets/utils'
 
 import FormEditAuthor from '@/components/FormEditAuthor';
-import { BIcon, BIconCaretDownFill, BIconCaretUpFill, BIconTrashFill, BIconPencilSquare  } from 'bootstrap-vue'
+import { BIcon, BIconCaretDownFill, BIconCaretUpFill, BIconTrashFill, BIconPencilSquare } from 'bootstrap-vue'
 import { mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody, mdbIcon  } from 'mdbvue';
 
 
@@ -194,7 +194,6 @@ export default {
     },
     toggleSpeaker(ind){
       this.$store.commit('toggleSpeaker', ind)
-      //this.author[ind].isSpeaker = !this.author[ind].isSpeaker
     },
     closeEdit(){
       this.isAuthorEdit = false
