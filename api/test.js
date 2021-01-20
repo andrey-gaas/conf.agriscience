@@ -1,9 +1,8 @@
 const { Router } = require('express');
 const router = Router();
-const Mongo = require('./db/Mongo');
-// const authMiddleware = require('../middleware/auth');
+const authMiddleware = require('../middleware/auth');
 
-router.get('/', (req, res) => {
+router.get('/', authMiddleware, (req, res) => {
   res.send('Тест пройден');
 });
 
