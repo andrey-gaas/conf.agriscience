@@ -1,17 +1,18 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcryptjs');
 const Mongo = require('./db/Mongo');
 
 exports.init = function() {
   passport.use(
     new LocalStrategy(function(email, password, done) {
-      console.log('2');
       Mongo.database
         .db('bibcongress')
         .collection('users')
         .findOne({ email: email })
         .then(function(user) {
-          if (!user || user.password !== password) return done(null, false);
+          if (!user) return done(null, false);
+          else if (!bcrypt.compareSync(password, user.password)) return done(null, false);
           return done(null, user);
         });
     })
@@ -34,16 +35,3 @@ passport.deserializeUser(function(email, done) {
     else done(null, user);
   });
 });
-
-/* passport.use(
-  new LocalStrategy((email, password, done) => {
-    const bibcongress = Mongo.database.db('bibcongress');
-    const users = bibcongress.collection('users');
-
-    users.findOne({ email: email }, (error, user) => {
-      if (error) return done(error);
-      else if (!user || user.password !== password) return done(null, false);
-      else return done(null, user);
-    });
-  })
-); */

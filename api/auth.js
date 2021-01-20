@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const passport = require('passport');
 const Mongo = require('./db/Mongo');
+const bcrypt = require('bcryptjs');
 const router = Router();
 
 router.post('/registration', (req, res) => {
@@ -15,7 +16,17 @@ router.post('/registration', (req, res) => {
       res.status(500).send('Server error');
     } else if (result !== null) res.status(400).send('E-Mail занят.');
     else {
-      const user = {name, surname, patronymic, organization, position, email, telephone, password};
+      const salt = bcrypt.genSaltSync(10);
+      const user = {
+        name,
+        surname,
+        patronymic,
+        organization,
+        position,
+        email,
+        telephone,
+        password: bcrypt.hashSync(password, salt),
+      };
 
       users.insertOne(user, (error) => {
         if (error) {
