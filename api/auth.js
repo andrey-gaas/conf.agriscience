@@ -28,15 +28,6 @@ router.post('/registration', (req, res) => {
   });
 });
 
-router.post('/login', (req, res, next) => {
-  passport.authenticate('local', function(err, user) {
-    if (err) return next(err);
-    if (!user) return res.status(400).send('Введен неверный E-Mail или пароль.');
-    req.logIn(user, function(err) {
-      if (err) { return next(err); }
-      return res.send('OK');
-    });
-  })(req, res, next);
-});
+router.post('/login', passport.authenticate('local', { successRedirect: '/personarea', failureRedirect: '/login' }));
 
 module.exports = router;

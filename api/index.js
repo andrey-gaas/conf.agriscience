@@ -8,7 +8,6 @@ const app = express();
 
 Mongo.connect();
 
-require('./passport');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
@@ -25,6 +24,8 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
 }));
+
+require('./passport').init();
 
 app.use('/auth', require('./auth'));
 app.use('/test', require('./test'));

@@ -5,9 +5,13 @@
 
         <div class="step_wrp w-100"      
         >
-          <form class="needs-validation" novalidate
-            @submit.prevent='formSubmit'
+          <form
+            class="needs-validation"
+            novalidate
+            method="post"
+            action="/api/auth/login"
           >
+            <!-- @submit.prevent='formSubmit' -->
             <div class="blue darken-1 px-4 py-3">
               <h2 class="form__title mb-0  white-text"><strong>{{$t('log_authorization')}}</strong></h2>
             </div>
@@ -15,6 +19,7 @@
               <mdb-input class="my-0" size="sm"
                 :label="$t('reg_email')"
                 v-model="formSet.email"
+                name="username"
               />
                 <span class="red-text"
                   v-if="(!this.$v.formSet.email.required && this.$v.formSet.email.$dirty)"
@@ -29,6 +34,7 @@
               <mdb-input class="mt-4 mb-0" type='password' size="sm"
                 :label="$t('reg_password')"
                 v-model="formSet.password"
+                name="password"
               />
                 <span class="red-text"
                   v-if="(!this.$v.formSet.password.required && this.$v.formSet.password.$dirty)"
