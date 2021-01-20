@@ -1,5 +1,6 @@
 export const state = () => ({
   personData:{},
+  personDataEn:{},
   personAboutMeRu:'',
   personAboutMeEn:'',
   speakerList:[
@@ -63,23 +64,43 @@ export const state = () => ({
 
 export const mutations = {
   setEditReport(s, ind){
-    const editReport = s.reportList[ind]
+    
+    let editReport
+    if(!s.reportList[ind]){
+      editReport = { 
+        title:'',
+        annotations: '',
+        status: 0,
+        speakerList:[]
+      }
+    }else{
+      editReport = s.reportList[ind]
+      if(editReport.status == 1) return
+    }
     s.speakerList = editReport.speakerList.map(el => {return {...el}})
     s.reportText = editReport.annotations
     s.reportName = editReport.title
     s.indEditReport = ind
   },
-  setPersonData(state, userData){
-    state.personData = userData
+  setPersonData(state, {userData, locale}){
+    
+    if(locale == 'ru'){
+      state.personData = userData
+    }else{
+      state.personDataEn = userData
+    }
+  },
+  setPersonDataEn(state, userData){
+    state.personDataEn = userData
   },
   setIndReport(state, ind){
     state.indEditReport = ind
   },
-  setPersonAboutMe(state, data){
-    if(data.locale == 'ru'){
-      state.personAboutMeRu = data.aboutMe
+  setPersonAboutMe(state, {aboutMe, locale}){
+    if(locale == 'ru'){
+      state.personAboutMeRu = aboutMe
     }else{
-      state.personAboutMeEn = data.aboutMe
+      state.personAboutMeEn = aboutMe
     }
   },
   setReportName(state, name){
@@ -97,7 +118,6 @@ export const mutations = {
       state.speakerList[ind-1].num = ind
       state.speakerList.splice(ind-1, 0, el)
       state.speakerList.splice(ind+1, 1)
-      console.log(state.speakerList);
   },
   downSpeaker(state, ind){
     if(ind == state.speakerList.length-1) return
@@ -135,6 +155,9 @@ export const mutations = {
 export const getters = {
   getPersonData(state){
     return state.personData
+  },
+  getPersonDataEn(state){
+    return state.personDataEn
   },
   getPersonAboutMeRu(state){
     return state.personAboutMeRu

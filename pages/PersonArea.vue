@@ -28,6 +28,7 @@
             </div>
             <mdb-btn class="m-0"
               color='primary'
+              @click="submitFile"
             >{{$t('personarea_download')}}</mdb-btn>
             <h4 class="mb-2 mt-4">{{$t('personarea_profile')}}</h4>
             <nuxt-link :to="localeRout('/editprofile')" 
@@ -70,7 +71,10 @@
                     />
                   </th>
                   <th>
-                    <mdb-btn class="m-1 px-3 py-2" color='primary' @click="editReport(item.ind)">
+                    <mdb-btn class="m-1 px-3 py-2" color='primary'
+                      v-if="item.status !== 1"
+                      @click="editReport(item.ind)"
+                    >
                       <BIconPencilSquare/>
                     </mdb-btn>
                   </th>
@@ -128,7 +132,7 @@
               </mdb-tbl-head>
               <mdb-tbl-body>
                 <tr
-                  v-for="(item, key) in personData" :key='key'
+                  v-for="(item, key) in personDataEn" :key='key'
                 >
                   <th>{{$t('personarea_'+key+'_'+EN)+':'}}</th>
                   <th>{{item}}</th>
@@ -161,7 +165,7 @@
 <script>
 
 import { RU, EN } from '@/constants/language';
-import {localeRout} from '@/assets/utils'
+import {localeRout, transliterate, yTransliterate} from '@/assets/utils'
 
 import { mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody } from 'mdbvue';
 import { BIcon, BIconPencilSquare, BIconXSquareFill, BIconCheckSquare, BIconQuestionSquare,   } from 'bootstrap-vue'
@@ -173,10 +177,10 @@ export default {
   data: () => ({
     RU, EN,
     personData:{},
+    personDataEn:{},
+    imgFile: '',
     personAboutMeRu:'',
     personAboutMeEn:'',
-    personDataRu:[],
-    personDataEn:[],
     personReport:[{title:'Нет активных заявок', ind:''}],
     fileName: '',
     isEditAboutMeRu: false,
@@ -188,18 +192,19 @@ export default {
   computed:{
     
   },
-  created(){
+  created(){ 
     this.setData()
     this.setReport()
   },
-  mounted(){
-    
+  async mounted(){
+    let asdf = await yTransliterate('Hello', 'en')
+    console.log(asdf);
   },
   validations:{
     
   },
   methods:{
-    localeRout,
+    localeRout,transliterate,yTransliterate,
     addReport(){
       const speakerPerson = {
         surname:this.personData.surname,
@@ -216,6 +221,26 @@ export default {
       this.$store.commit('addSpeaker', speakerPerson);
       this.$store.commit('logState');
       this.$router.push(this.localeRout('/addreport'))
+    },
+    localize(){
+      if(this.$i18n.locale == 'en'){
+        this.personData = {...this.personDataEn}
+        console.log();
+        for(let el in this.personData){
+          if( (el == 'surname') || (el == 'name') || (el == 'patronymic')){
+            this.personData[el] = this.transliterate()(this.personData[el], true)
+          } 
+        }
+        this.$store.commit('setPersonDataEn', this.personDataEn);
+      }else{
+        this.personDataEn = {...this.personData}
+        for(let el in this.personDataEn){
+          if( (el == 'surname') || (el == 'name') || (el == 'patronymic')){
+            this.personDataEn[el] = this.transliterate()(this.personDataEn[el])
+          } 
+        }
+        this.$store.commit('setPersonData', this.personData);
+      }
     },
     editReport(ind){
       this.$store.commit('setEditReport', ind);
@@ -235,15 +260,31 @@ export default {
         })
       }
     },
-    setFileName(){
-      this.fileName = this.$refs.fileInput.files[0].name
-    },
-    setPersonDate(){
-      let personData = this.$store.getters.getPersonData
-      delete personData.locality; 
-      delete personData.isConsent;
-      delete personData.password;
+    submitFile(){
+      let formData = new FormData();
+      formData.append('file', this.imgFile);
 
+      axios.post( '/single-file',
+        formData,
+        {
+          headers: {
+              'Content-Type': 'multipart/form-data'
+          }
+        }
+      ).finally(() => {
+        this.imgFile = ''
+        this.fileName = ''
+        formData = ''
+      }).then(function(){
+        console.log('SUCCESS!!');
+      })
+      .catch(function(){
+        console.log('FAILURE!!');
+      });
+    },
+    setFileName(){
+      this.imgFile = this.$refs.fileInput.files[0]
+      this.fileName = this.$refs.fileInput.files[0].name
     },
     setAboutMe(){
       this.$store.commit('setPersonAboutMe', this.personAboutMe);
@@ -253,10 +294,16 @@ export default {
       this.personAboutMeRu = this.$store.getters.getPersonAboutMeRu
       this.personAboutMeEn = this.$store.getters.getPersonAboutMeEn
       this.personData = this.$store.getters.getPersonData
+      this.personDataEn = this.$store.getters.getPersonDataEn
       delete this.personData.locality; 
       delete this.personData.isConsent;
       delete this.personData.password;
-      //this.setPersonDate()
+      delete this.personDataEn.locality; 
+      delete this.personDataEn.isConsent;
+      delete this.personDataEn.password;
+
+      this.localize()
+      
 
       this.fileName = this.$t('personarea_select_file')
     },

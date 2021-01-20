@@ -200,10 +200,10 @@ export default {
       if(this.$v.formSet.$invalid){
         return
       }
-      this.clearLacalStorage()
+      
       
       this.$router.push(this.localeRout('/personarea'))
-      this.$store.commit('setPersonData', this.formSet);
+      this.$store.commit('setPersonData', {userData:this.formSet, locale:this.$i18n.locale});
       this.$store.commit('setPersonAboutMe', {aboutMe:this.aboutMe, locale:this.$i18n.locale});
     },
     
@@ -248,10 +248,12 @@ export default {
   },
   async mounted(){
     //Загружаем данные
-    this.formSet = {...this.formSet ,...this.$store.getters.getPersonData}
+    
     if(this.$i18n.locale == 'ru'){
+      this.formSet = {...this.formSet ,...this.$store.getters.getPersonData}
       this.aboutMe = this.$store.getters.getPersonAboutMeRu
     }else{
+      this.formSet = {...this.formSet ,...this.$store.getters.getPersonDataEn}
       this.aboutMe = this.$store.getters.getPersonAboutMeEn
     }
     

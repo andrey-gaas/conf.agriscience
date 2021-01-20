@@ -134,21 +134,15 @@ export default {
   methods:{
     localeRout,
     formSubmit(){
-      console.log('form');
       this.$v.formSet.$touch()
       if(this.$v.formSet.$invalid){
         return
       }
-      
       if(this.formSet.num != undefined){
-        console.log('set');
         this.$store.commit('setSpeaker', {speaker:this.formSet, ind: this.formSet.num})
       }else{
-        console.log('add');
         this.$store.commit('addSpeaker', this.formSet)
       }
-      
-      
       this.closeEdit()
     },
     
