@@ -77,7 +77,75 @@
           
         </mdb-col>
         <mdb-col col="12" sm='12' md='6' lg='6' class=''>
-          23
+          <mdb-tbl responsiveSm bordered>
+            <mdb-tbl-head color="blue" textWhite class="rounded">
+              <tr>
+                <th colspan="5"><h5 class="mb-0">Авторы</h5></th>
+              </tr>
+            </mdb-tbl-head>
+            <mdb-tbl-body>
+              <tr>
+                <th>№</th>
+                <th>ФИО</th>
+                <th class='m-0 px-0'>Докладчик</th>
+                <th class='m-0 px-0'></th>
+                <th>Ред./ Удал.</th>
+              </tr>
+              <tr
+                v-for="(item, ind) of author" :key='ind'
+              >
+                <th class='p-0 align-middle'>
+                  <span class='m-1'>{{ind+1}}</span>
+                  <mdb-btn-group vertical>
+                    <mdb-btn class="m-0 px-2 py-1" color='primary' @click="upAuthor(ind)">
+                      <BIconCaretUpFill/>
+                    </mdb-btn>
+                    <mdb-btn class="m-0 px-2 py-1" color='primary' @click="downAuthor(ind)">
+                      <BIconCaretDownFill/>
+                    </mdb-btn>
+                  </mdb-btn-group>
+                </th>
+                <th>{{item.DOB}}</th>
+                <th class="p-0">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" :id="ind"
+                      v-model="item.isSpeaker"
+                      @click="toggleSpeaker(ind)"
+                    >
+                    <label class="custom-control-label" :for="ind"></label>
+                  </div>
+                </th>
+                <th class="p-0">
+                  
+                </th>
+                <th class="p-0">
+                  <mdb-btn class="m-0 px-1 py-1" color="warning" @click="startEditAuthor(ind)">
+                    <BIconPencilSquare/>
+                  </mdb-btn>
+                  <mdb-btn class="m-0 px-1 py-1" color="danger" @click="deletAuthor(ind)">
+                    <BIconTrashFill/>
+                  </mdb-btn>
+                </th>
+              </tr>
+              <tr>
+                <th colspan="5" class="p-0">
+                  <mdb-btn class="m-1 px-3 py-2" color='primary' @click="createAuthor()">Добавить автора</mdb-btn>
+                </th>
+              </tr>
+            </mdb-tbl-body>
+          </mdb-tbl>
+          <div class="form-group">
+            <label for="nameReport" class="h5">Название доклада</label>
+            <input type="text" id="nameReport" class="form-control"
+              v-model="reportName"
+            >
+          </div>
+          <div class="form-group">
+            <label for="Annotations" class="h5">Аннотации</label>
+            <mdb-input outline type="textarea" :rows='5' id='Annotations' class='mt-0'
+              v-model="reportText"
+            />
+          </div>
         </mdb-col>
       </mdb-row>
       <mdb-row class="m-0" p='2'>

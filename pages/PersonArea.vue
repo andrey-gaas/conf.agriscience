@@ -30,6 +30,18 @@
               color='primary'
               @click="submitFile"
             >{{$t('personarea_download')}}</mdb-btn>
+            <span
+              class="h6 d-flex my-2 red-text"
+              v-if="isEmailСonfirm"
+            >
+              {{$t('personarea_no_confirm')}}
+            </span>
+            <span
+              class="h6 d-flex my-2 green-text"
+              v-if="!isEmailСonfirm"
+            >
+              {{$t('personarea_confirm')}}
+            </span>
             <h4 class="mb-2 mt-4">{{$t('personarea_profile')}}</h4>
             <nuxt-link :to="localeRout('/editprofile')" 
               class="mt-0 mb-0 mx-0 btn btn-primary text-decoration-none ripple-parent text-white"
@@ -187,6 +199,7 @@ export default {
     isEditAboutMeEn: false,
     aboutMeRu:'',
     aboutMeEn:'',
+    isEmailСonfirm: true,
 
   }),
   computed:{
@@ -197,8 +210,8 @@ export default {
     this.setReport()
   },
   async mounted(){
-    let asdf = await yTransliterate('Hello', 'en')
-    console.log(asdf);
+    
+    
   },
   validations:{
     
@@ -223,15 +236,16 @@ export default {
       this.$router.push(this.localeRout('/addreport'))
     },
     localize(){
+
       if(this.$i18n.locale == 'en'){
         this.personData = {...this.personDataEn}
-        console.log();
+        
         for(let el in this.personData){
           if( (el == 'surname') || (el == 'name') || (el == 'patronymic')){
             this.personData[el] = this.transliterate()(this.personData[el], true)
           } 
         }
-        this.$store.commit('setPersonDataEn', this.personDataEn);
+        this.$store.commit('setPersonData', this.personData);
       }else{
         this.personDataEn = {...this.personData}
         for(let el in this.personDataEn){
@@ -239,7 +253,7 @@ export default {
             this.personDataEn[el] = this.transliterate()(this.personDataEn[el])
           } 
         }
-        this.$store.commit('setPersonData', this.personData);
+        this.$store.commit('setPersonDataEn', this.personDataEn);
       }
     },
     editReport(ind){
@@ -290,20 +304,19 @@ export default {
       this.$store.commit('setPersonAboutMe', this.personAboutMe);
     },
     setData(){
-      //console.log(this.$store.getters.getPersonData);
       this.personAboutMeRu = this.$store.getters.getPersonAboutMeRu
       this.personAboutMeEn = this.$store.getters.getPersonAboutMeEn
       this.personData = this.$store.getters.getPersonData
       this.personDataEn = this.$store.getters.getPersonDataEn
+
+      this.localize()
+
       delete this.personData.locality; 
       delete this.personData.isConsent;
       delete this.personData.password;
       delete this.personDataEn.locality; 
       delete this.personDataEn.isConsent;
       delete this.personDataEn.password;
-
-      this.localize()
-      
 
       this.fileName = this.$t('personarea_select_file')
     },
