@@ -48,7 +48,7 @@ export default {
     setLocale,
     localeRout,
     testFetch() {
-      this.$axios.put('/api/user', { name: 'Гендос', surname: 'Букинович' })
+      this.$axios.get('/api/reports', { name: 'Гендос', surname: 'Букинович' })
         .then(res => console.log(res))
         .catch(error => console.log(error.response.data));
     }
