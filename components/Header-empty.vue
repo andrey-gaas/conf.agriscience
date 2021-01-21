@@ -6,6 +6,7 @@
           <img src="assets/img/logo_white.png" alt="Logo" class='logo_white'>
         </nuxt-link>
       </logo>
+      <button @click="testFetch">Тестовый запрос</button>
       <dropdown>
         <dropdown-toggle color="primary" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
         <dropdown-menu>
@@ -44,7 +45,13 @@ export default {
     'dropdown-toggle': mdbDropdownToggle,
   },
   methods:{
-    setLocale, localeRout
+    setLocale,
+    localeRout,
+    testFetch() {
+      this.$axios.get('/api/user')
+        .then(res => console.log(res))
+        .catch(error => console.log(error.response.data));
+    }
   },
   data: () => ({ RU, EN }),
 }
