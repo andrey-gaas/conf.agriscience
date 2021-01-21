@@ -159,6 +159,8 @@ export default{
   'personarea_status':'Статус',
   'personarea_apply':'Подать заявку',
   'personarea_no_apply':'Нет активных заявок',
+  'personarea_no_confirm':'Требуется подтверждение E-Mail, для этого перейдите по ссылке в сообщении отправленом вам на почту.',
+  'personarea_confirm':'E-Mail подтверждён.',
   
 
   'editprofile_about_me':'О себе',

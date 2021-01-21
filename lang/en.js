@@ -158,7 +158,8 @@ export default{
   'personarea_status':'Status',
   'personarea_apply':'Apply',
   'personarea_no_apply':'No active orders',
-
+  'personarea_no_confirm':'E-Mail confirmation is required, for this follow the link in the message sent to you by mail.',
+  'personarea_confirm':'E-mail confirmed.',
 
   'editprofile_about_me':'About me',
   'editprofile_save_changes':'Save changes',

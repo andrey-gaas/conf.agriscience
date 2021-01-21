@@ -82,13 +82,8 @@ export const mutations = {
     s.reportName = editReport.title
     s.indEditReport = ind
   },
-  setPersonData(state, {userData, locale}){
-    
-    if(locale == 'ru'){
-      state.personData = userData
-    }else{
-      state.personDataEn = userData
-    }
+  setPersonData(state, userData){
+    state.personData = userData
   },
   setPersonDataEn(state, userData){
     state.personDataEn = userData
@@ -125,7 +120,6 @@ export const mutations = {
       state.speakerList[ind+1].num = ind
       state.speakerList.splice(ind+2, 0, el)
       state.speakerList.splice(ind, 1)
-      console.log(state.speakerList);
   },
   setSpeaker(state, {speaker, ind}){
     state.speakerList[ind] = speaker
