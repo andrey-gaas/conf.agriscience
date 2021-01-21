@@ -27,7 +27,6 @@ app.use(passport.session());
 require('./passport').init();
 
 app.use('/auth', require('./auth'));
-app.use('/test', require('./test'));
 
 if (require.main === module) {
   const port = 3001
