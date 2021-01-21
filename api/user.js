@@ -27,4 +27,18 @@ router.get('/', (req, res) => {
     });
 });
 
+router.put('/', (req, res) => {
+  Mongo.database
+    .db('bibcongress')
+    .collection('users')
+    .findOneAndUpdate(
+      { email: req.user.email },
+      { $set: req.body },
+    )
+    .then(() => {
+      res.send('OK');
+    })
+    .catch(err => console.log('My Error: ', err.message));
+});
+
 module.exports = router;
