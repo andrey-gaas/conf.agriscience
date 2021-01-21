@@ -28,6 +28,10 @@ router.get('/', (req, res) => {
 });
 
 router.put('/', (req, res) => {
+  if (req.body.email) {
+    return res.status(400).send('Bad Request');
+  }
+
   Mongo.database
     .db('bibcongress')
     .collection('users')
