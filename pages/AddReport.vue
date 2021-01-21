@@ -47,7 +47,7 @@
                   </mdb-btn-group>
                 </th>
                 <th class="p-0">
-                  <mdb-btn class="m-0 px-1 py-1" color="warning" @click="startEditAuthor(ind)">
+                  <mdb-btn class="m-0 px-1 py-1" color="warning" @click="startEditAuthor(ind, 'ru')">
                     <BIconPencilSquare/>
                   </mdb-btn>
                   <mdb-btn class="m-0 px-1 py-1" color="danger" @click="deletAuthor(ind)">
@@ -57,7 +57,7 @@
               </tr>
               <tr>
                 <th colspan="5" class="p-0">
-                  <mdb-btn class="m-1 px-3 py-2" color='primary' @click="createAuthor()">Добавить автора</mdb-btn>
+                  <mdb-btn class="m-1 px-3 py-2" color='primary' @click="createAuthor('ru')">Добавить автора</mdb-btn>
                 </th>
               </tr>
             </mdb-tbl-body>
@@ -85,17 +85,17 @@
             </mdb-tbl-head>
             <mdb-tbl-body>
               <tr>
-                <th>№</th>
+                <th class="th-1 px-4">№</th>
                 <th>ФИО</th>
-                <th class='m-0 px-0'>Докладчик</th>
-                <th class='m-0 px-0'></th>
+                <th class='m-0 px-2'>Докладчик</th>
+                
                 <th>Ред./ Удал.</th>
               </tr>
               <tr
-                v-for="(item, ind) of author" :key='ind'
+                v-for="(item, ind) of authorEn" :key='ind'
               >
-                <th class='p-0 align-middle'>
-                  <span class='m-1'>{{ind+1}}</span>
+                <th class='p-0 th-1'>
+                  <span class='mr-3'>{{ind+1}}</span>
                   <mdb-btn-group vertical>
                     <mdb-btn class="m-0 px-2 py-1" color='primary' @click="upAuthor(ind)">
                       <BIconCaretUpFill/>
@@ -106,7 +106,7 @@
                   </mdb-btn-group>
                 </th>
                 <th>{{item.DOB}}</th>
-                <th class="p-0">
+                <th class="p-3">
                   <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" :id="ind"
                       v-model="item.isSpeaker"
@@ -115,11 +115,9 @@
                     <label class="custom-control-label" :for="ind"></label>
                   </div>
                 </th>
+              
                 <th class="p-0">
-                  
-                </th>
-                <th class="p-0">
-                  <mdb-btn class="m-0 px-1 py-1" color="warning" @click="startEditAuthor(ind)">
+                  <mdb-btn class="m-0 px-1 py-1" color="warning" @click="startEditAuthor(ind, 'en')">
                     <BIconPencilSquare/>
                   </mdb-btn>
                   <mdb-btn class="m-0 px-1 py-1" color="danger" @click="deletAuthor(ind)">
@@ -129,7 +127,7 @@
               </tr>
               <tr>
                 <th colspan="5" class="p-0">
-                  <mdb-btn class="m-1 px-3 py-2" color='primary' @click="createAuthor()">Добавить автора</mdb-btn>
+                  <mdb-btn class="m-1 px-3 py-2" color='primary' @click="createAuthor('en')">Добавить автора</mdb-btn>
                 </th>
               </tr>
             </mdb-tbl-body>
@@ -137,13 +135,13 @@
           <div class="form-group">
             <label for="nameReport" class="h5">Название доклада</label>
             <input type="text" id="nameReport" class="form-control"
-              v-model="reportName"
+              v-model="reportNameEn"
             >
           </div>
           <div class="form-group">
             <label for="Annotations" class="h5">Аннотации</label>
             <mdb-input outline type="textarea" :rows='5' id='Annotations' class='mt-0'
-              v-model="reportText"
+              v-model="reportTextEn"
             />
           </div>
         </mdb-col>
@@ -167,6 +165,7 @@
         :editAuthor='editAuthor'
         :closeEdit='closeEdit'
         :textBtn='"Сохранить"'
+        :loc='locale'
       />
     </mdb-container>
     <mdb-container
@@ -177,6 +176,7 @@
         :editAuthor='crateAuthor'
         :closeEdit='closeCreate'
         :textBtn='"Добавить"'
+        :loc='locale'
       />
     </mdb-container>
   </div>
@@ -198,6 +198,7 @@ export default {
   data: () => ({
     RU, EN,
     author:[],
+    authorEn:[],
     isAuthorCrate: false,
     isAuthorEdit: false,
     editAuthor: { 
@@ -218,15 +219,24 @@ export default {
     },
     reportText:'',
     reportName:'',
+    reportTextEn:'',
+    reportNameEn:'',
+    locale:'',
 
   }),
   computed:{
     speakers(){
       return this.$store.getters.getSpeakers
     },
+    speakersEn(){
+      return this.$store.getters.getSpeakersEn
+    },
   },
   watch:{
     speakers(){
+      this.setAuthor()
+    },
+    speakersEn(){
       this.setAuthor()
     }
   },
@@ -277,15 +287,33 @@ export default {
           DOB: `${el.surname} ${el.name[0]}. ${el.patronymic[0] ? el.patronymic[0]+'.': ''}`,
           isSpeaker: el.isSpeaker,
         }
-    })},
+      })
+      this.authorEn = this.speakersEn.map((el, ind)=>{
+        return {
+          DOB: `${el.surname} ${el.name[0]}. ${el.patronymic[0] ? el.patronymic[0]+'.': ''}`,
+          isSpeaker: el.isSpeaker,
+        }
+      })
+      console.log(this.author,this.authorEn);
+    },
     setReport(){
       this.reportText = this.$store.getters.getReportText
       this.reportName = this.$store.getters.getReportName
+      this.reportTextEn = this.$store.getters.getReportTextEn
+      this.reportNameEn = this.$store.getters.getReportNameEn
     },
-    startEditAuthor(ind){
-      const speakers = this.$store.getters.getSpeakers
-      this.editAuthor = speakers[ind]
-      this.isAuthorEdit = true
+    startEditAuthor(ind, loc){
+      this.locale = loc
+      if(loc == 'en'){
+        const speakers = this.$store.getters.getSpeakersEn
+        this.editAuthor = speakers[ind]
+        this.isAuthorEdit = true
+      }else{
+        const speakers = this.$store.getters.getSpeakers
+        this.editAuthor = speakers[ind]
+        this.isAuthorEdit = true
+      }
+      
       
     },
     deletAuthor(ind){
@@ -297,7 +325,8 @@ export default {
     downAuthor(ind){
       this.$store.commit('downSpeaker', ind)
     },
-    createAuthor(){
+    createAuthor(loc){
+      this.locale = loc
       this.isAuthorCrate = true
     },
 
@@ -320,5 +349,9 @@ export default {
   padding: 0;
   margin: 0;
   z-index: 1010;
+}
+.th-1{
+  width: 70px;
+  text-align: right;
 }
 </style>

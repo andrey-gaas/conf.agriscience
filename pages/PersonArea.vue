@@ -229,10 +229,20 @@ export default {
         num: 0,
         isSpeaker: true,
       }
+      const speakerPersonEn = {
+        surname:this.personDataEn.surname,
+        name:this.personDataEn.name,
+        patronymic:this.personDataEn.patronymic,
+        position:this.personDataEn.position,
+        organization:this.personDataEn.organization,
+        email:this.personDataEn.email,
+        num: 0,
+        isSpeaker: true,
+      }
       this.$store.commit('cleanDataReport')
       this.$store.commit('setEditReport', this.$store.getters.getReportList.length);
-      this.$store.commit('addSpeaker', speakerPerson);
-      this.$store.commit('logState');
+      this.$store.commit('addSpeaker', {speakerPerson, speakerPersonEn});
+      //this.$store.commit('logState');
       this.$router.push(this.localeRout('/addreport'))
     },
     localize(){

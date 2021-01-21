@@ -5,8 +5,12 @@ export const state = () => ({
   personAboutMeEn:'',
   speakerList:[
   ],
+  speakerListEn:[
+  ],
   reportText:'',
   reportName:'',
+  reportTextEn:'',
+  reportNameEn:'',
   indEditReport: 0,
   reportList:[
     { title:'Доклад',
@@ -58,6 +62,58 @@ export const state = () => ({
           isSpeaker: false,
         },
       ]
+    }
+  ],
+  reportListEn:[
+    { title:'Report',
+      annotations: 'Small anotation',
+      status: 1,
+      speakerList:[
+        {
+          surname:"Nuzhdin",
+          name:'Alexei',
+          patronymic:'Иванвоич',
+          position:'Программист',
+          organization:'ГПНТБ',
+          email:'forsdsf@gsd.ru',
+          num: 0,
+          isSpeaker: false,
+        },{
+          surname:"Gaas",
+          name:'Andrei',
+          patronymic:'Николяевич',
+          position:'Программист',
+          organization:'ГПНТБ',
+          email:'gaas@gsd.ru',
+          num: 1,
+          isSpeaker: true,
+        },
+      ]
+    }, { 
+      title:'Report2',
+      annotations: 'Small anotation2',
+      status: 0,
+      speakerList:[
+        {
+          surname:"Ndin",
+          name:'alexei',
+          patronymic:'anovich',
+          position:'Программист',
+          organization:'ГПНТБ',
+          email:'forsdsf@gsd.ru',
+          num: 0,
+          isSpeaker: true,
+        },{
+          surname:"Gs",
+          name:'Ani',
+          patronymic:'Neivich',
+          position:'Программист',
+          organization:'ГПНТБ',
+          email:'gaas@gsd.ru',
+          num: 1,
+          isSpeaker: false,
+        },
+      ]
   }
   ]
 })
@@ -65,7 +121,8 @@ export const state = () => ({
 export const mutations = {
   setEditReport(s, ind){
     
-    let editReport
+    let editReport,
+        editReportEn;
     if(!s.reportList[ind]){
       editReport = { 
         title:'',
@@ -73,14 +130,23 @@ export const mutations = {
         status: 0,
         speakerList:[]
       }
+      editReportEn = {...editReport}
     }else{
       editReport = s.reportList[ind]
+      editReportEn = s.reportListEn[ind]
       if(editReport.status == 1) return
     }
     s.speakerList = editReport.speakerList.map(el => {return {...el}})
     s.reportText = editReport.annotations
     s.reportName = editReport.title
     s.indEditReport = ind
+
+    s.speakerListEn = editReportEn.speakerList.map(el => {return {...el}})
+    s.reportTextEn = editReportEn.annotations
+    s.reportNameEn = editReportEn.title
+    s.indEditReport = ind
+    
+
   },
   setPersonData(state, userData){
     state.personData = userData
@@ -113,6 +179,11 @@ export const mutations = {
       state.speakerList[ind-1].num = ind
       state.speakerList.splice(ind-1, 0, el)
       state.speakerList.splice(ind+1, 1)
+
+      const elEn = {...state.speakerListEn[ind], num: ind-1}
+      state.speakerListEn[ind-1].num = ind
+      state.speakerListEn.splice(ind-1, 0, elEn)
+      state.speakerListEn.splice(ind+1, 1)
   },
   downSpeaker(state, ind){
     if(ind == state.speakerList.length-1) return
@@ -120,26 +191,45 @@ export const mutations = {
       state.speakerList[ind+1].num = ind
       state.speakerList.splice(ind+2, 0, el)
       state.speakerList.splice(ind, 1)
+
+      const elEn = {...state.speakerListEn[ind], num: ind+1}
+      state.speakerListEn[ind+1].num = ind
+      state.speakerListEn.splice(ind+2, 0, elEn)
+      state.speakerListEn.splice(ind, 1)
   },
   setSpeaker(state, {speaker, ind}){
     state.speakerList[ind] = speaker
     state.speakerList.push('1')
     state.speakerList.pop()
   },
-  addSpeaker(state, speaker){
-    speaker.num = state.speakerList.length
-    state.speakerList.push(speaker)
+  setSpeakerEn(state, {speaker, ind}){
+    state.speakerListEn[ind] = speaker
+    state.speakerListEn.push('1')
+    state.speakerListEn.pop()
+  },
+  addSpeaker(state, {speakerPerson, speakerPersonEn}){
+    speakerPerson.num = state.speakerList.length
+    state.speakerList.push(speakerPerson)
+    speakerPersonEn.num = state.speakerListEn.length
+    state.speakerListEn.push(speakerPersonEn)
   },
   deletSpeaker(state, ind){
     state.speakerList.splice(ind, 1)
+    state.speakerListEn.splice(ind, 1)
   },
   toggleSpeaker(state, ind){
     state.speakerList[ind].isSpeaker = !state.speakerList[ind].isSpeaker
+    state.speakerListEn[ind].isSpeaker = !state.speakerListEn[ind].isSpeaker
+    console.log(state.speakerList[ind].isSpeaker,state.speakerListEn[ind].isSpeaker);
   },
   cleanDataReport(s){
     s.speakerList = []
     s.reportName = ''
     s.reportText = ''
+
+    s.speakerListEn = []
+    s.reportNameEn = ''
+    s.reportTextEn = ''
   },
   logState(state){
     console.log(state)
@@ -162,14 +252,23 @@ export const getters = {
   getSpeakers(state){
     return state.speakerList
   },
+  getSpeakersEn(state){
+    return state.speakerListEn
+  },
   getReportList(state){
     return state.reportList
   },
   getReportText(s){
     return s.reportText
   },
+  getReportTextEn(s){
+    return s.reportTextEn
+  },
   getReportName(s){
     return s.reportName
+  },
+  getReportNameEn(s){
+    return s.reportNameEn
   },
   getReportInd(s){
     return s.indEditReport

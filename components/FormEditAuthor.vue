@@ -95,7 +95,7 @@
 
 <script>
 import { RU, EN } from '@/constants/language';
-import {localeRout} from '@/assets/utils'
+import {localeRout, transliterate} from '@/assets/utils'
 
 import { helpers, required, email, } from 'vuelidate/lib/validators'
 import { mdbContainer, mdbInput,  mdbBtn , mdbBtnGroup, mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon } from 'mdbvue';
@@ -107,7 +107,7 @@ const alphaValid = helpers.regex('alpha', /^[a-zA-Zа-яёА-ЯЁ]*$/)
 export default {
   name: "Registration",
   layout: 'EmptyLayout',
-  props: ['editAuthor','closeEdit','textBtn'],
+  props: ['editAuthor','closeEdit','textBtn', 'loc'],
   data: () => ({
     step: 1,
     RU, EN,
@@ -132,17 +132,52 @@ export default {
     }
   },
   methods:{
-    localeRout,
+    localeRout,transliterate,
+    localize(speaker){
+      
+      let speakerData = {...speaker}
+      if(this.loc == 'en'){
+        for(let el in speakerData){
+          if( (el == 'surname') || (el == 'name') || (el == 'patronymic')){
+            speakerData[el] = this.transliterate()(speakerData[el])
+          } 
+        }
+      }else{
+        for(let el in speakerData){
+          if( (el == 'surname') || (el == 'name') || (el == 'patronymic')){
+            speakerData[el] = this.transliterate()(speakerData[el], true)
+          } 
+        }
+      }
+      
+      return speakerData
+    },
     formSubmit(){
+      console.log(this.loc);
       this.$v.formSet.$touch()
       if(this.$v.formSet.$invalid){
         return
       }
-      if(this.formSet.num != undefined){
-        this.$store.commit('setSpeaker', {speaker:this.formSet, ind: this.formSet.num})
+
+      let enPerson, ruPerson;
+
+      if(this.loc == 'ru'){
+        enPerson = this.formSet
+        ruPerson = this.localize({...enPerson})
       }else{
-        this.$store.commit('addSpeaker', this.formSet)
+        ruPerson = this.formSet
+        enPerson = this.localize({...ruPerson})
       }
+
+      if(this.formSet.num != undefined){
+        
+        this.$store.commit('setSpeaker', {speaker: ruPerson, ind: this.formSet.num})
+        this.$store.commit('setSpeakerEn', {speaker: enPerson, ind: this.formSet.num})
+        
+      }else{
+        this.$store.commit('addSpeaker', {speakerPerson:ruPerson, speakerPersonEn:enPerson})
+      }
+      console.log(ruPerson, enPerson);
       this.closeEdit()
     },
     
