@@ -1,6 +1,13 @@
 <template>
-  <div class="d-flex align-items-center blue lighten-5 min-h-100 flex-grow-1">
-    <mdb-container class="rounded-lg grey lighten-5 z-depth-1 my-0 my-sm-1 my-md-1 my-lg-1" p="0" >
+  <div class="d-flex align-items-center blue lighten-5 min-h-100 flex-grow-1 justify-content-center">
+    <div class="spinner-border text-primary" style="width: 4rem; height: 4rem;" role="status"
+      v-if="loading"
+    >
+      <span class="sr-only">Loading...</span>
+    </div>
+    <mdb-container class="rounded-lg grey lighten-5 z-depth-1 my-0 my-sm-1 my-md-1 my-lg-1" p="0" 
+      v-if="!loading"
+    >
       <mdb-row class="m-0 bg-primary" p='3'>
         <h2 class="mb-0  white-text"><strong>{{$t('personarea_person_area')}}</strong></h2>
       </mdb-row>
@@ -177,7 +184,7 @@
 <script>
 
 import { RU, EN } from '@/constants/language';
-import {localeRout, transliterate, yTransliterate} from '@/assets/utils'
+import {localeRout, transliterate,} from '@/assets/utils'
 
 import { mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody } from 'mdbvue';
 import { BIcon, BIconPencilSquare, BIconXSquareFill, BIconCheckSquare, BIconQuestionSquare,   } from 'bootstrap-vue'
@@ -188,6 +195,7 @@ export default {
   layout: 'EmptyLayout',
   data: () => ({
     RU, EN,
+    loading: true,
     personData:{},
     personDataEn:{},
     imgFile: '',
@@ -205,19 +213,22 @@ export default {
   computed:{
     
   },
-  created(){ 
+  async created(){
+
+    await this.$store.dispatch('fatchPersonData')
+
     this.setData()
     this.setReport()
   },
-  async mounted(){
-    
+  mounted(){
+    this.loading = false
     
   },
   validations:{
     
   },
   methods:{
-    localeRout,transliterate,yTransliterate,
+    localeRout,transliterate,
     addReport(){
       const speakerPerson = {
         surname:this.personData.surname,
@@ -324,9 +335,34 @@ export default {
       delete this.personData.locality; 
       delete this.personData.isConsent;
       delete this.personData.password;
+      delete this.personData.isEmailConfirmed;
+      delete this.personData.avatar;
       delete this.personDataEn.locality; 
       delete this.personDataEn.isConsent;
       delete this.personDataEn.password;
+      delete this.personDataEn.isEmailConfirmed;
+      delete this.personDataEn.avatar;
+
+      this.personData = {
+        surname: this.personData.surname,
+        name: this.personData.name,
+        patronymic: this.personData.patronymic,
+        organization: this.personData.organization,
+        position: this.personData.position,
+        place: this.personData.place,
+        email: this.personData.email,
+        telephone: this.personData.telephone,
+      }
+      this.personDataEn = {
+        surname: this.personDataEn.surname,
+        name: this.personDataEn.name,
+        patronymic: this.personDataEn.patronymic,
+        organization: this.personDataEn.organization,
+        position: this.personDataEn.position,
+        place: this.personDataEn.place,
+        email: this.personDataEn.email,
+        telephone: this.personDataEn.telephone,
+      }
 
       this.fileName = this.$t('personarea_select_file')
     },

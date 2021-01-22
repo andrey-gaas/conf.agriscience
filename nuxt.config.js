@@ -8,7 +8,7 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: '//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons' },
+      { rel: 'stylesheet', href: '//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic' },
       { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Arsenal:wght@400;700&family=Ubuntu:wght@300;400;700&display=swap' },
     ]
@@ -17,7 +17,6 @@ export default {
   css: [
     'bootstrap-css-only/css/bootstrap.min.css',
     'mdbvue/lib/css/mdb.min.css',
-    { src: 'vue-material/dist/vue-material.min.css', lang: 'css' },
     { src: '~/assets/style/theme.scss', lang: 'scss' },
     { src: '~/assets/style/main.scss', lang: 'scss' }
     
@@ -79,7 +78,7 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-    vendor: ['vue-material'],
+    
     extend (config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({

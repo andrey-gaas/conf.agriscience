@@ -7,6 +7,9 @@ body, #__nuxt, #__layout{
   flex-direction: column;
   flex-grow: 1;
 }
+body{
+  min-height: 100vh;
+}
 
 li{
   list-style: none;

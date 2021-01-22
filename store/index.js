@@ -1,4 +1,8 @@
+import Axios from 'axios';
+
 export const state = () => ({
+  loginData: {},
+  isAuth: false,
   personData:{},
   personDataEn:{},
   personAboutMeRu:'',
@@ -233,6 +237,9 @@ export const mutations = {
   },
   logState(state){
     console.log(state)
+  },
+  setLoginData(s, data){
+    s.loginData = data
   }
 }
 
@@ -273,10 +280,25 @@ export const getters = {
   getReportInd(s){
     return s.indEditReport
   },
+  getUserToken(s){
+    return s.isAuth
+  },
+  getLoginData(s){
+    return s.loginData
+  }
 }
 
 export const actions = {
-  
+  async fatchPersonData({commit,getters}, item){
+    let logData = getters.getLoginData
+
+    await this.$axios.get('/api/user/', logData)
+      .then( res => {
+        console.log(res);
+        commit('setPersonData', res.data)
+      })
+      .catch(error => console.log(error.response.data));
+  }
 }
 export const modules = {
   

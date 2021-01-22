@@ -257,7 +257,7 @@ export default {
       if(this.$v.formSet.$invalid){
         return
       }
-      //this.clearLacalStorage()
+      this.clearLacalStorage()
 
       if(this.$i18n.locale == 'en'){ 
         this.$store.commit('setPersonDataEn', this.formSet);
@@ -265,12 +265,9 @@ export default {
         this.$store.commit('setPersonData', this.formSet);
       }
 
-      this.$router.push(this.localeRout('/personarea'))
-
       this.$axios.post('/api/auth/registration', this.formSet)
         .then(res => {
           if (res.data === 'OK') {
-            this.$store.commit('setPersonData', this.formSet);
             this.$router.push(this.localeRout('/personarea'));
           }
         })

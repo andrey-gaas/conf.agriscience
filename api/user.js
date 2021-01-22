@@ -14,13 +14,14 @@ router.get('/', (req, res) => {
     .findOne({ email: req.user.email })
     .then(user => {
       res.send({
-        email: user.email,
-        telephone: user.telephone,
-        name: user.name,
         surname: user.surname,
-        organization: user.organization,
+        name: user.name,
         patronymic: user.patronymic,
+        organization: user.organization,
         position: user.position,
+        place: user.place,
+        telephone: user.telephone,
+        email: user.email,
         isEmailConfirmed: user.isEmailConfirmed,
         avatar: user.avatar,
       });

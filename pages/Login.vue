@@ -112,7 +112,7 @@ export default {
       if(this.$v.formSet.$invalid){
         return;
       }
-
+      this.$store.commit('setLoginData', this.formSet)
       this.$axios.post('/api/auth/login', this.formSet)
         .then(res => console.log(res))
         .catch(error => alert(error.response.data));

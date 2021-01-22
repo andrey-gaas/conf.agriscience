@@ -136,7 +136,7 @@ export default {
     localize(speaker){
       
       let speakerData = {...speaker}
-      if(this.loc == 'en'){
+      if(this.loc == 'ru'){
         for(let el in speakerData){
           if( (el == 'surname') || (el == 'name') || (el == 'patronymic')){
             speakerData[el] = this.transliterate()(speakerData[el])
@@ -162,11 +162,11 @@ export default {
       let enPerson, ruPerson;
 
       if(this.loc == 'ru'){
-        enPerson = this.formSet
-        ruPerson = this.localize({...enPerson})
-      }else{
         ruPerson = this.formSet
         enPerson = this.localize({...ruPerson})
+      }else{
+        enPerson = this.formSet
+        ruPerson = this.localize({...enPerson})
       }
 
       if(this.formSet.num != undefined){
@@ -211,7 +211,7 @@ export default {
 }
 
 .wrap__edit-author{
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   bottom: 0;

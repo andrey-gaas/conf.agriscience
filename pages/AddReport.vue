@@ -19,24 +19,13 @@
                 <th>№</th>
                 <th>ФИО</th>
                 <th class='m-0 px-0'>Докладчик</th>
-                <th class='m-0 px-0'></th>
                 <th>Ред./ Удал.</th>
               </tr>
               <tr
                 v-for="(item, ind) of author" :key='ind'
               >
-                <th>{{ind+1}}</th>
-                <th>{{item.DOB}}</th>
-                <th class="p-0">
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" :id="ind"
-                      v-model="item.isSpeaker"
-                      @click="toggleSpeaker(ind)"
-                    >
-                    <label class="custom-control-label" :for="ind"></label>
-                  </div>
-                </th>
-                <th class="p-0">
+                <th class='th-1 p-0'>
+                  <span class="mr-3">{{ind+1}}</span>
                   <mdb-btn-group vertical>
                     <mdb-btn class="m-0 px-2 py-1" color='primary' @click="upAuthor(ind)">
                       <BIconCaretUpFill/>
@@ -46,12 +35,22 @@
                     </mdb-btn>
                   </mdb-btn-group>
                 </th>
-                <th class="p-0">
-                  <mdb-btn class="m-0 px-1 py-1" color="warning" @click="startEditAuthor(ind, 'ru')">
-                    <BIconPencilSquare/>
+                <th>{{item.DOB}}</th>
+                <th class="p-3">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" :id="ind"
+                      v-model="item.isSpeaker"
+                      @click="toggleSpeaker(ind)"
+                    >
+                    <label class="custom-control-label size_lg" :for="ind"></label>
+                  </div>
+                </th>
+                <th class="p-2">
+                  <mdb-btn class="m-0 p-2" color="warning" @click="startEditAuthor(ind, 'ru')">
+                    <BIconPencilSquare class="icon-size-lg"/>
                   </mdb-btn>
-                  <mdb-btn class="m-0 px-1 py-1" color="danger" @click="deletAuthor(ind)">
-                    <BIconTrashFill/>
+                  <mdb-btn class="m-0 p-2" color="danger" @click="deletAuthor(ind)">
+                    <BIconTrashFill class="icon-size-lg"/>
                   </mdb-btn>
                 </th>
               </tr>
@@ -69,7 +68,7 @@
             >
           </div>
           <div class="form-group">
-            <label for="Annotations" class="h5">Аннотации</label>
+            <label for="Annotations" class="h5">Аннотация</label>
             <mdb-input outline type="textarea" :rows='5' id='Annotations' class='mt-0'
               v-model="reportText"
             />
@@ -85,7 +84,7 @@
             </mdb-tbl-head>
             <mdb-tbl-body>
               <tr>
-                <th class="th-1 px-4">№</th>
+                <th class="">№</th>
                 <th>ФИО</th>
                 <th class='m-0 px-2'>Докладчик</th>
                 
@@ -108,20 +107,20 @@
                 <th>{{item.DOB}}</th>
                 <th class="p-3">
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" :id="ind"
+                    <input type="checkbox" class="custom-control-input" :id="ind+'en'"
                       v-model="item.isSpeaker"
                       @click="toggleSpeaker(ind)"
                     >
-                    <label class="custom-control-label" :for="ind"></label>
+                    <label class="custom-control-label size_lg" :for="ind+'en'"></label>
                   </div>
                 </th>
               
-                <th class="p-0">
-                  <mdb-btn class="m-0 px-1 py-1" color="warning" @click="startEditAuthor(ind, 'en')">
-                    <BIconPencilSquare/>
+                <th class="p-2">
+                  <mdb-btn class="m-0 p-2" color="warning" @click="startEditAuthor(ind, 'en')">
+                    <BIconPencilSquare class="icon-size-lg"/>
                   </mdb-btn>
-                  <mdb-btn class="m-0 px-1 py-1" color="danger" @click="deletAuthor(ind)">
-                    <BIconTrashFill/>
+                  <mdb-btn class="m-0 p-2" color="danger" @click="deletAuthor(ind)">
+                    <BIconTrashFill class="icon-size-lg"/>
                   </mdb-btn>
                 </th>
               </tr>
@@ -139,7 +138,7 @@
             >
           </div>
           <div class="form-group">
-            <label for="Annotations" class="h5">Аннотации</label>
+            <label for="Annotations" class="h5">Аннотация</label>
             <mdb-input outline type="textarea" :rows='5' id='Annotations' class='mt-0'
               v-model="reportTextEn"
             />
@@ -272,6 +271,8 @@ export default {
     },
     toggleSpeaker(ind){
       this.$store.commit('toggleSpeaker', ind)
+
+      this.setAuthor()
     },
     closeEdit(){
       this.isAuthorEdit = false
@@ -281,7 +282,6 @@ export default {
     },
     setAuthor(){
       //console.log(this.speakers);
-      //this.speakers = this.$store.getters.getSpeakers
       this.author = this.speakers.map((el, ind)=>{
         return {
           DOB: `${el.surname} ${el.name[0]}. ${el.patronymic[0] ? el.patronymic[0]+'.': ''}`,
@@ -294,7 +294,6 @@ export default {
           isSpeaker: el.isSpeaker,
         }
       })
-      console.log(this.author,this.authorEn);
     },
     setReport(){
       this.reportText = this.$store.getters.getReportText
@@ -353,5 +352,19 @@ export default {
 .th-1{
   width: 70px;
   text-align: right;
+}
+.size_lg{
+  &::before{
+    height: 20px;
+    width: 20px;
+  }
+  &::after{
+    height: 20px;
+    width: 20px;
+  }
+}
+.icon-size-lg{
+  width: 20px;
+  height: 20px;
 }
 </style>
