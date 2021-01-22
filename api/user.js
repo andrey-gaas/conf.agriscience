@@ -43,7 +43,10 @@ router.put('/', (req, res) => {
     .then(() => {
       res.send('OK');
     })
-    .catch(err => console.log('My Error: ', err.message));
+    .catch(err => {
+      console.log(err);
+      res.status(500).send('Server Error');
+    });
 });
 
 module.exports = router;
