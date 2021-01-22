@@ -17,4 +17,14 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+
+  Mongo.database
+    .db('bibcongress')
+    .collection('reports')
+    .findOne({ id: +id })
+    .then(report => res.send(report));
+});
+
 module.exports = router;
