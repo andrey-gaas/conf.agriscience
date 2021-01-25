@@ -19,7 +19,7 @@
                 <th>№</th>
                 <th>ФИО</th>
                 <th class='m-0 px-0'>Докладчик</th>
-                <th>Ред./ Удал.</th>
+                <th>Ред./ Уд.</th>
               </tr>
               <tr
                 v-for="(item, ind) of author" :key='ind'
@@ -88,7 +88,7 @@
                 <th>ФИО</th>
                 <th class='m-0 px-2'>Докладчик</th>
                 
-                <th>Ред./ Удал.</th>
+                <th>Ред./ Уд.</th>
               </tr>
               <tr
                 v-for="(item, ind) of authorEn" :key='ind'
@@ -147,6 +147,26 @@
       </mdb-row>
       <mdb-row class="m-0" p='2'>
         <mdb-col col="12" sm='12' md='6' lg='6' class=''>
+          <span class='h6 d-flex red-text'
+            v-if="validData.isCheck && !validData.isCountAuthor"
+          >
+            Укажите хотя бы одного автора
+          </span>
+          <span class='h6 d-flex red-text'
+            v-if="validData.isCheck && !validData.isCountSpeaker"
+          >
+            Укажите хотя бы одного докладчика
+          </span>
+          <span class='h6 d-flex red-text'
+            v-if="validData.isCheck && !validData.isTitle"
+          >
+            Укажите название доклада
+          </span>
+          <span class='h6 d-flex red-text'
+            v-if="validData.isCheck && !validData.isAnnotation"
+          >
+            Добавьте аннотацию
+          </span>
           <mdb-btn class="" color="primary" @click="saveReport()">
             Сохранить
           </mdb-btn>
@@ -178,6 +198,12 @@
         :loc='locale'
       />
     </mdb-container>
+    <transition name="toast">
+      <Toast
+        v-if="isShowTost"
+        :message='toastMessage'
+      />
+    </transition>
   </div>
 </template>
 
@@ -186,6 +212,7 @@ import { RU, EN } from '@/constants/language';
 import {localeRout} from '@/assets/utils'
 
 import FormEditAuthor from '@/components/FormEditAuthor';
+import Toast from '@/components/Toast';
 import { BIcon, BIconCaretDownFill, BIconCaretUpFill, BIconTrashFill, BIconPencilSquare } from 'bootstrap-vue'
 import { mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody, mdbIcon  } from 'mdbvue';
 
@@ -221,6 +248,16 @@ export default {
     reportTextEn:'',
     reportNameEn:'',
     locale:'',
+    countSpeakers: 0,
+    validData:{
+      isCheck: false,
+      isCountAuthor: false,
+      isCountSpeaker: false,
+      isTitle: false,
+      isAnnotation: false,
+    },
+    toastMessage: 'asdf',
+    isShowTost: false,
 
   }),
   computed:{
@@ -234,10 +271,26 @@ export default {
   watch:{
     speakers(){
       this.setAuthor()
+
+      this.validation()
     },
     speakersEn(){
       this.setAuthor()
-    }
+
+      this.validation()
+    },
+    reportText(){
+      this.validation()
+    },
+    reportName(){
+      this.validation()
+    },
+    reportTextEn(){
+      this.validation()
+    },
+    reportNameEn(){
+      this.validation()
+    },
   },
   created(){
     this.setAuthor()
@@ -246,16 +299,21 @@ export default {
   mounted(){
     
   },
-  validations:{
-    
-  },
   methods:{
     localeRout,
+    showTost(text){
+      this.$store.commit('setToastMsg', text)
+      this.isShowTost = true
+      setTimeout(()=>{this.isShowTost = false}, 3000)
+    },
     cancelReport(){
       this.$store.commit('cleanDataReport')
       this.$router.push(this.localeRout('/personarea'))
     },
-    saveReport(){
+    async saveReport(){
+      this.validData.isCheck = true
+      if(!this.validation()) return
+      
       const ind = this.$store.getters.getReportInd
       const speakerList = this.$store.getters.getSpeakers
       const report = {
@@ -265,14 +323,31 @@ export default {
         speakerList
       }
       
-      this.$store.commit('saveReport', {report, ind})
-
-      this.$router.push(this.localeRout('/personarea'))
+      try {
+        if(ind == this.$store.getters.getReportList.length){
+          await this.$store.dispatch('addReportBD', {report})
+        }else{
+          await this.$store.dispatch('editReportBD', {report})
+        }
+        this.$store.commit('saveReport', {report, ind})
+        this.$router.push(this.localeRout('/personarea'))
+      } catch (e) {
+        this.showTost(e.message)
+      }
+      
+    },
+    howCountSpeaker(){
+      let count = this.author.reduce((acc, el) => {
+        return (el.isSpeaker == true) ? ++acc : acc
+      }, 0)
+      return count
     },
     toggleSpeaker(ind){
       this.$store.commit('toggleSpeaker', ind)
 
       this.setAuthor()
+
+      this.validation()
     },
     closeEdit(){
       this.isAuthorEdit = false
@@ -281,16 +356,15 @@ export default {
       this.isAuthorCrate = false
     },
     setAuthor(){
-      //console.log(this.speakers);
       this.author = this.speakers.map((el, ind)=>{
         return {
-          DOB: `${el.surname} ${el.name[0]}. ${el.patronymic[0] ? el.patronymic[0]+'.': ''}`,
+          DOB: `${el.surname} ${el.name[0]}. ${el.patronymic ? el.patronymic[0]+'.': ''}`,
           isSpeaker: el.isSpeaker,
         }
       })
       this.authorEn = this.speakersEn.map((el, ind)=>{
         return {
-          DOB: `${el.surname} ${el.name[0]}. ${el.patronymic[0] ? el.patronymic[0]+'.': ''}`,
+          DOB: `${el.surname} ${el.name[0]}. ${el.patronymic ? el.patronymic[0]+'.': ''}`,
           isSpeaker: el.isSpeaker,
         }
       })
@@ -328,13 +402,41 @@ export default {
       this.locale = loc
       this.isAuthorCrate = true
     },
+    validation(){
+      let isValid = true
+      if( this.author.length > 0 ) this.validData.isCountAuthor = true
+      else{ 
+        this.validData.isCountAuthor = false
+        isValid = false
+      }
 
+      if( this.howCountSpeaker() > 0 ) this.validData.isCountSpeaker = true
+      else {
+        isValid = false
+        this.validData.isCountSpeaker = false
+      }
+
+      if( this.reportName || this.reportNameEn) this.validData.isTitle = true
+      else {
+        isValid = false
+        this.validData.isTitle = false
+      }
+
+      if( this.reportText || this.reportTextEn) this.validData.isAnnotation = true
+      else {
+        isValid = false
+        this.validData.isAnnotation = false
+      }
+
+      return isValid
+
+    },
     log(el){
       console.log(el);
     }
   },
   components:{
-    FormEditAuthor, 
+    FormEditAuthor, Toast,
     BIcon, BIconCaretDownFill, BIconCaretUpFill, BIconTrashFill, BIconPencilSquare,
     mdbContainer, mdbInput, mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody
   }
@@ -366,5 +468,16 @@ export default {
 .icon-size-lg{
   width: 20px;
   height: 20px;
+}
+
+.toast-enter ,.toast-leave-to{
+  transform: translateY(-100%);
+  transition: all .3s ease;
+  opacity: 0;
+}
+.toast-enter-to, .toast-leave{
+  transform: translateY(0);
+  transition: all .3s ease;
+  opacity: 1;
 }
 </style>

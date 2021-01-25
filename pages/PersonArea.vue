@@ -15,7 +15,9 @@
         <mdb-row class="mb-4 col-12 mx-0 px-0">
           <mdb-col col="12" sm='12' md='6' lg='6' class='mb-sm-4 mb-4 mb-lg-0 mb-md-0'>
             <div class="person__img">
-              <div class="person-card_img rounded-circle shadow-lg my-3 mx-0" style=""></div>
+              <div class="person-card_img rounded-circle shadow-lg my-3 mx-0" 
+                :style="{'background-image': `url(${imgSrc})`}">
+              </div>
             </div>
             <span>{{$t('personarea_download_photo')}}</span>
             <div class="input-group mb-3">
@@ -39,13 +41,13 @@
             >{{$t('personarea_download')}}</mdb-btn>
             <span
               class="h6 d-flex my-2 red-text"
-              v-if="isEmailСonfirm"
+              v-if="!isEmailСonfirm"
             >
               {{$t('personarea_no_confirm')}}
             </span>
             <span
               class="h6 d-flex my-2 green-text"
-              v-if="!isEmailСonfirm"
+              v-if="isEmailСonfirm"
             >
               {{$t('personarea_confirm')}}
             </span>
@@ -73,9 +75,9 @@
                 <tr
                   v-for="(item, key) in personReport" :key='key'
                 >
-                  <th>{{item.title}}</th>
+                  <th class="p-2 align-middle">{{item.title}}</th>
                   
-                  <th>
+                  <th class="p-2 align-middle">
                     <BIconXSquareFill
                       class="report__status_icon red-text"
                       v-if="item.status == -1"
@@ -89,7 +91,7 @@
                       v-if="item.status == 0"
                     />
                   </th>
-                  <th>
+                  <th class="p-0 align-middle">
                     <mdb-btn class="m-1 px-3 py-2" color='primary'
                       v-if="item.status !== 1"
                       @click="editReport(item.ind)"
@@ -207,25 +209,34 @@ export default {
     isEditAboutMeEn: false,
     aboutMeRu:'',
     aboutMeEn:'',
-    isEmailСonfirm: true,
 
   }),
   computed:{
     
   },
   async created(){
+    if(!this.$store.getters.getLoadData){
+      await this.$store.dispatch('fetchPersonData')
+      await this.$store.dispatch('fetchPersonReports')
 
-    await this.$store.dispatch('fatchPersonData')
-
+      this.$store.commit('toggleLoadData')
+    }
     this.setData()
     this.setReport()
   },
   mounted(){
-    this.loading = false
+    setTimeout(() => {
+      this.loading = false
+    }, 2000);
     
   },
-  validations:{
-    
+  computed:{
+    isEmailСonfirm(){
+      return this.$store.getters.getEmailСonfirm
+    },
+    imgSrc(){
+      return this.$store.getters.getImgSrc
+    }
   },
   methods:{
     localeRout,transliterate,
@@ -296,6 +307,8 @@ export default {
       }
     },
     submitFile(){
+      //Сделать рабочию версию
+      console.log('TO DO!!');
       let formData = new FormData();
       formData.append('file', this.imgFile);
 
@@ -332,38 +345,13 @@ export default {
 
       this.localize()
 
-      delete this.personData.locality; 
-      delete this.personData.isConsent;
-      delete this.personData.password;
       delete this.personData.isEmailConfirmed;
       delete this.personData.avatar;
-      delete this.personDataEn.locality; 
-      delete this.personDataEn.isConsent;
-      delete this.personDataEn.password;
+    
       delete this.personDataEn.isEmailConfirmed;
       delete this.personDataEn.avatar;
 
-      this.personData = {
-        surname: this.personData.surname,
-        name: this.personData.name,
-        patronymic: this.personData.patronymic,
-        organization: this.personData.organization,
-        position: this.personData.position,
-        place: this.personData.place,
-        email: this.personData.email,
-        telephone: this.personData.telephone,
-      }
-      this.personDataEn = {
-        surname: this.personDataEn.surname,
-        name: this.personDataEn.name,
-        patronymic: this.personDataEn.patronymic,
-        organization: this.personDataEn.organization,
-        position: this.personDataEn.position,
-        place: this.personDataEn.place,
-        email: this.personDataEn.email,
-        telephone: this.personDataEn.telephone,
-      }
-
+    
       this.fileName = this.$t('personarea_select_file')
     },
     startEditAboutMe(loc){

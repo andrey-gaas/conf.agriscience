@@ -7,6 +7,7 @@ export const state = () => ({
   personDataEn:{},
   personAboutMeRu:'',
   personAboutMeEn:'',
+  toastMessag: '',
   speakerList:[
   ],
   speakerListEn:[
@@ -16,6 +17,9 @@ export const state = () => ({
   reportTextEn:'',
   reportNameEn:'',
   indEditReport: 0,
+  isLoadData: false,
+  isEmailСonfirm: false,
+  imgSrc:'',
   reportList:[
     { title:'Доклад',
       annotations: 'Небольшая аннотация',
@@ -155,11 +159,26 @@ export const mutations = {
   setPersonData(state, userData){
     state.personData = userData
   },
+  setToastMsg(state, text){
+    state.toastMessag = text
+  },
+  setEmailСonfirm(state, res){
+    state.isEmailСonfirm = res
+  },
+  setImgSrc(state, text){
+    state.imgSrc = text
+  },
   setPersonDataEn(state, userData){
     state.personDataEn = userData
   },
   setIndReport(state, ind){
     state.indEditReport = ind
+  },
+  serReportList(state, list){
+    state.reportList = list
+    state.reportListEn = list
+    //Испрваить когда появиться загрузка английский данных пользователя
+    console.log('TO DO!!!');
   },
   setPersonAboutMe(state, {aboutMe, locale}){
     if(locale == 'ru'){
@@ -224,7 +243,6 @@ export const mutations = {
   toggleSpeaker(state, ind){
     state.speakerList[ind].isSpeaker = !state.speakerList[ind].isSpeaker
     state.speakerListEn[ind].isSpeaker = !state.speakerListEn[ind].isSpeaker
-    console.log(state.speakerList[ind].isSpeaker,state.speakerListEn[ind].isSpeaker);
   },
   cleanDataReport(s){
     s.speakerList = []
@@ -240,6 +258,9 @@ export const mutations = {
   },
   setLoginData(s, data){
     s.loginData = data
+  },
+  toggleLoadData(s){
+    s.isLoadData = true
   }
 }
 
@@ -258,6 +279,15 @@ export const getters = {
   },
   getSpeakers(state){
     return state.speakerList
+  },
+  getToastMsg(state){
+    return state.toastMessag
+  },
+  getEmailСonfirm(state){
+    return state.isEmailСonfirm
+  },
+  getImgSrc(state){
+    return state.imgSrc
   },
   getSpeakersEn(state){
     return state.speakerListEn
@@ -285,19 +315,39 @@ export const getters = {
   },
   getLoginData(s){
     return s.loginData
+  },
+  getLoadData(s){
+    return s.isLoadData
   }
 }
 
 export const actions = {
-  async fatchPersonData({commit,getters}, item){
-    let logData = getters.getLoginData
-
-    await this.$axios.get('/api/user/', logData)
+  async fetchPersonData({commit}){
+    await this.$axios.get('/api/user/')
       .then( res => {
-        console.log(res);
         commit('setPersonData', res.data)
+        commit('setEmailСonfirm', res.data.isEmailConfirmed)
+        commit('setImgSrc', res.data.avatar)
       })
       .catch(error => console.log(error.response.data));
+  },
+  async fetchPersonReports({commit}){
+    await this.$axios.get('/api/reports').
+      then( res => {
+        commit('serReportList', res.data)
+      })
+  },
+  async addReportBD({}, {report}){
+    await this.$axios.post('/api/reports', report)
+  },
+  async editReportBD({getters}, {report}){
+    
+    let id = getters.getReportList[getters.getReportInd]._id;
+        //reportBD = {...getters.getReportList[getters.getReportInd], ...report};
+
+        
+    
+    await this.$axios.put('/api/reports/'+id, report)
   }
 }
 export const modules = {

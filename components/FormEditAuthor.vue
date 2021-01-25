@@ -153,7 +153,6 @@ export default {
       return speakerData
     },
     formSubmit(){
-      console.log(this.loc);
       this.$v.formSet.$touch()
       if(this.$v.formSet.$invalid){
         return
@@ -177,7 +176,6 @@ export default {
       }else{
         this.$store.commit('addSpeaker', {speakerPerson:ruPerson, speakerPersonEn:enPerson})
       }
-      console.log(ruPerson, enPerson);
       this.closeEdit()
     },
     
