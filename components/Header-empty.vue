@@ -48,7 +48,7 @@ export default {
     setLocale,
     localeRout,
     testFetch() {
-      this.$axios.put('/api/reports/1', { title: 'TITLE' })
+      this.$axios.delete('/api/reports/4')
         .then(res => console.log(res))
         .catch(error => console.log(error.response.data));
     }
