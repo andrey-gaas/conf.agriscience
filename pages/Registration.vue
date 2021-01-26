@@ -184,7 +184,7 @@
 
 <script>
 import { RU, EN } from '@/constants/language';
-import {localeRout} from '@/assets/utils'
+import {localeRout, transliterate} from '@/assets/utils'
 
 import { loadYmap } from 'vue-yandex-maps'
 import { helpers, required, numeric, email, minLength } from 'vuelidate/lib/validators'
@@ -249,7 +249,7 @@ export default {
     }
   },
   methods:{
-    localeRout,
+    localeRout, transliterate,
 
     async formSubmit(){
       await this.validYmap();
@@ -259,19 +259,61 @@ export default {
       }
       this.clearLacalStorage()
 
-      if(this.$i18n.locale == 'en'){ 
-        this.$store.commit('setPersonDataEn', this.formSet);
+      let personDataReg;
+      if(this.$i18n.locale == 'en'){
+        personDataReg = {
+          surname: this.transliterate()(this.formSet.surname, true),
+          surnameEn: this.formSet.surname,
+          name: this.transliterate()(this.formSet.name, true),
+          nameEn: this.formSet.name,
+          patronymic: this.transliterate()(this.formSet.patronymic, true),
+          patronymicEn: this.formSet.patronymic,
+          organization: '',
+          organizationEn: this.formSet.organization,
+          position: '',
+          positionEn: this.formSet.position,
+          place: '',
+          placeEn: this.formSet.place,
+          email: this.formSet.email,
+          telephone: this.formSet.telephone,
+          password: this.formSet.password,
+        }
       }else{
-        this.$store.commit('setPersonData', this.formSet);
+        personDataReg = {
+          surname: this.formSet.surname,
+          surnameEn: this.transliterate()(this.formSet.surname),
+          name: this.formSet.name,
+          nameEn: this.transliterate()(this.formSet.name),
+          patronymic: this.formSet.patronymic,
+          patronymicEn: this.transliterate()(this.formSet.patronymic),
+          organization: this.formSet.organization,
+          organizationEn: '',
+          position: this.formSet.position,
+          positionEn: '',
+          place: this.formSet.place,
+          placeEn: '',
+          email: this.formSet.email,
+          telephone: this.formSet.telephone,
+          password: this.formSet.password,
+        }
       }
+      
+      console.log(personDataReg);
 
-      this.$axios.post('/api/auth/registration', this.formSet)
-        .then(res => {
-          if (res.data === 'OK') {
-            this.$router.push(this.localeRout('/personarea'));
-          }
-        })
-        .catch(error => console.log(error.response.data));
+      // await this.$axios.post('/api/auth/registration', this.formSet)
+      //   .then(res => {
+      //     if (res.data === 'OK') {
+
+      //       if(this.$i18n.locale == 'en'){ 
+      //         this.$store.commit('setPersonDataEn', this.formSet);
+      //       }else{
+      //         this.$store.commit('setPersonData', this.formSet);
+      //       }
+
+      //       this.$router.push(this.localeRout('/personarea'));
+      //     }
+      //   })
+      //   .catch(error => console.log(error.response.data));
     },
     saveInLocalStorage(){
       //Сохроняем данные в localStorage,

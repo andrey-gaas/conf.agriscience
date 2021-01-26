@@ -316,11 +316,15 @@ export default {
       
       const ind = this.$store.getters.getReportInd
       const speakerList = this.$store.getters.getSpeakers
+      const speakerListEn = this.$store.getters.getSpeakersEn
       const report = {
         title: this.reportName,
+        titleEn: this.reportNameEn,
         annotations: this.reportText,
+        annotationsEn: this.reportTextEn,
         status: 0,
-        speakerList
+        speakerList,
+        speakerListEn,
       }
       
       try {

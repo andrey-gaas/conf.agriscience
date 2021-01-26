@@ -159,6 +159,9 @@ export const mutations = {
   setPersonData(state, userData){
     state.personData = userData
   },
+  setPersonDataEn(state, userData){
+    state.personDataEn = userData
+  },
   setToastMsg(state, text){
     state.toastMessag = text
   },
@@ -168,17 +171,28 @@ export const mutations = {
   setImgSrc(state, text){
     state.imgSrc = text
   },
-  setPersonDataEn(state, userData){
-    state.personDataEn = userData
-  },
   setIndReport(state, ind){
     state.indEditReport = ind
   },
   serReportList(state, list){
-    state.reportList = list
-    state.reportListEn = list
-    //Испрваить когда появиться загрузка английский данных пользователя
-    console.log('TO DO!!!');
+    state.reportList = list.map(el =>{
+      return {
+        title: el.title,
+        annotations: el.annotations,
+        status: el.status,
+        speakerList: el.speakerList,
+        id: el.id,
+      }
+    })
+    state.reportListEn = list.map(el =>{
+      return {
+        title: el.titleEn,
+        annotations: el.annotationsEn,
+        status: el.status,
+        speakerList: el.speakerListEn,
+        id: el.id,
+      }
+    })
   },
   setPersonAboutMe(state, {aboutMe, locale}){
     if(locale == 'ru'){
@@ -194,7 +208,20 @@ export const mutations = {
     state.reportText = text
   },
   saveReport(state, {report, ind}){
-    state.reportList.splice(ind, 1, report)
+    const ruReport = {
+      title: report.title,
+      annotations: report.annotations, 
+      status: report.status,
+      speakerList: report.speakerList,
+    }
+    const enReport = {
+      title: report.titleEn,
+      annotations: report.annotationsEn, 
+      status: report.status,
+      speakerList: report.speakerListEn,
+    }
+    state.reportList.splice(ind, 1, ruReport)
+    state.reportListEn.splice(ind, 1, enReport)
   },
   upSpeaker(state, ind){
     if(ind == 0) return
@@ -295,6 +322,9 @@ export const getters = {
   getReportList(state){
     return state.reportList
   },
+  getReportListEn(state){
+    return state.reportListEn
+  },
   getReportText(s){
     return s.reportText
   },
@@ -326,6 +356,8 @@ export const actions = {
     await this.$axios.get('/api/user/')
       .then( res => {
         commit('setPersonData', res.data)
+        commit('setPersonAboutMe', {aboutMe: res.data.aboutMe, locale:'ru'})
+        commit('setPersonAboutMe', {aboutMe: res.data.aboutMeEn, locale:'en'})
         commit('setEmailСonfirm', res.data.isEmailConfirmed)
         commit('setImgSrc', res.data.avatar)
       })
@@ -341,13 +373,12 @@ export const actions = {
     await this.$axios.post('/api/reports', report)
   },
   async editReportBD({getters}, {report}){
-    
-    let id = getters.getReportList[getters.getReportInd]._id;
-        //reportBD = {...getters.getReportList[getters.getReportInd], ...report};
-
-        
+    let id = getters.getReportList[getters.getReportInd].id
     
     await this.$axios.put('/api/reports/'+id, report)
+  },
+  async sevePersonAboutMeBD({}, aboutData){
+    await this.$axios.put('/api/user/', aboutData)
   }
 }
 export const modules = {

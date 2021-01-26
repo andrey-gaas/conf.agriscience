@@ -180,6 +180,12 @@
       </mdb-row>
       
     </mdb-container>
+    <transition name="toast">
+      <Toast
+        v-if="isShowTost"
+        :message='toastMessage'
+      />
+    </transition>
   </div>
 </template>
 
@@ -188,6 +194,7 @@
 import { RU, EN } from '@/constants/language';
 import {localeRout, transliterate,} from '@/assets/utils'
 
+import Toast from '@/components/Toast';
 import { mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody } from 'mdbvue';
 import { BIcon, BIconPencilSquare, BIconXSquareFill, BIconCheckSquare, BIconQuestionSquare,   } from 'bootstrap-vue'
 
@@ -209,6 +216,7 @@ export default {
     isEditAboutMeEn: false,
     aboutMeRu:'',
     aboutMeEn:'',
+    isShowTost: false,
 
   }),
   computed:{
@@ -216,19 +224,19 @@ export default {
   },
   async created(){
     if(!this.$store.getters.getLoadData){
-      await this.$store.dispatch('fetchPersonData')
-      await this.$store.dispatch('fetchPersonReports')
-
-      this.$store.commit('toggleLoadData')
+      try {
+        await this.$store.dispatch('fetchPersonData')
+        await this.$store.dispatch('fetchPersonReports')
+        this.$store.commit('toggleLoadData')
+      } catch (e) {
+        this.showTost(e.message)
+      }
     }
     this.setData()
     this.setReport()
   },
   mounted(){
-    setTimeout(() => {
-      this.loading = false
-    }, 2000);
-    
+    this.loading = false
   },
   computed:{
     isEmailСonfirm(){
@@ -240,6 +248,11 @@ export default {
   },
   methods:{
     localeRout,transliterate,
+    showTost(text){
+      this.$store.commit('setToastMsg', text)
+      this.isShowTost = true
+      setTimeout(()=>{this.isShowTost = false}, 3000)
+    },
     addReport(){
       const speakerPerson = {
         surname:this.personData.surname,
@@ -293,17 +306,44 @@ export default {
       this.$router.push(this.localeRout('/addreport'))
     },
     setReport(){
-      const reportList = this.$store.getters.getReportList
+      const reportList = this.$store.getters.getReportList,
+            reportListEn = this.$store.getters.getReportListEn;
+      console.log(reportList, reportListEn);
       
       if( reportList.length == 0){this.personReport[0].title = this.$t('personarea_no_apply') }
       else{
-        this.personReport = reportList.map((el, ind) => {
-          return {
-            title: el.title,
-            status: el.status,
-            ind,
+        this.personReport.pop()
+        for(let i = 0; i < reportList.length; i++){
+          if(this.$i18n.locale == 'en'){
+            if(reportListEn[i].title){
+              this.personReport.push({
+                title: reportListEn[i].title,
+                status: reportListEn[i].status,
+                ind: i,
+              })
+            }else{
+              this.personReport.push({
+                title: reportList[i].title,
+                status: reportList[i].status,
+                ind: i,
+              })
+            }
+          }else{
+            if(reportList[i].title){
+              this.personReport.push({
+                title: reportList[i].title,
+                status: reportList[i].status,
+                ind: i,
+              })
+            }else{
+              this.personReport.push({
+                title: reportListEn[i].title,
+                status: reportListEn[i].status,
+                ind: i,
+              })
+            }
           }
-        })
+        }
       }
     },
     submitFile(){
@@ -333,9 +373,6 @@ export default {
     setFileName(){
       this.imgFile = this.$refs.fileInput.files[0]
       this.fileName = this.$refs.fileInput.files[0].name
-    },
-    setAboutMe(){
-      this.$store.commit('setPersonAboutMe', this.personAboutMe);
     },
     setData(){
       this.personAboutMeRu = this.$store.getters.getPersonAboutMeRu
@@ -371,19 +408,26 @@ export default {
         
       }
     },
-    setPersonAboutMe(loc){
-      if(loc == 'ru'){ this.personAboutMeRu = this.aboutMeRu
-        this.$store.commit('setPersonAboutMe', {aboutMe: this.aboutMeRu, locale:loc});
-        this.isEditAboutMeRu = false
-      }
-      else{ this.personAboutMeEn = this.aboutMeEn
-        this.$store.commit('setPersonAboutMe', {aboutMe: this.aboutMeEn, locale:loc});
-        this.isEditAboutMeEn = false
+    async setPersonAboutMe(loc){
+      try {
+        await this.$store.dispatch('sevePersonAboutMeBD', {aboutMe: this.aboutMeRu, aboutMeEn: this.aboutMeEn})
+
+        if(loc == 'ru'){ this.personAboutMeRu = this.aboutMeRu
+          this.$store.commit('setPersonAboutMe', {aboutMe: this.aboutMeRu, locale:loc});
+          this.isEditAboutMeRu = false
+        }
+        else{ this.personAboutMeEn = this.aboutMeEn
+          this.$store.commit('setPersonAboutMe', {aboutMe: this.aboutMeEn, locale:loc});
+          this.isEditAboutMeEn = false
+        }
+      } catch (e) {
+        this.showTost(e.message)
       }
       
     }
   },
   components:{
+    Toast,
     BIconPencilSquare, BIconXSquareFill, BIconCheckSquare, BIconQuestionSquare, 
     mdbContainer, mdbInput, mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody
   }
@@ -408,5 +452,16 @@ export default {
     height: 25px;
     width: 25px;
     
+  }
+
+  .toast-enter ,.toast-leave-to{
+    transform: translateY(-100%);
+    transition: all .3s ease;
+    opacity: 0;
+  }
+  .toast-enter-to, .toast-leave{
+    transform: translateY(0);
+    transition: all .3s ease;
+    opacity: 1;
   }
 </style>
