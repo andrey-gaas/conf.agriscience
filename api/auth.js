@@ -1,7 +1,8 @@
 const { Router } = require('express');
 const passport = require('passport');
-const Mongo = require('./db/Mongo');
 const bcrypt = require('bcryptjs');
+const Mongo = require('./db/Mongo');
+const sendMail = require('./sendmail');
 const router = Router();
 
 router.post('/registration', (req, res) => {
@@ -45,7 +46,10 @@ router.post('/registration', (req, res) => {
           console.log(error);
           res.status(500).send('Server error');
         }
-        else res.send('OK');
+        else {
+          sendMail('Message');
+          res.send('OK');
+        }
       });
     }
   });
