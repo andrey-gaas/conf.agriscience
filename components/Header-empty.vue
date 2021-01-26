@@ -1,14 +1,13 @@
 <template>
-  <nav class="navbar primary-color navbar-expand-lg p-0">
+  <nav class="navbar teal lighten-1 navbar-expand-lg p-0">
     <container p='2'>
       <logo href="#" class="logo">
         <nuxt-link :to="localeRout('/')">
           <img src="assets/img/logo_white.png" alt="Logo" class='logo_white'>
         </nuxt-link>
       </logo>
-      <button @click="testFetch">Тестовый запрос</button>
       <dropdown>
-        <dropdown-toggle color="primary" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
+        <dropdown-toggle class="teal lighten-2" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
         <dropdown-menu>
           <dropdown-item ><nuxt-link :to="switchLocalePath(RU)">Русский</nuxt-link></dropdown-item>
           <dropdown-item ><nuxt-link :to="switchLocalePath(EN)">English</nuxt-link></dropdown-item>

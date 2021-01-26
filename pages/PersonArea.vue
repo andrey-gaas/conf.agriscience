@@ -8,7 +8,7 @@
     <mdb-container class="rounded-lg grey lighten-5 z-depth-1 my-0 my-sm-1 my-md-1 my-lg-1" p="0" 
       v-if="!loading"
     >
-      <mdb-row class="m-0 bg-primary" p='3'>
+      <mdb-row class="m-0 teal lighten-1" p='3'>
         <h2 class="mb-0  white-text"><strong>{{$t('personarea_person_area')}}</strong></h2>
       </mdb-row>
       <mdb-row class="m-0" p='2'>
@@ -22,7 +22,7 @@
             <span>{{$t('personarea_download_photo')}}</span>
             <div class="input-group mb-3">
               <div class="custom-file">
-                <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
+                <input type="file" class="custom-file-input " id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
                   ref="fileInput"
                   @change="setFileName"
                 >
@@ -35,8 +35,7 @@
                 >{{fileName}}</label>
               </div>
             </div>
-            <mdb-btn class="m-0"
-              color='primary'
+            <mdb-btn class="m-0 teal lighten-2"
               @click="submitFile"
             >{{$t('personarea_download')}}</mdb-btn>
             <span
@@ -53,7 +52,7 @@
             </span>
             <h4 class="mb-2 mt-4">{{$t('personarea_profile')}}</h4>
             <nuxt-link :to="localeRout('/editprofile')" 
-              class="mt-0 mb-0 mx-0 btn btn-primary text-decoration-none ripple-parent text-white"
+              class="mt-0 mb-0 mx-0 btn teal lighten-2 text-decoration-none ripple-parent text-white"
             >
               {{$t('personarea_edit_profile')}}
             </nuxt-link>
@@ -61,7 +60,7 @@
           </mdb-col>
           <mdb-col col="12" sm='12' md='6' lg='6' class=''>
             <mdb-tbl responsiveSm bordered>
-              <mdb-tbl-head color="blue" textWhite class="rounded">
+              <mdb-tbl-head textWhite class="rounded teal lighten-1">
                 <tr>
                   <th colspan="4"><h5 class="mb-0">{{$t('personarea_report_requests')}}</h5></th>
                 </tr>
@@ -92,7 +91,7 @@
                     />
                   </th>
                   <th class="p-0 align-middle">
-                    <mdb-btn class="m-1 px-3 py-2" color='primary'
+                    <mdb-btn class="m-1 px-3 py-2 teal lighten-2"
                       v-if="item.status !== 1"
                       @click="editReport(item.ind)"
                     >
@@ -102,7 +101,7 @@
                 </tr>
               </mdb-tbl-body>
             </mdb-tbl>
-            <mdb-btn class="mt-0 mb-4 mx-0" outline="primary"
+            <mdb-btn class="mt-0 mb-4 mx-0 teal lighten-2"
               @click="addReport()"
             >
               {{$t('personarea_apply')}}
@@ -114,7 +113,7 @@
             :class="{'order-3':($i18n.locale == EN)}"
           >
             <mdb-tbl responsiveSm>
-              <mdb-tbl-head color="blue" textWhite class="rounded">
+              <mdb-tbl-head textWhite class="rounded teal lighten-1">
                 <tr>
                   <th colspan="2"><h5 class="mb-0">{{$t('personarea_profiledata_ru')}}</h5></th>
                 </tr>
@@ -135,10 +134,10 @@
                       v-model="aboutMeRu"
                       ref='textareaRu'
                     />
-                    <mdb-btn class="m-1 px-3 py-2" color='primary' @click="setPersonAboutMe(RU)">{{$t('personarea_save_ru')}}</mdb-btn>
+                    <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="setPersonAboutMe(RU)">{{$t('personarea_save_ru')}}</mdb-btn>
                   </th>
                   <th v-else class="p-0">
-                    <mdb-btn class="m-1 px-3 py-2" color='primary' @click="startEditAboutMe(RU)">{{$t('personarea_add_about_me_ru')}}</mdb-btn>
+                    <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="startEditAboutMe(RU)">{{$t('personarea_add_about_me_ru')}}</mdb-btn>
                   </th>
                 </tr>
               </mdb-tbl-body>
@@ -146,7 +145,7 @@
           </mdb-col>
           <mdb-col col="12" sm='12' md='6' lg='6' p='' class=''>
             <mdb-tbl responsiveSm>
-              <mdb-tbl-head color="blue" textWhite>
+              <mdb-tbl-head textWhite class="teal lighten-1">
                 <tr>
                   <th colspan="2"><h5 class="mb-0">{{$t('personarea_profiledata_en')}}</h5></th>
                 </tr>
@@ -167,10 +166,10 @@
                       v-model="aboutMeEn"
                       ref='textareaEn'
                     />
-                    <mdb-btn class="m-1 px-3 py-2" color='primary' @click="setPersonAboutMe(EN)">{{$t('personarea_save_en')}}</mdb-btn>
+                    <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="setPersonAboutMe(EN)">{{$t('personarea_save_en')}}</mdb-btn>
                   </th>
                   <th v-else class="p-0">
-                    <mdb-btn class="m-1 px-3 py-2" color='primary' @click="startEditAboutMe(EN)">{{$t('personarea_add_about_me_en')}}</mdb-btn>
+                    <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="startEditAboutMe(EN)">{{$t('personarea_add_about_me_en')}}</mdb-btn>
                   </th>
                 </tr>
               </mdb-tbl-body>
