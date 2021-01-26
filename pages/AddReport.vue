@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex align-items-center blue lighten-5 min-h-100 flex-grow-1">
     <mdb-container class="rounded-lg grey lighten-5 z-depth-1 my-0 my-sm-1 my-md-1 my-lg-1" p="0" >
-      <mdb-row class="m-0 bg-primary" p='3'>
+      <mdb-row class="m-0 teal lighten-1" p='3'>
         <h2 class="mb-0  white-text"><strong>Доклад</strong></h2>
       </mdb-row>
       <mdb-row class="m-0" p='2'>
@@ -9,7 +9,7 @@
           :class="{'order-3':($i18n.locale == EN)}"
         >
           <mdb-tbl responsiveSm bordered>
-            <mdb-tbl-head color="blue" textWhite class="rounded">
+            <mdb-tbl-head textWhite class="rounded teal lighten-1">
               <tr>
                 <th colspan="5"><h5 class="mb-0">Авторы</h5></th>
               </tr>
@@ -27,10 +27,10 @@
                 <th class='th-1 p-0'>
                   <span class="mr-3">{{ind+1}}</span>
                   <mdb-btn-group vertical>
-                    <mdb-btn class="m-0 px-2 py-1" color='primary' @click="upAuthor(ind)">
+                    <mdb-btn class="m-0 px-2 py-1 teal lighten-2" @click="upAuthor(ind)">
                       <BIconCaretUpFill/>
                     </mdb-btn>
-                    <mdb-btn class="m-0 px-2 py-1" color='primary' @click="downAuthor(ind)">
+                    <mdb-btn class="m-0 px-2 py-1 teal lighten-2" @click="downAuthor(ind)">
                       <BIconCaretDownFill/>
                     </mdb-btn>
                   </mdb-btn-group>
@@ -56,7 +56,7 @@
               </tr>
               <tr>
                 <th colspan="5" class="p-0">
-                  <mdb-btn class="m-1 px-3 py-2" color='primary' @click="createAuthor('ru')">Добавить автора</mdb-btn>
+                  <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="createAuthor('ru')">Добавить автора</mdb-btn>
                 </th>
               </tr>
             </mdb-tbl-body>
@@ -77,7 +77,7 @@
         </mdb-col>
         <mdb-col col="12" sm='12' md='6' lg='6' class=''>
           <mdb-tbl responsiveSm bordered>
-            <mdb-tbl-head color="blue" textWhite class="rounded">
+            <mdb-tbl-head textWhite class="rounded teal lighten-1">
               <tr>
                 <th colspan="5"><h5 class="mb-0">Авторы</h5></th>
               </tr>
@@ -96,10 +96,10 @@
                 <th class='p-0 th-1'>
                   <span class='mr-3'>{{ind+1}}</span>
                   <mdb-btn-group vertical>
-                    <mdb-btn class="m-0 px-2 py-1" color='primary' @click="upAuthor(ind)">
+                    <mdb-btn class="m-0 px-2 py-1 teal lighten-2" @click="upAuthor(ind)">
                       <BIconCaretUpFill/>
                     </mdb-btn>
-                    <mdb-btn class="m-0 px-2 py-1" color='primary' @click="downAuthor(ind)">
+                    <mdb-btn class="m-0 px-2 py-1 teal lighten-2" @click="downAuthor(ind)">
                       <BIconCaretDownFill/>
                     </mdb-btn>
                   </mdb-btn-group>
@@ -126,7 +126,7 @@
               </tr>
               <tr>
                 <th colspan="5" class="p-0">
-                  <mdb-btn class="m-1 px-3 py-2" color='primary' @click="createAuthor('en')">Добавить автора</mdb-btn>
+                  <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="createAuthor('en')">Добавить автора</mdb-btn>
                 </th>
               </tr>
             </mdb-tbl-body>
@@ -167,10 +167,10 @@
           >
             Добавьте аннотацию
           </span>
-          <mdb-btn class="" color="primary" @click="saveReport()">
+          <mdb-btn class="teal lighten-2" @click="saveReport()">
             Сохранить
           </mdb-btn>
-          <mdb-btn class="" outline="primary" @click="cancelReport()">
+          <mdb-btn class="teal lighten-2" @click="cancelReport()">
             Отмена
           </mdb-btn>
         </mdb-col>

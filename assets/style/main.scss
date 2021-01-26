@@ -12,3 +12,12 @@
 @import "section/card.scss";
 
 @import "section/footer.scss";
+
+label.active {
+  color: #4db6ac !important;
+}
+
+.custom-control-input:checked~.custom-control-label::before {
+  border-color: #4db6ac !important;
+  background-color: #4db6ac !important;
+}

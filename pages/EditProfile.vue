@@ -10,7 +10,7 @@
             @submit.prevent='formSubmit'
             @keypress.enter.prevent
           >
-            <div class="blue darken-1 px-4 py-3">
+            <div class="teal lighten-1 px-4 py-3">
               <h2 class="form__title mb-0  white-text"><strong>{{$t('editprofile_modifying_profile')}}</strong></h2>
             </div>
             <div class="pt-4 pb-4 px-4">
@@ -116,12 +116,11 @@
                   v-model="aboutMe"
                 />
               <div>
-                <mdb-btn class="mt-4 mb-0" type="submit"
-                  color='primary'
-                  :class="{'btn-light-blue':this.$v.formSet.$invalid , 'btn-primary':!this.$v.formSet.$invalid }"
+                <mdb-btn class="mt-4 mb-0 teal lighten-2" type="submit"
+                  :class="{'teal lighten-3':this.$v.formSet.$invalid , 'teal lighten-2':!this.$v.formSet.$invalid }"
                 >{{$t('editprofile_save_changes')}}</mdb-btn>
                 <nuxt-link :to="localeRout('/personarea')" 
-                  class="mt-4 mb-0 btn btn-primary text-decoration-none ripple-parent btn-outline-primary text-white"
+                  class="mt-4 mb-0 btn teal lighten-2 text-decoration-none ripple-parent text-white"
                 >
                   {{$t('editprofile_cancel')}}
                 </nuxt-link>
