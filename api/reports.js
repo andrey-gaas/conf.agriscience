@@ -65,9 +65,7 @@ router.put('/:id', (req, res) => {
     return res.status(400).send('Bad Request');
   }
 
-  const { id } = req.params;
-
-  console.log('PUT', req.body);
+  const id = +req.params.id;
 
   Mongo.database
     .db('bibcongress')
