@@ -47,8 +47,17 @@ router.post('/registration', (req, res) => {
           res.status(500).send('Server error');
         }
         else {
-          sendMail('Message');
-          res.send('OK');
+          const message = {
+            email,
+            subject: 'Регистрация',
+            text: 'Регистрация пользователя',
+          };
+          sendMail(message)
+            .then(() => res.send('OK'))
+            .catch(error => {
+              console.log(error.message);
+              res.send('OK');
+            });
         }
       });
     }
