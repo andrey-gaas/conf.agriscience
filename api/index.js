@@ -31,7 +31,7 @@ app.use('/user', require('./user'));
 app.use('/reports', require('./reports'));
 
 if (require.main === module) {
-  const port = 3001
+  const port = 3100;
   app.listen(port, () => {
     console.log(`API server listening on port ${port}`);
   })
