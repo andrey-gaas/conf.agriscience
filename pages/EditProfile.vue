@@ -138,7 +138,7 @@ import { RU, EN } from '@/constants/language';
 import {localeRout} from '@/assets/utils'
 
 import { loadYmap } from 'vue-yandex-maps'
-import { helpers, required, numeric, email, minLength } from 'vuelidate/lib/validators'
+import { helpers, required, numeric } from 'vuelidate/lib/validators'
 import { mdbContainer, mdbInput,  mdbBtn , mdbBtnGroup, mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon } from 'mdbvue';
 //Валидатор для русского алфавита
 const alphaValid = helpers.regex('alpha', /^[a-zA-Zа-яёА-ЯЁ]*$/)

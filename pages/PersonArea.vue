@@ -21,7 +21,7 @@
             </div>
             <span>{{$t('personarea_download_photo')}}</span>
             <div class="input-group mb-3">
-              <div class="custom-file">
+              <div class="custom-file cursor-pointer">
                 <input type="file" class="custom-file-input " id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
                   ref="fileInput"
                   @change="setFileName"
@@ -127,7 +127,7 @@
                 </tr>
                 <tr>
                   <th>{{$t('personarea_about_me_ru')}}</th>
-                  <th v-if="personAboutMeRu != ''">{{personAboutMeRu}}</th>
+                  <th v-if="personAboutMeRu != '' && personAboutMeEn != undefined">{{personAboutMeRu}}</th>
                   <th v-else-if="isEditAboutMeRu">
                     <mdb-input type="textarea" class="m-0 p-0" outline
                       :rows="5" 
@@ -177,7 +177,7 @@
           </mdb-col>
         </mdb-row>
       </mdb-row>
-      
+      <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="axioxT()">Axios perevod</mdb-btn>
     </mdb-container>
     <transition name="toast">
       <Toast
@@ -247,6 +247,28 @@ export default {
   },
   methods:{
     localeRout,transliterate,
+    axioxT(){
+      this.$axios({
+        baseURL: 'https://api.cognitive.microsofttranslator.com',
+        url: '/translate',
+        method: 'post',
+        headers: {
+            'Ocp-Apim-Subscription-Key': '80e01ed4d2a44c39a546580ce3f16720',
+            'Content-type': 'application/json',
+        },
+        params: {
+            'api-version': '3.0',
+            'from': 'en',
+            'to': ['ru']
+        },
+        data: [{
+            'text': 'My name Alex'
+        }],
+        responseType: 'json'
+      }).then(function(response){
+          console.log(JSON.stringify(response.data, null, 4));
+      })
+    },
     showTost(text){
       this.$store.commit('setToastMsg', text)
       this.isShowTost = true
@@ -307,7 +329,6 @@ export default {
     setReport(){
       const reportList = this.$store.getters.getReportList,
             reportListEn = this.$store.getters.getReportListEn;
-      console.log(reportList, reportListEn);
       
       if( reportList.length == 0){this.personReport[0].title = this.$t('personarea_no_apply') }
       else{
@@ -439,12 +460,14 @@ export default {
   }
   .input__label_text_ru{
     &::after{
-      content:'Обзор...'
+      content:'Обзор...';
+      cursor: pointer;
     }
   }
   .input__label_text_en{
     &::after{
-      content:'Survey...'
+      content:'Survey...';
+      cursor: pointer;
     }
   }
   .report__status_icon{

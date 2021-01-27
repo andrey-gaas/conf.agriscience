@@ -112,7 +112,7 @@
                   {{$t('reg_empty_telephone_field_error')}}
                 </span>
                 <span class="red-text"
-                  v-else-if="(!this.$v.formSet.telephone.numeric && this.$v.formSet.telephone.$dirty)"
+                  v-else-if="(!this.$v.formSet.telephone.phoneValid && this.$v.formSet.telephone.$dirty)"
                 >
                   {{$t('reg_invalid_telephone_error')}}
                 </span>
@@ -197,6 +197,24 @@ const isBoolean = helpers.withParams(
 )
 //Валидатор пароля
 const passwordValid = helpers.regex('alpha', /^[a-zA-Z0-9]*$/)
+const phoneValid = helpers.regex('alpha', /^\+?[0-9]{6,14}$/)
+
+
+// const phoneValid = helpers.withParams(
+//   { type: 'phoneValid' },
+//   tel => {
+//     console.log(typeof(+tel[0]));
+//     if(tel[0] == '+' || typeof(+tel[0]) == 'number'){
+//       let num = tel
+
+//       num.slice(0,1)
+//       +num
+//       if(typeof(num) == 'number') return true
+//       return false
+//     }
+//     return false
+//   }
+// )
 
 
 export default {
@@ -237,7 +255,7 @@ export default {
       position: {required},
       place: {required},
       email: {email, required},
-      telephone: {numeric, required},
+      telephone: {phoneValid, required},
       password: {
         required,
         minLength: minLength(6),
@@ -258,7 +276,9 @@ export default {
       }
       this.clearLacalStorage()
 
-      let personDataReg;
+      let personDataReg,
+          personDataRu,
+          personDataEn;
       if(this.$i18n.locale == 'en'){
         personDataReg = {
           surname: this.transliterate()(this.formSet.surname, true),
@@ -273,6 +293,28 @@ export default {
           positionEn: this.formSet.position,
           place: '',
           placeEn: this.formSet.place,
+          email: this.formSet.email,
+          telephone: this.formSet.telephone,
+          password: this.formSet.password,
+        }
+        personDataRu = {
+          surname: this.transliterate()(this.formSet.surname, true),
+          name: this.transliterate()(this.formSet.name, true),
+          patronymic: this.transliterate()(this.formSet.patronymic, true),
+          organization: this.formSet.organization,
+          positionEn: this.formSet.position,
+          place: this.formSet.place,
+          email: this.formSet.email,
+          telephone: this.formSet.telephone,
+          password: this.formSet.password,
+        }
+        personDataEn = {
+          surname: this.formSet.surname,
+          name: this.formSet.name,
+          patronymic: this.formSet.patronymic,
+          organization: this.formSet.organization,
+          positionEn: this.formSet.position,
+          place: this.formSet.place,
           email: this.formSet.email,
           telephone: this.formSet.telephone,
           password: this.formSet.password,
@@ -295,21 +337,42 @@ export default {
           telephone: this.formSet.telephone,
           password: this.formSet.password,
         }
+        personDataEn = {
+          surname: this.transliterate()(this.formSet.surname),
+          name: this.transliterate()(this.formSet.name),
+          patronymic: this.transliterate()(this.formSet.patronymic),
+          organization: this.formSet.organization,
+          positionEn: this.formSet.position,
+          place: this.formSet.place,
+          email: this.formSet.email,
+          telephone: this.formSet.telephone,
+          password: this.formSet.password,
+        }
+        personDataRu = {
+          surname: this.formSet.surname,
+          name: this.formSet.name,
+          patronymic: this.formSet.patronymic,
+          organization: this.formSet.organization,
+          positionEn: this.formSet.position,
+          place: this.formSet.place,
+          email: this.formSet.email,
+          telephone: this.formSet.telephone,
+          password: this.formSet.password,
+        }
       }
       
-      console.log(personDataReg);
 
       await this.$axios.post('/api/auth/registration', this.formSet)
         .then(res => {
           if (res.data === 'OK') {
 
             if(this.$i18n.locale == 'en'){ 
-              this.$store.commit('setPersonDataEn', this.formSet);
+              this.$store.commit('setPersonDataEn', personDataEn);
             }else{
-              this.$store.commit('setPersonData', this.formSet);
+              this.$store.commit('setPersonData', personDataRu);
             }
 
-            this.$router.push(this.localeRout('/personarea'));
+            this.$router.push(this.localeRout('/login'));
           }
         })
         .catch(error => console.log(error.response.data));

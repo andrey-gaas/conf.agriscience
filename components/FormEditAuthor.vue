@@ -9,7 +9,7 @@
           <form class="needs-validation" novalidate 
             @submit.prevent='formSubmit'
           >
-            <div class="blue darken-1 px-4 py-3">
+            <div class="teal lighten-1 px-4 py-3">
               <h2 class="form__title mb-0  white-text"><strong>Докладчик</strong></h2>
             </div>
             <div class="pt-4 pb-4 px-4">
@@ -73,14 +73,12 @@
                   {{$t('reg_invalid_email_error')}}
                 </span>
               <div>
-                <mdb-btn class="mt-4 mb-0" type="submit"
-                  color='primary'
+                <mdb-btn class="mt-4 mb-0 teal lighten-2" type="submit"
                   :class="{'btn-light-blue':this.$v.formSet.$invalid , 'btn-primary':!this.$v.formSet.$invalid }"
                 >{{textBtn}}</mdb-btn>
                 <mdb-btn
+                  class="mt-4 mb-0 teal lighten-2"
                   @click="closeEdit"
-                  outline="primary"
-                  class="mt-4 mb-0"
                 >
                   Отмена
                 </mdb-btn>

@@ -82,7 +82,7 @@ export default{
   "reg_position": "Должность",
   "reg_empty_position_field_error": "Укажите свою должность",
   "reg_place": "Город",
-  "reg_country_city": "Страна, город",
+  "reg_country_city": "Город, страна",
   "reg_empty_country_city_field_error": "Укажите свои страну и город",
   "reg_invalid_country_city_field_error": "Проверьте или уточните страну или город",
   "reg_telephone": "Телефон",
