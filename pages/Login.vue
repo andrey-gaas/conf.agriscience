@@ -1,145 +1,100 @@
 <template>
-  <div class="d-flex align-items-center blue lighten-5 min-h-100 flex-grow-1">
-    <mdb-container class="form grey lighten-5 d-flex justify-content-center rounded-lg overflow-hidden" p="0" m='t5'>
-      <div class="d-flex w-100" >
-
-        <div class="step_wrp w-100"      
-        >
-          <form
-            class="needs-validation"
-            novalidate
-            method="post"
-            action="/api/auth/login"
-          >
-            <!-- @submit.prevent='formSubmit' -->
-            <div class="teal lighten-1 px-4 py-3">
-              <h2 class="form__title mb-0  white-text"><strong>{{$t('log_authorization')}}</strong></h2>
-            </div>
-            <div class="p-4">
-              <mdb-input class="my-0" size="sm"
-                :label="$t('reg_email')"
-                v-model="formSet.email"
-                name="username"
-              />
-                <span class="red-text"
-                  v-if="(!this.$v.formSet.email.required && this.$v.formSet.email.$dirty)"
-                >
-                  {{$t('reg_empty_email_field_error')}}
-                </span>
-                <span class="red-text"
-                  v-else-if="(!this.$v.formSet.email.email && this.$v.formSet.email.$dirty)"
-                >
-                  {{$t('reg_invalid_email_error')}}
-                </span>
-              <mdb-input class="mt-4 mb-0" type='password' size="sm"
-                :label="$t('reg_password')"
-                v-model="formSet.password"
-                name="password"
-              />
-                <span class="red-text"
-                  v-if="(!this.$v.formSet.password.required && this.$v.formSet.password.$dirty)"
-                >
-                  {{$t('reg_empty_password_field_error')}}
-                </span>
-                <span class="red-text"
-                  v-else-if="(!this.$v.formSet.password.minLength && this.$v.formSet.password.$dirty)"
-                >
-                  {{$tc('reg_length_password_error', 1, { count: $v.formSet.password.$params.minLength.min })}}
-                </span>
-                <span class="red-text"
-                  v-else-if="(!this.$v.formSet.password.passwordValid && this.$v.formSet.password.$dirty)"
-                >
-                  {{$t('reg_invalid_password_error')}}
-                </span>
-              <div>
-                <mdb-btn class="mt-4 mb-0 teal lighten-2" type="submit"
-                  color='primary'
-                >{{$t('log_login')}}</mdb-btn>
-                <nuxt-link :to="localeRout('/registration')" 
-                  class="mt-4 mb-0 btn teal lighten-2 text-decoration-none ripple-parent text-white"
-                >
-                  {{$t('log_reg')}}
-                </nuxt-link>
-
-              </div>
-            </div>
-          </form>
+  <section v-if="!$store.state.user" class="container">
+    <div class="has-text-centered">
+      <h1 class="title">LOGIN</h1>
+    </div>
+    <hr>
+    <form action="/login" method="POST">
+      <div class="field">
+        <label class="label">Email</label>
+        <div class="control">
+          <input class="input" type="text" v-model="form.email" placeholder="Email" value>
         </div>
       </div>
-    </mdb-container>
-  </div>
+      <div class="field">
+        <label class="label">Password</label>
+        <div class="control">
+          <input
+            class="input"
+            type="password"
+            v-model="form.password"
+            placeholder="Password"
+            @keyup.enter="login()"
+            value
+          >
+        </div>
+      </div>
+
+      <div class="control">
+        <input type="button" class="button is-link" @click="login()" value="Log in">
+      </div>
+      <div class="control">
+        <div class="button" type="link" style="margin-top:2vh;">
+          <img class="ic" src="/i/google.svg">
+          <a href="/auth/google" class="icon-adjusted">Log in with Google</a>
+        </div>
+        <div class="button" type="link" style="margin-top:1vh;">
+          <img class="ic" src="/i/twitter.svg">
+          <a href="/auth/twitter" class="icon-adjusted">Log in with Twitter</a>
+        </div>
+      </div>
+    </form>
+  </section>
 </template>
 
 <script>
-
-import { RU, EN } from '@/constants/language';
-import {localeRout} from '@/assets/utils'
-
-
-import { helpers, email, minLength, required } from 'vuelidate/lib/validators'
-import { mdbContainer, mdbInput,  mdbBtn } from 'mdbvue';
-//Валидатор пароля
-const passwordValid = helpers.regex('alpha', /^[a-zA-Z0-9]*$/)
+import axios from "axios";
 
 
 export default {
-  name: "Login",
-  layout: 'EmptyLayout',
-  data: () => ({
-    RU, EN,
-    formSet: {
-      email: '',
-      password: '',
-    },
-  }),
-  computed:{
-    
+  head() {
+    return {
+      title: "Login"
+    };
   },
-  validations:{
-    formSet: {
-      email: {email, required},
-      password: {
-        required,
-        minLength: minLength(6),
-        passwordValid,
-      },
-    },
-  },
-  methods:{
-    localeRout,
-    formSubmit(){
-      this.$v.formSet.$touch();
-      if(this.$v.formSet.$invalid){
-        return;
+  data() {
+    return {
+      form: {
+        email: "",
+        password: "",
+        error: null
       }
-      this.$store.commit('setLoginData', this.formSet)
-      this.$axios.post('/api/auth/login', this.formSet)
-        .then(res => console.log(res))
-        .catch(error => alert(error.response.data));
-    },
+    };
   },
-  components:{
-    mdbContainer, mdbInput,  mdbBtn
+  created() {
+    if (this.$store.state.user) {
+      this.$router.push("/");
+      return;
+    }
+  },
+  methods: {
+    async login() {
+      try {
+        await this.$store.dispatch("login", {
+          email: this.form.email,
+          password: this.form.password
+        });
+        this.form.email = "";
+        this.form.password = "";
+        this.form.error = null;
+        this.msg("info", true, "You have successfully logged in!");
+        this.$nuxt._router.push("/");
+      } catch (err) {
+        console.log(err);
+        this.msg("error", true, err.meta.msg);
+      }
+    },
+    msg(type, state, msg) {
+      //todo cleanup
+      this.$parent.$parent.$children[1].msgOn(type, true, msg);
+    }
   }
 };
 </script>
 
-<style lang="scss">
-
-.md-form.invalid>{
-  & input{
-  box-shadow: 0 1px 0 0 red !important;
-  border-bottom: 1px solid red !important;
-    &:focus{
-      &~label{
-        color: #4285f4 !important;
-      }
-    }
-  }
-  & label{
-    color: red !important;
-  }
+<style scoped>
+form {
+  width: 15vw;
+  margin: auto;
 }
-
-
 </style>

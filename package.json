@@ -1,38 +1,56 @@
 {
-  "name": "agrisci",
-  "version": "1.0.0",
-  "private": true,
+  "name": "vue-nuxt-passport-bulma-express-boiler",
+  "version": "1.0.2",
+  "description": "A vue/nuxtjs/passport/bulma boilerplate for express.",
+  "author": "Scharkee",
   "scripts": {
-    "dev": "nuxt",
+    "dev": "node src/server.js",
     "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
+    "start": "NODE_ENV=production node src/server.js",
+    "launch": "nuxt build && npm run start",
+    "precommit": "npm run lint",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "test": "ava --serial --verbose",
+    "setup": "node setup.js",
+    "config": "npm run setup",
+    "setup:headless": "node setup.js --headless"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.12.2",
-    "bcryptjs": "^2.4.3",
-    "bootstrap-css-only": "^4.4.1",
-    "bootstrap-vue": "^2.21.2",
-    "core-js": "^3.6.5",
-    "email-validator": "^2.0.4",
+    "async": "^3.1.0",
+    "axios": "^0.19.0",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.0.0",
     "express": "^4.17.1",
-    "express-session": "^1.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "mdbvue": "^6.7.2",
-    "mongodb": "^3.6.3",
-    "node-sass": "^5.0.0",
-    "nodemailer": "^6.4.17",
-    "nuxt": "^2.14.6",
-    "nuxt-i18n": "^6.16.0",
-    "passport": "^0.4.1",
+    "express-session": "^1.16.2",
+    "flash": "^1.1.0",
+    "greenlock-express": "^2.7.11",
+    "helmet": "^3.19.0",
+    "le-challenge-fs": "^2.0.9",
+    "le-store-certbot": "^2.2.3",
+    "nedb": "^1.8.0",
+    "nedb-session-store": "^1.1.2",
+    "nuxt": "^2.8.1",
+    "passport": "^0.4.0",
+    "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
-    "phone-validation": "^0.1.1",
-    "sass-loader": "^10.1.0",
-    "sass-resources-loader": "^2.1.1",
-    "session-file-store": "^1.5.0",
-    "vue-material": "^1.0.0-beta-15",
-    "vue-yandex-maps": "^0.10.9",
-    "vuelidate": "^0.7.6"
+    "passport-twitter": "^1.0.4",
+    "serve-favicon": "^2.5.0",
+    "shortid": "^2.2.14"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@nuxtjs/vuetify": "^1.11.3",
+    "ava": "^2.2.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-vue": "^5.2.3",
+    "fs-extra": "^8.1.0",
+    "prompt-sync": "^4.1.7"
+  },
+  "prettier": {},
+  "ava": {
+    "files": [
+      "test/**/*"
+    ]
+  }
 }

@@ -1,0 +1,15 @@
+{
+  "port": 7777,
+  "url": "https://example.com",
+  "session_secret": "super-secret-key",
+  "self_hosted": false,
+  "tls": {
+    "email": "email@example.com",
+    "domains": ["domain1.com", "domain2.com"],
+    "tos":false
+  },
+  "infinite_sessions": true,
+  "production_logging": "none",
+  "bcrypt_salt_rounds": 12,
+  "secure_override": false
+}

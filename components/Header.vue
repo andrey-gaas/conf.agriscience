@@ -1,113 +1,37 @@
 <template>
-  <header class="header">
-    <container class="d-flex justify-content-between align-items-center">
-      <nuxt-link :to="localeRout('/')">
-        <img src="@/assets/img/logo_color.png" alt="logo international bibliographic congress" class="logo">
-      </nuxt-link>
-
-      <div class="d-flex align-items-center">
-        <div class="auth">
-          <nuxt-link :to="localeRout('/registration')" class="link">{{$t('header_registration')}}</nuxt-link>
-          <nuxt-link :to="localeRout('/login')" class="link">{{$t('header_login')}}</nuxt-link>
-        </div>
-
-        <div class="flags">
-          <nuxt-link :to="switchLocalePath(RU)" class="m-2 d-block locale_btn">
-            <img src="@/assets/img/flag_ru.svg" alt="flar rus" class="flag">
-          </nuxt-link>
-          <nuxt-link :to="switchLocalePath(EN)" class="m-2 d-block locale_btn">
-            <img src="@/assets/img/flag_en.svg" alt="flag brit" class="flag">
-          </nuxt-link>
-        </div>
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <nuxt-link to="/" class="navbar-item"><h1>vue-nuxt-passport-bulma-express-boiler</h1></nuxt-link>
+    </div>
+      <div class="navbar-end" v-if="$store.state.user">
+        <nuxt-link to="/profile"  class="navbar-item">Profile</nuxt-link>
+        <a @click="logout()"  class="navbar-item" style="color:darkRed;">Logout</a>
       </div>
-    </container>
-  </header>
+      <div class="navbar-end" v-else>
+        <nuxt-link to="/login" class="navbar-item">Login</nuxt-link>
+        <nuxt-link to="/register" class="navbar-item">Register</nuxt-link>
+      </div>
+  </nav>
 </template>
-
+ 
 <script>
-import {
-  mdbContainer, mdbNavbarBrand,
-} from 'mdbvue';
-import { RU, EN } from '@/constants/language';
-import {localeRout} from '@/assets/utils'
+import axios from "axios";
 
 export default {
-  components: {
-    'container': mdbContainer,
-    'logo': mdbNavbarBrand,
-  },
   methods:{
-    localeRout,
+    async logout() {
+      try {
+        await this.$store.dispatch("logout", {});
+        this.msg( "info", true,"You have successfully logged out!");
+        this.$nuxt._router.push("/");
+      } catch (err) {
+        this.msg("error", true,err.meta.msg);
+      }
+    },
+    msg(type,state,msg){
+      // TODO: clean this call up
+      this.$parent.$children[1].msgOn( "info",true, msg);
+    },
   },
-  data: () => ({ RU, EN }),
-}
+};
 </script>
-
-<style lang="scss" scoped>
-  header {
-    display: none;
-    padding: 20px 0;
-
-    @media (min-width: 768px) {
-      display: block;
-    }
-  }
-  .logo {
-    margin-left: 14px;
-    height: 60px !important;
-  }
-
-  .auth {
-    display: none;
-    @media (min-width: 768px) {
-      display: block;
-    }
-  }
-
-  .link {
-    color: #212529 !important;
-
-    &:hover {
-      text-decoration: none;
-    }
-
-    &:last-child {
-      margin-left: 5px;
-    }
-  }
-  .flags {
-    display: none;
-    margin-left: 16px;
-    @media (min-width: 768px) {
-      display: flex;
-      align-items: center;
-    }
-  }
-  .flag {
-    height: 24px;
-    border: 1px solid #eee;
-  }
-  .burger-container {
-    display: block;
-
-    @media (min-width: 768px) {
-      display: none;
-    }
-  }
-  .burger {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 0;
-    width: 35px;
-    height: 27px;
-    border: none;
-    background: none;
-
-    div {
-      width: 100%;
-      height: 4px;
-      background: #666;
-    }
-  }
-</style>
