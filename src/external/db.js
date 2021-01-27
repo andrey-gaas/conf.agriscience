@@ -1,27 +1,21 @@
-const Datastore = require("nedb");
+const { MongoClient } = require('mongodb');
 
-/*
-A single database for user data
-*/
-const db = {
-  users: new Datastore({
-    filename: "db/users",
-    autoload: true
-  })
-};
+class Mongo {
+  static database = null;
 
-// making usernames unique
-db.users.ensureIndex(
-  {
-    fieldName: "email",
-    unique: true,
-    sparse: true
-  },
-  function(err) {
-    if (err) {
-      console.error(err);
-    }
+  static connect() {
+    const mongoClient = new MongoClient(
+      'mongodb://svc:hf^gjhd7jas@mongodb:27017/bibcongress',
+      {useNewUrlParser: true, useUnifiedTopology: true }
+    );
+
+    mongoClient.connect((err, database) => {
+      if (err) return console.log('Error connection to database');
+
+      Mongo.database = database;
+    });
+
   }
-);
+}
 
-module.exports = db;
+module.exports = Mongo;

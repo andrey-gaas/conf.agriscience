@@ -28,16 +28,6 @@
       <div class="control">
         <input type="button" class="button is-link" @click="login()" value="Log in">
       </div>
-      <div class="control">
-        <div class="button" type="link" style="margin-top:2vh;">
-          <img class="ic" src="/i/google.svg">
-          <a href="/auth/google" class="icon-adjusted">Log in with Google</a>
-        </div>
-        <div class="button" type="link" style="margin-top:1vh;">
-          <img class="ic" src="/i/twitter.svg">
-          <a href="/auth/twitter" class="icon-adjusted">Log in with Twitter</a>
-        </div>
-      </div>
     </form>
   </section>
 </template>

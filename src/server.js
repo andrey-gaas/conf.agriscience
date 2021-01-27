@@ -13,13 +13,14 @@ const passport = require("passport");
 const bcrypt = require("bcrypt");
 const flash = require("flash");
 
+const Mongo = require('./db/Mongo');
 const utils = require("./external/utilities.js");
 const apiRoutes = require("./routes/users.js");
 
 /*
 Databases
 */
-const db = require("./external/db.js");
+Mongo.connect();
 
 /*
 Importing the config
@@ -108,59 +109,55 @@ app.use(passport.session());
 /*
 API route import
 */
-app.use("/api", apiRoutes);
+app.use("/api/users", apiRoutes);
 
 /*
-Login post route
+Nuxt.js configuration
 */
-app.post("/login", (req, res) => {
-  utils.log(`LOGIN | requester: ${req.body.email}`, 0);
 
-  if (req.user) {
-    return;
-  }
+const nuxtConfig = require("../nuxt.config.js");
 
-  passport.authenticate("local", (err, user) => {
-    if (err) {
-      return res.json({
-        meta: {
-          error: true,
-          msg: err.msg
-        }
-      });
-    }
-    if (!user) {
-      // all failed logins default to the same error message
-      return res.json({
-        meta: {
-          error: true,
-          msg: "Bad credentials"
-        }
-      });
-    }
-    req.logIn(user, err => {
-      if (err) {
-        return res.json({
-          meta: {
-            error: true,
-            msg: err
-          }
-        });
-      }
-      return res.json({
-        meta: {
-          error: false
-        },
-        user:  utils.cleanUser(Object.assign({}, user))
-      });
+nuxtConfig.dev = process.env.NODE_ENV !== "production";
+const nuxt = new Nuxt(nuxtConfig);
+// serving nuxt in devmode
+if (nuxtConfig.dev) {
+  const builder = new Builder(nuxt);
+  builder.build();
+}
+// serving nuxt
+app.use(nuxt.render);
+
+/*
+Port listening; HTTPS redirect setup if self_hosted is set in the config
+*/
+if (config.self_hosted) {
+  // handles acme-challenge and redirects to https
+  require("http")
+    .createServer(lex.middleware(require("redirect-https")()))
+    .listen(80, function() {
+      utils.log("Listening for ACME http-01 challenges on", this.address());
     });
-  })(req, res);
-});
+
+  // https handler
+  const server = require("https").createServer(
+    lex.httpsOptions,
+    lex.middleware(app)
+  );
+  server.listen(443, function() {
+    utils.log(
+      "Listening for ACME tls-sni-01 challenges and serve app on",
+      this.address()
+    );
+  });
+} else {
+  app.listen(config.port);
+  utils.log(`Server is listening on http://localhost:${config.port}`);
+}
 
 /*
 Register post route
 */
-app.post("/register", (req, res, next) => {
+/* app.post("/register", (req, res, next) => {
   if (req.user) {
     return res.json({
       meta: {
@@ -168,10 +165,10 @@ app.post("/register", (req, res, next) => {
         msg: "You're already logged in!"
       }
     });
-  }
+  } */
 
   // mirrored validation checks
-  if (!/\S+@\S+\.\S+/.test(req.body.email)) {
+  /* if (!/\S+@\S+\.\S+/.test(req.body.email)) {
     return res.json({
       meta: {
         error: true,
@@ -186,9 +183,9 @@ app.post("/register", (req, res, next) => {
         msg: "Password must be between 5 and a 100 characters."
       }
     });
-  }
+  } */
 
-  bcrypt
+  /* bcrypt
     .hash(req.body.password, config.bcrypt_salt_rounds)
     .then(hashed => {
       db.users.insert(
@@ -245,10 +242,10 @@ app.post("/register", (req, res, next) => {
         }
       });
     });
-});
+}); */
 
 // user logout route
-app.post("/logout", (req, res) => {
+/* app.post("/logout", (req, res) => {
   if (!req.user) {
     return;
   }
@@ -261,10 +258,10 @@ app.post("/logout", (req, res) => {
       msg: "You have successfully logged out!"
     }
   });
-});
+}); */
 
 // password change route
-app.patch("/changePassword", (req, res) => {
+/* app.patch("/changePassword", (req, res) => {
   if (!req.user) {
     return;
   }
@@ -309,10 +306,10 @@ app.patch("/changePassword", (req, res) => {
         }
       });
     });
-});
+}); */
 
 // route to clear linked accounts
-app.post("/unlink", (req, res) => {
+/* app.post("/unlink", (req, res) => {
   if (!req.user) {
     return;
   }
@@ -334,10 +331,10 @@ app.post("/unlink", (req, res) => {
       }
     });
   });
-});
+}); */
 
 // route to delete account
-app.post("/deleteAccount", (req, res) => {
+/* app.post("/deleteAccount", (req, res) => {
   if (!req.user) {
     return;
   }
@@ -361,18 +358,18 @@ app.post("/deleteAccount", (req, res) => {
       });
     });
   });
-});
+}); */
 
 /*
 Sample Passportjs routes
 */
-app.get(
+/* app.get(
   "/auth/google",
   passport.authenticate("google", {
     scope: "profile email"
   })
-);
-app.get(
+); */
+/* app.get(
   "/auth/google/callback",
   passport.authenticate("google", {
     failureRedirect: "/login"
@@ -380,9 +377,9 @@ app.get(
   (req, res) => {
     res.redirect(req.session.returnTo || "/");
   }
-);
-app.get("/auth/twitter", passport.authenticate("twitter"));
-app.get(
+); */
+/* app.get("/auth/twitter", passport.authenticate("twitter")); */
+/* app.get(
   "/auth/twitter/callback",
   passport.authenticate("twitter", {
     failureRedirect: "/login"
@@ -390,47 +387,5 @@ app.get(
   (req, res) => {
     res.redirect(req.session.returnTo || "/");
   }
-);
+); */
 
-/*
-Nuxt.js configuration
-*/
-
-const nuxtConfig = require("../nuxt.config.js");
-
-nuxtConfig.dev = process.env.NODE_ENV !== "production";
-const nuxt = new Nuxt(nuxtConfig);
-// serving nuxt in devmode
-if (nuxtConfig.dev) {
-  const builder = new Builder(nuxt);
-  builder.build();
-}
-// serving nuxt
-app.use(nuxt.render);
-
-/*
-Port listening; HTTPS redirect setup if self_hosted is set in the config
-*/
-if (config.self_hosted) {
-  // handles acme-challenge and redirects to https
-  require("http")
-    .createServer(lex.middleware(require("redirect-https")()))
-    .listen(80, function() {
-      utils.log("Listening for ACME http-01 challenges on", this.address());
-    });
-
-  // https handler
-  const server = require("https").createServer(
-    lex.httpsOptions,
-    lex.middleware(app)
-  );
-  server.listen(443, function() {
-    utils.log(
-      "Listening for ACME tls-sni-01 challenges and serve app on",
-      this.address()
-    );
-  });
-} else {
-  app.listen(config.port);
-  utils.log(`Server is listening on http://localhost:${config.port}`);
-}
