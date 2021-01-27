@@ -299,20 +299,20 @@ export default {
       
       console.log(personDataReg);
 
-      // await this.$axios.post('/api/auth/registration', this.formSet)
-      //   .then(res => {
-      //     if (res.data === 'OK') {
+      await this.$axios.post('/api/auth/registration', this.formSet)
+        .then(res => {
+          if (res.data === 'OK') {
 
-      //       if(this.$i18n.locale == 'en'){ 
-      //         this.$store.commit('setPersonDataEn', this.formSet);
-      //       }else{
-      //         this.$store.commit('setPersonData', this.formSet);
-      //       }
+            if(this.$i18n.locale == 'en'){ 
+              this.$store.commit('setPersonDataEn', this.formSet);
+            }else{
+              this.$store.commit('setPersonData', this.formSet);
+            }
 
-      //       this.$router.push(this.localeRout('/personarea'));
-      //     }
-      //   })
-      //   .catch(error => console.log(error.response.data));
+            this.$router.push(this.localeRout('/personarea'));
+          }
+        })
+        .catch(error => console.log(error.response.data));
     },
     saveInLocalStorage(){
       //Сохроняем данные в localStorage,

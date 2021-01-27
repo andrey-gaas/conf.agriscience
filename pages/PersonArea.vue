@@ -159,7 +159,7 @@
                 </tr>
                 <tr>
                   <th>{{$t('personarea_about_me_en')}}</th>
-                  <th v-if="personAboutMeEn != ''">{{personAboutMeEn}}</th>
+                  <th v-if="personAboutMeEn != '' && personAboutMeEn != undefined">{{personAboutMeEn}}</th>
                   <th v-else-if="isEditAboutMeEn">
                     <mdb-input type="textarea" class="m-0 p-0" outline
                       :rows="5" 
