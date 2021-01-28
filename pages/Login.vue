@@ -3,8 +3,7 @@
     <mdb-container class="form grey lighten-5 d-flex justify-content-center rounded-lg overflow-hidden" p="0" m='t5'>
       <div class="d-flex w-100" >
 
-        <div class="step_wrp w-100"      
-        >
+        <div class="step_wrp w-100">
           <form
             class="needs-validation"
             novalidate

@@ -6,6 +6,16 @@ const sendMail = require('./sendmail');
 const e = require('express');
 const router = Router();
 
+const isProduction = process.env.NODE_ENV === 'production';
+
+let successRedirect = '/personarea';
+let failureRedirect = '/login'
+
+if (isProduction) {
+  successRedirect = 'https://www.bibcongress.ru/personarea';
+  failureRedirect = 'https://www.bibcongress.ru/login';
+}
+
 router.post('/registration', (req, res) => {
   const {
     name,
@@ -63,7 +73,7 @@ router.post('/registration', (req, res) => {
           const message = {
             email,
             subject: 'Регистрация - III Международный библиографический конгресс',
-            text: `Для подтверждения электронной почты, перейдите по ссылке: http://localhost:3000/api/auth/email-confirm/${email}`,
+            text: `Для подтверждения электронной почты, перейдите по ссылке: https://api.bibcongress.ru/auth/email-confirm/${email}`,
           };
           sendMail(message)
             .then(() => res.send('OK'))
@@ -77,7 +87,7 @@ router.post('/registration', (req, res) => {
   });
 });
 
-router.post('/login', passport.authenticate('local', { successRedirect: '/personarea', failureRedirect: '/login' }));
+router.post('/login', passport.authenticate('local', { successRedirect, failureRedirect }));
 
 router.get('/email-confirm/:email', (req, res) => {
   const { email } = req.params;
@@ -85,6 +95,8 @@ router.get('/email-confirm/:email', (req, res) => {
   const users = Mongo.database
     .db('bibcongress')
     .collection('users');
+
+  const redirectUrl = isProduction ? 'https://bibcongress.ru/' : 'http://localhost:3101/';
 
 
   users
@@ -98,11 +110,11 @@ router.get('/email-confirm/:email', (req, res) => {
         users
           .findOneAndUpdate({ email }, { $set: { isEmailConfirmed: true } })
           .then(() => {
-            res.redirect('/');
+            res.redirect(redirectUrl);
           })
           .catch(error => {
             console.log(error.message);
-            res.status(500).redirect('/');
+            res.status(500).redirect(redirectUrl);
           });
       }
     })
