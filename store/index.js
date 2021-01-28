@@ -157,7 +157,8 @@ export const mutations = {
 
   },
   setPersonData(state, userData){
-    state.personData = userData
+    
+    state.personData = {...state.personData,...userData}
   },
   setPersonDataEn(state, userData){
     state.personDataEn = userData
@@ -174,7 +175,7 @@ export const mutations = {
   setIndReport(state, ind){
     state.indEditReport = ind
   },
-  serReportList(state, list){
+  setReportList(state, list){
     state.reportList = list.map(el =>{
       return {
         title: el.title,
@@ -293,10 +294,30 @@ export const mutations = {
 
 export const getters = {
   getPersonData(state){
-    return state.personData
+    let result = {
+      surname: state.personData.surname,
+      name: state.personData.name,
+      patronymic: state.personData.patronymic,
+      organization: state.personData.organization,
+      position: state.personData.position,
+      place: state.personData.place,
+      email: state.personData.email,
+      telephone :state.personData.telephone,
+    }
+    return result
   },
   getPersonDataEn(state){
-    return state.personDataEn
+    let result = {
+      surname: state.personData.surnameEn,
+      name: state.personData.nameEn,
+      patronymic: state.personData.patronymicEn,
+      organization: state.personData.organizationEn,
+      position: state.personData.positionEn,
+      place: state.personData.placeEn,
+      email: state.personData.email,
+      telephone :state.personData.telephone,
+    }
+    return result
   },
   getPersonAboutMeRu(state){
     return state.personAboutMeRu
@@ -366,7 +387,7 @@ export const actions = {
   async fetchPersonReports({commit}){
     await this.$axios.get('/api/reports').
       then( res => {
-        commit('serReportList', res.data)
+        commit('setReportList', res.data)
       })
   },
   async addReportBD({}, {report}){
@@ -379,7 +400,10 @@ export const actions = {
   },
   async sevePersonAboutMeBD({}, aboutData){
     await this.$axios.put('/api/user/', aboutData)
-  }
+  },
+  async sevePersonDataBD({}, personData){
+    await this.$axios.put('/api/user/', personData)
+  },
 }
 export const modules = {
   

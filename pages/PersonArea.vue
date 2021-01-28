@@ -127,7 +127,7 @@
                 </tr>
                 <tr>
                   <th>{{$t('personarea_about_me_ru')}}</th>
-                  <th v-if="personAboutMeRu != '' && personAboutMeEn != undefined">{{personAboutMeRu}}</th>
+                  <th v-if="personAboutMeRu != '' && personAboutMeRu != undefined">{{personAboutMeRu}}</th>
                   <th v-else-if="isEditAboutMeRu">
                     <mdb-input type="textarea" class="m-0 p-0" outline
                       :rows="5" 
@@ -177,7 +177,6 @@
           </mdb-col>
         </mdb-row>
       </mdb-row>
-      <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="axioxT()">Axios perevod</mdb-btn>
     </mdb-container>
     <transition name="toast">
       <Toast
@@ -243,32 +242,13 @@ export default {
     },
     imgSrc(){
       return this.$store.getters.getImgSrc
+    },
+    toastMessage(){
+      return this.$store.getters.getToastMsg
     }
   },
   methods:{
     localeRout,transliterate,
-    axioxT(){
-      this.$axios({
-        baseURL: 'https://api.cognitive.microsofttranslator.com',
-        url: '/translate',
-        method: 'post',
-        headers: {
-            'Ocp-Apim-Subscription-Key': '80e01ed4d2a44c39a546580ce3f16720',
-            'Content-type': 'application/json',
-        },
-        params: {
-            'api-version': '3.0',
-            'from': 'en',
-            'to': ['ru']
-        },
-        data: [{
-            'text': 'My name Alex'
-        }],
-        responseType: 'json'
-      }).then(function(response){
-          console.log(JSON.stringify(response.data, null, 4));
-      })
-    },
     showTost(text){
       this.$store.commit('setToastMsg', text)
       this.isShowTost = true
@@ -399,8 +379,8 @@ export default {
       this.personAboutMeEn = this.$store.getters.getPersonAboutMeEn
       this.personData = this.$store.getters.getPersonData
       this.personDataEn = this.$store.getters.getPersonDataEn
-
-      this.localize()
+      console.log(this.personAboutMeRu);
+      //this.localize()
 
       delete this.personData.isEmailConfirmed;
       delete this.personData.avatar;

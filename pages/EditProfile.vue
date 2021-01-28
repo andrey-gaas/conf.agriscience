@@ -135,7 +135,7 @@
 
 <script>
 import { RU, EN } from '@/constants/language';
-import {localeRout} from '@/assets/utils'
+import {localeRout, transliterate} from '@/assets/utils'
 
 import { loadYmap } from 'vue-yandex-maps'
 import { helpers, required, numeric } from 'vuelidate/lib/validators'
@@ -191,19 +191,98 @@ export default {
     }
   },
   methods:{
-    localeRout,
-
+    localeRout, transliterate, 
+    async axiosTranslete(textData, {from, to}){
+      let res = await this.$axios({
+        baseURL: 'https://api.cognitive.microsofttranslator.com',
+        url: '/translate',
+        method: 'post',
+        headers: {
+            'Ocp-Apim-Subscription-Key': '80e01ed4d2a44c39a546580ce3f16720',
+            'Content-type': 'application/json',
+        },
+        params: {
+            'api-version': '3.0',
+            'from': from,
+            'to': [to]
+        },
+        data: [
+          {'text': textData.organization}, 
+          {'text': textData.position},
+          {'text': textData.place},
+        ],
+        responseType: 'json'
+      }).then(function(response){
+          let rusult = {
+            organization: response.data[0].translations[0].text,
+            position: response.data[1].translations[0].text,
+            place: response.data[2].translations[0].text,
+          }
+          return rusult
+      }).catch((err) => {
+        console.log(err);
+      })
+      return res
+    },
     async formSubmit(){
       await this.validYmap();
       this.$v.formSet.$touch()
       if(this.$v.formSet.$invalid){
         return
       }
+      let personDataReg;
       
-      
+      if(this.$i18n.locale == 'en'){
+        let dataTranslet = await this.axiosTranslete(
+          {organization: this.formSet.organization, 
+          position: this.formSet.position, 
+          place: this.formSet.place,}, 
+          {from:'en', to:'ru'})
+        personDataReg = {
+          surname: this.transliterate()(this.formSet.surname, true),
+          surnameEn: this.formSet.surname,
+          name: this.transliterate()(this.formSet.name, true),
+          nameEn: this.formSet.name,
+          patronymic: this.transliterate()(this.formSet.patronymic, true),
+          patronymicEn: this.formSet.patronymic,
+          organization: dataTranslet.organization,
+          organizationEn: this.formSet.organization,
+          position: dataTranslet.position,
+          positionEn: this.formSet.position,
+          place: dataTranslet.place,
+          placeEn: this.formSet.place,
+          telephone: this.formSet.telephone,
+          aboutMeEn: this.aboutMe
+        }
+        
+      }else{
+        let dataTranslet = await this.axiosTranslete(
+          {organization: this.formSet.organization, 
+          position: this.formSet.position, 
+          place: this.formSet.place,}, 
+          {from:'ru', to:'en'})
+        personDataReg = {
+          surname: this.formSet.surname,
+          surnameEn: this.transliterate()(this.formSet.surname),
+          name: this.formSet.name,
+          nameEn: this.transliterate()(this.formSet.name),
+          patronymic: this.formSet.patronymic,
+          patronymicEn: this.transliterate()(this.formSet.patronymic),
+          organization: this.formSet.organization,
+          organizationEn: dataTranslet.organization,
+          position: this.formSet.position,
+          positionEn: dataTranslet.position,
+          place: this.formSet.place,
+          placeEn: dataTranslet.place,
+          telephone: this.formSet.telephone,
+          aboutMe: this.aboutMe
+        }
+      }
+
+      await this.$store.dispatch('sevePersonDataBD', personDataReg )
+      await this.$store.commit('setPersonData', personDataReg);
+      await this.$store.commit('setPersonAboutMe', {aboutMe:this.aboutMe, locale:this.$i18n.locale});
       this.$router.push(this.localeRout('/personarea'))
-      this.$store.commit('setPersonData', {userData:this.formSet, locale:this.$i18n.locale});
-      this.$store.commit('setPersonAboutMe', {aboutMe:this.aboutMe, locale:this.$i18n.locale});
     },
     
     async validYmap(){

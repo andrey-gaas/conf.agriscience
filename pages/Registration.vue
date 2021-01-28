@@ -196,7 +196,7 @@ const isBoolean = helpers.withParams(
   v => v
 )
 //Валидатор пароля
-const passwordValid = helpers.regex('alpha', /^[a-zA-Z0-9]*$/)
+const passwordValid = helpers.regex('alpha', /^[a-zA-Z0-9_!@#$%^&*]*$/)
 const phoneValid = helpers.regex('alpha', /^\+?[0-9]{6,14}$/)
 
 
@@ -267,7 +267,38 @@ export default {
   },
   methods:{
     localeRout, transliterate,
-
+    async axiosTranslete(textData, {from, to}){
+      let res = await this.$axios({
+        baseURL: 'https://api.cognitive.microsofttranslator.com',
+        url: '/translate',
+        method: 'post',
+        headers: {
+            'Ocp-Apim-Subscription-Key': '80e01ed4d2a44c39a546580ce3f16720',
+            'Content-type': 'application/json',
+        },
+        params: {
+            'api-version': '3.0',
+            'from': from,
+            'to': [to]
+        },
+        data: [
+          {'text': textData.organization}, 
+          {'text': textData.position},
+          {'text': textData.place},
+        ],
+        responseType: 'json'
+      }).then(function(response){
+          let rusult = {
+            organization: response.data[0].translations[0].text,
+            position: response.data[1].translations[0].text,
+            place: response.data[2].translations[0].text,
+          }
+          return rusult
+      }).catch((err) => {
+        console.log(err);
+      })
+      return res
+    },
     async formSubmit(){
       await this.validYmap();
       this.$v.formSet.$touch()
@@ -276,10 +307,13 @@ export default {
       }
       this.clearLacalStorage()
 
-      let personDataReg,
-          personDataRu,
-          personDataEn;
+      let personDataReg;
       if(this.$i18n.locale == 'en'){
+        let dataTranslet = await this.axiosTranslete(
+          {organization: this.formSet.organization, 
+          position: this.formSet.position, 
+          place: this.formSet.place,}, 
+          {from:'en', to:'ru'})
         personDataReg = {
           surname: this.transliterate()(this.formSet.surname, true),
           surnameEn: this.formSet.surname,
@@ -287,39 +321,22 @@ export default {
           nameEn: this.formSet.name,
           patronymic: this.transliterate()(this.formSet.patronymic, true),
           patronymicEn: this.formSet.patronymic,
-          organization: '',
+          organization: dataTranslet.organization,
           organizationEn: this.formSet.organization,
-          position: '',
+          position: dataTranslet.position,
           positionEn: this.formSet.position,
-          place: '',
+          place: dataTranslet.place,
           placeEn: this.formSet.place,
           email: this.formSet.email,
           telephone: this.formSet.telephone,
           password: this.formSet.password,
         }
-        personDataRu = {
-          surname: this.transliterate()(this.formSet.surname, true),
-          name: this.transliterate()(this.formSet.name, true),
-          patronymic: this.transliterate()(this.formSet.patronymic, true),
-          organization: this.formSet.organization,
-          positionEn: this.formSet.position,
-          place: this.formSet.place,
-          email: this.formSet.email,
-          telephone: this.formSet.telephone,
-          password: this.formSet.password,
-        }
-        personDataEn = {
-          surname: this.formSet.surname,
-          name: this.formSet.name,
-          patronymic: this.formSet.patronymic,
-          organization: this.formSet.organization,
-          positionEn: this.formSet.position,
-          place: this.formSet.place,
-          email: this.formSet.email,
-          telephone: this.formSet.telephone,
-          password: this.formSet.password,
-        }
       }else{
+        let dataTranslet = await this.axiosTranslete(
+          {organization: this.formSet.organization, 
+          position: this.formSet.position, 
+          place: this.formSet.place,}, 
+          {from:'ru', to:'en'})
         personDataReg = {
           surname: this.formSet.surname,
           surnameEn: this.transliterate()(this.formSet.surname),
@@ -328,33 +345,11 @@ export default {
           patronymic: this.formSet.patronymic,
           patronymicEn: this.transliterate()(this.formSet.patronymic),
           organization: this.formSet.organization,
-          organizationEn: '',
+          organizationEn: dataTranslet.organization,
           position: this.formSet.position,
-          positionEn: '',
+          positionEn: dataTranslet.position,
           place: this.formSet.place,
-          placeEn: '',
-          email: this.formSet.email,
-          telephone: this.formSet.telephone,
-          password: this.formSet.password,
-        }
-        personDataEn = {
-          surname: this.transliterate()(this.formSet.surname),
-          name: this.transliterate()(this.formSet.name),
-          patronymic: this.transliterate()(this.formSet.patronymic),
-          organization: this.formSet.organization,
-          positionEn: this.formSet.position,
-          place: this.formSet.place,
-          email: this.formSet.email,
-          telephone: this.formSet.telephone,
-          password: this.formSet.password,
-        }
-        personDataRu = {
-          surname: this.formSet.surname,
-          name: this.formSet.name,
-          patronymic: this.formSet.patronymic,
-          organization: this.formSet.organization,
-          positionEn: this.formSet.position,
-          place: this.formSet.place,
+          placeEn: dataTranslet.place,
           email: this.formSet.email,
           telephone: this.formSet.telephone,
           password: this.formSet.password,
@@ -362,16 +357,10 @@ export default {
       }
       
 
-      await this.$axios.post('/api/auth/registration', this.formSet)
+      await this.$axios.post('/api/auth/registration', personDataReg)
         .then(res => {
           if (res.data === 'OK') {
-
-            if(this.$i18n.locale == 'en'){ 
-              this.$store.commit('setPersonDataEn', personDataEn);
-            }else{
-              this.$store.commit('setPersonData', personDataRu);
-            }
-
+            this.$store.commit('setPersonData', personDataReg);
             this.$router.push(this.localeRout('/login'));
           }
         })

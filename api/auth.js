@@ -9,11 +9,17 @@ const router = Router();
 router.post('/registration', (req, res) => {
   const {
     name,
+    nameEn,
     surname,
+    surnameEn,
     patronymic,
+    patronymicEn,
     organization,
+    organizationEn,
     position,
+    positionEn,
     place,
+    placeEn,
     email,
     telephone,
     password,
@@ -21,7 +27,7 @@ router.post('/registration', (req, res) => {
 
   const users = Mongo.database.db('bibcongress').collection('users');
   
- users.findOne({ email: email }, (error, result) => {
+  users.findOne({ email: email }, (error, result) => {
     if (error) {
       console.log(error);
       res.status(500).send('Server error');
@@ -30,13 +36,19 @@ router.post('/registration', (req, res) => {
       const salt = bcrypt.genSaltSync(10);
       const user = {
         name,
+        nameEn,
         surname,
+        surnameEn,
         patronymic,
+        patronymicEn,
         organization,
+        organizationEn,
         position,
+        positionEn,
+        place,
+        placeEn,
         email,
         telephone,
-        place,
         isEmailConfirmed: false,
         password: bcrypt.hashSync(password, salt),
         avatar: '',
