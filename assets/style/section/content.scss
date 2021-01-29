@@ -67,18 +67,18 @@
 .menu__l{
   height: 100%;
   width: 100%;
-  background-color: #70ccc9;
+  background-color: #82d8d5;
 }
 .menu__i{
   padding: 15px 20px;
-
+  cursor: pointer;
   @include size(md){
     font-size: 18px;
   }
 
   &:hover{
     background-color: #58B0B1;
-    cursor: pointer;
+    
   }
 }
 

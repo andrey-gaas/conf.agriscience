@@ -2,7 +2,7 @@
   <header class="header">
     <div class="top-container">
       <img src="@/assets/img/logo_color.png" alt="logo international bibliographic congress" class="logo">
-      <button class="button"
+      <button class="button mobile-header__button"
         @click="isOpen = !isOpen"
       >
         <div></div>
@@ -114,13 +114,15 @@ export default {
 
   .nav-container {
     width: 100%;
-    height: 0;
     background: #eee;
     transition: .3s;
     overflow: hidden;
-
+    transform: scaleY(0);
+    transform-origin: 0 0;
+    opacity: 0;
     &.open {
-      height: 419px;
+      opacity: 1;
+      transform: scaleY(1);
       padding-bottom: 14px;
       border-top: 1px solid #ccc;
       border-bottom: 1px solid #ccc;
@@ -158,5 +160,8 @@ export default {
         border: 1px solid #eee;
       }
     }
+  }
+  .mobile-header__button{
+    outline: none;
   }
 </style>

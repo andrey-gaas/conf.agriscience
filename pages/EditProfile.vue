@@ -106,7 +106,7 @@
                   {{$t('reg_empty_telephone_field_error')}}
                 </span>
                 <span class="red-text"
-                  v-else-if="(!this.$v.formSet.telephone.numeric && this.$v.formSet.telephone.$dirty)"
+                  v-else-if="(!this.$v.formSet.telephone.phoneValid && this.$v.formSet.telephone.$dirty)"
                 >
                   {{$t('reg_invalid_telephone_error')}}
                 </span>
@@ -138,7 +138,7 @@ import { RU, EN } from '@/constants/language';
 import {localeRout, transliterate} from '@/assets/utils'
 
 import { loadYmap } from 'vue-yandex-maps'
-import { helpers, required, numeric } from 'vuelidate/lib/validators'
+import { helpers, required } from 'vuelidate/lib/validators'
 import { mdbContainer, mdbInput,  mdbBtn , mdbBtnGroup, mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon } from 'mdbvue';
 //Валидатор для русского алфавита
 const alphaValid = helpers.regex('alpha', /^[a-zA-Zа-яёА-ЯЁ]*$/)
@@ -147,9 +147,8 @@ const isBoolean = helpers.withParams(
   { type: 'isTrue' },
   v => v
 )
-//Валидатор пароля
-const passwordValid = helpers.regex('alpha', /^[a-zA-Z0-9]*$/)
-
+//Валидатор телефона
+const phoneValid = helpers.regex('alpha', /^\+?[0-9]{0,3}(\s|-| |\s|\(|\s\(|-\()?\d{3}(\s|-| |\s|\)|\)\s|\)\-)?(\d|\d\s|\d\-){3,8}$/)
 
 export default {
   name: "Registration",
@@ -186,7 +185,7 @@ export default {
       organization: {required},
       position: {required},
       place: {required},
-      telephone: {numeric, required},
+      telephone: {phoneValid, required},
       locality:{isBoolean}
     }
   },

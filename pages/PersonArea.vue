@@ -92,7 +92,7 @@
                   </th>
                   <th class="p-0 align-middle">
                     <mdb-btn class="m-1 px-3 py-2 teal lighten-2"
-                      v-if="item.status !== 1"
+                      v-if="item.status !== 1 && item.status !== undefined"
                       @click="editReport(item.ind)"
                     >
                       <BIconPencilSquare/>
@@ -208,7 +208,7 @@ export default {
     imgFile: '',
     personAboutMeRu:'',
     personAboutMeEn:'',
-    personReport:[{title:'Нет активных заявок', ind:''}],
+    personReport:[{title:'Нет активных заявок', ind:'',}],
     fileName: '',
     isEditAboutMeRu: false,
     isEditAboutMeEn: false,
@@ -379,7 +379,6 @@ export default {
       this.personAboutMeEn = this.$store.getters.getPersonAboutMeEn
       this.personData = this.$store.getters.getPersonData
       this.personDataEn = this.$store.getters.getPersonDataEn
-      console.log(this.personAboutMeRu);
       //this.localize()
 
       delete this.personData.isEmailConfirmed;

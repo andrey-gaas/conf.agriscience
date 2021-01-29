@@ -186,7 +186,7 @@ import { RU, EN } from '@/constants/language';
 import {localeRout, transliterate} from '@/assets/utils'
 
 import { loadYmap } from 'vue-yandex-maps'
-import { helpers, required, numeric, email, minLength } from 'vuelidate/lib/validators'
+import { helpers, required, email, minLength } from 'vuelidate/lib/validators'
 import { mdbContainer, mdbInput,  mdbBtn , mdbBtnGroup, mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon } from 'mdbvue';
 //Валидатор для русского алфавита
 const alphaValid = helpers.regex('alpha', /^[a-zA-Zа-яёА-ЯЁ]*$/)
@@ -196,8 +196,8 @@ const isBoolean = helpers.withParams(
   v => v
 )
 //Валидатор пароля
-const passwordValid = helpers.regex('alpha', /^[a-zA-Z0-9_!@#$%^&*]*$/)
-const phoneValid = helpers.regex('alpha', /^\+?[0-9]{6,14}$/)
+const passwordValid = helpers.regex('alpha', /^[a-zA-Zа-яёА-ЯЁ0-9_!@#$%^&*]*$/)
+const phoneValid = helpers.regex('alpha', /^\+?[0-9]{0,3}(\s|-| |\s|\(|\s\(|-\()?\d{3}(\s|-| |\s|\)|\)\s|\)\-)?(\d|\d\s|\d\-){3,8}$/)
 
 
 // const phoneValid = helpers.withParams(
