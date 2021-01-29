@@ -2,7 +2,12 @@
   <header class="header">
     <container class="d-flex justify-content-between align-items-center">
       <nuxt-link :to="localeRout('/')">
-        <img src="@/assets/img/logo_color.png" alt="logo international bibliographic congress" class="logo">
+        <img src="@/assets/img/logo_color.png" alt="logo international bibliographic congress" class="logo"
+          v-if="$i18n.locale=='ru'"
+        >
+        <img src="@/assets/img/logo_color_en.png" alt="logo international bibliographic congress" class="logo"
+          v-if="$i18n.locale=='en'"
+        >
       </nuxt-link>
 
       <div class="d-flex align-items-center">

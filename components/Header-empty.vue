@@ -3,7 +3,12 @@
     <container p='2'>
       <logo href="#" class="logo">
         <nuxt-link :to="localeRout('/')">
-          <img src="assets/img/logo_white.png" alt="Logo" class='logo_white'>
+          <img src="@/assets/img/logo_white.png" alt="Logo" class='logo_white'
+            v-if="$i18n.locale == 'ru'"
+          >
+          <img src="@/assets/img/logo_white_en.png" alt="Logo" class='logo_white'
+            v-if="$i18n.locale == 'en'"
+          >
         </nuxt-link>
       </logo>
       <dropdown>
