@@ -14,16 +14,12 @@
       :class="{open: isOpen}"
     >
       <div class="section">
-        <!-- <nuxt-link :to="localeRout('/')" class="link"
+        <nuxt-link  class="link mobile-header__linck"
           v-for="(item, ind) of menuDataSm" :key='ind'
-        >{{item.title}}</nuxt-link> -->
-        <nuxt-link :to="localeRout('/')" class="link">{{$t('main_menu_organising_committee')}}</nuxt-link>
-        <nuxt-link :to="localeRout('/')" class="link">{{$t('main_menu_program_committee')}}</nuxt-link>
-        <nuxt-link :to="localeRout('/')" class="link">{{$t('main_menu_publication_materials')}}</nuxt-link>
-        <nuxt-link :to="localeRout('/')" class="link">{{$t('main_menu_participants')}}</nuxt-link>
-        <nuxt-link :to="localeRout('/')" class="link">{{$t('main_menu_programma')}}</nuxt-link>
-        <nuxt-link :to="localeRout('/registration')" class="link">{{$t('header_registration')}}</nuxt-link>
-        <nuxt-link :to="localeRout('/login')" class="link">{{$t('header_login')}}</nuxt-link>
+          :to="localeRout(`/${item.linck}`)"
+          :class="{disabled: item.linck == ''}"
+        >{{item.title}}</nuxt-link>
+      
         
       </div>
       <div class="section">
@@ -50,11 +46,13 @@ export default {
     isOpen: false,
     RU, EN,
     menuDataSm:[
-      { title: 'main_menu_organising_committee' },
-      { title: 'main_menu_program_committee' },
-      { title: 'main_menu_publication_materials'},
-      { title: 'main_menu_participants' },
-      { title: 'main_menu_programma'},
+      { title: 'main_menu_organising_committee', linck:'' },
+      { title: 'main_menu_program_committee', linck:'' },
+      { title: 'main_menu_publication_materials', linck:''},
+      { title: 'main_menu_participants', linck:'' },
+      { title: 'main_menu_programma', linck:''},
+      { title: 'header_registration', linck:'registration'},
+      { title: 'header_login', linck:'login'},
     ],
   }),
   components: {},
@@ -163,5 +161,10 @@ export default {
   }
   .mobile-header__button{
     outline: none;
+  }
+  .mobile-header__linck{
+    &.disabled{
+      color: #aaa
+    }
   }
 </style>

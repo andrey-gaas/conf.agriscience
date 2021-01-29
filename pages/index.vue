@@ -124,8 +124,8 @@ export default {
   data:()=>({
 
     menuDataSm:[
-      { title: 'main_menu_organising_committee', linck:'asdf' },
-      { title: 'main_menu_program_committee', linck:'asdf'},
+      { title: 'main_menu_organising_committee',  },
+      { title: 'main_menu_program_committee', },
       { title: 'main_menu_publication_materials'},
       { title: 'main_menu_participants' },
       { title: 'main_menu_programma'},
