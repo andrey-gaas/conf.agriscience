@@ -1,5 +1,12 @@
 import Axios from 'axios';
 
+const isProduction = process.env.NODE_ENV === 'production';
+function getApiUrl(url) {
+  return isProduction ? 
+    `https://api.bibcongress.ru${url.slice(4)}`
+    : url;
+}
+
 export const state = () => ({
   loginData: {},
   isAuth: false,
@@ -374,7 +381,7 @@ export const getters = {
 
 export const actions = {
   async fetchPersonData({commit}){
-    await this.$axios.get('/api/user/')
+    await this.$axios.get(getApiUrl('/api/user/'))
       .then( res => {
         commit('setPersonData', res.data)
         commit('setPersonAboutMe', {aboutMe: res.data.aboutMe, locale:'ru'})
@@ -385,24 +392,24 @@ export const actions = {
       .catch(error => console.log(error.response.data));
   },
   async fetchPersonReports({commit}){
-    await this.$axios.get('/api/reports').
+    await this.$axios.get(getApiUrl('/api/reports')).
       then( res => {
         commit('setReportList', res.data)
       })
   },
   async addReportBD({}, {report}){
-    await this.$axios.post('/api/reports', report)
+    await this.$axios.post(getApiUrl('/api/reports'), report)
   },
   async editReportBD({getters}, {report}){
     let id = getters.getReportList[getters.getReportInd].id
     
-    await this.$axios.put('/api/reports/'+id, report)
+    await this.$axios.put(getApiUrl('/api/reports/'+id), report)
   },
   async sevePersonAboutMeBD({}, aboutData){
-    await this.$axios.put('/api/user/', aboutData)
+    await this.$axios.put(getApiUrl('/api/user/'), aboutData)
   },
   async sevePersonDataBD({}, personData){
-    await this.$axios.put('/api/user/', personData)
+    await this.$axios.put(getApiUrl('/api/user/'), personData)
   },
 }
 export const modules = {

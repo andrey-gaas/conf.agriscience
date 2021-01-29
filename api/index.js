@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const passport = require('passport');
@@ -8,6 +9,11 @@ const app = express();
 
 Mongo.connect();
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(cors({
+    origin: 'https://www.bibcongress.ru'
+  }));
+}
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(session({
@@ -29,6 +35,8 @@ require('./passport').init();
 app.use('/auth', require('./auth'));
 app.use('/user', require('./user'));
 app.use('/reports', require('./reports'));
+
+app.use('/test', require('./test'));
 
 if (require.main === module) {
   const port = 3100;
