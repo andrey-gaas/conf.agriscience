@@ -3,7 +3,8 @@ const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const Mongo = require('./db/Mongo');
 const sendMail = require('./sendmail');
-const e = require('express');
+const jwt = require('jsonwebtoken');
+const { secretKey } = require('./config');
 const router = Router();
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -87,7 +88,31 @@ router.post('/registration', (req, res) => {
   });
 });
 
-router.post('/login', passport.authenticate('local', { successRedirect, failureRedirect }));
+// router.post('/login', passport.authenticate('local', { successRedirect, failureRedirect }));
+
+router.post('/login', (req, res, next) => {
+  const user = req.body;
+
+  if (!user.username || !user.password) {
+    return res.status(400).send('Bad Request');
+  }
+
+  return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
+    if(err || !passportUser) {
+      console.log(info);
+      return res.status(500).send(err);
+    }
+
+    if(passportUser) {
+      const token = jwt.sign({
+        email: passportUser.email,
+      }, secretKey);
+
+      res.cookie('token', token, { expires: new Date(Date.now() + 31536000000) });
+      return res.send({ message: 'OK', token: token });
+    }
+  })(req, res, next);
+});
 
 router.get('/email-confirm/:email', (req, res) => {
   const { email } = req.params;

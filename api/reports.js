@@ -1,17 +1,17 @@
 const { Router } = require('express');
 const Mongo = require('./db/Mongo');
+const auth = require('../middleware/auth');
 const router = Router();
 
-router.use('*', (req, res, next) => {
-  if (req.user) next();
-  else res.status(401).send('Unauthorized');
+router.use('*', auth, (req, res, next) => {
+  next();
 });
 
 router.get('/', (req, res) => {
   Mongo.database
     .db('bibcongress')
     .collection('reports')
-    .find({ email: req.user.email })
+    .find({ email: req.email })
     .toArray((err, reports) => {
       res.send(reports);
     });

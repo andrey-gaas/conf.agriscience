@@ -7,10 +7,8 @@
           <form
             class="needs-validation"
             novalidate
-            method="post"
-            action="/api/auth/login"
+            @submit.prevent='formSubmit'
           >
-            <!-- @submit.prevent='formSubmit' -->
             <div class="teal lighten-1 px-4 py-3">
               <h2 class="form__title mb-0  white-text"><strong>{{$t('log_authorization')}}</strong></h2>
             </div>
@@ -112,9 +110,15 @@ export default {
         return;
       }
       this.$store.commit('setLoginData', this.formSet)
-      this.$axios.post('/api/auth/login', this.formSet)
-        .then(res => console.log(res))
-        .catch(error => alert(error.response.data));
+      this.$axios.post('/api/auth/login', { username: this.formSet.email, password: this.formSet.password })
+        .then(res => {
+          const { message, token } = res.data;
+
+          if (message === 'OK' && token) {
+            localStorage.setItem('token', token);
+          }
+        })
+        .catch(error => console.log(error.response.data));
     },
   },
   components:{

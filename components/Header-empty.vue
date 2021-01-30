@@ -47,7 +47,7 @@ export default {
     setLocale,
     localeRout,
     testFetch() {
-      this.$axios.delete('/api/reports/4')
+      this.$axios.get('/api/test', { headers: { Authorization: localStorage.getItem('token') } })
         .then(res => console.log(res))
         .catch(error => console.log(error.response.data));
     }

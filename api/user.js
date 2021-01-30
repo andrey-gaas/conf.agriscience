@@ -1,17 +1,17 @@
 const { Router } = require('express');
+const auth = require('../middleware/auth');
 const Mongo = require('./db/Mongo');
 const router = Router();
 
-router.use('*', (req, res, next) => {
-  if (req.user) next();
-  else res.status(401).send('Unauthorized');
+router.use('*', auth, (req, res, next) => {
+  next();
 });
 
 router.get('/', (req, res) => {
   Mongo.database
     .db('bibcongress')
     .collection('users')
-    .findOne({ email: req.user.email })
+    .findOne({ email: req.email })
     .then(user => {
       res.send({
         surname: user.surname,
@@ -45,7 +45,7 @@ router.put('/', (req, res) => {
     .db('bibcongress')
     .collection('users')
     .findOneAndUpdate(
-      { email: req.user.email },
+      { email: req.email },
       { $set: req.body },
     )
     .then(() => {

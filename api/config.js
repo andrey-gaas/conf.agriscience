@@ -1,0 +1,1 @@
+exports.secretKey = 'Super-Bibliotechniy-Secretniy-Key-Dla-J-W-T';
