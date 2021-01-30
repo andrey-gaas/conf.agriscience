@@ -359,7 +359,7 @@ export default {
 
       await this.$axios.post('/api/auth/registration', personDataReg)
         .then(res => {
-          if (res.data === 'OK') {
+          if (res.data.message === 'OK') {
             this.$store.commit('setPersonData', personDataReg);
             this.$router.push(this.localeRout('/login'));
           }

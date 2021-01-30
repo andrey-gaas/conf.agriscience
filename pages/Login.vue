@@ -115,7 +115,7 @@ export default {
           const { message, token } = res.data;
 
           if (message === 'OK' && token) {
-            localStorage.setItem('token', token);
+            this.$router.push(this.localeRout('/personarea'));
           }
         })
         .catch(error => console.log(error.response.data));

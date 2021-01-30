@@ -71,13 +71,20 @@ router.post('/registration', (req, res) => {
           res.status(500).send('Server error');
         }
         else {
+          const token = jwt.sign({
+            email,
+          }, secretKey);
+    
+          res.cookie('token', token, { expires: new Date(Date.now() + 31536000000) });
+          //res.send({ message: 'OK', token: token });
+
           const message = {
             email,
             subject: 'Регистрация - III Международный библиографический конгресс',
             text: `Для подтверждения электронной почты, перейдите по ссылке: https://api.bibcongress.ru/auth/email-confirm/${email}`,
           };
           sendMail(message)
-            .then(() => res.send('OK'))
+            .then(() => res.send({ message: 'OK', token }))
             .catch(error => {
               console.log(error.message);
               res.send('OK');
