@@ -30,7 +30,7 @@ export default {
   components: true,
   
   loading: {
-    color: 'blue',
+    color: '#82d8d5',
     height: '5px'
   },
 
