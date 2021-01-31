@@ -71,8 +71,8 @@ router.put('/:id', (req, res) => {
     .db('bibcongress')
     .collection('reports')
     .findOneAndUpdate({ id }, { $set: req.body })
-    .then(() => {
-      res.send('OK');
+    .then((result) => {
+      res.send({ message: 'OK', oldReport: result });
     })
     .catch(err => {
       console.log(err);
