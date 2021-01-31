@@ -410,13 +410,13 @@ export default {
     },
     async setPersonAboutMe(loc){
       try {
-        await this.$store.dispatch('sevePersonAboutMeBD', {aboutMe: this.aboutMeRu, aboutMeEn: this.aboutMeEn})
-
         if(loc == 'ru'){ this.personAboutMeRu = this.aboutMeRu
+          await this.$store.dispatch('sevePersonAboutMeBD', {aboutMe: this.aboutMeRu, aboutMeEn: this.personAboutMeEn})
           this.$store.commit('setPersonAboutMe', {aboutMe: this.aboutMeRu, locale:loc});
           this.isEditAboutMeRu = false
         }
         else{ this.personAboutMeEn = this.aboutMeEn
+          await this.$store.dispatch('sevePersonAboutMeBD', {aboutMe: this.personAboutMeRu, aboutMeEn: this.aboutMeEn})
           this.$store.commit('setPersonAboutMe', {aboutMe: this.aboutMeEn, locale:loc});
           this.isEditAboutMeEn = false
         }
