@@ -295,13 +295,19 @@ export const getters = {
   },
   getLoadData(s){
     return s.isLoadData
+  },
+  getAxiosWithToken(s){
+    const AxiosTooken = Axios.create({
+      headers: { 'Authorization': s.cookie.token }
+    });
+    return AxiosTooken
   }
 }
 
 export const actions = {
   async fetchPersonData({commit, getters}){
-    let token = getters.getCookie.token
-    await this.$axios.get(getApiUrl('/api/user/'), { headers: { 'Authorization':  token } })
+    const axios = getters.getAxiosWithToken
+    await axios.get(getApiUrl('/api/user/'))
       .then( res => {
         commit('setPersonData', res.data)
         commit('setPersonAboutMe', {aboutMe: res.data.aboutMe, locale:'ru'})
@@ -312,33 +318,29 @@ export const actions = {
       .catch(error => console.log(error.response.data));
   },
   async fetchPersonReports({commit, getters}){
-    let token = getters.getCookie.token
-    await this.$axios.get(getApiUrl('/api/reports'), { headers: { 'Authorization':  token } }).
+    const axios = getters.getAxiosWithToken
+    await axios.get(getApiUrl('/api/reports')).
       then( res => {
         commit('setReportList', res.data)
       })
   },
   async addReportBD({getters}, {report}){
-    let token = getters.getCookie.token
-    await this.$axios.post(getApiUrl('/api/reports'), {data:report} , { headers: { 'Authorization':  token } })
+    const axios = getters.getAxiosWithToken
+    await axios.post(getApiUrl('/api/reports'), {report})
   },
   async editReportBD({getters}, {report}){
-    let token = getters.getCookie.token
+    const axios = getters.getAxiosWithToken
     let id = getters.getReportList[getters.getReportInd].id
     
-    await this.$axios.put(getApiUrl('/api/reports/'+id), {data:report}, { headers: { 'Authorization':  token } })
+    await axios.put(getApiUrl('/api/reports/'+id), {report})
   },
-  async sevePersonAboutMeBD({}, aboutData){
-    let token = getters.getCookie.token
-
-    const AxiosTooken = Axios.create({
-      headers: { 'Authorization':  token }
-    });
-    await AxiosTooken.put(getApiUrl('/api/user/'), aboutData)
+  async sevePersonAboutMeBD({getters}, aboutData){
+    const axios = getters.getAxiosWithToken
+    await axios.put(getApiUrl('/api/user/'), aboutData)
   },
   async sevePersonDataBD({getters}, personData){
-    let token = getters.getCookie.token
-    await this.$axios.put(getApiUrl('/api/user/'), {data:personData}, { headers: { 'Authorization':  token }})
+    const axios = getters.getAxiosWithToken
+    await axios.put(getApiUrl('/api/user/'), personData)
   },
 }
 export const modules = {
