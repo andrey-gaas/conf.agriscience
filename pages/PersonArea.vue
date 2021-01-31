@@ -226,7 +226,7 @@ export default {
       try {
         await this.$store.dispatch('fetchPersonData')
         await this.$store.dispatch('fetchPersonReports')
-        this.$store.commit('toggleLoadData')
+        this.$store.commit('toggleLoadData', true)
       } catch (e) {
         this.showTost(e.message)
       }

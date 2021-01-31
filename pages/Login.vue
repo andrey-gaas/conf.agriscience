@@ -89,9 +89,6 @@ export default {
       password: '',
     },
   }),
-  computed:{
-    
-  },
   validations:{
     formSet: {
       email: {email, required},
@@ -109,6 +106,7 @@ export default {
       if(this.$v.formSet.$invalid){
         return;
       }
+      this.$store.commit('toggleLoadData', false)
       this.$store.commit('setLoginData', this.formSet)
       this.$axios.post('/api/auth/login', { username: this.formSet.email, password: this.formSet.password })
         .then(res => {

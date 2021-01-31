@@ -193,8 +193,8 @@ export const mutations = {
   setLoginData(s, data){
     s.loginData = data
   },
-  toggleLoadData(s){
-    s.isLoadData = true
+  toggleLoadData(s, boolean){
+    s.isLoadData = boolean
   },
   setCookie(s){
     let cookieArr1 = document.cookie.split(/;/)
