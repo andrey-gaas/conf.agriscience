@@ -46,7 +46,7 @@ router.post('/', (req, res) => {
     } else {
       id = lastReport[0].id + 1;
       report.id = id;
-      report.email = req.user.email;
+      report.email = req.email;
 
       reports.insertOne(report)
         .then(report => {
