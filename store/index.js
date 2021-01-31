@@ -326,13 +326,13 @@ export const actions = {
   },
   async addReportBD({getters}, {report}){
     const axios = getters.getAxiosWithToken
-    await axios.post(getApiUrl('/api/reports'), {report})
+    await axios.post(getApiUrl('/api/reports'), report)
   },
   async editReportBD({getters}, {report}){
     const axios = getters.getAxiosWithToken
     let id = getters.getReportList[getters.getReportInd].id
     
-    await axios.put(getApiUrl('/api/reports/'+id), {report})
+    await axios.put(getApiUrl('/api/reports/'+id), report)
   },
   async sevePersonAboutMeBD({getters}, aboutData){
     const axios = getters.getAxiosWithToken

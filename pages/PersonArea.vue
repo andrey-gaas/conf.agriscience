@@ -349,27 +349,27 @@ export default {
     },
     submitFile(){
       //Сделать рабочию версию
-      console.log('TO DO!!');
-      let formData = new FormData();
-      formData.append('file', this.imgFile);
+      // console.log('TO DO!!');
+      // let formData = new FormData();
+      // formData.append('file', this.imgFile);
 
-      axios.post( '/single-file',
-        formData,
-        {
-          headers: {
-              'Content-Type': 'multipart/form-data'
-          }
-        }
-      ).finally(() => {
-        this.imgFile = ''
-        this.fileName = ''
-        formData = ''
-      }).then(function(){
-        console.log('SUCCESS!!');
-      })
-      .catch(function(){
-        console.log('FAILURE!!');
-      });
+      // axios.post( '/single-file',
+      //   formData,
+      //   {
+      //     headers: {
+      //         'Content-Type': 'multipart/form-data'
+      //     }
+      //   }
+      // ).finally(() => {
+      //   this.imgFile = ''
+      //   this.fileName = ''
+      //   formData = ''
+      // }).then(function(){
+      //   console.log('SUCCESS!!');
+      // })
+      // .catch(function(){
+      //   console.log('FAILURE!!');
+      // });
     },
     setFileName(){
       this.imgFile = this.$refs.fileInput.files[0]
