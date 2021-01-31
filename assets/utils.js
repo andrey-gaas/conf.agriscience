@@ -22,3 +22,21 @@ export function transliterate() {
       return text;
   }
 }
+
+export function getCookie(){
+  let cookieArr1 = document.cookie.split(/;/)
+    let cookieArr2 = cookieArr1.map(el => {      
+      return el.replace(/=/, ';')
+    })
+    let cookieArr3 = cookieArr2.map( el => {
+      
+      return el.split(/;/)
+    })
+    let cookieObj = {}
+    for( let el of cookieArr3){
+      let key = el[0].replace(/\s/g, '')
+      let val = el[1].replace(/\s/g, '')
+      cookieObj[key] = val
+    }
+    return cookieObj
+}

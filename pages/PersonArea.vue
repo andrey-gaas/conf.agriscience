@@ -190,7 +190,7 @@
 <script>
 
 import { RU, EN } from '@/constants/language';
-import {localeRout, transliterate,} from '@/assets/utils'
+import {localeRout, transliterate, getCookie} from '@/assets/utils'
 
 import Toast from '@/components/Toast';
 import { mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody } from 'mdbvue';
@@ -215,12 +215,13 @@ export default {
     aboutMeRu:'',
     aboutMeEn:'',
     isShowTost: false,
-
   }),
   computed:{
     
   },
   async created(){
+    this.$store.commit('setCookie')
+    
     if(!this.$store.getters.getLoadData){
       try {
         await this.$store.dispatch('fetchPersonData')
@@ -248,7 +249,7 @@ export default {
     }
   },
   methods:{
-    localeRout,transliterate,
+    localeRout, transliterate, getCookie,
     showTost(text){
       this.$store.commit('setToastMsg', text)
       this.isShowTost = true
