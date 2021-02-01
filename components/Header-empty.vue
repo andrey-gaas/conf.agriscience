@@ -11,6 +11,7 @@
           >
         </nuxt-link>
       </logo>
+      <button @click="testFetch">Тестовый запрос</button>
       <dropdown>
         <dropdown-toggle class="teal lighten-2" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
         <dropdown-menu>
@@ -52,7 +53,8 @@ export default {
     setLocale,
     localeRout,
     testFetch() {
-      this.$axios.get('/api/test', { headers: { Authorization: localStorage.getItem('token') } })
+      // this.$axios.get('/api/test', { headers: { Authorization: localStorage.getItem('token') } })
+      this.$axios.post('/translate', { language: { from: 'RU', to: 'EN' }, fields: { language: 'Язык', user: 'Пользователь' } })
         .then(res => console.log(res))
         .catch(error => console.log(error.response.data));
     }
