@@ -342,6 +342,10 @@ export const actions = {
     const axios = getters.getAxiosWithToken
     await axios.put(getApiUrl('/api/user/'), personData)
   },
+  async TransleteFunc({getters}, data){
+    const axios = getters.getAxiosWithToken
+    await axios.post(getApiUrl('/api/translate'), {t:'asdf', asdf:2})
+  },
 }
 export const modules = {
   

@@ -1,10 +1,6 @@
 <template>
   <div class="d-flex align-items-center blue lighten-5 min-h-100 flex-grow-1 justify-content-center">
-    <div class="spinner-border text-primary" style="width: 4rem; height: 4rem;" role="status"
-      v-if="loading"
-    >
-      <span class="sr-only">Loading...</span>
-    </div>
+
     <mdb-container class="rounded-lg grey lighten-5 z-depth-1 my-0 my-sm-1 my-md-1 my-lg-1" p="0" 
       v-if="!loading"
     >
@@ -177,6 +173,7 @@
           </mdb-col>
         </mdb-row>
       </mdb-row>
+      <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="translateText()">Test API translate</mdb-btn>
     </mdb-container>
     <transition name="toast">
       <Toast
@@ -202,7 +199,6 @@ export default {
   layout: 'EmptyLayout',
   data: () => ({
     RU, EN,
-    loading: true,
     personData:{},
     personDataEn:{},
     imgFile: '',
@@ -234,9 +230,6 @@ export default {
     this.setData()
     this.setReport()
   },
-  mounted(){
-    this.loading = false
-  },
   computed:{
     isEmailСonfirm(){
       return this.$store.getters.getEmailСonfirm
@@ -249,6 +242,9 @@ export default {
     }
   },
   methods:{
+    async translateText(){
+      this.$store.dispatch('TransleteFunc', )
+    },
     localeRout, transliterate, getCookie,
     showTost(text){
       this.$store.commit('setToastMsg', text)
