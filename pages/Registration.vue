@@ -355,9 +355,8 @@ export default {
           password: this.formSet.password,
         }
       }
-      const regUrl = process.env.NODE_ENV === 'production' ? 'https://api.bibcongress.ru/auth/registration' : '/api/auth/registration';
 
-      await this.$axios.post('/api/auth/registration', personDataReg)
+      await this.$axios.post('/auth/registration', personDataReg)
         .then(res => {
           if (res.data.message === 'OK') {
             this.$store.commit('setPersonData', personDataReg);

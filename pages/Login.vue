@@ -108,7 +108,7 @@ export default {
       }
       this.$store.commit('toggleLoadData', false)
       this.$store.commit('setLoginData', this.formSet)
-      this.$axios.post('/api/auth/login', { username: this.formSet.email, password: this.formSet.password })
+      this.$axios.post('/auth/login', { username: this.formSet.email, password: this.formSet.password })
         .then(res => {
           const { message, token } = res.data;
 
