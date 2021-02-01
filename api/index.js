@@ -9,11 +9,10 @@ const app = express();
 
 Mongo.connect();
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(cors({
-    origin: 'https://www.bibcongress.ru'
-  }));
-}
+app.use(cors({
+  origin: 'https://www.bibcongress.ru'
+}));
+  
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(session({
