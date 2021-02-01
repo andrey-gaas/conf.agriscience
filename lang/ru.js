@@ -162,6 +162,19 @@ export default{
   'personarea_no_confirm':'Требуется подтверждение E-Mail, для этого перейдите по ссылке в сообщении отправленом вам на почту.',
   'personarea_confirm':'E-Mail подтверждён.',
   
+  'edit_report_report':'Доклад',
+  'edit_report_save':'Сохранить',
+  'edit_report_cancel':'Отмена',
+  'edit_report_enter_author':'Укажите хотя бы одного автора',
+  'edit_report_enter_speaker':'Укажите хотя бы одного докладчика',
+  'edit_report_enter_title_report':'Укажите название доклада',
+  'edit_report_add_annotation':'Добавьте аннотацию',
+  
+  'edit_author_speaker':'Докладчик',
+  'edit_author_enter_surname':'Укажите фамилию',
+  'edit_author_enter_name':'Укажите имя',
+  'edit_author_cancel':'Отмена',
+  'edit_author_add':'Добавить',
 
   'editprofile_about_me':'О себе',
   'editprofile_save_changes':'Сохранить изменения',

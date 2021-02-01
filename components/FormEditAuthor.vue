@@ -10,7 +10,7 @@
             @submit.prevent='formSubmit'
           >
             <div class="teal lighten-1 px-4 py-3">
-              <h2 class="form__title mb-0  white-text"><strong>Докладчик</strong></h2>
+              <h2 class="form__title mb-0  white-text"><strong>{{$t('edit_author_speaker')}}</strong></h2>
             </div>
             <div class="pt-4 pb-4 px-4">
               <mdb-input class="my-0" size="sm"
@@ -26,7 +26,7 @@
                 <span class="red-text"
                   v-else-if="(!this.$v.formSet.surname.required && this.$v.formSet.surname.$dirty)"
                 >
-                  Укажите фамилию
+                  {{$t('edit_author_enter_surname')}}
                 </span>
               <mdb-input class="mt-4 mb-0 " size="sm" 
                 :label="$t('reg_name')" 
@@ -41,7 +41,7 @@
                 <span class="red-text"
                   v-else-if="(!this.$v.formSet.name.required && this.$v.formSet.name.$dirty)"
                 >
-                  Укажите имя
+                  {{$t('edit_author_enter_name')}}
                 </span>
               <mdb-input class="mt-4 mb-0" size="sm"
                 :label="$t('reg_patronymic')" 
@@ -80,7 +80,7 @@
                   class="mt-4 mb-0 teal lighten-2"
                   @click="closeEdit"
                 >
-                  Отмена
+                  {{$t('edit_author_cancel')}}
                 </mdb-btn>
               </div>
             </div>

@@ -200,22 +200,6 @@ const passwordValid = helpers.regex('alpha', /^[a-zA-Zа-яёА-ЯЁ0-9_!@#$%^&*
 const phoneValid = helpers.regex('alpha', /^\+?[0-9]{0,3}(\s|-| |\s|\(|\s\(|-\()?\d{3}(\s|-| |\s|\)|\)\s|\)\-)?(\d|\d\s|\d\-){3,8}$/)
 
 
-// const phoneValid = helpers.withParams(
-//   { type: 'phoneValid' },
-//   tel => {
-//     console.log(typeof(+tel[0]));
-//     if(tel[0] == '+' || typeof(+tel[0]) == 'number'){
-//       let num = tel
-
-//       num.slice(0,1)
-//       +num
-//       if(typeof(num) == 'number') return true
-//       return false
-//     }
-//     return false
-//   }
-// )
-
 
 export default {
   name: "Registration",

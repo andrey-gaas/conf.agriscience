@@ -2,7 +2,7 @@
   <div class="d-flex align-items-center blue lighten-5 min-h-100 flex-grow-1">
     <mdb-container class="rounded-lg grey lighten-5 z-depth-1 my-0 my-sm-1 my-md-1 my-lg-1" p="0" >
       <mdb-row class="m-0 teal lighten-1" p='3'>
-        <h2 class="mb-0  white-text"><strong>Доклад</strong></h2>
+        <h2 class="mb-0  white-text"><strong>{{$t('edit_report_report')}}</strong></h2>
       </mdb-row>
       <mdb-row class="m-0" p='2'>
         <mdb-col col="12" sm='12' md='6' lg='6' class='mb-sm-4 mb-4 mb-lg-0 mb-md-0'
@@ -79,16 +79,16 @@
           <mdb-tbl responsiveSm bordered>
             <mdb-tbl-head textWhite class="rounded teal lighten-1">
               <tr>
-                <th colspan="5"><h5 class="mb-0">Авторы</h5></th>
+                <th colspan="5"><h5 class="mb-0">Authors</h5></th>
               </tr>
             </mdb-tbl-head>
             <mdb-tbl-body>
               <tr>
                 <th class="">№</th>
-                <th>ФИО</th>
-                <th class='m-0 px-2'>Докладчик</th>
+                <th>Full name</th>
+                <th class='m-0 px-2'>Speaker</th>
                 
-                <th>Ред./ Уд.</th>
+                <th>Edit/ del.</th>
               </tr>
               <tr
                 v-for="(item, ind) of authorEn" :key='ind'
@@ -126,19 +126,19 @@
               </tr>
               <tr>
                 <th colspan="5" class="p-0">
-                  <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="createAuthor('en')">Добавить автора</mdb-btn>
+                  <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="createAuthor('en')">Add author</mdb-btn>
                 </th>
               </tr>
             </mdb-tbl-body>
           </mdb-tbl>
           <div class="form-group">
-            <label for="nameReport" class="h5">Название доклада</label>
+            <label for="nameReport" class="h5">Title of the report</label>
             <input type="text" id="nameReport" class="form-control"
               v-model="reportNameEn"
             >
           </div>
           <div class="form-group">
-            <label for="Annotations" class="h5">Аннотация</label>
+            <label for="Annotations" class="h5">Annotation</label>
             <mdb-input outline type="textarea" :rows='5' id='Annotations' class='mt-0'
               v-model="reportTextEn"
             />
@@ -150,28 +150,28 @@
           <span class='h6 d-flex red-text'
             v-if="validData.isCheck && !validData.isCountAuthor"
           >
-            Укажите хотя бы одного автора
+            {{$t('edit_report_enter_author')}}
           </span>
           <span class='h6 d-flex red-text'
             v-if="validData.isCheck && !validData.isCountSpeaker"
           >
-            Укажите хотя бы одного докладчика
+            {{$t('edit_report_enter_speaker')}}
           </span>
           <span class='h6 d-flex red-text'
             v-if="validData.isCheck && !validData.isTitle"
           >
-            Укажите название доклада
+            {{$t('edit_report_enter_title_report')}}
           </span>
           <span class='h6 d-flex red-text'
             v-if="validData.isCheck && !validData.isAnnotation"
           >
-            Добавьте аннотацию
+            {{$t('edit_report_add_annotation')}}
           </span>
           <mdb-btn class="teal lighten-2" @click="saveReport()">
-            Сохранить
+            {{$t('edit_report_save')}}
           </mdb-btn>
           <mdb-btn class="teal lighten-2" @click="cancelReport()">
-            Отмена
+            {{$t('edit_report_cancel')}}
           </mdb-btn>
         </mdb-col>
       </mdb-row>
@@ -183,7 +183,7 @@
       <FormEditAuthor
         :editAuthor='editAuthor'
         :closeEdit='closeEdit'
-        :textBtn='"Сохранить"'
+        :textBtn='$t("edit_report_save")'
         :loc='locale'
       />
     </mdb-container>
@@ -194,7 +194,7 @@
       <FormEditAuthor
         :editAuthor='crateAuthor'
         :closeEdit='closeCreate'
-        :textBtn='"Добавить"'
+        :textBtn='$t("edit_author_add")'
         :loc='locale'
       />
     </mdb-container>

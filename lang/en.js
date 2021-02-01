@@ -161,6 +161,20 @@ export default{
   'personarea_no_confirm':'E-Mail confirmation is required, for this follow the link in the message sent to you by mail.',
   'personarea_confirm':'E-mail confirmed.',
 
+  'edit_report_report':'Report',
+  'edit_report_save':'Save',
+  'edit_report_cancel':'Cancel',
+  'edit_report_enter_author':'Please enter at least one author',
+  'edit_report_enter_speaker':'Please enter at least one speaker',
+  'edit_report_enter_title_report':'Please enter a title for the report',
+  'edit_report_add_annotation':'Add annotation',
+
+  'edit_author_speaker':'Speaker',
+  'edit_author_enter_surname':'Enter your surname',
+  'edit_author_enter_name':'Enter your name',
+  'edit_author_cancel':'Cancel',
+  'edit_author_add':'Add',
+
   'editprofile_about_me':'About me',
   'editprofile_save_changes':'Save changes',
   'editprofile_cancel':'Cancel',
