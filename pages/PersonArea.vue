@@ -196,6 +196,7 @@ import { BIcon, BIconPencilSquare, BIconXSquareFill, BIconCheckSquare, BIconQues
 export default {
   name: "PersonArea",
   layout: 'EmptyLayout',
+  middleware: 'authenticated',
   data: () => ({
     RU, EN,
     personData:{},
@@ -215,7 +216,7 @@ export default {
     
   },
   async created(){
-    this.$store.commit('setCookie')
+    //this.$store.commit('setCookie')
     
     if(!this.$store.getters.getLoadData){
       try {

@@ -221,6 +221,7 @@ import { mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, m
 export default {
   name: "AddReport",
   layout: 'EmptyLayout',
+  middleware: 'authenticated',
   data: () => ({
     RU, EN,
     author:[],

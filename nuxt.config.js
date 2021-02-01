@@ -41,6 +41,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     'bootstrap-vue/nuxt',
+    'cookie-universal-nuxt',
     ['nuxt-i18n', {
       detectBrowserLanguage: {
           useCookie: true,

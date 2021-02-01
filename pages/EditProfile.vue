@@ -153,6 +153,7 @@ const phoneValid = helpers.regex('alpha', /^\+?[0-9]{0,3}(\s|-| |\s|\(|\s\(|-\()
 export default {
   name: "Registration",
   layout: 'EmptyLayout',
+  middleware: 'authenticated',
   data: () => ({
     step: 1,
     RU, EN,
