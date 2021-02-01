@@ -76,7 +76,7 @@ import {localeRout} from '@/assets/utils'
 import { helpers, email, minLength, required } from 'vuelidate/lib/validators'
 import { mdbContainer, mdbInput,  mdbBtn } from 'mdbvue';
 //Валидатор пароля
-const passwordValid = helpers.regex('alpha', /^[a-zA-Z0-9]*$/)
+const passwordValid = helpers.regex('alpha', /^[a-zA-Zа-яёА-ЯЁ0-9_!@#$%^&*]*$/)
 
 
 export default {
