@@ -1,7 +1,12 @@
 <template>
   <div class="d-flex align-items-center blue lighten-5 min-h-100 flex-grow-1 justify-content-center">
-
+    <div class="spinner-border text-primary" style="width: 4rem; height: 4rem;" role="status"
+        v-if="loading"
+      >
+        <span class="sr-only">Loading...</span>
+    </div>
     <mdb-container class="rounded-lg grey lighten-5 z-depth-1 my-0 my-sm-1 my-md-1 my-lg-1" p="0" 
+      v-if="!loading"
     >
       <mdb-row class="m-0 teal lighten-1" p='3'>
         <h2 class="mb-0  white-text"><strong>{{$t('personarea_person_area')}}</strong></h2>
@@ -210,6 +215,7 @@ export default {
     aboutMeRu:'',
     aboutMeEn:'',
     isShowTost: false,
+    loading: true,
   }),
   computed:{
     
@@ -239,6 +245,9 @@ export default {
     toastMessage(){
       return this.$store.getters.getToastMsg
     }
+  },
+  mounted(){
+    this.loading = false
   },
   methods:{
     localeRout, transliterate, getCookie,
