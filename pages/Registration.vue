@@ -334,7 +334,7 @@ export default {
         }
       }
 
-      await this.$axios.post('/auth/registration', personDataReg)
+      await this.$axios.post('/auth/registration', personDataReg, { withCredentials: true })
         .then(res => {
           if (res.data.message === 'OK') {
             this.$store.commit('setPersonData', personDataReg);
