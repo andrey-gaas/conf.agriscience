@@ -35,6 +35,7 @@ require('./passport').init();
 app.use('/auth', require('./auth'));
 app.use('/user', require('./user'));
 app.use('/reports', require('./reports'));
+app.use('/translate', require('./translate'));
 
 app.use('/test', require('./test'));
 
