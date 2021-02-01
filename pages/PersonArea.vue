@@ -2,7 +2,6 @@
   <div class="d-flex align-items-center blue lighten-5 min-h-100 flex-grow-1 justify-content-center">
 
     <mdb-container class="rounded-lg grey lighten-5 z-depth-1 my-0 my-sm-1 my-md-1 my-lg-1" p="0" 
-      v-if="!loading"
     >
       <mdb-row class="m-0 teal lighten-1" p='3'>
         <h2 class="mb-0  white-text"><strong>{{$t('personarea_person_area')}}</strong></h2>
