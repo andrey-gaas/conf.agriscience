@@ -172,7 +172,6 @@
           </mdb-col>
         </mdb-row>
       </mdb-row>
-      <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="translateText()">Test API translate</mdb-btn>
     </mdb-container>
     <transition name="toast">
       <Toast
@@ -216,7 +215,7 @@ export default {
     
   },
   async created(){
-    //this.$store.commit('setCookie')
+    this.$store.commit('setCookie')
     
     if(!this.$store.getters.getLoadData){
       try {
@@ -242,9 +241,6 @@ export default {
     }
   },
   methods:{
-    async translateText(){
-      this.$store.dispatch('TransleteFunc', )
-    },
     localeRout, transliterate, getCookie,
     showTost(text){
       this.$store.commit('setToastMsg', text)

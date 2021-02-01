@@ -194,42 +194,12 @@ export default {
     localeRout, transliterate, 
     async axiosTranslete(textData, {from, to}){
       let res = await this.$axios.post('/translate', {language: {from, to}, fields:textData})
-      let result
+      let result = {}
       let i = 0
-      for(key in textData){
-        rusult[key] = res.data[i]
+      for(let key in textData){
+        result[key] = res.data[i]
         i++
       }
-      console.log(result);
-      // let res = await this.$axios({
-      //   baseURL: 'https://api.cognitive.microsofttranslator.com',
-      //   url: '/translate',
-      //   method: 'post',
-      //   headers: {
-      //       'Ocp-Apim-Subscription-Key': '80e01ed4d2a44c39a546580ce3f16720',
-      //       'Content-type': 'application/json',
-      //   },
-      //   params: {
-      //       'api-version': '3.0',
-      //       'from': from,
-      //       'to': [to]
-      //   },
-      //   data: [
-      //     {'text': textData.organization}, 
-      //     {'text': textData.position},
-      //     {'text': textData.place},
-      //   ],
-      //   responseType: 'json'
-      // }).then(function(response){
-      //     let rusult = {
-      //       organization: response.data[0].translations[0].text,
-      //       position: response.data[1].translations[0].text,
-      //       place: response.data[2].translations[0].text,
-      //     }
-      //     return rusult
-      // }).catch((err) => {
-      //   console.log(err);
-      // })
       return result
     },
     async formSubmit(){
@@ -286,11 +256,10 @@ export default {
           aboutMe: this.aboutMe
         }
       }
-      console.log(personDataReg);
-      // await this.$store.dispatch('sevePersonDataBD', personDataReg )
-      // await this.$store.commit('setPersonData', personDataReg);
-      // await this.$store.commit('setPersonAboutMe', {aboutMe:this.aboutMe, locale:this.$i18n.locale});
-      // this.$router.push(this.localeRout('/personarea'))
+      await this.$store.dispatch('sevePersonDataBD', personDataReg )
+      await this.$store.commit('setPersonData', personDataReg);
+      await this.$store.commit('setPersonAboutMe', {aboutMe:this.aboutMe, locale:this.$i18n.locale});
+      this.$router.push(this.localeRout('/personarea'))
     },
     
     async validYmap(){
