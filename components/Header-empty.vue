@@ -11,7 +11,7 @@
           >
         </nuxt-link>
       </logo>
-      <button @click="testFetch">Тестовый запрос</button>
+      <!-- <button @click="testFetch">Тестовый запрос</button> -->
       <dropdown>
         <dropdown-toggle class="teal lighten-2" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
         <dropdown-menu>
