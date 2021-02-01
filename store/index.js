@@ -1,12 +1,5 @@
 import Axios from 'axios';
 
-const isProduction = process.env.NODE_ENV === 'production';
-function getApiUrl(url) {
-  return isProduction ? 
-    `https://api.bibcongress.ru${url.slice(4)}`
-    : url;
-}
-
 export const state = () => ({
   loginData: {},
   isAuth: false,
@@ -298,7 +291,8 @@ export const getters = {
   },
   getAxiosWithToken(s){
     const AxiosTooken = Axios.create({
-      headers: { 'Authorization': s.cookie.token }
+      headers: { 'Authorization': s.cookie.token },
+      baseURL: process.env.NODE_ENV === 'production' ? 'https://api.bibcongress.ru/' : 'http://localhost:3101/api/',
     });
     return AxiosTooken
   }
@@ -306,8 +300,9 @@ export const getters = {
 
 export const actions = {
   async fetchPersonData({commit, getters}){
+    console.log('/user/');
     const axios = getters.getAxiosWithToken
-    await axios.get(getApiUrl('/api/user/'))
+    await axios.get('/user/')
       .then( res => {
         commit('setPersonData', res.data)
         commit('setPersonAboutMe', {aboutMe: res.data.aboutMe, locale:'ru'})
@@ -319,28 +314,28 @@ export const actions = {
   },
   async fetchPersonReports({commit, getters}){
     const axios = getters.getAxiosWithToken
-    await axios.get(getApiUrl('/api/reports')).
+    await axios.get('/reports').
       then( res => {
         commit('setReportList', res.data)
       })
   },
   async addReportBD({getters}, {report}){
     const axios = getters.getAxiosWithToken
-    await axios.post(getApiUrl('/api/reports'), report)
+    await axios.post('/reports', report)
   },
   async editReportBD({getters}, {report}){
     const axios = getters.getAxiosWithToken
     let id = getters.getReportList[getters.getReportInd].id
     
-    await axios.put(getApiUrl('/api/reports/'+id), report)
+    await axios.put('/reports/'+id, report)
   },
   async sevePersonAboutMeBD({getters}, aboutData){
     const axios = getters.getAxiosWithToken
-    await axios.put(getApiUrl('/api/user/'), aboutData)
+    await axios.put('/user/', aboutData)
   },
   async sevePersonDataBD({getters}, personData){
     const axios = getters.getAxiosWithToken
-    await axios.put(getApiUrl('/api/user/'), personData)
+    await axios.put('/user/', personData)
   },
   async TransleteFunc({getters}, data){
     const axios = getters.getAxiosWithToken
