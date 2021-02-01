@@ -339,7 +339,7 @@ export default {
           if (res.data.message === 'OK') {
             this.$store.commit('setPersonData', personDataReg);
             console.log('1');
-            this.$router.push(this.localeRout('/login'));
+            this.$router.push(this.localeRout('/PersonArea'));
             console.log(2);
           }
         })
