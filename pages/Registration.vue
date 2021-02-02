@@ -313,14 +313,16 @@ export default {
         }
       }
 
-      await this.$axios.post('/auth/registration', personDataReg, { withCredentials: true })
+      await this.$axios.post('/auth/registration', personDataReg)
         .then(res => {
+          const { message, token } = res.data;
           if (res.data.message === 'OK') {
+            this.$cookies.set('token', token, { maxAge: 60 * 60 * 24 * 7 });
             this.$store.commit('setPersonData', personDataReg);
             this.$router.push(this.localeRout('/PersonArea'));
           }
         })
-        .catch(error => console.log(error.response.data));
+        .catch(error => console.log(error));
     },
     saveInLocalStorage(){
       //Сохроняем данные в localStorage,

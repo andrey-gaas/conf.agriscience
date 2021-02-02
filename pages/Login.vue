@@ -108,18 +108,17 @@ export default {
       }
       this.$store.commit('toggleLoadData', false)
       this.$store.commit('setLoginData', this.formSet)
-      this.$axios.post('/auth/login', { username: this.formSet.email, password: this.formSet.password }, { withCredentials: true })
+      this.$axios.post('/auth/login', { username: this.formSet.email, password: this.formSet.password })
         .then(res => {
           //console.log('Success: ', res);
           const { message, token } = res.data;
 
           if (message === 'OK' && token) {
+            this.$cookies.set('token', token, { maxAge: 60 * 60 * 24 * 7 });
             this.$router.push(this.localeRout('/personarea'));
           }
         })
-        .catch(error => {
-          console.log('Error: ', error.message);
-        });
+        .catch(error => console.log(error));
     },
   },
   components:{

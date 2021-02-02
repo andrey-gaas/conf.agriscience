@@ -128,9 +128,6 @@ router.get('/email-confirm/:email', (req, res) => {
     .db('bibcongress')
     .collection('users');
 
-  const redirectUrl = isProduction ? 'https://bibcongress.ru/' : 'http://localhost:3101/';
-
-
   users
     .findOne({ email })
     .then(user => {
@@ -142,11 +139,11 @@ router.get('/email-confirm/:email', (req, res) => {
         users
           .findOneAndUpdate({ email }, { $set: { isEmailConfirmed: true } })
           .then(() => {
-            res.redirect(redirectUrl);
+            res.redirect(`https://bibcongress.ru/notification?type=email&message=${email}`);
           })
           .catch(error => {
             console.log(error.message);
-            res.status(500).redirect(redirectUrl);
+            res.status(500).redirect('https://bibcongress.ru/notification?type=email-error');
           });
       }
     })
