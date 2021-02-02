@@ -128,6 +128,7 @@ export default{
   'log_authorization':"Authorization",
 
   'notification_email_confirm': "Mail: '{email}' confirmed successfully.",
+  "notification_person_area": "Personal Area",
 
   'personarea_surname_ru':'Фамилия',
   'personarea_name_ru':'Имя',
