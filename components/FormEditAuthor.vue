@@ -151,38 +151,41 @@ export default {
           } 
         }
         
-        // let tenslateData = await this.axiosTranslete(
-        //   { organization: speakerData.organization,
-        //     position: speakerData.position,},
-        //   {from:'ru', to:'en'})
-        // speakerData = {...speakerData, ...tenslateData}
+        let tenslateData = await this.axiosTranslete(
+          { organization: speakerData.organization,
+            position: speakerData.position,},
+          {from:'ru', to:'en'})
+        speakerData = {...speakerData, ...tenslateData}
       }else{
         for(let el in speakerData){
           if( (el == 'surname') || (el == 'name') || (el == 'patronymic')){
             speakerData[el] = this.transliterate()(speakerData[el], true)
           } 
         }
-        // let tenslateData = await this.axiosTranslete(
-        //   { organization: speakerData.organization,
-        //     position: speakerData.position,},
-        //   {from:'en', to:'ru'})
-        // speakerData = {...speakerData, ...tenslateData}
+        let tenslateData = await this.axiosTranslete(
+          { organization: speakerData.organization,
+            position: speakerData.position,},
+          {from:'en', to:'ru'})
+        speakerData = {...speakerData, ...tenslateData}
       }
       return speakerData
     },
-    formSubmit(){
+    async formSubmit(){
       this.$v.formSet.$touch()
       if(this.$v.formSet.$invalid){
         return
       }
+
       let enPerson, ruPerson;
+      
       if(this.loc == 'ru'){
         ruPerson = this.formSet
-        enPerson = this.localize({...ruPerson})
+        enPerson = await this.localize({...ruPerson})
       }else{
         enPerson = this.formSet
-        ruPerson = this.localize({...enPerson})
+        ruPerson = await this.localize({...enPerson})
       }
+     
       if(this.formSet.num != undefined){
         
         this.$store.commit('setSpeaker', {speaker: ruPerson, ind: this.formSet.num})
@@ -191,6 +194,7 @@ export default {
       }else{
         this.$store.commit('addSpeaker', {speakerPerson:ruPerson, speakerPersonEn:enPerson})
       }
+    
       this.closeEdit()
     },
     
