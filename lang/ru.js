@@ -126,7 +126,8 @@ export default{
   'log_reg':"Регистрация",
   'log_authorization':"Авторизация",
 
-  'notification_email_confirm': "Почта: '{email}' успешно подтверждена.",
+  "notification_email_confirm": "Почта: '{email}' успешно подтверждена.",
+  "notification_person_area": "Личный кабинет",
 
   'personarea_surname_ru':'Фамилия',
   'personarea_name_ru':'Имя',
