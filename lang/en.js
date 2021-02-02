@@ -122,6 +122,8 @@ export default{
   'log_reg':"Register",
   'log_authorization':"Authorization",
 
+  'notification_email_confirm': "Mail: '{email}' confirmed successfully.",
+
   'personarea_surname_ru':'Фамилия',
   'personarea_name_ru':'Имя',
   'personarea_patronymic_ru':'Отчество',

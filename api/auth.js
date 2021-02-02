@@ -139,11 +139,11 @@ router.get('/email-confirm/:email', (req, res) => {
         users
           .findOneAndUpdate({ email }, { $set: { isEmailConfirmed: true } })
           .then(() => {
-            res.redirect('https://bibcongress.ru/personarea');
+            res.redirect(`https://bibcongress.ru/notification?type=email&message=${email}`);
           })
           .catch(error => {
             console.log(error.message);
-            res.status(500).redirect('https://bibcongress.ru/personarea');
+            res.status(500).redirect('https://bibcongress.ru/notification?type=email-error');
           });
       }
     })

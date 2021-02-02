@@ -123,6 +123,8 @@ export default{
   'log_reg':"Регистрация",
   'log_authorization':"Авторизация",
 
+  'notification_email_confirm': "Почта: '{email}' успешно подтверждена.",
+
   'personarea_surname_ru':'Фамилия',
   'personarea_name_ru':'Имя',
   'personarea_patronymic_ru':'Отчество',
