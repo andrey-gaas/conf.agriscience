@@ -129,6 +129,7 @@ export default {
       { title: 'main_menu_publication_materials'},
       { title: 'main_menu_participants' },
       { title: 'main_menu_programma'},
+      { title: 'main_menu_important_dates'},
     ],
     bibCardData:[
       { title:'main_card_organizetion_title_1',

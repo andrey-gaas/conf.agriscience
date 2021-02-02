@@ -110,7 +110,7 @@ export default {
       this.$store.commit('setLoginData', this.formSet)
       this.$axios.post('/auth/login', { username: this.formSet.email, password: this.formSet.password }, { withCredentials: true })
         .then(res => {
-          console.log('Success: ', res);
+          //console.log('Success: ', res);
           const { message, token } = res.data;
 
           if (message === 'OK' && token) {

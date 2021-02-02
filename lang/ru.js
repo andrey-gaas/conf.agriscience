@@ -2,6 +2,8 @@ export default{
   "header_language": "Русский",
   "header_registration": "Регистрация",
   "header_login": "Вход",
+  "header_exit": "Выход",
+  "header_person_area": "Личный кабинет",
   "mobile_menu_language": "Язык",
 
   "main_header_subtitle": "III Международный библиографический конгресс",
@@ -12,6 +14,7 @@ export default{
   "main_menu_publication_materials": "Издание материалов",
   "main_menu_participants": "Участники",
   "main_menu_programma": "Программа",
+  "main_menu_important_dates": "Важные даты",
 
   "main_descrption_text_1": "Приглашаем вас принять участие в III Международном библиографическом конгрессе, который состоится 27 – 29 апреля 2021 года. Впервые Конгресс пройдет в онлайн-формате. Участие бесплатное.",
   "main_descrption_text_2": "Конгресс состоится на базе Государственной публичной научно-технической библиотеки Сибирского отделения Российской академии наук (ГПНТБ СО РАН), Новосибирск. Это будет уже третий международный библиографический конгресс: первый прошел в 2010 году в Российской государственной библиотеке, а второй — в 2015 году в Российской национальной библиотеке.",
@@ -24,7 +27,7 @@ export default{
   "main_сoordinators_text_6": "Леликова Наталья Константиновна",
   "main_сoordinators_text_7": "доктор исторических наук, Российская национальная библиотека, С-Петербург, председатель секции библиографии и информационно-библиографического обслуживания Российской библиотечной ассоциации",
 
-  "main_cardreg_text_1": "Регистрация будет открыта с 15 января",
+  "main_cardreg_text_1": "Регистрация открыта до 26 апреля",
   "main_cardreg_register": "Зарегистрироваться",
   "main_announcement_text_1": "Уважаемые коллеги, мы принимаем заявки: ",
   "main_announcement_text_2": "для участия с докладом",
@@ -149,7 +152,7 @@ export default{
   'personarea_add_about_me_en':'Add about yourself',
   'personarea_download':'Загрузить',
   'personarea_download_photo':'Загрузить фотографию',
-  'personarea_select_file':'Выберете файл',
+  'personarea_select_file':'Выберите файл',
   'personarea_person_area':'Личный кабинет',
   'personarea_profile':'Профиль',
   'personarea_edit_profile':'Редактировать профиль',

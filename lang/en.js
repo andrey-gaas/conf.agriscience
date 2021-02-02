@@ -2,6 +2,8 @@ export default{
   "header_language": "English",
   "header_registration": "Registration",
   "header_login": "Login",
+  "header_exit": "Exit",
+  "header_person_area": "Person area",
   "mobile_menu_language": "Language",
 
   "main_header_subtitle": "III International Bibliographic Congress",
@@ -12,6 +14,7 @@ export default{
   "main_menu_publication_materials": "Publication of materials",
   "main_menu_participants": "Participants",
   "main_menu_programma": "Programma",
+  "main_menu_important_dates": "Important dates",
 
   "main_descrption_text_1": "We invite you to take part in the III International Bibliographic Congress, which will be held on April 27 - 29, 2021. For the first time, the Congress will be held online. Participation is free.",
   "main_descrption_text_2": "The Congress will take place on the basis of the State Public Scientific and Technical Library of the Siberian Branch of the Russian Academy of Sciences (SPSTL SB RAS), Novosibirsk. This will be the third international bibliographic congress: the first was held in 2010 at the Russian State Library, and the second in 2015 at the Russian National Library.",
@@ -24,7 +27,7 @@ export default{
   "main_сoordinators_text_6": "Lelikova Natalia Konstantinovna",
   "main_сoordinators_text_7": "Doctor of Historical Sciences, The National Library of Russia, St. Petersburg, Chairman of the Section of Bibliography and Information and Bibliographic Services of the Russian Library Association",
 
-  "main_cardreg_text_1": "Registration will be open from January 15",
+  "main_cardreg_text_1": "Registration is open until April 26",
   "main_cardreg_register": "Register",
   "main_announcement_text_1": "Dear colleagues, we accept applications:",
   "main_announcement_text_2": "to participate with the report",
@@ -76,7 +79,7 @@ export default{
   "reg_name": "Name",
   "reg_name_without_numbers_error": "Name must not contain numbers",
   "reg_empty_name_field_error": "Please enter your name",
-  "reg_patronymic": "Patronymic",
+  "reg_patronymic": "Middle name",
   "reg_patronymic_without_numbers_error": "The middle name should not contain numbers",
   "reg_empty_patronymic_field_error": "Enter your middle name",
   "reg_organization": "Organization",
@@ -136,7 +139,7 @@ export default{
   'personarea_add_about_me_ru':'Добавить о себе',
   'personarea_surname_en':'Surname',
   'personarea_name_en':'Name',
-  'personarea_patronymic_en':'Patronymic',
+  'personarea_patronymic_en':'Middle name',
   'personarea_organization_en':'Organization',
   'personarea_position_en':'Position',
   'personarea_place_en':'Сity',

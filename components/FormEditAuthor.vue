@@ -131,7 +131,17 @@ export default {
   },
   methods:{
     localeRout,transliterate,
-    localize(speaker){
+    async axiosTranslete(textData, {from, to}){
+      let res = await this.$axios.post('/translate', {language: {from, to}, fields:textData})
+      let result = {}
+      let i = 0
+      for(let key in textData){
+        result[key] = res.data[i]
+        i++
+      }
+      return result
+    },
+    async localize(speaker){
       
       let speakerData = {...speaker}
       if(this.loc == 'ru'){
@@ -140,14 +150,24 @@ export default {
             speakerData[el] = this.transliterate()(speakerData[el])
           } 
         }
+        
+        // let tenslateData = await this.axiosTranslete(
+        //   { organization: speakerData.organization,
+        //     position: speakerData.position,},
+        //   {from:'ru', to:'en'})
+        // speakerData = {...speakerData, ...tenslateData}
       }else{
         for(let el in speakerData){
           if( (el == 'surname') || (el == 'name') || (el == 'patronymic')){
             speakerData[el] = this.transliterate()(speakerData[el], true)
           } 
         }
+        // let tenslateData = await this.axiosTranslete(
+        //   { organization: speakerData.organization,
+        //     position: speakerData.position,},
+        //   {from:'en', to:'ru'})
+        // speakerData = {...speakerData, ...tenslateData}
       }
-      
       return speakerData
     },
     formSubmit(){
@@ -155,9 +175,7 @@ export default {
       if(this.$v.formSet.$invalid){
         return
       }
-
       let enPerson, ruPerson;
-
       if(this.loc == 'ru'){
         ruPerson = this.formSet
         enPerson = this.localize({...ruPerson})
@@ -165,7 +183,6 @@ export default {
         enPerson = this.formSet
         ruPerson = this.localize({...enPerson})
       }
-
       if(this.formSet.num != undefined){
         
         this.$store.commit('setSpeaker', {speaker: ruPerson, ind: this.formSet.num})

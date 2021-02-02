@@ -107,12 +107,7 @@
                 :wrapperClass="(this.$v.formSet.telephone.$invalid && this.$v.formSet.telephone.$dirty) ? 'invalid' : '' "
               />
                 <span class="red-text"
-                  v-if="(!this.$v.formSet.telephone.required && this.$v.formSet.telephone.$dirty)"
-                >
-                  {{$t('reg_empty_telephone_field_error')}}
-                </span>
-                <span class="red-text"
-                  v-else-if="(!this.$v.formSet.telephone.phoneValid && this.$v.formSet.telephone.$dirty)"
+                  v-if="(!this.$v.formSet.telephone.phoneValid && this.$v.formSet.telephone.$dirty)"
                 >
                   {{$t('reg_invalid_telephone_error')}}
                 </span>
@@ -239,7 +234,7 @@ export default {
       position: {required},
       place: {required},
       email: {email, required},
-      telephone: {phoneValid, required},
+      telephone: {phoneValid},
       password: {
         required,
         minLength: minLength(6),

@@ -11,9 +11,14 @@
       </nuxt-link>
 
       <div class="d-flex align-items-center">
-        <div class="auth">
+        <div v-show="!isAuthorized" class="auth">
           <nuxt-link :to="localeRout('/registration')" class="link">{{$t('header_registration')}}</nuxt-link>
           <nuxt-link :to="localeRout('/login')" class="link">{{$t('header_login')}}</nuxt-link>
+          
+        </div>
+        <div v-show="isAuthorized" class="auth">
+          <a  @click="extiPersonArea()" class="link">{{$t('header_exit')}}</a>
+          <nuxt-link  :to="localeRout('/personArea')" class="link">{{$t('header_person_area')}}</nuxt-link>
         </div>
 
         <div class="flags">
@@ -41,10 +46,38 @@ export default {
     'container': mdbContainer,
     'logo': mdbNavbarBrand,
   },
+  data: () => ({ 
+    RU, EN,
+    isAuthorized:false,
+  }),
   methods:{
     localeRout,
+    async extiPersonArea(){
+      await this.$cookies.remove('token')
+      this.setAuthorizarion()
+    },
+    async setAuthorizarion(){
+      const token = this.$cookies.get('token')
+      if(token){
+        const AxiosTooken = this.$axios.create({
+        headers: { 'Authorization': token },
+        baseURL: process.env.NODE_ENV === 'production' ? 'https://api.bibcongress.ru/' : 'http://localhost:3101/api/',
+        });
+        this.isAuthorized = await AxiosTooken.get('/user/').then(()=>{
+          return  true
+        }).catch(()=>{
+          return false
+        })
+      }else{
+        this.isAuthorized = false
+      }
+    }
   },
-  data: () => ({ RU, EN }),
+  async created(){
+    await this.setAuthorizarion()
+    
+  },
+  
 }
 </script>
 

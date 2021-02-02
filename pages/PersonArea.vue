@@ -140,6 +140,15 @@
                     <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="startEditAboutMe(RU)">{{$t('personarea_add_about_me_ru')}}</mdb-btn>
                   </th>
                 </tr>
+                <!-- <tr
+                  v-if="personAboutMeRu != '' && personAboutMeRu != undefined"
+                >
+                  <th class="p-0" colspan="2">
+                    <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="translateAboutMe({from:'ru', to:'en'}, personAboutMeRu)">
+                      Перевести о себе
+                    </mdb-btn>
+                  </th>
+                </tr> -->
               </mdb-tbl-body>
             </mdb-tbl>
           </mdb-col>
@@ -172,6 +181,15 @@
                     <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="startEditAboutMe(EN)">{{$t('personarea_add_about_me_en')}}</mdb-btn>
                   </th>
                 </tr>
+                <!-- <tr
+                  v-if="personAboutMeEn != '' && personAboutMeEn != undefined"
+                >
+                  <th class="p-0" colspan="2">
+                    <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="translateAboutMe({from:'en', to:'ru'}, personAboutMeEn)">
+                      translate about me
+                    </mdb-btn>
+                  </th>
+                </tr> -->
               </mdb-tbl-body>
             </mdb-tbl>
           </mdb-col>
@@ -244,7 +262,7 @@ export default {
     },
     toastMessage(){
       return this.$store.getters.getToastMsg
-    }
+    },
   },
   mounted(){
     this.loading = false
@@ -255,6 +273,23 @@ export default {
       this.$store.commit('setToastMsg', text)
       this.isShowTost = true
       setTimeout(()=>{this.isShowTost = false}, 3000)
+    },
+    async translateAboutMe({from, to}, textData){
+      try {
+        let res = await this.$axios.post('/translate', {language: {from, to}, fields:{aboutMe:textData}})
+        if(to == 'en' && res.data){
+          this.$store.dispatch('sevePersonAboutMeBD', {aboutMeEn: res.data[0]})
+          this.$store.commit('setPersonAboutMe', {aboutMe:res.data[0], locale:to })
+          this.personAboutMeEn = res.data[0]
+        }else{
+          this.$store.dispatch('sevePersonAboutMeBD', {aboutMe: res.data[0]})
+          this.$store.commit('setPersonAboutMe', {aboutMe:res.data[0], locale:to })
+          this.personAboutMeRu = res.data[0]
+        }
+      } catch (error) {
+        
+      }
+      
     },
     addReport(){
       const speakerPerson = {

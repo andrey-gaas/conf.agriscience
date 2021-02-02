@@ -19,6 +19,21 @@
           :to="localeRout(`/${item.linck}`)"
           :class="{disabled: item.linck == ''}"
         >{{item.title}}</nuxt-link>
+        <nuxt-link class="link mobile-header__linck"
+          :to="localeRout('/registration')" v-if="!isAuthorized"
+        >{{$t('header_registration')}}
+        </nuxt-link>
+        <nuxt-link class="link mobile-header__linck"
+          :to="localeRout('/login')" v-if="!isAuthorized"
+        >{{$t('header_login')}}
+        </nuxt-link>
+        <nuxt-link class="link mobile-header__linck"
+          :to="localeRout('/personarea')" v-if="isAuthorized"
+        >{{$t('header_person_area')}}
+        </nuxt-link>
+        <a v-if="isAuthorized" @click="extiPersonArea()" class="link mobile-header__linck"
+        >{{$t('header_exit')}}
+        </a>
       
         
       </div>
@@ -44,6 +59,7 @@ import {localeRout} from '@/assets/utils'
 export default {
   data:()=>({
     isOpen: false,
+    isAuthorized:false,
     RU, EN,
     menuDataSm:[
       { title: 'main_menu_organising_committee', linck:'' },
@@ -51,15 +67,35 @@ export default {
       { title: 'main_menu_publication_materials', linck:''},
       { title: 'main_menu_participants', linck:'' },
       { title: 'main_menu_programma', linck:''},
-      { title: 'header_registration', linck:'registration'},
-      { title: 'header_login', linck:'login'},
+      { title: 'main_menu_important_dates', linck:''},
     ],
   }),
   components: {},
   methods:{
     localeRout,
+    async extiPersonArea(){
+      await this.$cookies.remove('token')
+      this.setAuthorizarion()
+    },
+    async setAuthorizarion(){
+      const token = this.$cookies.get('token')
+      if(token){
+        const AxiosTooken = this.$axios.create({
+        headers: { 'Authorization': token },
+        baseURL: process.env.NODE_ENV === 'production' ? 'https://api.bibcongress.ru/' : 'http://localhost:3101/api/',
+        });
+        this.isAuthorized = await AxiosTooken.get('/user/').then(()=>{
+          return  true
+        }).catch(()=>{
+          return false
+        })
+      }else{
+        this.isAuthorized = false
+      }
+    }
   },
-  created(){
+  async created(){
+    await this.setAuthorizarion()
     this.menuDataSm.map(el =>{
       el.title = this.$t(el.title)
     })
