@@ -158,6 +158,7 @@
               >
                 {{$t('reg_consent_required')}}
               </span>
+              <span class='d-flex mt-2 grey-text'>{{$t('reg_info_message')}}</span>
               <div>
                 <mdb-btn class="mt-4 mb-0" type="submit"
                   :class="{'teal lighten-3':this.$v.formSet.$invalid , 'teal lighten-2':!this.$v.formSet.$invalid }"

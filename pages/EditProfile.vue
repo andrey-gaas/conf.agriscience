@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex align-items-center blue lighten-5 min-h-100 flex-grow-1">
-    <mdb-container class="form grey lighten-5 d-flex justify-content-center rounded-lg overflow-hidden" p="0" m='t5'>
+    <mdb-container class="form grey lighten-5 d-flex justify-content-center rounded-lg overflow-hidden" p="0" m='t4'>
       <div class="d-flex w-100" >
 
         <div class="step_wrp w-100" 
@@ -14,6 +14,7 @@
               <h2 class="form__title mb-0  white-text"><strong>{{$t('editprofile_modifying_profile')}}</strong></h2>
             </div>
             <div class="pt-4 pb-4 px-4">
+              
               <mdb-input class="my-0" size="sm"
                 v-model="formSet.surname"
                 :label="$t('reg_surname')"
@@ -115,6 +116,11 @@
                   :rows="5" 
                   v-model="aboutMe"
                 />
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="autoTranslate" v-model="isAutoTranslate">
+                  <label class="custom-control-label" for="autoTranslate">{{$t('reg_automatic_translation')}}</label>
+                </div>
+                <span class='d-flex mt-2 grey-text'>{{$t('editprofile_info_message')}}</span>
               <div>
                 <mdb-btn class="mt-4 mb-0 teal lighten-2" type="submit"
                   :class="{'teal lighten-3':this.$v.formSet.$invalid , 'teal lighten-2':!this.$v.formSet.$invalid }"
@@ -157,6 +163,7 @@ export default {
   data: () => ({
     step: 1,
     RU, EN,
+    isAutoTranslate: false,
     formSet:{ 
       surname: '',
       name: '',
@@ -209,51 +216,76 @@ export default {
         return
       }
       let personDataReg;
-      
-      if(this.$i18n.locale == 'en'){
-        let dataTranslet = await this.axiosTranslete(
-          {organization: this.formSet.organization, 
-          position: this.formSet.position, 
-          place: this.formSet.place,}, 
-          {from:'en', to:'ru'})
-        personDataReg = {
-          surname: this.transliterate()(this.formSet.surname, true),
-          surnameEn: this.formSet.surname,
-          name: this.transliterate()(this.formSet.name, true),
-          nameEn: this.formSet.name,
-          patronymic: this.transliterate()(this.formSet.patronymic, true),
-          patronymicEn: this.formSet.patronymic,
-          organization: dataTranslet.organization,
-          organizationEn: this.formSet.organization,
-          position: dataTranslet.position,
-          positionEn: this.formSet.position,
-          place: dataTranslet.place,
-          placeEn: this.formSet.place,
-          telephone: this.formSet.telephone,
-          aboutMeEn: this.aboutMe
+      if(this.isAutoTranslate){
+        if(this.$i18n.locale == 'en'){
+          let dataTranslet = await this.axiosTranslete(
+            {organization: this.formSet.organization, 
+            position: this.formSet.position, 
+            place: this.formSet.place,}, 
+            {from:'en', to:'ru'})
+          personDataReg = {
+            surname: this.transliterate()(this.formSet.surname, true),
+            surnameEn: this.formSet.surname,
+            name: this.transliterate()(this.formSet.name, true),
+            nameEn: this.formSet.name,
+            patronymic: this.transliterate()(this.formSet.patronymic, true),
+            patronymicEn: this.formSet.patronymic,
+            organization: dataTranslet.organization,
+            organizationEn: this.formSet.organization,
+            position: dataTranslet.position,
+            positionEn: this.formSet.position,
+            place: dataTranslet.place,
+            placeEn: this.formSet.place,
+            telephone: this.formSet.telephone,
+            aboutMeEn: this.aboutMe
+          }
+          
+        }else{
+          let dataTranslet = await this.axiosTranslete(
+            {organization: this.formSet.organization, 
+            position: this.formSet.position, 
+            place: this.formSet.place,}, 
+            {from:'ru', to:'en'})
+          personDataReg = {
+            surname: this.formSet.surname,
+            surnameEn: this.transliterate()(this.formSet.surname),
+            name: this.formSet.name,
+            nameEn: this.transliterate()(this.formSet.name),
+            patronymic: this.formSet.patronymic,
+            patronymicEn: this.transliterate()(this.formSet.patronymic),
+            organization: this.formSet.organization,
+            organizationEn: dataTranslet.organization,
+            position: this.formSet.position,
+            positionEn: dataTranslet.position,
+            place: this.formSet.place,
+            placeEn: dataTranslet.place,
+            telephone: this.formSet.telephone,
+            aboutMe: this.aboutMe
+          }
         }
-        
       }else{
-        let dataTranslet = await this.axiosTranslete(
-          {organization: this.formSet.organization, 
-          position: this.formSet.position, 
-          place: this.formSet.place,}, 
-          {from:'ru', to:'en'})
-        personDataReg = {
-          surname: this.formSet.surname,
-          surnameEn: this.transliterate()(this.formSet.surname),
-          name: this.formSet.name,
-          nameEn: this.transliterate()(this.formSet.name),
-          patronymic: this.formSet.patronymic,
-          patronymicEn: this.transliterate()(this.formSet.patronymic),
-          organization: this.formSet.organization,
-          organizationEn: dataTranslet.organization,
-          position: this.formSet.position,
-          positionEn: dataTranslet.position,
-          place: this.formSet.place,
-          placeEn: dataTranslet.place,
-          telephone: this.formSet.telephone,
-          aboutMe: this.aboutMe
+        if(this.$i18n.locale == 'en'){
+          personDataReg = {
+            surnameEn: this.formSet.surname,
+            nameEn: this.formSet.name,
+            patronymicEn: this.formSet.patronymic,
+            organizationEn: this.formSet.organization,
+            positionEn: this.formSet.position,
+            placeEn: this.formSet.place,
+            telephone: this.formSet.telephone,
+            aboutMeEn: this.aboutMe
+          }
+        }else{
+          personDataReg = {
+            surname: this.formSet.surname,
+            name: this.formSet.name,
+            patronymic: this.formSet.patronymic,
+            organization: this.formSet.organization,
+            position: this.formSet.position,
+            place: this.formSet.place,
+            telephone: this.formSet.telephone,
+            aboutMe: this.aboutMe
+          }
         }
       }
       await this.$store.dispatch('sevePersonDataBD', personDataReg )

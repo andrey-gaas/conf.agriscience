@@ -17,8 +17,8 @@
           
         </div>
         <div v-show="isAuthorized" class="auth">
-          <a  @click="extiPersonArea()" class="link">{{$t('header_exit')}}</a>
           <nuxt-link  :to="localeRout('/personArea')" class="link">{{$t('header_person_area')}}</nuxt-link>
+          <a  @click="extiPersonArea()" class="link">{{$t('header_exit')}}</a>
         </div>
 
         <div class="flags">

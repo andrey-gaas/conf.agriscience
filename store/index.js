@@ -16,7 +16,7 @@ export const state = () => ({
   reportName:'',
   reportTextEn:'',
   reportNameEn:'',
-  indEditReport: 0,
+  indEditReport: -1,
   isLoadData: false,
   isEmailСonfirm: false,
   imgSrc:'',

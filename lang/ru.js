@@ -100,6 +100,7 @@ export default{
   "reg_invalid_password_error": "Пароль может содержать только латинские буквы или цифры",
   "reg_consent": "Согласие на обработку персональных данных",
   "reg_consent_required": "Необходимо согласие на обработку персональных данных",
+  "reg_info_message": "После регистрации вы сможете подать заявку на доклад",
 
   "reg_DOB": "Дата рождения",
   "reg_education": "Образование",
@@ -109,6 +110,7 @@ export default{
   "reg_locality": "Населенный пункт",
   "reg_specialty": "Специальность",
   "reg_(full)": "(полностью)",
+  "reg_automatic_translation":"Выполнить автоматический перевод",
   "reg_header_logo": "Лого",
   "reg_fill": "Заполнить",
   "reg_back": "Назад",
@@ -182,6 +184,7 @@ export default{
   'edit_author_add':'Добавить',
 
   'editprofile_about_me':'О себе',
+  'editprofile_info_message':'Для редактирования данных на другом языке, измените язык интерфейса в верхнем правом углу',
   'editprofile_save_changes':'Сохранить изменения',
   'editprofile_cancel':'Отмена',
   'editprofile_modifying_profile':'Изменение данных профиля',

@@ -18,7 +18,7 @@
               <tr>
                 <th>№</th>
                 <th>ФИО</th>
-                <th class='m-0 px-0'>Докладчик</th>
+                <th class='m-0 px-2'>Докладчик</th>
                 <th>Ред./ Уд.</th>
               </tr>
               <tr
@@ -73,7 +73,9 @@
               v-model="reportText"
             />
           </div>
-          
+          <mdb-btn class="teal lighten-2" @click="translateReport({from:'ru', to:'en'})">
+            Перевести на английский
+          </mdb-btn>
         </mdb-col>
         <mdb-col col="12" sm='12' md='6' lg='6' class=''>
           <mdb-tbl responsiveSm bordered>
@@ -88,7 +90,7 @@
                 <th>Full name</th>
                 <th class='m-0 px-2'>Speaker</th>
                 
-                <th>Edit/ del.</th>
+                <th>Edit/ Del.</th>
               </tr>
               <tr
                 v-for="(item, ind) of authorEn" :key='ind'
@@ -143,6 +145,9 @@
               v-model="reportTextEn"
             />
           </div>
+          <mdb-btn class="teal lighten-2" @click="translateReport({from:'en', to:'ru'})">
+            Translate on Russian
+          </mdb-btn>
         </mdb-col>
       </mdb-row>
       <mdb-row class="m-0" p='2'>
@@ -294,6 +299,8 @@ export default {
     },
   },
   created(){
+
+    if(this.$store.getters.getReportInd == -1) this.$router.push(this.localeRout('/personarea'))
     this.setAuthor()
     this.setReport()
   },
@@ -302,6 +309,55 @@ export default {
   },
   methods:{
     localeRout,
+    async axiosTranslete(textData, {from, to}){
+      let res = await this.$axios.post('/translate', {language: {from, to}, fields:textData})
+      let result = {}
+      let i = 0
+      for(let key in textData){
+        result[key] = res.data[i]
+        i++
+      }
+      return result
+    },
+    async translateReport({from, to}){
+      if(from === 'en'){
+        if( (localStorage.reportTitleEn == this.reportNameEn 
+            && localStorage.reportTextEn == this.reportTextEn
+            && localStorage.reportTitleRu == this.reportName
+            && localStorage.reportTexteRu == this.reportText) ||
+            this.reportNameEn.length > 5000
+        ){
+          console.log('NO NO NO, прекраты тыкать на кнопку');
+          return
+        }
+      }else{
+        if( localStorage.reportTitleEn == this.reportNameEn 
+            && localStorage.reportTextEn == this.reportTextEn
+            && localStorage.reportTitleRu == this.reportName
+            && localStorage.reportTexteRu == this.reportText
+        ){
+          console.log('NO NO NO, прекраты тыкать на кнопку');
+          return
+        }
+      }
+
+      if(from === 'en'){
+        let result = await this.axiosTranslete({title:this.reportNameEn, text:this.reportTextEn}, {from, to})
+        this.reportText = result.text
+        this.reportName = result.title
+
+        
+      }else{
+        let result = await this.axiosTranslete({title:this.reportName, text:this.reportText}, {from, to})
+        this.reportTextEn = result.text
+        this.reportNameEn = result.title
+      }
+
+      localStorage.reportTitleEn = this.reportNameEn
+      localStorage.reportTextEn = this.reportTextEn
+      localStorage.reportTitleRu = this.reportName
+      localStorage.reportTexteRu = this.reportText
+    },
     showTost(text){
       this.$store.commit('setToastMsg', text)
       this.isShowTost = true

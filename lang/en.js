@@ -112,6 +112,7 @@ export default{
   "reg_locality": "Locality",
   "reg_specialty": "Specialty",
   "reg_(full)": "(full)",
+  "reg_automatic_translation":"Perform automatic translation",
   "reg_text_1":"Dear users! You are given the opportunity to book a library card number and get access to a larger number of databases, order publications from electronic catalogs. After filling in the user card, within 24 hours you will receive a library card number by e-mail. To work in the library, you need to come with your passport to the reception (hall on the first floor) to confirm your entry. The cost of a library card is indicated in the Price List of the State Public Scientific Technical Library of the SB RAS.",
   "reg_text_2":"We are waiting for you at the address: Voskhod, 15 (travel to metro Oktyabrskaya or stop. SPLST)",
   "reg_text_3":"from Tuesday to Friday - from 9.00 to 19.00",
@@ -120,6 +121,7 @@ export default{
   "reg_text_6":"Our contact phone number is (383) 266-75-71.",
   "reg_text_7":"Please fill out the registration card",
   "reg_text_8":"Fields marked with an asterisk are required",
+  "reg_info_message": "After registration you will be able to apply for a report",
 
   'log_login':"Log In",
   'log_reg':"Register",
@@ -181,6 +183,7 @@ export default{
   'edit_author_add':'Add',
 
   'editprofile_about_me':'About me',
+  'editprofile_info_message':'To edit data in another language, change the interface language in the upper right corner',
   'editprofile_save_changes':'Save changes',
   'editprofile_cancel':'Cancel',
   'editprofile_modifying_profile':'Modifying profile data',

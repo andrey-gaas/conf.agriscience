@@ -68,10 +68,10 @@
           </div>
           <div class="announcement">
             <h4 class="announcement__title">{{$t('main_announcement_text_1')}}</h4>
-            <nuxt-link :to="localeRout('/registration')" class="ad__left text-decoration-none text-dark d-flex justify-content-around align-items-center">
+            <nuxt-link :to="localeRout('/registration')" class="ad__left p-1 text-decoration-none text-dark d-flex justify-content-around align-items-center">
                 {{$t('main_announcement_text_2')}}<br>{{$t('main_announcement_text_3')}}
             </nuxt-link>
-            <nuxt-link :to="localeRout('/registration')" class="ad__right text-decoration-none text-dark d-flex justify-content-around align-items-center">
+            <nuxt-link :to="localeRout('/registration')" class="ad__right p-1 text-decoration-none text-dark d-flex justify-content-around align-items-center">
               {{$t('main_announcement_text_4')}}<br>{{$t('main_announcement_text_5')}}
             </nuxt-link>
           </div>

@@ -12,7 +12,7 @@
         <h2 class="mb-0  white-text"><strong>{{$t('personarea_person_area')}}</strong></h2>
       </mdb-row>
       <mdb-row class="m-0" p='2'>
-        <mdb-row class="mb-4 col-12 mx-0 px-0">
+        <mdb-row class="mb-1 col-12 mx-0 px-0">
           <mdb-col col="12" sm='12' md='6' lg='6' class='mb-sm-4 mb-4 mb-lg-0 mb-md-0'>
             <div class="person__img">
               <div class="person-card_img rounded-circle shadow-lg my-3 mx-0" 
@@ -35,7 +35,7 @@
                 >{{fileName}}</label>
               </div>
             </div>
-            <mdb-btn class="m-0 teal lighten-2"
+            <mdb-btn class="m-0 teal lighten-2 disabled"
               @click="submitFile"
             >{{$t('personarea_download')}}</mdb-btn>
             <span
@@ -50,12 +50,6 @@
             >
               {{$t('personarea_confirm')}}
             </span>
-            <h4 class="mb-2 mt-4">{{$t('personarea_profile')}}</h4>
-            <nuxt-link :to="localeRout('/editprofile')" 
-              class="mt-0 mb-0 mx-0 btn teal lighten-2 text-decoration-none ripple-parent text-white"
-            >
-              {{$t('personarea_edit_profile')}}
-            </nuxt-link>
             
           </mdb-col>
           <mdb-col col="12" sm='12' md='6' lg='6' class=''>
@@ -109,6 +103,15 @@
           </mdb-col>
         </mdb-row>
         <mdb-row class="mb-0 col-12 mx-0 px-0" >
+          <mdb-col col='12' class="mb-4">
+
+            <h4 class="mb-2 mt-0">{{$t('personarea_profile')}}</h4>
+            <nuxt-link :to="localeRout('/editprofile')" 
+              class="mt-0 mb-0 mx-0 btn teal lighten-2 text-decoration-none ripple-parent text-white"
+            >
+              {{$t('personarea_edit_profile')}}
+            </nuxt-link>
+          </mdb-col>
           <mdb-col col="12" sm='12' md='6' lg='6' class=''
             :class="{'order-3':($i18n.locale == EN)}"
           >
