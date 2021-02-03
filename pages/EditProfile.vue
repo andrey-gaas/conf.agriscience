@@ -333,7 +333,19 @@ export default {
       this.validYmap()
     }
   },
-  async mounted(){
+  async created(){
+    this.$store.commit('setCookie')
+    
+    if(!this.$store.getters.getLoadData){
+      try {
+        await this.$store.dispatch('fetchPersonData')
+        await this.$store.dispatch('fetchPersonReports')
+        this.$store.commit('toggleLoadData', true)
+      } catch (e) {
+        this.showTost(e.message)
+      }
+    }
+
     //Загружаем данные
     
     if(this.$i18n.locale == 'ru'){
@@ -343,6 +355,9 @@ export default {
       this.formSet = {...this.formSet ,...this.$store.getters.getPersonDataEn}
       this.aboutMe = this.$store.getters.getPersonAboutMeEn
     }
+  },
+  async mounted(){
+    
     
     //Инициализируем лоадер яндекс карт
     await loadYmap({ ...this.ymapSettings, debug: true })

@@ -6,18 +6,8 @@
     </container>
     <container  class="p-0">
       <mdb-row class="mx-sm-0 m-xs-0">
-
         <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
-          <menu class='nav__menu w-100 h-100 m-0 p-0'>
-            <ul class='menu__l m-0 p-0'>
-              <li class='menu__i px-lg-4 py-lg-3 px-md-3 py-md-2'
-                v-for="(item, ind ) in menuDataSm" :key="ind"
-                :class="{disabled:(item.linck == undefined || item.linck == '')}"
-              >
-                {{item.title}}
-              </li>
-            </ul>
-          </menu>
+          <Menu />
         </mdb-col>
         <mdb-col md="6" sm='12' class='px-0 col_m'>
           <div class="descrption px-3 pb-md-0 pb-sm-3 pt-md-2 pt-sm-3 pt-xs-3">
@@ -28,20 +18,7 @@
           </div>
         </mdb-col>
         <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
-          <div class="organizetion flex-grow-1 p-3">
-            <h3 class="title">{{$t('main_сoordinators_text_1')}}</h3>
-            <p class="font-ubuntu">
-              <span class='font-weight-bold'>{{$t('main_сoordinators_text_2')}}</span><br>
-              {{$t('main_сoordinators_text_3')}}<br>
-              {{$t('main_сoordinators_text_4')}}<br>
-              {{$t('main_сoordinators_text_5')}}
-            </p>
-            <p class="font-ubuntu">
-              <span class='font-weight-bold'>{{$t('main_сoordinators_text_6')}}</span><br>
-              {{$t('main_сoordinators_text_7')}}<br>
-              e-mail: nklelikova@ya.ru
-            </p>
-          </div>
+          <Coordinators />
         </mdb-col>
       </mdb-row>
       <mdb-row class="mx-sm-0 m-xs-0">
@@ -63,7 +40,7 @@
             <img src="assets/img/reg_img.jpg" class="card-img reg__card-img" alt="...">
             <div class="card-img-overlay reg-card__overlay d-flex flex-column justify-content-around">
               <h2 class="card-title reg-card__title">{{$t('main_cardreg_text_1')}}</h2>
-              <nuxt-link class="btn btn-danger reg-card__btn text-white" :to="localeRout('/')">{{$t('main_cardreg_register')}}</nuxt-link>
+              <nuxt-link class="btn btn-danger reg-card__btn text-white" :to="localeRout('/registration')">{{$t('main_cardreg_register')}}</nuxt-link>
             </div>
           </div>
           <div class="announcement">
@@ -89,25 +66,12 @@
 
         </mdb-col>
         <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
-          
-          <mdb-card 
-            v-for="(item, ind ) in bibCardData" :key="ind"
-            class='m-sm-2 m-lg-3'
-          >
-            <mdb-view hover>
-              <a href="#!">
-                <mdb-card-image
-                  :src="'/assets/img/'+item.img"
-                  alt="Card image cap"/>
-                <mdb-mask flex-center waves overlay="white-slight"></mdb-mask>
-              </a>
-            </mdb-view>
-            <mdb-card-body>
-              <mdb-card-title class='text-info text-uppercase bib__card-title'>{{item.title}}</mdb-card-title>
-              <mdb-card-text class="bib__card_text">{{item.text}}</mdb-card-text>
-            </mdb-card-body>
-          </mdb-card>
-          
+          <CoorCard
+            v-for="(item, ind) in bibCardData" :key="ind"
+            :title='item.title'
+            :img='item.img'
+            :text='item.text'
+          />
         </mdb-col>
       </mdb-row>
     </container>
@@ -120,17 +84,12 @@ import {
 } from 'mdbvue';
 import {localeRout} from '@/assets/utils'
 
+import Menu from '@/components/NavMenu'
+import Coordinators from '@/components/Coordinators'
+import CoorCard from '@/components/CoordinatorsCard'
+
 export default {
   data:()=>({
-
-    menuDataSm:[
-      { title: 'main_menu_organising_committee',  },
-      { title: 'main_menu_program_committee', },
-      { title: 'main_menu_publication_materials'},
-      { title: 'main_menu_participants' },
-      { title: 'main_menu_programma'},
-      { title: 'main_menu_important_dates'},
-    ],
     bibCardData:[
       { title:'main_card_organizetion_title_1',
         text:'main_card_organizetion_text_1',
@@ -144,7 +103,6 @@ export default {
       { title:'main_card_organizetion_title_4',
         text:'main_card_organizetion_text_4',
         img:'RGB.jpg'},
-      
     ],
     topicData:['main_congress_topic_1','main_congress_topic_2','main_congress_topic_3','main_congress_topic_4','main_congress_topic_5','main_congress_topic_6','main_congress_topic_7','main_congress_topic_8','main_congress_topic_9','main_congress_topic_10','main_congress_topic_11','main_congress_topic_12','main_congress_topic_13','main_congress_topic_14','main_congress_topic_15',],
     isMenuDrop:false,
@@ -153,18 +111,10 @@ export default {
     localeRout,
   },
   components: {
-    'container': mdbContainer,
+    'container': mdbContainer, Menu, Coordinators, CoorCard,
     mdbCard, mdbRow, mdbCol, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbBtn, mdbView, mdbMask, mdbAvatar
   },
   created(){
-    // this.menuData.map(arr =>{
-    //   arr.map(el =>{
-    //     el.title = this.$t(el.title)
-    //   })
-    // })
-    this.menuDataSm.map(el =>{
-      el.title = this.$t(el.title)
-    })
     this.topicData = this.topicData.map(el =>{
       return this.$t(el)
       
@@ -192,16 +142,6 @@ export default {
 
 .title {
   font-family: Arsenal;
-}
-
-.menu__i {
-  font-family: Ubuntu;
-  font-size: 16px;
-  font-weight: 400;
-
-  &.disabled{
-    color:rgb(122, 122, 122)
-  }
 }
 
 .descrption {

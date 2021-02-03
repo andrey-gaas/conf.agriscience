@@ -73,7 +73,7 @@
               v-model="reportText"
             />
           </div>
-          <mdb-btn class="teal lighten-2" @click="translateReport({from:'ru', to:'en'})">
+          <mdb-btn class="teal lighten-2 m-0" @click="translateReport({from:'ru', to:'en'})">
             Перевести на английский
           </mdb-btn>
         </mdb-col>
@@ -145,9 +145,31 @@
               v-model="reportTextEn"
             />
           </div>
-          <mdb-btn class="teal lighten-2" @click="translateReport({from:'en', to:'ru'})">
+          <mdb-btn class="teal lighten-2 m-0" @click="translateReport({from:'en', to:'ru'})">
             Translate on Russian
           </mdb-btn>
+        </mdb-col>
+      </mdb-row>
+      <mdb-row class="m-0" p='2'>
+        <mdb-col col="12" sm='12' md='6' lg='6'>
+          <div class="input-group mb-3">
+            <div class="custom-file cursor-pointer">
+              <input type="file" class="custom-file-input " id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
+                ref="fileInput"
+                @change="setFileName"
+              >
+              <label class="custom-file-label" for="inputGroupFile01"
+                :class="{
+                  input__label_text_ru: ($i18n.locale == 'ru'), 
+                  input__label_text_en: ($i18n.locale == 'en'), 
+                }"
+              
+              >{{fileName}}</label>
+            </div>
+          </div>
+          <mdb-btn class="m-0 teal lighten-2 disabled"
+            @click="submitFile"
+          >{{$t('personarea_download')}}</mdb-btn>
         </mdb-col>
       </mdb-row>
       <mdb-row class="m-0" p='2'>
@@ -264,6 +286,8 @@ export default {
     },
     toastMessage: 'asdf',
     isShowTost: false,
+    fileName: '',
+    imgFile: '',
 
   }),
   computed:{
@@ -299,7 +323,7 @@ export default {
     },
   },
   created(){
-
+    this.fileName = this.$t('personarea_select_file')
     if(this.$store.getters.getReportInd == -1) this.$router.push(this.localeRout('/personarea'))
     this.setAuthor()
     this.setReport()
@@ -309,6 +333,10 @@ export default {
   },
   methods:{
     localeRout,
+    setFileName(){
+      this.imgFile = this.$refs.fileInput.files[0]
+      this.fileName = this.$refs.fileInput.files[0].name
+    },
     async axiosTranslete(textData, {from, to}){
       let res = await this.$axios.post('/translate', {language: {from, to}, fields:textData})
       let result = {}
@@ -541,4 +569,16 @@ export default {
   transition: all .3s ease;
   opacity: 1;
 }
+.input__label_text_ru{
+    &::after{
+      content:'Обзор...';
+      cursor: pointer;
+    }
+  }
+  .input__label_text_en{
+    &::after{
+      content:'Survey...';
+      cursor: pointer;
+    }
+  }
 </style>
