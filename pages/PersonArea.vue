@@ -22,8 +22,10 @@
             <span>{{$t('personarea_download_photo')}}</span>
             <div class="input-group mb-3">
               <div class="custom-file cursor-pointer">
-                <input type="file" class="custom-file-input " id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
+                <input type="file" class="custom-file-input " aria-describedby="inputGroupFileAddon01"
                   ref="fileInput"
+                  id="upload-avatar"
+                  name="avatar"
                   @change="setFileName"
                 >
                 <label class="custom-file-label" for="inputGroupFile01"
@@ -35,7 +37,7 @@
                 >{{fileName}}</label>
               </div>
             </div>
-            <mdb-btn class="m-0 teal lighten-2 disabled"
+            <mdb-btn class="m-0 teal lighten-2"
               @click="submitFile"
             >{{$t('personarea_download')}}</mdb-btn>
             <span
@@ -387,28 +389,60 @@ export default {
       }
     },
     submitFile(){
-      //Сделать рабочию версию
-      // console.log('TO DO!!');
-      // let formData = new FormData();
-      // formData.append('file', this.imgFile);
+      const avatar = document.querySelector('#upload-avatar').files[0];
 
-      // axios.post( '/single-file',
-      //   formData,
-      //   {
-      //     headers: {
-      //         'Content-Type': 'multipart/form-data'
-      //     }
-      //   }
-      // ).finally(() => {
-      //   this.imgFile = ''
-      //   this.fileName = ''
-      //   formData = ''
-      // }).then(function(){
-      //   console.log('SUCCESS!!');
-      // })
-      // .catch(function(){
-      //   console.log('FAILURE!!');
-      // });
+      console.log(this.$store.getters.getCookie.token);
+
+      if (!avatar) {
+        return alert('Сначала добавьте картинку в форму выше');
+      }
+
+      const formData = new FormData();
+      formData.append('avatar', avatar, avatar.name);
+
+      this.$axios.post(
+        '/user/avatar',
+        formData,
+        { headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': this.$store.getters.getCookie.token,
+        }},
+      )
+        .then(result => {
+          console.log(result);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+      /* let formData = new FormData();
+      formData.append('file', this.imgFile);
+
+      console.log(formData); */
+
+      /* axios.post(
+        '/user/avatar',
+        formData,
+
+      ); */
+
+      /* axios.post( '/single-file',
+        formData,
+        {
+          headers: {
+              'Content-Type': 'multipart/form-data'
+          }
+        }
+      ).finally(() => {
+        this.imgFile = ''
+        this.fileName = ''
+        formData = ''
+      }).then(function(){
+        console.log('SUCCESS!!');
+      })
+      .catch(function(){
+        console.log('FAILURE!!');
+      }); */
     },
     setFileName(){
       this.imgFile = this.$refs.fileInput.files[0]
