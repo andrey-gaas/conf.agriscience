@@ -67,15 +67,33 @@ router.post('/avatar', (req, res) => {
   form.multiples = true;
 
   form.parse(req, function(err, fields, file) {
+    if (err) {
+      console.log(err.message);
+      res.status(500).send('Server Error');
+    }
     const newFileName = `${req.email}.${file.avatar.name.split('.').pop()}`;
 
     fs.rename(file.avatar.path, path.join(form.uploadDir, newFileName), (err, img) => {
       if (err) {
         console.log(err.message);
+        return res.status(500).send('Server Error');
       }
+      
+      Mongo.database
+        .db('bibcongress')
+        .collection('users')
+        .findOneAndUpdate(
+          { email: req.email },
+          { $set: { avatar: newFileName } },
+        )
+        .then(() => {
+          res.send(newFileName);
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(500).send('Server Error');
+        });
     });
-
-    res.send(newFileName);
   });
 });
 
