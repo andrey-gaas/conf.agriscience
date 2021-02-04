@@ -78,16 +78,18 @@ router.post('/avatar', (req, res) => {
         console.log(err.message);
         return res.status(500).send('Server Error');
       }
+
+      const url = `https://api.bibcongress.ru/upload/avatars/${newFileName}`;
       
       Mongo.database
         .db('bibcongress')
         .collection('users')
         .findOneAndUpdate(
           { email: req.email },
-          { $set: { avatar: newFileName } },
+          { $set: { avatar: url } },
         )
         .then(() => {
-          res.send(newFileName);
+          res.send(url);
         })
         .catch(err => {
           console.log(err);
