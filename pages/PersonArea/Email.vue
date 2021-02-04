@@ -5,19 +5,49 @@
       >
         <span class="sr-only">Loading...</span>
     </div>
-    <mdb-container class="rounded-lg grey lighten-5 z-depth-1 my-0 my-sm-1 my-md-1 my-lg-1" p="0" 
+    <mdb-container class="email-container rounded-lg grey lighten-5 z-depth-1 my-0 my-sm-1 my-md-1 my-lg-1" p="0" 
       v-if="!loading"
     >
       <mdb-row class="m-0 teal lighten-1" p='3'>
         <h2 class="mb-0  white-text"><strong>Не пришло письмо?</strong></h2>
       </mdb-row>
       <mdb-row class="m-0" p='2'>
-        <p>
-          Если вам не пишло письмо, проверти папку СПАМ, возможно оно попло туда.
-        </p>
-        <p>
-          Также вы можете отправить писмо повторо или написать в оргкомитет.
-        </p>
+        <div class="d-flex flex-column">
+          <span class="h4 pl-2">Если вам не пишло письмо:</span>
+          <ul class="pl-4 email-message__list">
+            <li class="mb-3">
+              Провертье папку спам, возможно оно попало туда
+            </li>
+            <li class="mb-3">
+              <span class='d-flex'>
+                Отправить письмо повторно.
+              </span>
+              <mdb-btn class="m-0 px-3 py-2 teal lighten-2" @click="sendMail">
+                Отправить
+              </mdb-btn>
+            </li>
+            <!-- <li>
+              <span class="d-flex">
+                Напишите писмо в оргкомитет на почту orgkomitet@gpntb.ru следующиее сообщение:
+              </span>
+              <span>"Не приходит сообщения для подтвержджения почты. /ваш адресс почты/"</span>
+            </li> -->
+          </ul>
+        </div>
+        <nuxt-link
+          v-show="!isAuthorized"
+          :to="localeRout('/login')" 
+          class="mt-4 btn teal lighten-2 text-decoration-none ripple-parent text-white"
+        >
+          {{$t('log_authorization')}}
+        </nuxt-link>
+        <nuxt-link
+          v-show="isAuthorized"
+          :to="localeRout('/personarea')" 
+          class="mt-4 btn teal lighten-2 text-decoration-none ripple-parent text-white"
+        >
+          {{$t('notification_person_area')}}
+        </nuxt-link>
       </mdb-row>
     </mdb-container>
     <transition name="toast">
@@ -43,6 +73,7 @@ export default {
   middleware: 'authenticated',
   data: () => ({
     loading: true,
+    isAuthorized : false,
   }),
   computed:{
     
@@ -63,6 +94,30 @@ export default {
       this.isShowTost = true
       setTimeout(()=>{this.isShowTost = false}, 3000)
     },
+    sendMail(){
+      console.log('send');
+    },
+    async setAuthorizarion(){
+      const token = this.$cookies.get('token')
+      if (token) {
+        const AxiosTooken = this.$axios.create({
+          headers: { 'Authorization': token },
+          baseURL: process.env.NODE_ENV === 'production' ? 'https://api.bibcongress.ru/' : 'http://localhost:3101/api/',
+        });
+      this.isAuthorized = await AxiosTooken.get('/user/')
+        .then(() => {
+          return  true
+        })
+        .catch(() => {
+          return false
+        });
+      } else {
+        this.isAuthorized = false
+      }
+    }
+  },
+  async created(){
+    await this.setAuthorizarion()
   },
   components:{
     Toast, 
@@ -72,7 +127,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+  
   .toast-enter ,.toast-leave-to{
     transform: translateY(-100%);
     transition: all .3s ease;
@@ -82,5 +137,8 @@ export default {
     transform: translateY(0);
     transition: all .3s ease;
     opacity: 1;
+  }
+  .email-message__list>li{
+    list-style: decimal;
   }
 </style>

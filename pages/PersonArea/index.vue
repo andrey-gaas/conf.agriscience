@@ -53,6 +53,7 @@
               {{$t('personarea_confirm')}}
             </span>
             <nuxt-link class="h6 d-flex my-2"
+              v-if="!isEmailСonfirm"
               :to="localeRout('/PersonArea/Email')"
             >Не пришло письмо?</nuxt-link>
           </mdb-col>

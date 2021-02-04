@@ -98,6 +98,17 @@
   }
 
 }
+.email-container{
+  @include size(md){
+    max-width: 720px;
+  }
+  @include size(xl){
+    max-width: 720px;
+  }
+  @include size(lg){
+    max-width: 720px;
+  }
+}
 
 .organizetion{
   background-color: #A7C728;
