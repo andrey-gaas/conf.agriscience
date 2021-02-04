@@ -5,14 +5,15 @@ const transporter = mailer.createTransport({
   port: 25,
 });
 
-module.exports = function(data) {
+module.exports = function(data, html) {
   return new Promise((resolve, reject) => {
+
     const mailConfig = {
       from: { name: 'Оргкомитет Библиографического Конгресса', address: 'info@bibcongress.ru' },
       to: data.email,
       subject: data.subject,
       text: data.text,
-      html: `<p>${data.text}</p>`,
+      html: html ? html : `<p>${data.text}</p>`,
     };
 
     transporter.sendMail(mailConfig, function(err, info) {
