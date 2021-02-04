@@ -80,7 +80,7 @@ router.post('/registration', (req, res) => {
 
           const message = {
             email,
-            subject: 'Регистрация - III Международный библиографический конгресс',
+            subject: 'Подтвердите регистрацию на III Международный библиографический конгресс.',
             text: `Для подтверждения электронной почты, перейдите по ссылке: https://api.bibcongress.ru/auth/email-confirm/${email}`,
           };
           sendMail(message, require('./mail/mail')(email))
