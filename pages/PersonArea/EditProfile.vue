@@ -221,7 +221,8 @@ export default {
           let dataTranslet = await this.axiosTranslete(
             {organization: this.formSet.organization, 
             position: this.formSet.position, 
-            place: this.formSet.place,}, 
+            place: this.formSet.place,
+            aboutMe: this.aboutMe,}, 
             {from:'en', to:'ru'})
           personDataReg = {
             surname: this.transliterate()(this.formSet.surname, true),
@@ -237,14 +238,16 @@ export default {
             place: dataTranslet.place,
             placeEn: this.formSet.place,
             telephone: this.formSet.telephone,
-            aboutMeEn: this.aboutMe
+            aboutMeEn: this.aboutMe,
+            aboutMe: dataTranslet.aboutMe,
           }
           
         }else{
           let dataTranslet = await this.axiosTranslete(
             {organization: this.formSet.organization, 
             position: this.formSet.position, 
-            place: this.formSet.place,}, 
+            place: this.formSet.place,
+            aboutMe: this.aboutMe,}, 
             {from:'ru', to:'en'})
           personDataReg = {
             surname: this.formSet.surname,
@@ -260,7 +263,8 @@ export default {
             place: this.formSet.place,
             placeEn: dataTranslet.place,
             telephone: this.formSet.telephone,
-            aboutMe: this.aboutMe
+            aboutMe: this.aboutMe,
+            aboutMeEn: dataTranslet.aboutMe,
           }
         }
       }else{
@@ -290,7 +294,14 @@ export default {
       }
       await this.$store.dispatch('sevePersonDataBD', personDataReg )
       await this.$store.commit('setPersonData', personDataReg);
-      await this.$store.commit('setPersonAboutMe', {aboutMe:this.aboutMe, locale:this.$i18n.locale});
+      if(personDataReg.aboutMeEn !== undefined){
+        await this.$store.commit('setPersonAboutMe', {aboutMe:personDataReg.aboutMeEn, locale:'en'});
+      }
+      if(personDataReg.aboutMe !== undefined){
+        await this.$store.commit('setPersonAboutMe', {aboutMe:personDataReg.aboutMe, locale:'ru'});
+      }
+      
+      
       this.$router.push(this.localeRout('/personarea'))
     },
     

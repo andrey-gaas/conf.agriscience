@@ -52,7 +52,9 @@
             >
               {{$t('personarea_confirm')}}
             </span>
-            
+            <nuxt-link class="h6 d-flex my-2"
+              :to="localeRout('/PersonArea/Email')"
+            >Не пришло письмо?</nuxt-link>
           </mdb-col>
           <mdb-col col="12" sm='12' md='6' lg='6' class=''>
             <mdb-tbl responsiveSm bordered>
