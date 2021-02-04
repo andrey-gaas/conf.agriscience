@@ -390,7 +390,7 @@ export default {
       //Сделать рабочию версию
       // console.log('TO DO!!');
       // let formData = new FormData();
-      // formData.append('file', this.imgFile);
+      // formData.append('image', this.imgFile);
 
       // axios.post( '/single-file',
       //   formData,

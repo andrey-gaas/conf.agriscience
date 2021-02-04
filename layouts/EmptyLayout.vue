@@ -1,16 +1,16 @@
 <template>
   <div class="empty_layout_wrap min-h-100">
-      <client-only>
-    <Header />
-    <div class="d-flex align-items-center blue lighten-5 min-h-100 flex-grow-1 justify-content-center">
-      <div class="spinner-border text-primary" style="width: 4rem; height: 4rem;" role="status"
-        v-if="loading"
-      >
-        <span class="sr-only">Loading...</span>
+    <client-only>
+      <Header />
+      <div class="d-flex align-items-center blue lighten-5 min-h-100 flex-grow-1 justify-content-center">
+        <div class="spinner-border text-primary" style="width: 4rem; height: 4rem;" role="status"
+          v-if="loading"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
+          <Nuxt />
       </div>
-        <Nuxt />
-    </div>
-      </client-only>
+    </client-only>
   </div>
 </template>
 

@@ -80,7 +80,7 @@
 
 <script>
 import {
-  mdbContainer, mdbRow, mdbCol, mdbCard, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbBtn, mdbView, mdbMask, mdbAvatar
+  mdbContainer, mdbRow, mdbCol, mdbBtn
 } from 'mdbvue';
 import {localeRout} from '@/assets/utils'
 
@@ -112,7 +112,7 @@ export default {
   },
   components: {
     'container': mdbContainer, Menu, Coordinators, CoorCard,
-    mdbCard, mdbRow, mdbCol, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbBtn, mdbView, mdbMask, mdbAvatar
+    mdbRow, mdbCol,  mdbBtn,
   },
   created(){
     this.topicData = this.topicData.map(el =>{

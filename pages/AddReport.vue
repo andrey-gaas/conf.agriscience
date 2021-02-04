@@ -151,8 +151,18 @@
         </mdb-col>
       </mdb-row>
       <mdb-row class="m-0" p='2'>
+        
+        <mdb-col col="12" m='b2'>
+        <span class="d-flex h5">Расширенные тезисы</span>
+        <!-- <div class="rich-editor">
+          <vue-editor id="editor" v-model="editorContent"
+            placeholder='Напишите расширенные тезисы доклада, не менее 500 слов. Или прикрепите файл'
+          />
+        </div> -->
+        </mdb-col>
+      
         <mdb-col col="12" sm='12' md='6' lg='6'>
-          <div class="input-group mb-3">
+          <div class="input-group mb-2">
             <div class="custom-file cursor-pointer">
               <input type="file" class="custom-file-input " id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
                 ref="fileInput"
@@ -167,8 +177,8 @@
               >{{fileName}}</label>
             </div>
           </div>
-          <mdb-btn class="m-0 teal lighten-2 disabled"
-            @click="submitFile"
+          <mdb-btn size="md" class="m-0 teal lighten-2 disabled"
+            @click="howCountWord"
           >{{$t('personarea_download')}}</mdb-btn>
         </mdb-col>
       </mdb-row>
@@ -238,23 +248,24 @@
 import { RU, EN } from '@/constants/language';
 import {localeRout} from '@/assets/utils'
 
+
 import FormEditAuthor from '@/components/FormEditAuthor';
 import Toast from '@/components/Toast';
+//import {VueEditor} from 'vue2-editor'
 import { BIcon, BIconCaretDownFill, BIconCaretUpFill, BIconTrashFill, BIconPencilSquare } from 'bootstrap-vue'
 import { mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody, mdbIcon  } from 'mdbvue';
-
-
 
 export default {
   name: "AddReport",
   layout: 'EmptyLayout',
-  middleware: 'authenticated',
+  middleware: ['authenticated', 'checkreport'],
   data: () => ({
     RU, EN,
     author:[],
     authorEn:[],
     isAuthorCrate: false,
     isAuthorEdit: false,
+    isShowEditor: false,
     editAuthor: { 
       surname: '',
       name: '',
@@ -271,6 +282,7 @@ export default {
       position: '',
       email: '',
     },
+    editorContent:'',
     reportText:'',
     reportName:'',
     reportTextEn:'',
@@ -288,7 +300,7 @@ export default {
     isShowTost: false,
     fileName: '',
     imgFile: '',
-
+    countWordEditor: '',
   }),
   computed:{
     speakers(){
@@ -329,10 +341,24 @@ export default {
     this.setReport()
   },
   mounted(){
-    
+    //this.isShowEditor = true;
   },
   methods:{
     localeRout,
+    howCountWord(){
+      let arr = this.editorContent.match(/\>([^\>\<]*)\</g)
+      if(!arr) return
+
+      let count = 1;
+      arr.map((el, ind) => {
+        let space = el.match(/\s{1,}/g)
+        if(space !== null) count += space.length
+        if(++ind === arr.length && el !== null){
+          if(el.slice(-1) == ' ') --count
+        }
+      })
+      return count
+    },
     setFileName(){
       this.imgFile = this.$refs.fileInput.files[0]
       this.fileName = this.$refs.fileInput.files[0].name
@@ -525,6 +551,7 @@ export default {
     }
   },
   components:{
+    //VueEditor,
     FormEditAuthor, Toast,
     BIcon, BIconCaretDownFill, BIconCaretUpFill, BIconTrashFill, BIconPencilSquare,
     mdbContainer, mdbInput, mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody

@@ -17,13 +17,13 @@
 
 <script>
 import {
-  mdbCard, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbView
+  mdbCard, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbView, mdbMask
 } from 'mdbvue';
 
 export default {
   props:['title','text','img'],
   components:{
-    mdbCard, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbView
+    mdbCard, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbView, mdbMask
   }
 }
 </script>
