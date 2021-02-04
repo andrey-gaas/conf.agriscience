@@ -1,4 +1,7 @@
+const path = require('path');
+const fs = require('fs');
 const { Router } = require('express');
+const formidable = require('formidable');
 const auth = require('../middleware/auth');
 const Mongo = require('./db/Mongo');
 const router = Router();
@@ -55,6 +58,25 @@ router.put('/', (req, res) => {
       console.log(err);
       res.status(500).send('Server Error');
     });
+});
+
+router.post('/avatar', (req, res) => {
+  const form = new formidable.IncomingForm();
+  form.keepExtensions = true;
+  form.uploadDir = path.join(__dirname, '.', 'upload', 'avatars');
+  form.multiples = true;
+
+  form.parse(req, function(err, fields, file) {
+    const newFileName = `${req.email}.${file.avatar.name.split('.').pop()}`;
+
+    fs.rename(file.avatar.path, path.join(form.uploadDir, newFileName), (err, img) => {
+      if (err) {
+        console.log(err.message);
+      }
+    });
+
+    res.send(newFileName);
+  });
 });
 
 module.exports = router;
