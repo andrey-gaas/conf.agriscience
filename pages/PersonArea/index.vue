@@ -108,7 +108,7 @@
           <mdb-col col='12' class="mb-4">
 
             <h4 class="mb-2 mt-0">{{$t('personarea_profile')}}</h4>
-            <nuxt-link :to="localeRout('/editprofile')" 
+            <nuxt-link :to="localeRout('/personArea/editprofile')" 
               class="mt-0 mb-0 mx-0 btn teal lighten-2 text-decoration-none ripple-parent text-white"
             >
               {{$t('personarea_edit_profile')}}
@@ -321,7 +321,7 @@ export default {
       this.$store.commit('setEditReport', this.$store.getters.getReportList.length);
       this.$store.commit('addSpeaker', {speakerPerson, speakerPersonEn});
       //this.$store.commit('logState');
-      this.$router.push(this.localeRout('/addreport'))
+      this.$router.push(this.localeRout('/personArea/addreport'))
     },
     localize(){
 
@@ -346,7 +346,7 @@ export default {
     },
     editReport(ind){
       this.$store.commit('setEditReport', ind);
-      this.$router.push(this.localeRout('/addreport'))
+      this.$router.push(this.localeRout('/personArea/addreport'))
     },
     setReport(){
       const reportList = this.$store.getters.getReportList,
@@ -391,14 +391,12 @@ export default {
     submitFile(){
       const avatar = document.querySelector('#upload-avatar').files[0];
 
-      console.log(this.$store.getters.getCookie.token);
-
-      if (!avatar) {
+      if (!this.imgFile) {
         return alert('Сначала добавьте картинку в форму выше');
       }
 
       const formData = new FormData();
-      formData.append('avatar', avatar, avatar.name);
+      formData.append('avatar', this.imgFile, this.fileNam);
 
       this.$axios.post(
         '/user/avatar',
