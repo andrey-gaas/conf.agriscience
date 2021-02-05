@@ -29,6 +29,7 @@ passport.deserializeUser(function(email, done) {
     .collection('users')
     .findOne({ email: email })
     .then(user => {
+      console.log('user', user);
       if (!user) done(null, false);
       else done(null, user);
     });

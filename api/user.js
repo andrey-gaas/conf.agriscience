@@ -4,7 +4,6 @@ const { Router } = require('express');
 const formidable = require('formidable');
 const auth = require('../middleware/auth');
 const Mongo = require('./db/Mongo');
-const { checkExtension } = require('./utils');
 const router = Router();
 
 router.use('*', auth, (req, res, next) => {
@@ -62,7 +61,6 @@ router.put('/', (req, res) => {
 });
 
 router.post('/avatar', (req, res) => {
-  let extension = '';
   const form = new formidable.IncomingForm();
   form.keepExtensions = true;
   form.uploadDir = path.join(__dirname, '.', 'upload', 'avatars');
@@ -71,7 +69,7 @@ router.post('/avatar', (req, res) => {
     if(!part.filename || part.filename.match(/\.(jpg|jpeg|png)$/i)) {
       this.handlePart(part);
     }
-}
+  }
 
   form.parse(req, function(err, fields, file) {
     if (err) {
