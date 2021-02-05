@@ -36,28 +36,30 @@ router.post('/', (req, res) => {
 
   const report = req.body;
   let id = 0;
+  
+  const reports = Mongo.database
+    .db('bibcongress')
+    .collection('reports');
 
-  const form = new formidable.IncomingForm();
-  form.keepExtensions = true;
-  form.uploadDir = path.join(__dirname, '.', 'upload', 'avatars');
-  form.multiples = true;
-  form.onPart = function (part) {
-    if(!part.filename || part.filename.match(/\.(docx)$/i)) {
-      this.handlePart(part);
-    }
-  }
-
-  form.parse(req, (err, fields, file) => {
-    if (err) {
-      console.log(err.message);
-      return res.status(500).send('Server Error');
-    }
-
-    if (!file.avatar) {
-      console.log('!file.avatar');
-      return res.status(400).send('Недопустимое изображение. Картинка должна быть в формате: JPG, JPEG, PNG');
-    }
-  });
+    reports.find().limit(1).sort({ $natural: -1 }).toArray((error, lastReport) => {
+      if (error) {
+        console.log(error.message);
+        res.status(500).send('Server Error');
+      } else {
+        if (lastReport && lastReport.length) id = lastReport[0].id + 1;
+        report.id = id;
+        report.email = req.email;
+  
+        reports.insertOne(report)
+          .then(report => {
+            res.send(report.ops[0]);
+          })
+          .catch(error => {
+            console.log(error.message);
+            res.status(500).send('Server error')
+          });
+      }
+    });
 });
 
 router.put('/:id', (req, res) => {
