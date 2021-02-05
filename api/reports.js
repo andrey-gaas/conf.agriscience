@@ -33,7 +33,7 @@ router.post('/', (req, res) => {
   }
 
   const report = req.body;
-  let id;
+  let id = 0;
 
   const reports = Mongo.database
     .db('bibcongress')
@@ -44,7 +44,7 @@ router.post('/', (req, res) => {
       console.log(error.message);
       res.status(500).send('Server Error');
     } else {
-      id = lastReport[0].id + 1;
+      if (lastReport && lastReport.length) id = lastReport[0].id + 1;
       report.id = id;
       report.email = req.email;
 

@@ -36,59 +36,73 @@ router.post('/registration', (req, res) => {
     password,
   } = req.body;
 
-  const users = Mongo.database.db('bibcongress').collection('users');
-  
-  users.findOne({ email: email }, (error, result) => {
-    if (error) {
-      console.log(error);
-      res.status(500).send('Server error');
-    } else if (result !== null) res.status(400).send('E-Mail занят.');
-    else {
-      const salt = bcrypt.genSaltSync(10);
-      const user = {
-        name,
-        nameEn,
-        surname,
-        surnameEn,
-        patronymic,
-        patronymicEn,
-        organization,
-        organizationEn,
-        position,
-        positionEn,
-        place,
-        placeEn,
-        email,
-        telephone,
-        isEmailConfirmed: false,
-        password: bcrypt.hashSync(password, salt),
-        avatar: '',
-      };
+  console.log('surname', surname);
 
-      users.insertOne(user, (error) => {
+  const users = Mongo.database.db('bibcongress').collection('users');
+
+  users.find().limit(1).sort({ $natural: -1 }).toArray((error, lastUser) => {
+    let id = 0;
+    if (error) {
+      console.log(error.message);
+      res.status(500).send('Ошибка сервера');
+    } else {
+      if (lastUser && lastUser.length) id = lastUser[0].id + 1;
+
+      users.findOne({ email: email }, (error, result) => {
         if (error) {
           console.log(error);
           res.status(500).send('Server error');
-        }
+        } else if (result !== null) res.status(400).send('E-Mail занят.');
         else {
-          const token = jwt.sign({
+          const salt = bcrypt.genSaltSync(10);
+          const user = {
+            id,
+            name,
+            nameEn,
+            surname,
+            surnameEn,
+            patronymic,
+            patronymicEn,
+            organization,
+            organizationEn,
+            position,
+            positionEn,
+            place,
+            placeEn,
             email,
-          }, secretKey);
-    
-          res.cookie('token', token, { expires: new Date(Date.now() + 31536000000) });
-          //res.send({ message: 'OK', token: token });
-
-          const message = {
-            email,
-            subject: 'Подтвердите регистрацию на III Международный библиографический конгресс.',
-            text: `Для подтверждения электронной почты, перейдите по ссылке: https://api.bibcongress.ru/auth/email-confirm/${email}`,
+            telephone,
+            isEmailConfirmed: false,
+            password: bcrypt.hashSync(password, salt),
+            avatar: '',
           };
-          sendMail(message, require('./mail/mail')(email))
-            .then(() => res.send({ message: 'OK', token }))
-            .catch(error => {
-              console.log(error.message);
-              res.send('OK');
-            });
+    
+          users.insertOne(user, (error) => {
+            if (error) {
+              console.log(error);
+              res.status(500).send('Server error');
+            }
+            else {
+              const token = jwt.sign({
+                email,
+                id,
+              }, secretKey);
+        
+              res.cookie('token', token, { expires: new Date(Date.now() + 31536000000) });
+              //res.send({ message: 'OK', token: token });
+    
+              const message = {
+                email,
+                subject: 'Подтвердите регистрацию на III Международный библиографический конгресс.',
+                text: `Для подтверждения электронной почты, перейдите по ссылке: https://api.bibcongress.ru/auth/email-confirm/${email}`,
+              };
+              sendMail(message, require('./mail/mail')(email))
+                .then(() => res.send({ message: 'OK', token }))
+                .catch(error => {
+                  console.log(error.message);
+                  res.send('OK');
+                });
+            }
+          });
         }
       });
     }
@@ -113,6 +127,7 @@ router.post('/login', (req, res, next) => {
     if(passportUser) {
       const token = jwt.sign({
         email: passportUser.email,
+        id: passportUser.id,
       }, secretKey);
 
       res.cookie('token', token, { expires: new Date(Date.now() + 31536000000) });

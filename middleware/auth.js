@@ -9,8 +9,9 @@ module.exports = (req, res, next) => {
   }
 
   try {
-    const email = jwt.verify(authorization, secretKey).email;
-    req.email = email;
+    const user = jwt.verify(authorization, secretKey);
+    req.email = user.email;
+    req.id = user.id;
   } catch (error) {
     if (error instanceof jwt.JsonWebTokenError) {
       return res.status(401).send('Invalid token!');
