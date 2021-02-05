@@ -4,6 +4,7 @@ const { Router } = require('express');
 const formidable = require('formidable');
 const auth = require('../middleware/auth');
 const Mongo = require('./db/Mongo');
+const { checkExtension } = require('./utils');
 const router = Router();
 
 router.use('*', auth, (req, res, next) => {
@@ -61,16 +62,28 @@ router.put('/', (req, res) => {
 });
 
 router.post('/avatar', (req, res) => {
+  let extension = '';
   const form = new formidable.IncomingForm();
   form.keepExtensions = true;
   form.uploadDir = path.join(__dirname, '.', 'upload', 'avatars');
   form.multiples = true;
+  form.onPart = function (part) {
+    if(!part.filename || part.filename.match(/\.(jpg|jpeg|png)$/i)) {
+      this.handlePart(part);
+    }
+}
 
   form.parse(req, function(err, fields, file) {
     if (err) {
       console.log(err.message);
-      res.status(500).send('Server Error');
+      return res.status(500).send('Server Error');
     }
+
+    if (!file.avatar) {
+      console.log('!file.avatar');
+      return res.status(400).send('Недопустимое изображение. Картинка должна быть в формате: JPG, JPEG, PNG');
+    }
+
     const newFileName = `${req.email}.${file.avatar.name.split('.').pop()}`;
 
     fs.rename(file.avatar.path, path.join(form.uploadDir, newFileName), (err, img) => {

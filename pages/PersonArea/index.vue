@@ -412,38 +412,9 @@ export default {
         .then(result => {
           console.log(result);
         })
-        .catch(error => {
-          console.log(error);
+        .catch(({ response }) => {
+          alert(response.data);
         });
-
-      /* let formData = new FormData();
-      formData.append('file', this.imgFile);
-
-      console.log(formData); */
-
-      /* axios.post(
-        '/user/avatar',
-        formData,
-
-      ); */
-
-      /* axios.post( '/single-file',
-        formData,
-        {
-          headers: {
-              'Content-Type': 'multipart/form-data'
-          }
-        }
-      ).finally(() => {
-        this.imgFile = ''
-        this.fileName = ''
-        formData = ''
-      }).then(function(){
-        console.log('SUCCESS!!');
-      })
-      .catch(function(){
-        console.log('FAILURE!!');
-      }); */
     },
     setFileName(){
       this.imgFile = this.$refs.fileInput.files[0]
