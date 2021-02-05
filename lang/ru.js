@@ -9,6 +9,7 @@ export default{
   "main_header_subtitle": "III Международный библиографический конгресс",
   "main_header_title": "Библиографическая информация в цифровой культуре",
 
+  "main_menu_home": "Главная",
   "main_menu_organising_committee": "Организационный комитет",
   "main_menu_program_committee": "Программный комитет",
   "main_menu_publication_materials": "Издание материалов",
@@ -167,8 +168,9 @@ export default{
   'personarea_status':'Статус',
   'personarea_apply':'Подать заявку',
   'personarea_no_apply':'Нет активных заявок',
-  'personarea_no_confirm':'Требуется подтверждение E-Mail, для этого перейдите по ссылке в сообщении отправленом вам на почту.',
+  'personarea_no_confirm':'Требуется подтверждение email. Для этого перейдите по ссылке в сообщении, которое мы отправили на указанную почту.',
   'personarea_confirm':'E-Mail подтверждён.',
+  'personarea_not_come_letter':'Не пришло письмо?',
   
   'edit_report_report':'Доклад',
   'edit_report_save':'Сохранить',
@@ -189,5 +191,11 @@ export default{
   'editprofile_save_changes':'Сохранить изменения',
   'editprofile_cancel':'Отмена',
   'editprofile_modifying_profile':'Изменение данных профиля',
+
+  'emeil_message_1':'Проверьте папку Спам: возможно, оно попало туда.',
+  'emeil_message_2':'Рекомендуем добавить наш адрес в список контактов, чтобы не пропустить важные письма о программе и орг.моментах Конгресса.',
+  'emeil_message_3':'Нажмите на кнопку, чтобы повторно отправить письмо для подтверждения.',
+  'emeil_send':'Отправить',
+  'emeil_title':'Если вам не пришло письмо:',
 
 }

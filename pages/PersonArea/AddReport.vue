@@ -4,7 +4,7 @@
       <mdb-row class="m-0 teal lighten-1" p='3'>
         <h2 class="mb-0  white-text"><strong>{{$t('edit_report_report')}}</strong></h2>
       </mdb-row>
-      <mdb-row class="m-0" p='2'>
+      <mdb-row class="m-0" p='2' m='b2'>
         <mdb-col col="12" sm='12' md='6' lg='6' class='mb-sm-4 mb-4 mb-lg-0 mb-md-0'
           :class="{'order-3':($i18n.locale == EN)}"
         >
@@ -152,8 +152,9 @@
       </mdb-row>
       <mdb-row class="m-0" p='2'>
         
-        <mdb-col col="12" m='b2'>
-        <span class="d-flex h5">Расширенные тезисы</span>
+        <mdb-col col="12" m='b1'>
+        <span class="d-flex h5 mb-2">Расширенные тезисы</span>
+        <p class='mb-0'>Прикрепите файл с расширенными тезисами доклада, не менее 500 слов.</p>
         <!-- <div class="rich-editor">
           <vue-editor id="editor" v-model="editorContent"
             placeholder='Напишите расширенные тезисы доклада, не менее 500 слов. Или прикрепите файл'
@@ -161,8 +162,8 @@
         </div> -->
         </mdb-col>
       
-        <mdb-col col="12" sm='12' md='6' lg='6'>
-          <div class="input-group mb-2">
+        <mdb-col col="12" sm='12' md='8' lg='7'>
+          <div class="input-group m-0">
             <div class="custom-file cursor-pointer">
               <input type="file" class="custom-file-input " id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
                 ref="fileInput"
@@ -177,9 +178,9 @@
               >{{fileName}}</label>
             </div>
           </div>
-          <mdb-btn size="md" class="m-0 teal lighten-2 disabled"
+          <!-- <mdb-btn size="md" class="m-0 teal lighten-2 disabled"
             @click="howCountWord"
-          >{{$t('personarea_download')}}</mdb-btn>
+          >{{$t('personarea_download')}}</mdb-btn> -->
         </mdb-col>
       </mdb-row>
       <mdb-row class="m-0" p='2'>
@@ -381,7 +382,7 @@ export default {
             && localStorage.reportTexteRu == this.reportText) ||
             this.reportNameEn.length > 5000
         ){
-          console.log('NO NO NO, прекраты тыкать на кнопку');
+          console.log('NO NO NO, stop click the button');
           return
         }
       }else{

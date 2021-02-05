@@ -9,21 +9,20 @@
       v-if="!loading"
     >
       <mdb-row class="m-0 teal lighten-1" p='3'>
-        <h2 class="mb-0  white-text"><strong>Не пришло письмо?</strong></h2>
+        <h2 class="mb-0  white-text"><strong>{{$t('emeil_title')}}</strong></h2>
       </mdb-row>
       <mdb-row class="m-0" p='2'>
-        <div class="d-flex flex-column">
-          <span class="h4 pl-2">Если вам не пишло письмо:</span>
-          <ul class="pl-4 email-message__list">
+        <div class="d-flex flex-column w-100">
+          <ul class="pl-4 email-message__list mb-0">
             <li class="mb-3">
-              Провертье папку спам, возможно оно попало туда
+              {{$t('emeil_message_1')}} <br> {{$t('emeil_message_2')}}
             </li>
             <li class="mb-3">
-              <span class='d-flex'>
-                Отправить письмо повторно.
+              <span class='d-flex mb-2'>
+                {{$t('emeil_message_3')}}
               </span>
               <mdb-btn class="m-0 px-3 py-2 teal lighten-2" @click="sendMail">
-                Отправить
+                {{$t('emeil_send')}}
               </mdb-btn>
             </li>
             <!-- <li>
@@ -37,14 +36,14 @@
         <nuxt-link
           v-show="!isAuthorized"
           :to="localeRout('/login')" 
-          class="mt-4 btn teal lighten-2 text-decoration-none ripple-parent text-white"
+          class="mt-3 btn teal lighten-2 text-decoration-none ripple-parent text-white"
         >
           {{$t('log_authorization')}}
         </nuxt-link>
         <nuxt-link
           v-show="isAuthorized"
           :to="localeRout('/personarea')" 
-          class="mt-4 btn teal lighten-2 text-decoration-none ripple-parent text-white"
+          class="mt-3 btn teal lighten-2 text-decoration-none ripple-parent text-white"
         >
           {{$t('notification_person_area')}}
         </nuxt-link>
@@ -66,8 +65,6 @@ import {localeRout, } from '@/assets/utils'
 import Toast from '@/components/Toast';
 import { mdbContainer,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol } from 'mdbvue';
 
-
-
 export default {
   layout: 'EmptyLayout',
   middleware: 'authenticated',
@@ -82,7 +79,9 @@ export default {
   
   },
   computed:{
-  
+    isEmeilConfirm(){
+      return this.$store.getters.getEmailСonfirm
+    }
   },
   mounted(){
     this.loading = false
@@ -95,6 +94,9 @@ export default {
       setTimeout(()=>{this.isShowTost = false}, 3000)
     },
     sendMail(){
+      if(isEmeilConfirm){
+        return
+      }
       console.log('send');
     },
     async setAuthorizarion(){
