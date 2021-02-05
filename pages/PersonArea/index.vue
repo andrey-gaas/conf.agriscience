@@ -55,7 +55,7 @@
             <nuxt-link class="h6 d-flex my-2"
               v-if="!isEmailСonfirm"
               :to="localeRout('/PersonArea/Email')"
-            >Не пришло письмо?</nuxt-link>
+            >{{$t('personarea_not_come_letter')}}</nuxt-link>
           </mdb-col>
           <mdb-col col="12" sm='12' md='6' lg='6' class=''>
             <mdb-tbl responsiveSm bordered>

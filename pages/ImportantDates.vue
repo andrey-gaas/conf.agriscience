@@ -9,11 +9,11 @@
         <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
           <Menu />
         </mdb-col>
-        <mdb-col md="6" sm='12' class='px-0 col_m'>
+        <mdb-col md="6" sm='12' class='p-4 col_m'>
           <h3>Важные даты</h3>
           <ul>
-            <li>Окончание регестрации с доладом</li>
-            <li>Окончание регестрации просто</li>
+            <li>Окончание регистрации с докладом 15 марта.</li>
+            <li>Окончание регистрации 26 апреля.</li>
           </ul>
         </mdb-col>
         <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>

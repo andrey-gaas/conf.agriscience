@@ -9,6 +9,7 @@ export default{
   "main_header_subtitle": "III International Bibliographic Congress",
   "main_header_title": "Bibliographic information in digital culture",
 
+  "main_menu_home": "Home",
   "main_menu_organising_committee": "Organising Committee",
   "main_menu_program_committee": "Program committee",
   "main_menu_publication_materials": "Publication of materials",
@@ -168,6 +169,7 @@ export default{
   'personarea_no_apply':'No active orders',
   'personarea_no_confirm':'E-Mail confirmation is required, for this follow the link in the message sent to you by mail.',
   'personarea_confirm':'E-mail confirmed.',
+  'personarea_not_come_letter':"Didn't receive a letter?",
 
   'edit_report_report':'Report',
   'edit_report_save':'Save',
@@ -188,4 +190,11 @@ export default{
   'editprofile_save_changes':'Save changes',
   'editprofile_cancel':'Cancel',
   'editprofile_modifying_profile':'Modifying profile data',
+
+  'emeil_message_1':'Check your Spam folder to see if it got there.',
+  'emeil_message_2':'We recommend that you add our address to your contact list so as not to miss important letters about the program and organizing moments of the Congress.',
+  'emeil_message_3':'Click the button to resend the confirmation email.',
+  'emeil_send':'Send',
+  'emeil_title':"If you haven't received a letter:",
+
 }
