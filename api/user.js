@@ -84,7 +84,7 @@ router.post('/avatar', (req, res) => {
       return res.status(400).send('Недопустимое изображение. Картинка должна быть в формате: JPG, JPEG, PNG');
     }
 
-    const newFileName = `${req.email}.${file.avatar.name.split('.').pop()}`;
+    const newFileName = `${req.id}.${file.avatar.name.split('.').pop()}`;
 
     fs.rename(file.avatar.path, path.join(form.uploadDir, newFileName), (err, img) => {
       if (err) {
