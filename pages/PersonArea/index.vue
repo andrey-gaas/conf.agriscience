@@ -446,7 +446,6 @@ export default {
         delete this.personData.telephone
         delete this.personData.email
       }
-      console.log(this.$store);
 
       this.fileName = this.$t('personarea_select_file')
     },
