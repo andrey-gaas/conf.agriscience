@@ -119,9 +119,13 @@ router.post('/login', (req, res, next) => {
   }
 
   return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
-    if(err || !passportUser) {
+    if(err) {
       console.log(info);
-      return res.status(500).send(err);
+      return res.status(500).send('Ошибка сервера. Перезагрузите страницу и попробуйте еще раз.');
+    }
+
+    if (!passportUser) {
+      res.status(401).send('Введены неверные E-Mail или пароль.');
     }
 
     if(passportUser) {
