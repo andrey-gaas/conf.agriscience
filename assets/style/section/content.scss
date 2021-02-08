@@ -113,7 +113,7 @@
 .organizetion{
   background-color: #A7C728;
   line-height: 0.9rem;
-  font-size: 13px;
+  font-size: 16px;
   height: 100%;
 
   @include size(xs){
@@ -123,7 +123,7 @@
     font-size: 13px;
   }
   &>h3{
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-weight: bold;
   }
   &>p{
