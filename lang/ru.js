@@ -176,6 +176,7 @@ export default{
   'personarea_no_confirm':'Требуется подтверждение email. Для этого перейдите по ссылке в сообщении, которое мы отправили на указанную почту.',
   'personarea_confirm':'E-Mail подтверждён.',
   'personarea_not_come_letter':'Не пришло письмо?',
+  'personarea_add_report_not_emeil':'Чтобы подать заявку на доклад, необходимо подтверить свой E-mail',
   
   'edit_report_report':'Доклад',
   'edit_report_save':'Сохранить',

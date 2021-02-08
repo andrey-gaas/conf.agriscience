@@ -175,6 +175,7 @@ export default{
   'personarea_no_confirm':'E-Mail confirmation is required, for this follow the link in the message sent to you by mail.',
   'personarea_confirm':'E-mail confirmed.',
   'personarea_not_come_letter':"Didn't receive a letter?",
+  'personarea_add_report_not_emeil':"To apply for a report, you must confirm your E-mail",
 
   'edit_report_report':'Report',
   'edit_report_save':'Save',

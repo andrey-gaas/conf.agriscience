@@ -106,6 +106,11 @@
             >
               {{$t('personarea_apply')}}
             </mdb-btn>
+            <span
+              class='d-flex grey-text'
+              v-if="!isEmailСonfirm"
+            >{{$t('personarea_add_report_not_emeil')}}
+            </span>
           </mdb-col>
         </mdb-row>
         <mdb-row class="mb-0 col-12 mx-0 px-0" >
@@ -424,8 +429,8 @@ export default {
     setData(){
       this.personAboutMeRu = this.$store.getters.getPersonAboutMeRu
       this.personAboutMeEn = this.$store.getters.getPersonAboutMeEn
-      this.personData = this.$store.getters.getPersonData
-      this.personDataEn = this.$store.getters.getPersonDataEn
+      this.personData = {...this.$store.getters.getPersonData}
+      this.personDataEn = {...this.$store.getters.getPersonDataEn}
       //this.localize()
 
       delete this.personData.isEmailConfirmed;
@@ -434,7 +439,15 @@ export default {
       delete this.personDataEn.isEmailConfirmed;
       delete this.personDataEn.avatar;
 
-    
+      if(this.$i18n.locale == 'ru'){
+        delete this.personDataEn.telephone
+        delete this.personDataEn.email
+      }else{
+        delete this.personData.telephone
+        delete this.personData.email
+      }
+      console.log(this.$store);
+
       this.fileName = this.$t('personarea_select_file')
     },
     startEditAboutMe(loc){
