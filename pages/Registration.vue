@@ -264,7 +264,8 @@ export default {
         return
       }
       this.clearLacalStorage()
-
+      this.$store.commit('toggleLoadData', false)
+      
       let personDataReg;
       if(this.$i18n.locale == 'en'){
         let dataTranslet = await this.axiosTranslete(

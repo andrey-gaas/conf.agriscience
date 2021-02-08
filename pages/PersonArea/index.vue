@@ -102,6 +102,7 @@
             </mdb-tbl>
             <mdb-btn class="mt-0 mb-4 mx-0 teal lighten-2"
               @click="addReport()"
+              :class="{'disabled':!isEmailСonfirm}"
             >
               {{$t('personarea_apply')}}
             </mdb-btn>
@@ -410,7 +411,7 @@ export default {
         }},
       )
         .then(result => {
-          console.log(result);
+          //console.log(result);
         })
         .catch(({ response }) => {
           alert(response.data);

@@ -113,7 +113,7 @@ router.post('/registration', (req, res) => {
 
 router.post('/login', (req, res, next) => {
   const user = req.body;
-
+  
   if (!user.username || !user.password) {
     return res.status(400).send('Bad Request');
   }
@@ -123,7 +123,6 @@ router.post('/login', (req, res, next) => {
       console.log(info);
       return res.status(500).send('Ошибка сервера. Перезагрузите страницу и попробуйте еще раз.');
     }
-
     if (!passportUser) {
       res.status(401).send('Введены неверные E-Mail или пароль.');
     }

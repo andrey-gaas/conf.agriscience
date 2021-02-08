@@ -128,6 +128,7 @@ export default{
   'log_login':"Войти",
   'log_reg':"Регистрация",
   'log_authorization':"Авторизация",
+  'log_error_login_or_password':"Неверный логин или пароль",
 
   "notification_email_confirm": "Почта: '{email}' успешно подтверждена.",
   "notification_person_area": "Личный кабинет",
@@ -186,6 +187,14 @@ export default{
   'edit_author_cancel':'Отмена',
   'edit_author_add':'Добавить',
 
+  'important_dates':'Важные даты',
+  'important_dates_data_1':'15 марта',
+  'important_dates_data_1_text':'Окончание регистрации участников конгресса c представлением тезисов докладов (500 слов).',
+  'important_dates_data_2':'31 марта',
+  'important_dates_data_2_text':'Уведомление участников о включении докладов в программу конгресса.',
+  'important_dates_data_3':'26 апреля',
+  'important_dates_data_3_text':'Окончание регистрации участников конгресса без докладов.',
+
   'editprofile_about_me':'О себе',
   'editprofile_info_message':'Для редактирования данных на другом языке, измените язык интерфейса в верхнем правом углу',
   'editprofile_save_changes':'Сохранить изменения',
@@ -195,7 +204,10 @@ export default{
   'emeil_message_1':'Проверьте папку Спам: возможно, оно попало туда.',
   'emeil_message_2':'Рекомендуем добавить наш адрес в список контактов, чтобы не пропустить важные письма о программе и орг.моментах Конгресса.',
   'emeil_message_3':'Нажмите на кнопку, чтобы повторно отправить письмо для подтверждения.',
+  'emeil_message_4':'Отправьте письмо на адрес оргкомитета',
+  'emeil_message_5':'в произвольной форме. ',
+  'emeil_message_6':'Позвоните нам по номеру',
   'emeil_send':'Отправить',
-  'emeil_title':'Если вам не пришло письмо:',
+  'emeil_title':'Если вам не пришло письмо, попробуйте один из этих вариантов:',
 
 }

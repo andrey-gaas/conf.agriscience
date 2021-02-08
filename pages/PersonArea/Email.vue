@@ -25,12 +25,12 @@
                 {{$t('emeil_send')}}
               </mdb-btn>
             </li>
-            <!-- <li>
-              <span class="d-flex">
-                Напишите писмо в оргкомитет на почту orgkomitet@gpntb.ru следующиее сообщение:
-              </span>
-              <span>"Не приходит сообщения для подтвержджения почты. /ваш адресс почты/"</span>
-            </li> -->
+            <li>
+              {{$t('emeil_message_4')}} <strong>info@bibcongress.ru</strong> {{$t('emeil_message_5')}} 
+            </li>
+            <li>
+              {{$t('emeil_message_6')}} +7(383)373-16-42. 
+            </li>
           </ul>
         </div>
         <nuxt-link
@@ -49,12 +49,6 @@
         </nuxt-link>
       </mdb-row>
     </mdb-container>
-    <transition name="toast">
-      <Toast
-        v-if="isShowTost"
-        :message='toastMessage'
-      />
-    </transition>
   </div>
 </template>
 
@@ -88,11 +82,6 @@ export default {
   },
   methods:{
     localeRout,
-    showTost(text){
-      this.$store.commit('setToastMsg', text)
-      this.isShowTost = true
-      setTimeout(()=>{this.isShowTost = false}, 3000)
-    },
     sendMail(){
       if(isEmeilConfirm){
         return

@@ -48,9 +48,13 @@
                 >
                   {{$t('reg_invalid_password_error')}}
                 </span>
+                <span class="red-text"
+                  v-if="(error == 401)"
+                >
+                  {{$t('log_error_login_or_password')}}
+                </span>
               <div>
                 <mdb-btn class="mt-4 mb-0 teal lighten-2" type="submit"
-                  color='primary'
                 >{{$t('log_login')}}</mdb-btn>
                 <nuxt-link :to="localeRout('/registration')" 
                   class="mt-4 mb-0 btn teal lighten-2 text-decoration-none ripple-parent text-white"
@@ -88,6 +92,7 @@ export default {
       email: '',
       password: '',
     },
+    error: '',
   }),
   validations:{
     formSet: {
@@ -118,7 +123,9 @@ export default {
             this.$router.push(this.localeRout('/personarea'));
           }
         })
-        .catch(error => console.log(error));
+        .catch((error) => {
+          this.error = error.message.slice(-3)
+        });
     },
   },
   components:{

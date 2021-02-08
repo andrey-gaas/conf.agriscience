@@ -127,6 +127,7 @@ export default{
   'log_login':"Log In",
   'log_reg':"Register",
   'log_authorization':"Authorization",
+  'log_error_login_or_password':"wrong login or password",
 
   'notification_email_confirm': "Mail: '{email}' confirmed successfully.",
   "notification_person_area": "Personal Area",
@@ -185,6 +186,15 @@ export default{
   'edit_author_cancel':'Cancel',
   'edit_author_add':'Add',
 
+
+  'important_dates':'Important dates',
+  'important_dates_data_1':'15 March',
+  'important_dates_data_1_text':'End of registration of congress participants with presentation of abstracts (500 words).',
+  'important_dates_data_2':'31 March',
+  'important_dates_data_2_text':'Notification of participants about the inclusion of reports in the congress program.',
+  'important_dates_data_3':'26 April',
+  'important_dates_data_3_text':'End of registration of the congress participants without reports.',
+
   'editprofile_about_me':'About me',
   'editprofile_info_message':'To edit data in another language, change the interface language in the upper right corner',
   'editprofile_save_changes':'Save changes',
@@ -194,7 +204,10 @@ export default{
   'emeil_message_1':'Check your Spam folder to see if it got there.',
   'emeil_message_2':'We recommend that you add our address to your contact list so as not to miss important letters about the program and organizing moments of the Congress.',
   'emeil_message_3':'Click the button to resend the confirmation email.',
+  'emeil_message_4':'Send a letter to the address of the organizing committee',
+  'emeil_message_5':'in any form.',
+  'emeil_message_6':'Call us at',
   'emeil_send':'Send',
-  'emeil_title':"If you haven't received a letter:",
+  'emeil_title':"If you haven't received an email, try one of these options:",
 
 }

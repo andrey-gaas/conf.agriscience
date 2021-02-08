@@ -10,10 +10,11 @@
           <Menu />
         </mdb-col>
         <mdb-col md="6" sm='12' class='p-4 col_m'>
-          <h3>Важные даты</h3>
-          <ul>
-            <li>Окончание регистрации с докладом 15 марта.</li>
-            <li>Окончание регистрации 26 апреля.</li>
+          <h3>{{$t('important_dates')}}</h3>
+          <ul class="pl-3">
+            <li><strong>{{$t('important_dates_data_1')}}</strong> - {{$t('important_dates_data_1_text')}}</li>
+            <li><strong>{{$t('important_dates_data_2')}}</strong> - {{$t('important_dates_data_2_text')}}</li>
+            <li><strong>{{$t('important_dates_data_3')}}</strong> - {{$t('important_dates_data_3_text')}}</li>
           </ul>
         </mdb-col>
         <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
@@ -25,7 +26,6 @@
           <!-- <PersonCard/> -->
         </mdb-col>
         <mdb-col md="6" sm='12' class='px-0 col_m c0l'>
-
 
         </mdb-col>
         <mdb-col col="3" class='px-0 d-sm-none d-xs-none d-md-block'>
