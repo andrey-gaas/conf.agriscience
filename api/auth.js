@@ -174,8 +174,6 @@ router.get('/email-confirm/:email', (req, res) => {
 router.post('/email-recovery', (req, res) => {
   const { email } = req.body;
 
-  console.log(email);
-
   if (!email || !emailValidator.validate(email)) {
     return res.status(400).send('Введите валидный E-Mail.')
   }
@@ -196,7 +194,7 @@ router.post('/email-recovery', (req, res) => {
         sendMail(message)
           .then(() => {
             users
-              .findOneAndUpdate({ email }, { $set: { code } })
+              .findOneAndUpdate({ email }, { $set: { code: `${code}` } })
               .then(() => {
                 res.send('OK');
               })
@@ -216,6 +214,43 @@ router.post('/email-recovery', (req, res) => {
     .catch(error => {
       console.log(error.message);
       res.status(500).send('Ошибка сервера.')
+    });
+});
+
+router.post('/email-recovery/code', (req, res) => {
+  const { email, code } = req.body;
+
+  if (!email || !emailValidator.validate(email)) {
+    return res.status(400).send('Невалидный E-Mail.')
+  }
+  
+  const users = Mongo.database.db('bibcongress').collection('users');
+
+  users
+    .findOne({ email })
+    .then(user => {
+      if (!user) {
+        return res.status(404).send('Пользователь не найден');
+      }
+
+      if (user.code !== code) {
+        return res.status(400).send('Код неверен.');
+      }
+
+      users
+        .findOneAndUpdate({ email }, { $set: { code: '' } })
+        .then(() => {
+          res.send('OK');
+        })
+        .catch(error => {
+          console.log(error.message);
+          console.log('Ошибка сохранения кода');
+          res.status(500).redirect('Ошибка сервера');
+        });
+    })
+    .catch(error => {
+      console.log(error.message);
+      res.status(500).send('Ошибка сервера');
     });
 });
 

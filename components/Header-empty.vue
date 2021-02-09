@@ -53,9 +53,9 @@ export default {
     setLocale,
     localeRout,
     testFetch() {
-      this.$axios.post('/auth/email-recovery', { email: 'captain.destroyer@yandex.ru' })
+      this.$axios.post('/auth/email-recovery/code', { email: 'captain.destroyer@yandex.ru', code: '6667' })
         .then(res => console.log(res))
-        .catch(({ data }) => console.log(data));
+        .catch(({ response }) => console.log(response));
     }
   },
   data: () => ({ RU, EN }),
