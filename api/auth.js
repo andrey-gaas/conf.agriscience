@@ -1,6 +1,8 @@
 const { Router } = require('express');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
+const emailValidator = require('email-validator');
+const phoneToken = require('generate-sms-verification-code');
 const Mongo = require('./db/Mongo');
 const sendMail = require('./mail/sendmail');
 const jwt = require('jsonwebtoken');
@@ -35,8 +37,6 @@ router.post('/registration', (req, res) => {
     telephone,
     password,
   } = req.body;
-
-  console.log('surname', surname);
 
   const users = Mongo.database.db('bibcongress').collection('users');
 
@@ -109,8 +109,6 @@ router.post('/registration', (req, res) => {
   });
 });
 
-// router.post('/login', passport.authenticate('local', { successRedirect, failureRedirect }));
-
 router.post('/login', (req, res, next) => {
   const user = req.body;
   
@@ -168,6 +166,45 @@ router.get('/email-confirm/:email', (req, res) => {
     .catch(error => {
       console.log(error.message);
       res.status(500).send('Server Error');
+    });
+});
+
+// ВОССТАНОВЛЕНИЕ ПАРОЛЯ
+//====================================================================
+router.post('/email-recovery', (req, res) => {
+  const { email } = req.body;
+
+  console.log(email);
+
+  if (!email || !emailValidator.validate(email)) {
+    return res.status(400).send('Введите валидный E-Mail.')
+  }
+
+  const users = Mongo.database.db('bibcongress').collection('users');
+
+  users.findOne({ email })
+    .then(user => {
+      if (!user) {
+        res.status(500).send('Пользователь не найден.');
+      } else {
+        const code = phoneToken(4, {type: 'number'});
+        const message = {
+          email,
+          subject: 'Восстановление пароля. III Международный библиографический конгресс.',
+          text: `Код восстановления пароля: ${code}`,
+        };
+        sendMail(message)
+          .then(() => res.send('OK'))
+          .catch(error => {
+            console.log(error.message);
+            console.log('Ошибка оправки почты');
+            res.status(500).send('Ошибка сервера');
+          });
+      }
+    })
+    .catch(error => {
+      console.log(error.message);
+      res.status(500).send('Ошибка сервера.')
     });
 });
 
