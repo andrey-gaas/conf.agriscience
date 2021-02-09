@@ -53,7 +53,7 @@
                 >
                   {{$t('log_error_login_or_password')}}
                 </span>
-                <nuxt-link :to="localeRout('/NewPassword')">Забыли пароль?</nuxt-link>
+                <nuxt-link :to="localeRout('/NewPassword')">{{$t('log_forgot_password')}}</nuxt-link>
               <div>
                 <mdb-btn class="mt-4 mb-0 teal lighten-2" type="submit"
                 >{{$t('log_login')}}</mdb-btn>

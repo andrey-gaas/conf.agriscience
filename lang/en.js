@@ -132,6 +132,8 @@ export default{
   'log_reg':"Register",
   'log_authorization':"Authorization",
   'log_error_login_or_password':"wrong login or password",
+  'log_forgot_password':"Forgot your password?",
+
 
   'notification_email_confirm': "Mail: '{email}' confirmed successfully.",
   "notification_person_area": "Personal Area",
@@ -217,6 +219,9 @@ export default{
 
   'new_password_email_not_exist':"User with this E-mail does't exist",
   'new_password_code':"Code",
+  'new_password_reestablish':'Reestablish',
   'new_password_error_code':'Code is incorrect',
+  'new_password_recovery_password':'Password recovery',
+  'new_password_message':'To change your password, enter the code sent to the specified mail'
 
 }

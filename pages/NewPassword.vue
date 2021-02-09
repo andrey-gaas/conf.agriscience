@@ -12,7 +12,7 @@
             @submit.prevent='stepOne'
           >
             <div class="teal lighten-1 px-4 py-3">
-              <h2 class="form__title mb-0  white-text"><strong>Восстановление пароля</strong></h2>
+              <h2 class="form__title mb-0  white-text"><strong>{{$t('new_password_recovery_password')}}</strong></h2>
             </div>
             <div class="p-4">
               <mdb-input class="my-0" size="sm"
@@ -36,7 +36,7 @@
                 >{{error}}</span>
               <div>
                 <mdb-btn class="mt-4 mb-0 teal lighten-2" type="submit">
-                  Восстановить
+                  {{$t('new_password_reestablish')}}
                 </mdb-btn>
                 <nuxt-link :to="localeRout('/login')" 
                   class="mt-4 mb-0 btn teal lighten-2 text-decoration-none ripple-parent text-white"
@@ -56,10 +56,10 @@
             @submit.prevent='stepTwo'
           >
             <div class="teal lighten-1 px-4 py-3">
-              <h2 class="form__title mb-0  white-text"><strong>Восстановление пароля</strong></h2>
+              <h2 class="form__title mb-0  white-text"><strong>{{$t('new_password_recovery_password')}}</strong></h2>
             </div>
             <div class="p-4">
-              <span class="d-flex h5">Чтобы изменить пароль, укажите код, присланный вам на указанную почту</span>
+              <span class="d-flex h6">{{$t('new_password_message')}}</span>
               <mdb-input class="my-0" size="sm"
                 :label="$t('new_password_code')"
                 v-model="code"

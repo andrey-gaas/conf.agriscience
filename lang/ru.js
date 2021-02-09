@@ -70,6 +70,7 @@ export default{
   
 
 
+  
   "reg_readerRegistrationCard": "Регистрация",
   "reg_remoteReaderEntry": "Удалённая запись читателей",
   "reg_surname": "Фамилия",
@@ -133,6 +134,8 @@ export default{
   'log_reg':"Регистрация",
   'log_authorization':"Авторизация",
   'log_error_login_or_password':"Неверный логин или пароль",
+  'log_forgot_password':"Забыли пароль?",
+
 
   "notification_email_confirm": "Почта: '{email}' успешно подтверждена.",
   "notification_person_area": "Личный кабинет",
@@ -217,7 +220,10 @@ export default{
   
   'new_password_email_not_exist':'Пользователя с данным E-mail не существет',
   'new_password_code':'Код',
+  'new_password_reestablish':'Восстановить',
   'new_password_error_code':'Код указан неверно',
+  'new_password_recovery_password':'Восстановление пароля',
+  'new_password_message':'Чтобы изменить пароль, укажите код, присланный на указанную почту',
   
 
 }
