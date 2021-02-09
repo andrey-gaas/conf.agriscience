@@ -194,7 +194,18 @@ router.post('/email-recovery', (req, res) => {
           text: `Код восстановления пароля: ${code}`,
         };
         sendMail(message)
-          .then(() => res.send('OK'))
+          .then(() => {
+            users
+              .findOneAndUpdate({ email }, { $set: { code } })
+              .then(() => {
+                res.send('OK');
+              })
+              .catch(error => {
+                console.log(error.message);
+                console.log('Ошибка сохранения кода');
+                res.status(500).redirect('Ошибка сервера');
+              });
+          })
           .catch(error => {
             console.log(error.message);
             console.log('Ошибка оправки почты');
