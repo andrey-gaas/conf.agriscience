@@ -19,6 +19,7 @@ if (isProduction) {
   failureRedirect = 'https://www.bibcongress.ru/login';
 }
 
+// Регистрация
 router.post('/registration', (req, res) => {
   const {
     name,
@@ -109,6 +110,7 @@ router.post('/registration', (req, res) => {
   });
 });
 
+// Вход
 router.post('/login', (req, res, next) => {
   const user = req.body;
   
@@ -137,6 +139,7 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
+// Подтверждение почты
 router.get('/email-confirm/:email', (req, res) => {
   const { email } = req.params;
 
@@ -171,6 +174,8 @@ router.get('/email-confirm/:email', (req, res) => {
 
 // ВОССТАНОВЛЕНИЕ ПАРОЛЯ
 //====================================================================
+
+// Проверка почты, оправка письма
 router.post('/email-recovery', (req, res) => {
   const { email } = req.body;
 
@@ -217,6 +222,7 @@ router.post('/email-recovery', (req, res) => {
     });
 });
 
+// Проверка кода
 router.post('/email-recovery/code', (req, res) => {
   const { email, code } = req.body;
 

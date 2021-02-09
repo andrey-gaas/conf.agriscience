@@ -9,6 +9,7 @@ router.use('*', auth, (req, res, next) => {
   next();
 });
 
+// Получить список своих докладов
 router.get('/', (req, res) => {
   Mongo.database
     .db('bibcongress')
@@ -19,6 +20,7 @@ router.get('/', (req, res) => {
     });
 });
 
+// Получить доклад по ID
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
@@ -29,6 +31,7 @@ router.get('/:id', (req, res) => {
     .then(report => res.send(report));
 });
 
+// Создать доклад
 router.post('/', (req, res) => {
   if (req.body.email || req.body.id) {
     return res.status(400).send('Bad Request');
@@ -62,6 +65,7 @@ router.post('/', (req, res) => {
     });
 });
 
+// Редактировать доклад
 router.put('/:id', (req, res) => {
   if (req.body.email || req.body.id) {
     return res.status(400).send('Bad Request');
@@ -82,6 +86,7 @@ router.put('/:id', (req, res) => {
     });
 });
 
+// Удалить доклад
 router.delete('/:id', (req, res) => {
   const id = +req.params.id;
 
@@ -96,6 +101,7 @@ router.delete('/:id', (req, res) => {
   
 });
 
+// Загрузить файл тезисов
 router.post('/file/:id', (req, res) => {
   const { id } = req.params;
   const isProduction = process.env.NODE_ENV === 'production';

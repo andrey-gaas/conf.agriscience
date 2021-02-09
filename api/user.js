@@ -10,6 +10,7 @@ router.use('*', auth, (req, res, next) => {
   next();
 });
 
+// Получить данные
 router.get('/', (req, res) => {
   Mongo.database
     .db('bibcongress')
@@ -39,6 +40,7 @@ router.get('/', (req, res) => {
     });
 });
 
+// Редактировать данные
 router.put('/', (req, res) => {
   if (req.body.email) {
     return res.status(400).send('Bad Request');
@@ -60,6 +62,7 @@ router.put('/', (req, res) => {
     });
 });
 
+// Загрузка аватара
 router.post('/avatar', (req, res) => {
   const form = new formidable.IncomingForm();
   form.keepExtensions = true;
