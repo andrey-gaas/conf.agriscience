@@ -398,14 +398,12 @@ export default {
       }
     },
     submitFile(){
-      const avatar = document.querySelector('#upload-avatar').files[0];
-
       if (!this.imgFile) {
         return alert('Сначала добавьте картинку в форму выше');
       }
 
       const formData = new FormData();
-      formData.append('avatar', this.imgFile, this.fileNam);
+      formData.append('avatar', this.imgFile, this.fileName);
 
       this.$axios.post(
         '/user/avatar',
