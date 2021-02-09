@@ -17,6 +17,7 @@
         {{$t('notification_person_area')}}
       </nuxt-link>
     </div>
+    
   </div>
 </template>
 

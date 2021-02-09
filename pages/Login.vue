@@ -15,36 +15,36 @@
             <div class="p-4">
               <mdb-input class="my-0" size="sm"
                 :label="$t('reg_email')"
-                v-model="formSet.email"
+                v-model="email"
                 name="username"
               />
                 <span class="red-text"
-                  v-if="(!this.$v.formSet.email.required && this.$v.formSet.email.$dirty)"
+                  v-if="(!this.$v.email.required && this.$v.email.$dirty)"
                 >
                   {{$t('reg_empty_email_field_error')}}
                 </span>
                 <span class="red-text"
-                  v-else-if="(!this.$v.formSet.email.email && this.$v.formSet.email.$dirty)"
+                  v-else-if="(!this.$v.email.email && this.$v.email.$dirty)"
                 >
                   {{$t('reg_invalid_email_error')}}
                 </span>
               <mdb-input class="mt-4 mb-0" type='password' size="sm"
                 :label="$t('reg_password')"
-                v-model="formSet.password"
+                v-model="password"
                 name="password"
               />
-                <span class="red-text"
-                  v-if="(!this.$v.formSet.password.required && this.$v.formSet.password.$dirty)"
+                <span class="red-text d-flex"
+                  v-if="(!this.$v.password.required && this.$v.password.$dirty)"
                 >
                   {{$t('reg_empty_password_field_error')}}
                 </span>
-                <span class="red-text"
-                  v-else-if="(!this.$v.formSet.password.minLength && this.$v.formSet.password.$dirty)"
+                <span class="red-text d-flex"
+                  v-else-if="(!this.$v.password.minLength && this.$v.password.$dirty)"
                 >
-                  {{$tc('reg_length_password_error', 1, { count: $v.formSet.password.$params.minLength.min })}}
+                  {{$tc('reg_length_password_error', 1, { count: $v.password.$params.minLength.min })}}
                 </span>
-                <span class="red-text"
-                  v-else-if="(!this.$v.formSet.password.passwordValid && this.$v.formSet.password.$dirty)"
+                <span class="red-text d-flex"
+                  v-else-if="(!this.$v.password.passwordValid && this.$v.password.$dirty)"
                 >
                   {{$t('reg_invalid_password_error')}}
                 </span>
@@ -89,32 +89,32 @@ export default {
   layout: 'EmptyLayout',
   data: () => ({
     RU, EN,
-    formSet: {
-      email: '',
-      password: '',
-    },
+    email: '',
+    password: '',
     error: '',
   }),
   validations:{
-    formSet: {
-      email: {email, required},
-      password: {
-        required,
-        minLength: minLength(6),
-        passwordValid,
-      },
+    email: {email, required},
+    password: {
+      required,
+      minLength: minLength(6),
+      passwordValid,
     },
+  },
+  watch:{
+    password(){ this.error = ''},
+    email(){ this.error = ''},
   },
   methods:{
     localeRout,
     formSubmit(){
-      this.$v.formSet.$touch();
-      if(this.$v.formSet.$invalid){
+      this.$v.$touch();
+      if(this.$v.$invalid){
         return;
       }
       this.$store.commit('toggleLoadData', false)
-      this.$store.commit('setLoginData', this.formSet)
-      this.$axios.post('/auth/login', { username: this.formSet.email, password: this.formSet.password })
+      this.$store.commit('setLoginData', {email: this.email, password: this.password})
+      this.$axios.post('/auth/login', { username: this.email, password: this.password })
         .then(res => {
           //console.log('Success: ', res);
           const { message, token } = res.data;

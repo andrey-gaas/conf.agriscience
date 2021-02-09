@@ -214,5 +214,10 @@ export default{
   'emeil_message_6':'Позвоните нам по номеру',
   'emeil_send':'Отправить',
   'emeil_title':'Если вам не пришло письмо, попробуйте один из этих вариантов:',
+  
+  'new_password_email_not_exist':'Пользователя с данным E-mail не существет',
+  'new_password_code':'Код',
+  'new_password_error_code':'Код указан неверно',
+  
 
 }

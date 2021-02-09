@@ -215,4 +215,8 @@ export default{
   'emeil_send':'Send',
   'emeil_title':"If you haven't received an email, try one of these options:",
 
+  'new_password_email_not_exist':"User with this E-mail does't exist",
+  'new_password_code':"Code",
+  'new_password_error_code':'Code is incorrect',
+
 }

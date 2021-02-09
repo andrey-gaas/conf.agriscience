@@ -300,7 +300,7 @@ export default {
     toastMessage: 'asdf',
     isShowTost: false,
     fileName: '',
-    imgFile: '',
+    wordFile: '',
     countWordEditor: '',
   }),
   computed:{
@@ -361,7 +361,7 @@ export default {
       return count
     },
     setFileName(){
-      this.imgFile = this.$refs.fileInput.files[0]
+      this.wordFile = this.$refs.fileInput.files[0]
       this.fileName = this.$refs.fileInput.files[0].name
     },
     async axiosTranslete(textData, {from, to}){
@@ -447,7 +447,7 @@ export default {
         }
 
         const fileDoc = new FormData();
-        fileDoc.append('word', this.imgFile, this.fileName);
+        fileDoc.append('word', this.wordFile, this.fileName);
 
         await this.$axios.post(
             'reports/file/'+ind, 
@@ -557,7 +557,7 @@ export default {
         this.validData.isAnnotation = false
       }
 
-      //if( !this.imgFile ) isValid = false
+      //if( !this.wordFile ) isValid = false
 
       return isValid
 
