@@ -445,6 +445,19 @@ export default {
         }else{
           await this.$store.dispatch('editReportBD', {report})
         }
+
+        const fileDoc = new FormData();
+        fileDoc.append('word', this.imgFile, this.fileName);
+
+        await this.$axios.post(
+            'reports/file/'+ind, 
+            fileDoc,
+            { headers: {
+              'Content-Type': 'multipart/form-data',
+              'Authorization': this.$store.getters.getCookie.token,
+            }}
+          )
+
         this.$store.commit('saveReport', {report, ind})
         this.$router.push(this.localeRout('/personarea'))
       } catch (e) {
@@ -543,6 +556,8 @@ export default {
         isValid = false
         this.validData.isAnnotation = false
       }
+
+      //if( !this.imgFile ) isValid = false
 
       return isValid
 

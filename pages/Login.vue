@@ -48,11 +48,12 @@
                 >
                   {{$t('reg_invalid_password_error')}}
                 </span>
-                <span class="red-text"
+                <span class="red-text d-flex"
                   v-if="(error == 401)"
                 >
                   {{$t('log_error_login_or_password')}}
                 </span>
+                <nuxt-link :to="localeRout('/NewPassword')">Забыли пароль?</nuxt-link>
               <div>
                 <mdb-btn class="mt-4 mb-0 teal lighten-2" type="submit"
                 >{{$t('log_login')}}</mdb-btn>
@@ -135,7 +136,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .md-form.invalid>{
   & input{
   box-shadow: 0 1px 0 0 red !important;
@@ -150,6 +150,5 @@ export default {
     color: red !important;
   }
 }
-
 
 </style>
