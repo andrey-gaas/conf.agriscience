@@ -446,17 +446,17 @@ export default {
           await this.$store.dispatch('editReportBD', {report})
         }
 
-        // const fileDoc = new FormData();
-        // await fileDoc.append('word', this.wordFile, this.fileName);
+        const fileDoc = new FormData();
+        await fileDoc.append('word', this.wordFile, this.fileName);
 
-        // await this.$axios.post(
-        //     'reports/file/'+ind, 
-        //     fileDoc,
-        //     { headers: {
-        //       'Content-Type': 'multipart/form-data',
-        //       'Authorization': this.$store.getters.getCookie.token,
-        //     }}
-        //   )
+        await this.$axios.post(
+            'reports/file/'+ind, 
+            fileDoc,
+            { headers: {
+              'Content-Type': 'multipart/form-data',
+              'Authorization': this.$store.getters.getCookie.token,
+            }}
+          ).then(res => console.log(res))
 
         this.$store.commit('saveReport', {report, ind})
         this.$router.push(this.localeRout('/personarea'))

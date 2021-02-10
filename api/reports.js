@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const formidable = require('formidable');
 const fs = require('fs');
+const path = require('path');
 const Mongo = require('./db/Mongo');
 const auth = require('../middleware/auth');
 const router = Router();
@@ -118,89 +119,39 @@ router.post('/file/:id', (req, res) => {
     fs.mkdirSync(`${reportsDirPath}/${req.id}`);
   }
 
-  res.send('OK');
-
-  /* const form = new formidable.IncomingForm();
+  const form = new formidable.IncomingForm();
   form.keepExtensions = true;
-  form.uploadDir = path.join(__dirname, '.', 'upload', 'reports', req.id);
+  form.uploadDir = path.join(__dirname, '.', 'upload', 'reports', `${req.id}`);
   form.multiples = true;
   form.onPart = function (part) {
-    if(!part.filename || part.filename.match(/\.(docx)$/i)) {
+    if(!part.filename || part.filename.match(/\.docx$/i)) {
       this.handlePart(part);
     }
-  } */
-  /* form.parse(req, (err, fields, file) => {
+  }
+
+  form.parse(req, (err, fields, file) => {
     if (err) {
       console.log(err.message);
+      console.log('Ошибка parse');
       return res.status(500).send('Server Error');
     }
-
-    if (!file.file) {
-      console.log('!file.file');
+    if (!file.word) {
+      console.log('Неправильный формат файла');
       return res.status(400).send('Допустим только формат: DOCX.');
     }
 
     const newFileName = `${id}.docx`;
-
-    fs.rename(file.file.path, path.join(form.uploadDir, newFileName), (err, img) => {
+    
+    fs.rename(file.word.path, path.join(form.uploadDir, newFileName), (err, img) => {
       if (err) {
         console.log(err.message);
+        console.log('Ошибка переименовывания файла');
         return res.status(500).send('Server Error');
       }
 
-      res.send('ok');
-    });
-
-  }); */
-})
-
-/* router.post('/file', (req, res) => {
-  const form = new formidable.IncomingForm();
-  form.keepExtensions = true;
-  form.uploadDir = path.join(__dirname, '.', 'upload', 'avatars');
-  form.multiples = true;
-  form.onPart = function (part) {
-    if(!part.filename || part.filename.match(/\.(docx)$/i)) {
-      this.handlePart(part);
-    }
-  }
-  form.parse(req, function(err, fields, file) {
-    if (err) {
-      console.log(err.message);
-      return res.status(500).send('Server Error');
-    }
-
-    if (!file.file) {
-      console.log('!file.file');
-      return res.status(400).send('Допустим только формат: DOCX.');
-    }
-
-    // const newFileName = `${req.id}.${file.avatar.name.split('.').pop()}`;
-
-    fs.rename(file.avatar.path, path.join(form.uploadDir, newFileName), (err, img) => {
-      if (err) {
-        console.log(err.message);
-        return res.status(500).send('Server Error');
-      }
-
-      const url = `https://api.bibcongress.ru/upload/avatars/${newFileName}`;
-      
-      Mongo.database
-        .db('bibcongress')
-        .collection('users')
-        .findOneAndUpdate(
-          { email: req.email },
-          { $set: { avatar: url } },
-        )
-        .then(() => {
-          res.send(url);
-        })
-        .catch(err => {
-          console.log(err);
-          res.status(500).send('Server Error');
-        });
+      res.send('OK');
     });
   });
-}) */
+})
 
 module.exports = router;
