@@ -65,7 +65,7 @@
                 v-model="code"
                 name="code"
               />
-              <mdb-input class="my-0" size="sm"
+              <mdb-input class="my-0" size="sm" type='password'
                 :label="$t('reg_password')"
                 v-model="password"
                 name="password"
@@ -150,8 +150,9 @@ export default {
         await this.$axios.post('/auth/email-recovery', { email: this.email })
         this.step = 2
         this.error = ''
-      } catch (error) {
-        this.error = this.$t('new_password_email_not_exist');
+      } catch ({response}) {
+        let errorLog = response.data
+        this.error = this.$t(errorLog);
       }
     },
     async stepTwo(){
@@ -163,9 +164,10 @@ export default {
       try {
         await this.$axios.post('/auth/email-recovery/code', { email: this.email, code:this.code })
         //Пересылать на страницу нотификаций с сообщением что парль успешно изменён.
-        this.$router.push(this.localeRout('/Login'));
-      } catch (error) {
-        this.error = this.$t('new_password_error_code');
+        this.$router.push(this.localeRout('/Notification?type=new-password-successful'));
+      } catch ({response}) {
+        let errorLog = response.data
+        this.error = this.$t(errorLog);
       }
 
     }

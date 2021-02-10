@@ -218,12 +218,14 @@ export default{
   'emeil_send':'Отправить',
   'emeil_title':'Если вам не пришло письмо, попробуйте один из этих вариантов:',
   
-  'new_password_email_not_exist':'Пользователя с данным E-mail не существет',
   'new_password_code':'Код',
   'new_password_reestablish':'Восстановить',
-  'new_password_error_code':'Код указан неверно',
   'new_password_recovery_password':'Восстановление пароля',
   'new_password_message':'Чтобы изменить пароль, укажите код, присланный на указанную почту',
   
+
+  'error_400_error_code':'Код указан неверно',
+  'error_user_not_found':'Пользователя с данным E-mail не существет',
+  'error_server_500':'Ошибка сервера, перезагрузите страницу и попробуйте снова.'
 
 }
