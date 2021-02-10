@@ -222,12 +222,16 @@ router.post('/email-recovery', (req, res) => {
     });
 });
 
-// Проверка кода
+// Проверка кода и смена пароля
 router.post('/email-recovery/code', (req, res) => {
-  const { email, code } = req.body;
+  const { email, code, password } = req.body;
 
   if (!email || !emailValidator.validate(email)) {
-    return res.status(400).send('Невалидный E-Mail.')
+    return res.status(400).send('Невалидный E-Mail.');
+  }
+
+  if (!password) {
+    return res.status(400).send('Невалидный пароль.');
   }
   
   const users = Mongo.database.db('bibcongress').collection('users');
@@ -243,8 +247,11 @@ router.post('/email-recovery/code', (req, res) => {
         return res.status(400).send('error_400_error_code');
       }
 
+      const salt = bcrypt.genSaltSync(10);
+      const newPasswrod = bcrypt.hashSync(password, salt);
+
       users
-        .findOneAndUpdate({ email }, { $set: { code: '' } })
+        .findOneAndUpdate({ email }, { $set: { code: '', password: newPasswrod } })
         .then(() => {
           res.send('OK');
         })

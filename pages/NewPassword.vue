@@ -162,7 +162,7 @@ export default {
       }
       
       try {
-        await this.$axios.post('/auth/email-recovery/code', { email: this.email, code:this.code })
+        await this.$axios.post('/auth/email-recovery/code', { email: this.email, code: this.code, password: this.password })
         //Пересылать на страницу нотификаций с сообщением что парль успешно изменён.
         this.$router.push(this.localeRout('/Notification?type=new-password-successful'));
       } catch ({response}) {
