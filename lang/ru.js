@@ -70,6 +70,7 @@ export default{
   
 
 
+  
   "reg_readerRegistrationCard": "Регистрация",
   "reg_remoteReaderEntry": "Удалённая запись читателей",
   "reg_surname": "Фамилия",
@@ -133,6 +134,8 @@ export default{
   'log_reg':"Регистрация",
   'log_authorization':"Авторизация",
   'log_error_login_or_password':"Неверный логин или пароль",
+  'log_forgot_password':"Забыли пароль?",
+
 
   "notification_email_confirm": "Почта: '{email}' успешно подтверждена.",
   "notification_person_area": "Личный кабинет",
@@ -214,5 +217,15 @@ export default{
   'emeil_message_6':'Позвоните нам по номеру',
   'emeil_send':'Отправить',
   'emeil_title':'Если вам не пришло письмо, попробуйте один из этих вариантов:',
+  
+  'new_password_code':'Код',
+  'new_password_reestablish':'Восстановить',
+  'new_password_recovery_password':'Восстановление пароля',
+  'new_password_message':'Чтобы изменить пароль, укажите код, присланный на указанную почту',
+  
+
+  'error_400_error_code':'Код указан неверно',
+  'error_user_not_found':'Пользователя с данным E-mail не существет',
+  'error_server_500':'Ошибка сервера, перезагрузите страницу и попробуйте снова.'
 
 }

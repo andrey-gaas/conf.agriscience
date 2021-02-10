@@ -188,7 +188,7 @@ router.post('/email-recovery', (req, res) => {
   users.findOne({ email })
     .then(user => {
       if (!user) {
-        res.status(500).send('Пользователь не найден.');
+        res.status(500).send('error_user_not_found');
       } else {
         const code = phoneToken(4, {type: 'number'});
         const message = {
@@ -206,19 +206,19 @@ router.post('/email-recovery', (req, res) => {
               .catch(error => {
                 console.log(error.message);
                 console.log('Ошибка сохранения кода');
-                res.status(500).redirect('Ошибка сервера');
+                res.status(500).redirect('error_server_500');
               });
           })
           .catch(error => {
             console.log(error.message);
             console.log('Ошибка оправки почты');
-            res.status(500).send('Ошибка сервера');
+            res.status(500).send('error_server_500');
           });
       }
     })
     .catch(error => {
       console.log(error.message);
-      res.status(500).send('Ошибка сервера.')
+      res.status(500).send('error_server_500')
     });
 });
 
@@ -236,11 +236,11 @@ router.post('/email-recovery/code', (req, res) => {
     .findOne({ email })
     .then(user => {
       if (!user) {
-        return res.status(404).send('Пользователь не найден');
+        return res.status(404).send('error_user_not_found');
       }
 
       if (user.code !== code) {
-        return res.status(400).send('Код неверен.');
+        return res.status(400).send('error_400_error_code');
       }
 
       users
@@ -251,12 +251,12 @@ router.post('/email-recovery/code', (req, res) => {
         .catch(error => {
           console.log(error.message);
           console.log('Ошибка сохранения кода');
-          res.status(500).redirect('Ошибка сервера');
+          res.status(500).redirect('error_server_500');
         });
     })
     .catch(error => {
       console.log(error.message);
-      res.status(500).send('Ошибка сервера');
+      res.status(500).send('error_server_500');
     });
 });
 

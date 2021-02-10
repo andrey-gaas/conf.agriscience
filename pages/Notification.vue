@@ -17,6 +17,25 @@
         {{$t('notification_person_area')}}
       </nuxt-link>
     </div>
+
+    <div v-if="type==='new-password-successful'" class="container">
+      <h3>Пароль успешно изменён</h3>
+      <nuxt-link
+        v-show="!isAuthorized"
+        :to="localeRout('/login')" 
+        class="mt-4 btn teal lighten-2 text-decoration-none ripple-parent text-white"
+      >
+        {{$t('log_authorization')}}
+      </nuxt-link>
+      <nuxt-link
+        v-show="isAuthorized"
+        :to="localeRout('/personarea')" 
+        class="mt-4 btn teal lighten-2 text-decoration-none ripple-parent text-white"
+      >
+        {{$t('notification_person_area')}}
+      </nuxt-link>
+    </div>
+    
   </div>
 </template>
 

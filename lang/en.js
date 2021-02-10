@@ -132,6 +132,8 @@ export default{
   'log_reg':"Register",
   'log_authorization':"Authorization",
   'log_error_login_or_password':"wrong login or password",
+  'log_forgot_password':"Forgot your password?",
+
 
   'notification_email_confirm': "Mail: '{email}' confirmed successfully.",
   "notification_person_area": "Personal Area",
@@ -215,4 +217,13 @@ export default{
   'emeil_send':'Send',
   'emeil_title':"If you haven't received an email, try one of these options:",
 
+  'new_password_code':"Code",
+  'new_password_reestablish':'Reestablish',
+  'new_password_recovery_password':'Password recovery',
+  'new_password_message':'To change your password, enter the code sent to the specified mail',
+  
+  
+  'error_400_error_code':'Code is incorrect',
+  'error_user_not_found':"User with this E-mail does't exist",
+  'error_server_500':"Server error, please reload the page and try again."
 }
