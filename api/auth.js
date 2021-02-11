@@ -111,7 +111,7 @@ router.post('/registration', (req, res) => {
 });
 
 // Вход
-router.post('/login', (req, res, next) => {
+router.post('/login', (req, res) => {
   const user = req.body;
   
   if (!user.username || !user.password) {
@@ -136,7 +136,7 @@ router.post('/login', (req, res, next) => {
       res.cookie('token', token, { expires: new Date(Date.now() + 31536000000) });
       return res.send({ message: 'OK', token: token });
     }
-  })(req, res, next);
+  })(req, res);
 });
 
 // Подтверждение почты
