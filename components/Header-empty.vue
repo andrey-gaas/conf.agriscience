@@ -14,9 +14,9 @@
       <!-- <button @click="testFetch">Тестовый запрос</button> -->
       <dropdown>
         <dropdown-toggle class="teal lighten-2" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
-        <dropdown-menu>
-          <dropdown-item ><nuxt-link :to="switchLocalePath(RU)">Русский</nuxt-link></dropdown-item>
-          <dropdown-item ><nuxt-link :to="switchLocalePath(EN)">English</nuxt-link></dropdown-item>
+        <dropdown-menu >
+          <nuxt-link class='dropdown-item locale_btn' tabindex="0" :to="switchLocalePath(RU)">Русский</nuxt-link>
+          <nuxt-link class='dropdown-item locale_btn' tabindex="0" :to="switchLocalePath(EN)">English</nuxt-link>
         </dropdown-menu>
       </dropdown>
     </container>
@@ -64,5 +64,8 @@ export default {
 <style scoped>
 .logo_white{
   height: 60px;
+}
+.locale_btn{
+  z-index: 100;
 }
 </style>

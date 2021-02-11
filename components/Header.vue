@@ -54,6 +54,7 @@ export default {
     localeRout,
     async extiPersonArea(){
       await this.$cookies.remove('token')
+      await this.$cookies.remove('token', {path: '/en'})
       this.setAuthorizarion()
     },
     async setAuthorizarion(){
