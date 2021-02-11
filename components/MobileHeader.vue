@@ -1,7 +1,12 @@
 <template>
   <header class="header">
     <div class="top-container">
-      <img src="@/assets/img/logo_color.png" alt="logo international bibliographic congress" class="logo">
+      <img src="@/assets/img/logo_color.png" alt="logo international bibliographic congress" class="logo"
+        v-show="$i18n.locale === 'ru'"
+      >
+      <img src="@/assets/img/logo_color_en.png" alt="logo international bibliographic congress" class="logo"
+        v-show="$i18n.locale === 'en'"
+      >
       <button class="button mobile-header__button"
         @click="isOpen = !isOpen"
       >
@@ -18,7 +23,8 @@
           v-for="(item, ind) of menuDataSm" :key='ind'
           :to="localeRout(`/${item.linck}`)"
           :class="{disabled: item.linck == ''}"
-        >{{item.title}}</nuxt-link>
+        >{{$t(item.title)}}</nuxt-link>
+        
         <nuxt-link class="link mobile-header__linck"
           :to="localeRout('/registration')" v-if="!isAuthorized"
         >{{$t('header_registration')}}
@@ -70,12 +76,11 @@ export default {
       { title: 'main_menu_important_dates', linck:''},
     ],
   }),
-  components: {},
   methods:{
     localeRout,
     async extiPersonArea(){
-      console.log('exit&');
       await this.$cookies.remove('token')
+      await this.$cookies.remove('token', {path: '/en'})
       this.setAuthorizarion()
     },
     async setAuthorizarion(){
@@ -93,13 +98,10 @@ export default {
       }else{
         this.isAuthorized = false
       }
-    }
+    },
   },
   async created(){
     await this.setAuthorizarion()
-    this.menuDataSm.map(el =>{
-      el.title = this.$t(el.title)
-    })
   }
 }
 </script>
