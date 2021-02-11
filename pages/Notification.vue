@@ -19,7 +19,7 @@
     </div>
 
     <div v-if="type==='new-password-successful'" class="container">
-      <h3>Пароль успешно изменён</h3>
+      <h3>{{$t('notification_password_changed')}}</h3>
       <nuxt-link
         v-show="!isAuthorized"
         :to="localeRout('/login')" 

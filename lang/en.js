@@ -66,11 +66,8 @@ export default{
   "footer_phone": "Phone",
   "footer_spslt": "SPSTL",
   "footer_text_1": "Doctor of Pedagogy, Professor, Chief Researcher, Head of the Laboratory of Information and System Analysis, SPSTL SB RAS, Novosibirsk, Russia",
-  "footer_text_2": "Doctor of Historical Sciences, The National Library of Russia, St. Petersburg, Chairman of the Section of Bibliography and Information and Bibliographic Services of the Russian library association",
+  "footer_text_2": "Doctor of Historical Sciences, The National Library of Russia, St. Petersburg, Chairman of the Section of Bibliography and Information and Bibliographic Services of the Russian library association. Head of the Department of Bibliography and Local History of the NLR.",
   
-
-
-
   "reg_readerRegistrationCard": "Registration",
   "reg_remoteReaderEntry": "Remote reader entry",
   "reg_fill": "Fill",
@@ -124,6 +121,7 @@ export default{
   "reg_text_8":"Fields marked with an asterisk are required",
   "reg_info_message": "After registration you will be able to apply for a report",
 
+
   "contact_us":"Contact us:",
   "contact_us_secretary":"Secretary of the orgcommittee",
   "contact_us_text":"Kurmysheva Lidiya Konstantinovna - Junior Researcher, Laboratory of Information and System Analysis, State Public Scientific Technical Library of the SB RAS, Novosibirsk, Russia.",
@@ -133,7 +131,6 @@ export default{
   'log_authorization':"Authorization",
   'log_error_login_or_password':"wrong login or password",
   'log_forgot_password':"Forgot your password?",
-
 
   'notification_email_confirm': "Mail: '{email}' confirmed successfully.",
   "notification_person_area": "Personal Area",
@@ -193,7 +190,6 @@ export default{
   'edit_author_cancel':'Cancel',
   'edit_author_add':'Add',
 
-
   'important_dates':'Important dates',
   'important_dates_data_1':'15 March',
   'important_dates_data_1_text':'End of registration of congress participants with presentation of abstracts (500 words).',
@@ -222,8 +218,10 @@ export default{
   'new_password_recovery_password':'Password recovery',
   'new_password_message':'To change your password, enter the code sent to the specified mail',
   
-  
+  'notification_password_changed':"Password changed successfully",
+
   'error_400_error_code':'Code is incorrect',
   'error_user_not_found':"User with this E-mail does't exist",
   'error_server_500':"Server error, please reload the page and try again."
+
 }

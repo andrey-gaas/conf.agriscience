@@ -243,7 +243,7 @@ router.post('/email-recovery/code', (req, res) => {
         return res.status(404).send('error_user_not_found');
       }
 
-      if (user.code !== code) {
+      if (user.code !== code || code === '') {
         return res.status(400).send('error_400_error_code');
       }
 

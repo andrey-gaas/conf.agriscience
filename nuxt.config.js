@@ -4,7 +4,15 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Приглашаем вас принять участие в III Международном библиографическом конгрессе, который состоится 27 – 29 апреля 2021 года. Впервые Конгресс пройдет в онлайн-формате.' }
+      { hid: 'description', name: 'description', content: 'Приглашаем вас принять участие в III Международном библиографическом конгрессе, который состоится 27 – 29 апреля 2021 года. Впервые Конгресс пройдет в онлайн-формате.' },
+
+      { property:"og:title", content:"III Международный библиографический конгресс. «Библиографическая информация в цифровой культуре»" },
+      { property:"og:description", content:"Приглашаем вас принять участие в III Международном библиографическом конгрессе, который состоится 27 – 29 апреля 2021 года. Впервые Конгресс пройдет в онлайн-формате." },
+      { property:"og:image", content:"https://www.bibcongress.ru//meta_social_icon.png"},
+      { property:"og:url", content:"https://www.bibcongress.ru/"},
+      { name:"twitter:card", content:"summary_large_image"},
+      { name:"og:site_name", content:"bibcongress"},
+
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
