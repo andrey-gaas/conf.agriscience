@@ -8,7 +8,7 @@ export default {
 
       { property:"og:title", content:"III Международный библиографический конгресс. «Библиографическая информация в цифровой культуре»" },
       { property:"og:description", content:"Приглашаем вас принять участие в III Международном библиографическом конгрессе, который состоится 27 – 29 апреля 2021 года. Впервые Конгресс пройдет в онлайн-формате." },
-      { property:"og:image", content:"https://www.bibcongress.ru//meta_social_icon.png"},
+      { property:"og:image", content:"https://www.bibcongress.ru/fb_bibliocongress_ru.jpg"},
       { property:"og:url", content:"https://www.bibcongress.ru/"},
       { name:"twitter:card", content:"summary_large_image"},
       { name:"og:site_name", content:"bibcongress"},
