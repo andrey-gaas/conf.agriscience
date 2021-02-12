@@ -11,7 +11,7 @@
           >
         </nuxt-link>
       </logo>
-      <!-- <button @click="testFetch">Тестовый запрос</button> -->
+      <button @click="testFetch">Тестовый запрос</button>
       <dropdown>
         <dropdown-toggle class="teal lighten-2" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
         <dropdown-menu >
@@ -53,7 +53,7 @@ export default {
     setLocale,
     localeRout,
     testFetch() {
-      this.$axios.post('/auth/email-recovery', { email: 'captain.destroyer@yandex.ru' })
+      this.$axios.get('/admin', { headers: { 'Authorization': this.$cookies.get('token') } })
         .then(res => console.log(res))
         .catch(({ response }) => console.log(response));
     }
