@@ -23,9 +23,23 @@ export const state = () => ({
   reportList:[],
   reportListEn:[],
   cookie: '',
+  addReportID: -1,
+  fileNameReportList: [],
+  fileNameEditReport: '',
 })
 
 export const mutations = {
+  setFileNameEditReport(s, name){
+    s.fileNameEditReport = name
+  },
+  setFileNameReportList(s, list){
+    s.fileNameReportList = list.map(el => {
+      return el.fileName
+    })
+  },
+  setAddReportID(s, rep){
+    s.addReportID = rep.id
+  },
   setEditReport(s, ind){
     
     let editReport,
@@ -35,7 +49,8 @@ export const mutations = {
         title:'',
         annotations: '',
         status: 0,
-        speakerList:[]
+        speakerList:[],
+        fileName: '',
       }
       editReportEn = {...editReport}
     }else{
@@ -53,6 +68,7 @@ export const mutations = {
     s.reportNameEn = editReportEn.title
     s.indEditReport = ind
     
+    s.fileNameEditReport = s.fileNameReportList[ind]
 
   },
   setPersonData(state, userData){
@@ -122,6 +138,7 @@ export const mutations = {
     }
     state.reportList.splice(ind, 1, ruReport)
     state.reportListEn.splice(ind, 1, enReport)
+    state.fileNameReportList[ind] = report.fileName
   },
   upSpeaker(state, ind){
     if(ind == 0) return
@@ -209,6 +226,12 @@ export const mutations = {
 }
 
 export const getters = {
+  getFileNameEditReport(s){
+    return s.fileNameEditReport
+  },
+  getAddReportID(s){
+    return s.addReportID
+  },
   getCookie(s){
     return s.cookie
   },
@@ -317,11 +340,13 @@ export const actions = {
     await axios.get('/reports').
       then( res => {
         commit('setReportList', res.data)
+        commit('setFileNameReportList', res.data)
       })
   },
-  async addReportBD({getters}, {report}){
+  async addReportBD({getters,commit}, {report}){
     const axios = getters.getAxiosWithToken
-    await axios.post('/reports', report)
+    let rep = await axios.post('/reports', report)
+    commit('setAddReportID', rep.data)
   },
   async editReportBD({getters}, {report}){
     const axios = getters.getAxiosWithToken
@@ -337,7 +362,4 @@ export const actions = {
     const axios = getters.getAxiosWithToken
     await axios.put('/user/', personData)
   },
-}
-export const modules = {
-  
 }

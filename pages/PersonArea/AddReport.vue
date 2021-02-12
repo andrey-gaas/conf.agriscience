@@ -153,8 +153,8 @@
       <mdb-row class="m-0" p='2'>
         
         <mdb-col col="12" m='b1'>
-        <span class="d-flex h5 mb-2">Расширенные тезисы</span>
-        <p class='mb-0'>Прикрепите файл с расширенными тезисами доклада, не менее 500 слов.</p>
+        <span class="d-flex h5 mb-2">{{$t('edit_report_extended_theses')}}</span>
+        <p class='mb-0'>{{$t('edit_report_add_file')}}</p>
         <!-- <div class="rich-editor">
           <vue-editor id="editor" v-model="editorContent"
             placeholder='Напишите расширенные тезисы доклада, не менее 500 слов. Или прикрепите файл'
@@ -175,7 +175,7 @@
                   input__label_text_en: ($i18n.locale == 'en'), 
                 }"
               
-              >{{fileName}}</label>
+              >{{fileName === '' ? $t('personarea_select_file'): fileName}}</label>
             </div>
           </div>
           <!-- <mdb-btn size="md" class="m-0 teal lighten-2 disabled"
@@ -204,6 +204,11 @@
             v-if="validData.isCheck && !validData.isAnnotation"
           >
             {{$t('edit_report_add_annotation')}}
+          </span>
+          <span class='h6 d-flex red-text'
+            v-if="validData.isCheck && !validData.isFileName"
+          >
+            Прикрепите файл с расширенными тезисами
           </span>
           <mdb-btn class="teal lighten-2" @click="saveReport()">
             {{$t('edit_report_save')}}
@@ -296,6 +301,7 @@ export default {
       isCountSpeaker: false,
       isTitle: false,
       isAnnotation: false,
+      isFileName: false,
     },
     toastMessage: 'asdf',
     isShowTost: false,
@@ -336,10 +342,11 @@ export default {
     },
   },
   created(){
-    this.fileName = this.$t('personarea_select_file')
+    
     if(this.$store.getters.getReportInd == -1) this.$router.push(this.localeRout('/personarea'))
     this.setAuthor()
     this.setReport()
+    this.fileName = this.$store.getters.getFileNameEditReport
   },
   mounted(){
     //this.isShowEditor = true;
@@ -391,7 +398,7 @@ export default {
             && localStorage.reportTitleRu == this.reportName
             && localStorage.reportTexteRu == this.reportText
         ){
-          console.log('NO NO NO, прекраты тыкать на кнопку');
+          console.log('NO NO NO, прекрати тыкать на кнопку');
           return
         }
       }
@@ -434,29 +441,37 @@ export default {
         titleEn: this.reportNameEn,
         annotations: this.reportText,
         annotationsEn: this.reportTextEn,
+        fileName: this.fileName,
         status: 0,
         speakerList,
         speakerListEn,
       }
-      
+      let indReport;
       try {
         if(ind == this.$store.getters.getReportList.length){
           await this.$store.dispatch('addReportBD', {report})
+          indReport = this.$store.getters.getAddReportID
+          console.log(indReport);
         }else{
           await this.$store.dispatch('editReportBD', {report})
+          indReport = this.$store.getters.getReportList[ind].id
         }
 
-        const fileDoc = new FormData();
-        await fileDoc.append('word', this.wordFile, this.fileName);
-
-        await this.$axios.post(
-            'reports/file/'+ind, 
-            fileDoc,
-            { headers: {
-              'Content-Type': 'multipart/form-data',
-              'Authorization': this.$store.getters.getCookie.token,
-            }}
-          ).then(res => console.log(res))
+        if(this.wordFile !== ''){
+          const fileDoc = new FormData();
+          
+          await fileDoc.append('word', this.wordFile, this.fileName);
+          
+  
+          await this.$axios.post(
+              'reports/file/'+indReport, 
+              fileDoc,
+              { headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': this.$store.getters.getCookie.token,
+              }}
+            ).then(res => console.log(res))
+        }
 
         this.$store.commit('saveReport', {report, ind})
         this.$router.push(this.localeRout('/personarea'))
@@ -557,7 +572,11 @@ export default {
         this.validData.isAnnotation = false
       }
 
-      //if( !this.wordFile ) isValid = false
+      if( this.fileName !== '') this.validData.isFileName = true
+      else{
+        isValid = false
+        this.validData.isFileName = false
+      }
 
       return isValid
 

@@ -183,6 +183,9 @@ export default{
   'edit_report_enter_speaker':'Please enter at least one speaker',
   'edit_report_enter_title_report':'Please enter a title for the report',
   'edit_report_add_annotation':'Add annotation',
+  'edit_report_extended_theses':'Extended theses',
+  'edit_report_add_file':'Attach a file with extended abstracts, in .docx format, no less than 500 words.',
+  
 
   'edit_author_speaker':'Speaker',
   'edit_author_enter_surname':'Enter your surname',

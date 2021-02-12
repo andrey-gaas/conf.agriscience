@@ -183,6 +183,8 @@ export default{
   'edit_report_enter_speaker':'Укажите хотя бы одного докладчика',
   'edit_report_enter_title_report':'Укажите название доклада',
   'edit_report_add_annotation':'Добавьте аннотацию',
+  'edit_report_extended_theses':'Расширенные тезисы',
+  'edit_report_add_file':'Прикрепите файл в формате .docx, с расширенными тезисами доклада, не менее 500 слов.',
   
   'edit_author_speaker':'Докладчик',
   'edit_author_enter_surname':'Укажите фамилию',
