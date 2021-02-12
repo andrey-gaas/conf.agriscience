@@ -10,7 +10,8 @@ Mongo.connect();
 app.use(cors({
   origin: 'https://www.bibcongress.ru',
 }));
-  
+
+app.use("/upload", express.static(__dirname + "/upload"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
