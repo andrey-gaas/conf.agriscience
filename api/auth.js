@@ -131,6 +131,7 @@ router.post('/login', (req, res) => {
       const token = jwt.sign({
         email: passportUser.email,
         id: passportUser.id,
+        admin: passportUser.isAdmin || false,
       }, secretKey);
 
       res.cookie('token', token, { expires: new Date(Date.now() + 31536000000) });

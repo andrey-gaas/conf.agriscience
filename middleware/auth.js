@@ -12,6 +12,7 @@ module.exports = (req, res, next) => {
     const user = jwt.verify(authorization, secretKey);
     req.email = user.email;
     req.id = user.id;
+    req.isAdmin = user.admin;
   } catch (error) {
     if (error instanceof jwt.JsonWebTokenError) {
       return res.status(401).send('Invalid token!');
@@ -21,14 +22,3 @@ module.exports = (req, res, next) => {
 
   next();
 };
-
-/* module.exports = (req, res, next) => {
-  console.log(req, res, next);
-  if (req.isAuthenticated()) {
-    //console.log(req, res);
-    next();
-  } else {
-    return res.status(401).send('Unauthenticated 1');
-  }
-};
- */
