@@ -53,6 +53,7 @@ router.post('/', (req, res) => {
         if (lastReport && lastReport.length) id = lastReport[0].id + 1;
         report.id = id;
         report.email = req.email;
+        report.url = '';
   
         reports.insertOne(report)
           .then(report => {
@@ -92,19 +93,19 @@ router.delete('/:id', (req, res) => {
   const id = +req.params.id;
 
   Mongo.database
-  .db('bibcongress')
-  .collection('reports')
-  .deleteOne({ id })
-  .then(() => {
-    res.send('OK');
-  })
-  .catch(error => res.status(500).send(error.message));
+    .db('bibcongress')
+    .collection('reports')
+    .deleteOne({ id })
+    .then(() => {
+      res.send('OK');
+    })
+    .catch(error => res.status(500).send(error.message));
   
 });
 
 // Загрузить файл тезисов
 router.post('/file/:id', (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params; // ID доклада
   const isProduction = process.env.NODE_ENV === 'production';
   
   const reportsDirPath = isProduction ? './upload/reports' : './api/upload/reports';
@@ -149,7 +150,15 @@ router.post('/file/:id', (req, res) => {
         return res.status(500).send('Server Error');
       }
 
-      res.send('OK');
+      const url = `https://api.bibcongress.ru/api/upload/reports/${req.id}/${newFileName}`;
+
+      Mongo.database
+        .db('bibcongress')
+        .collection('reports')
+        .findOneAndUpdate({ id: +id }, { $set: { url } })
+        .then(result => {
+          res.send('OK');
+        });
     });
   });
 })
