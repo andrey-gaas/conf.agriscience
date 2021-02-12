@@ -9,8 +9,6 @@ Mongo.connect();
 
 app.use(cors({
   origin: 'https://www.bibcongress.ru',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
 }));
   
 app.use(express.json());
