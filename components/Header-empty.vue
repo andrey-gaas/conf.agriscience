@@ -53,7 +53,7 @@ export default {
     setLocale,
     localeRout,
     testFetch() {
-      this.$axios.post('/auth/email-recovery', { email: 'captain.destroyer@yandex.ru' })
+      this.$axios.get('/admin', { headers: { 'Authorization': this.$cookies.get('token') } })
         .then(res => console.log(res))
         .catch(({ response }) => console.log(response));
     }
