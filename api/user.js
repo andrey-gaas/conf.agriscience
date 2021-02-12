@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
     .collection('users')
     .findOne({ email: req.email })
     .then(user => {
+      const isAdmin = user.isAdmin ? user.isAdmin : false;
       res.send({
         surname: user.surname,
         surnameEn: user.surnameEn,
@@ -36,6 +37,7 @@ router.get('/', (req, res) => {
         email: user.email,
         isEmailConfirmed: user.isEmailConfirmed,
         avatar: user.avatar,
+        isAdmin,
       });
     });
 });
