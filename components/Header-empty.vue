@@ -12,7 +12,7 @@
         </nuxt-link>
       </logo>
       <!-- <button @click="testFetch">Тестовый запрос</button> -->
-      <dropdown>
+      <dropdown end>
         <dropdown-toggle class="teal lighten-2" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
         <dropdown-menu >
           <nuxt-link class='dropdown-item locale_btn' tabindex="0" :to="switchLocalePath(RU)">Русский</nuxt-link>
