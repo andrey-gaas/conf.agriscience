@@ -86,6 +86,7 @@ router.post('/registration', (req, res) => {
               const token = jwt.sign({
                 email,
                 id,
+                admin: false,
               }, secretKey);
         
               res.cookie('token', token, { expires: new Date(Date.now() + 31536000000) });
