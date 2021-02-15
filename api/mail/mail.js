@@ -37,11 +37,11 @@ module.exports = function(email) {
                   </tr>
                   <tr>
                     <td style="padding-top: 20px;">
-                      <a href="https://api.bibcongress.ru/email-confirm/${email}">
+                      <a href="https://api.bibcongress.ru/auth/email-confirm/${email}">
                         <table width="100%" style="max-width: 240px; margin: 0 auto;">
                           <tr>
                             <td align="center" style="padding: 12px 24px; background: rgb(7, 39, 141); border-radius: 4px;">
-                              <a href="https://api.bibcongress.ru/email-confirm/${email}" style="color: #fff; font-size: 17px; line-height: 120%;" target="_blank">Подтвердить E-Mail</a>
+                              <a href="https://api.bibcongress.ru/auth/email-confirm/${email}" style="color: #fff; font-size: 17px; line-height: 120%;" target="_blank">Подтвердить E-Mail</a>
                             </td>
                           </tr>
                         </table>
