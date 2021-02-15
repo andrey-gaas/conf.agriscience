@@ -34,9 +34,8 @@
 
           <div class="card bg-dark text-white text-center reg__card">
             <img src="assets/img/reg_img.jpg" class="card-img reg__card-img" alt="...">
-            <div class="card-img-overlay reg-card__overlay d-flex flex-column justify-content-around">
-              <h2 class="card-title reg-card__title">{{$t('main_cardreg_text_1')}}</h2>
-              <nuxt-link class="btn btn-danger reg-card__btn text-white" :to="localeRout('/registration')">{{$t('main_cardreg_register')}}</nuxt-link>
+            <div class="card-img-overlay reg-card__overlay d-flex justify-content-center align-content-center px-2">
+              <nuxt-link class="btn btn-danger reg-card__btn text-white d-flex" :to="localeRout('/registration')">{{$t('main_cardreg_register')}}</nuxt-link>
             </div>
           </div>
           <div class="announcement">
@@ -126,7 +125,7 @@ export default {
 
 </script>
 
-<style lang="scss" scope>
+<style lang="scss">
 .main{
   display: flex;
   flex-direction: column;
@@ -165,5 +164,10 @@ export default {
 
 .reg__card-img {
   height: 350px !important;
+}
+
+.reg-card__btn{
+  max-width: 250px;
+  height: min-content;
 }
 </style>

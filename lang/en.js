@@ -125,7 +125,7 @@ export default{
   "reg_info_message": "After registration you will be able to apply for a report",
 
 
-  "contact_us":"Contact us:",
+  "contact_us":"Contact us",
   "contact_us_secretary":"Secretary of the orgcommittee",
   "contact_us_text":"Kurmysheva Lidiya Konstantinovna - Junior Researcher, Laboratory of Information and System Analysis, State Public Scientific Technical Library of the SB RAS, Novosibirsk, Russia.",
 

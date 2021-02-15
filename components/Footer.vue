@@ -35,6 +35,29 @@
             </strong>
           </div>
         </mdb-col>
+        <mdb-col col='12' m='t3'>
+          <h4 class="title">{{$t('contact_us')}}</h4>
+        </mdb-col>
+        <mdb-col col='12'>
+          <p>
+            {{$t('reg_telephone')}}: 
+            <strong class="ml-1">
+              <a href="tel:+73833731642" class="text-light">+7(383)373-16-42</a>
+            </strong> 
+          </p>
+          <p>
+            E-mail: 
+            <strong class="ml-1">
+              <a href="mailto:info@bibcongress.ru" class="text-light">info@bibcongress.ru</a>
+            </strong>
+          </p>
+          <h5>{{$t('contact_us_secretary')}}</h5>
+          <p>
+            <span>
+              {{$t('contact_us_text')}}
+            </span>
+          </p>
+        </mdb-col>
       </mdb-row>
     </mdb-container>
     <div class="footer-copyright text-center py-3 mt-4">
