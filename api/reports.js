@@ -21,6 +21,19 @@ router.get('/', (req, res) => {
     });
 });
 
+// Получить список всех докладов
+router.get('/all', (req, res) => {
+  console.log('in reports all');
+
+  Mongo.database
+    .db('bibcongress')
+    .collection('reports')
+    .find()
+    .toArray((err, reports) => {
+      res.send(reports);
+    });
+});
+
 // Получить доклад по ID
 router.get('/:id', (req, res) => {
   const { id } = req.params;

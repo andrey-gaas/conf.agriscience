@@ -362,4 +362,14 @@ export const actions = {
     const axios = getters.getAxiosWithToken
     await axios.put('/user/', personData)
   },
+  async fetchAllReports({commit, getters}){
+    const axios = getters.getAxiosWithToken
+    await axios.get('/reports/all').
+    then( res => {
+      commit('admin/setAllReport', res.data)
+    }).catch(err => {
+      console.log(err);
+      console.log('in fetch all reports');
+    })
+  },
 }

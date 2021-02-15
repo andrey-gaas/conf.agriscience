@@ -206,6 +206,11 @@
                 </tr> -->
               </mdb-tbl-body>
             </mdb-tbl>
+            <mdb-btn
+              @click="testAxios"
+            >
+              Тест
+            </mdb-btn>
           </mdb-col>
         </mdb-row>
       </mdb-row>
@@ -282,6 +287,10 @@ export default {
     this.loading = false
   },
   methods:{
+    testAxios(){
+      console.log('in test axios');
+      this.$store.dispatch('fetchAllReports')
+    },
     localeRout, transliterate, getCookie,
     showTost(text){
       this.$store.commit('setToastMsg', text)
