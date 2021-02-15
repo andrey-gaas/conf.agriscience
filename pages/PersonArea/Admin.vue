@@ -66,8 +66,11 @@ export default {
   methods:{
     testAxios(){
       console.log('in test axios');
-      this.$store.dispatch('fetchAllReports')
+      this.$store.dispatch('admin/fetchAllReports')
     }
+  },
+  created(){
+    this.$store.commit('setCookie')
   },
   mounted(){
     //console.log(this.$store);

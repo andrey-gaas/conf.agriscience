@@ -289,7 +289,7 @@ export default {
   methods:{
     testAxios(){
       console.log('in test axios');
-      this.$store.dispatch('fetchAllReports')
+      this.$store.dispatch('admin/fetchAllReports')
     },
     localeRout, transliterate, getCookie,
     showTost(text){
