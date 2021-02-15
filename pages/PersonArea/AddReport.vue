@@ -346,7 +346,7 @@ export default {
     if(this.$store.getters.getReportInd == -1) this.$router.push(this.localeRout('/personarea'))
     this.setAuthor()
     this.setReport()
-    this.fileName = this.$store.getters.getFileNameEditReport
+    if(this.$store.getters.getFileNameEditReport) this.fileName = this.$store.getters.getFileNameEditReport
   },
   mounted(){
     //this.isShowEditor = true;
@@ -456,7 +456,7 @@ export default {
           indReport = this.$store.getters.getReportList[ind].id
         }
 
-        if(this.wordFile || this.fileName.slice(-4)=== 'docx'){
+        if(this.wordFile){
           const fileDoc = new FormData();
           
           await fileDoc.append('word', this.wordFile, this.fileName);
