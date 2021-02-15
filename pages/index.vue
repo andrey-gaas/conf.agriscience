@@ -12,8 +12,11 @@
         <mdb-col md="6" sm='12' class='px-0 col_m'>
           <div class="descrption px-3 pb-md-0 pb-sm-3 pt-md-2 pt-sm-3 pt-xs-3">
             <p>{{$t('main_descrption_text_1')}}</p>
-            <p>{{$t('main_descrption_text_2')}}<br>
-              {{$t('main_descrption_text_3')}}
+            <p>{{$t('main_descrption_text_2')}}
+              <a href="http://nlr.ru/tus/20100921/rus/" target="_blank">{{$t('main_descrption_text_3')}}</a> 
+              {{$t('main_descrption_text_4')}}
+              <a href="https://www.rsl.ru/ru/events/afisha/conf/expert7666" target="_blank">{{$t('main_descrption_text_5')}}</a> 
+              <br> {{$t('main_descrption_text_6')}}
             </p>
           </div>
         </mdb-col>

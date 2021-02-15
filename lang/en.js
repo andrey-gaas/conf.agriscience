@@ -18,8 +18,11 @@ export default{
   "main_menu_important_dates": "Important dates",
 
   "main_descrption_text_1": "We invite you to take part in the III International Bibliographic Congress, which will be held on April 27 - 29, 2021. For the first time, the Congress will be held online. Participation is free.",
-  "main_descrption_text_2": "The Congress will take place on the basis of the State Public Scientific and Technical Library of the Siberian Branch of the Russian Academy of Sciences (SPSTL SB RAS), Novosibirsk. This will be the third international bibliographic congress: the first was held in 2010 at the Russian State Library, and the second in 2015 at the Russian National Library.",
-  "main_descrption_text_3": "Working languages of the Congress: Russian and English.",
+  "main_descrption_text_2": "The Congress will take place on the basis of the State Public Scientific and Technical Library of the Siberian Branch of the Russian Academy of Sciences (SPSTL SB RAS), Novosibirsk. This will be the third international bibliographic congress: the first was held in 2010 at the",
+  "main_descrption_text_3": "Russian National Library",
+  "main_descrption_text_4": ", and the second in 2015 at the",
+  "main_descrption_text_5": "Russian State Library.",
+  "main_descrption_text_6": "Working languages of the Congress: Russian and English.",
   "main_сoordinators_text_1": "Program Committee Coordinators",
   "main_сoordinators_text_2": "Lavrik Olga Lvovna",
   "main_сoordinators_text_3": "Doctor of Pedagogy, Professor, Chief Researcher, Head of the Laboratory of Information and System Analysis,",
