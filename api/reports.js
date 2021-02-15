@@ -23,8 +23,6 @@ router.get('/', (req, res) => {
 
 // Получить список всех докладов
 router.get('/all', (req, res) => {
-  console.log('in reports all');
-
   Mongo.database
     .db('bibcongress')
     .collection('reports')

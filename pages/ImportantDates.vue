@@ -88,43 +88,5 @@ export default {
 </script>
 
 <style lang="scss" scope>
-.main{
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
 
-.main__img {
-  padding: 0 160px;
-  height: 500px;
-}
-
-.title {
-  font-family: Arsenal;
-}
-
-.descrption {
-  font-family: Ubuntu;
-  font-size: 15px;
-
-  @media (min-width: 768px) {
-    padding: 1.5rem 2rem 0 2rem !important;
-  }
-}
-
-.font-ubuntu {
-  font-family: Ubuntu;
-}
-
-.reg-card__title {
-  font-family: Arsenal;
-}
-
-.reg__card {
-  height: 350px;
-}
-
-.reg__card-img {
-  height: 350px !important;
-}
 </style>
