@@ -29,10 +29,17 @@
 }
 .reg-card__overlay{
   background-color: rgba(0, 0, 0, 0.75);
-  padding: 9rem;
+  height: 100%;
 }
 .reg-card__btn{
   border-radius: 40px;
+}
+
+.reg__card {
+  height: 300px;
+  background-image: url(/assets/img/reg_img.jpg);
+  background-size: cover;
+  background-position: center center;
 }
 
 .bib__card-title{

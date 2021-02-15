@@ -33,8 +33,7 @@
         <mdb-col md="6" sm='12' class='px-0 col_m c0l'>
 
           <div class="card bg-dark text-white text-center reg__card">
-            <img src="assets/img/reg_img.jpg" class="card-img reg__card-img" alt="...">
-            <div class="card-img-overlay reg-card__overlay d-flex justify-content-center align-content-center px-2">
+            <div class="card-img-overlay reg-card__overlay d-flex justify-content-center align-items-center px-2">
               <nuxt-link class="btn btn-danger reg-card__btn text-white d-flex" :to="localeRout('/registration')">{{$t('main_cardreg_register')}}</nuxt-link>
             </div>
           </div>
@@ -156,14 +155,6 @@ export default {
 
 .reg-card__title {
   font-family: Arsenal;
-}
-
-.reg__card {
-  height: 350px;
-}
-
-.reg__card-img {
-  height: 350px !important;
 }
 
 .reg-card__btn{
