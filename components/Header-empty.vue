@@ -53,7 +53,7 @@ export default {
     setLocale,
     localeRout,
     testFetch() {
-      this.$axios.get('/admin', { headers: { 'Authorization': this.$cookies.get('token') } })
+      this.$axios.get('/admin/reports/2', { headers: { 'Authorization': this.$cookies.get('token') } })
         .then(res => console.log(res))
         .catch(({ response }) => console.log(response));
     }
