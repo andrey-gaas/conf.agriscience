@@ -456,7 +456,7 @@ export default {
           indReport = this.$store.getters.getReportList[ind].id
         }
 
-        if(this.wordFile){
+        if(this.wordFile !== ''){
           const fileDoc = new FormData();
           
           await fileDoc.append('word', this.wordFile, this.fileName);
