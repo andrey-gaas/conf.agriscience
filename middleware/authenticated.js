@@ -6,6 +6,10 @@ export default function ({ app, redirect }) {
   });
 
   return AxiosTooken.get('/user/').catch(()=>{
+    app.$cookies.remove('token')
+    app.$cookies.remove('token', {path: '/en'})
+    app.$cookies.remove('token', {path: '/personarea'})
+    app.$cookies.remove('token', {path: '/en/personarea'})
     return redirect('/login')
   })
   

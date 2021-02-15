@@ -451,13 +451,12 @@ export default {
         if(ind == this.$store.getters.getReportList.length){
           await this.$store.dispatch('addReportBD', {report})
           indReport = this.$store.getters.getAddReportID
-          console.log(indReport);
         }else{
           await this.$store.dispatch('editReportBD', {report})
           indReport = this.$store.getters.getReportList[ind].id
         }
 
-        if(this.wordFile !== ''){
+        if(this.wordFile || this.fileName.slice(-4)=== 'docx'){
           const fileDoc = new FormData();
           
           await fileDoc.append('word', this.wordFile, this.fileName);
@@ -470,15 +469,18 @@ export default {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': this.$store.getters.getCookie.token,
               }}
-            ).then(res => console.log(res))
+            )
+        }else{
+          this.showTost('Ошибка загрузки файла')
+          return
         }
-
-        this.$store.commit('saveReport', {report, ind})
-        this.$router.push(this.localeRout('/personarea'))
-      } catch (e) {
+      }catch(e){
         this.showTost(e.message)
+        return
       }
-      
+
+      this.$store.commit('saveReport', {report, ind})
+      this.$router.push(this.localeRout('/personarea'))
     },
     howCountSpeaker(){
       let count = this.author.reduce((acc, el) => {
