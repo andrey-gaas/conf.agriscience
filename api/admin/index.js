@@ -11,7 +11,14 @@ router.use('/reports', require('./reports'));
 router.use('/users', require('./users'));
 
 router.get('/check', (req, res) => {
-  res.send('OK');
+  Mongo.database
+    .db('bibcongress')
+    .collection('users')
+    .findOne({ id: +req.id, isAdmin: true })
+    .then(user => {
+      if (user) res.send('OK');
+      else res.status(403).send('Ошибка доступа');
+    })
 });
 
 module.exports = router;
