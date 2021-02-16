@@ -3,6 +3,7 @@ const formidable = require('formidable');
 const fs = require('fs');
 const path = require('path');
 const Mongo = require('./db/Mongo');
+const { isProduction } = require('./config');
 const auth = require('../middleware/auth');
 const router = Router();
 
@@ -117,18 +118,12 @@ router.delete('/:id', (req, res) => {
 // Загрузить файл тезисов
 router.post('/file/:id', (req, res) => {
   const { id } = req.params; // ID доклада
-  const isProduction = process.env.NODE_ENV === 'production';
   
   const reportsDirPath = isProduction ? './upload/reports' : './api/upload/reports';
 
-  // Создание папки докладов
-  if (!fs.existsSync(`${reportsDirPath}`)) {
-    fs.mkdirSync(`${reportsDirPath}`);
-  }
-
   // Создание папки пользователя
   if (!fs.existsSync(`${reportsDirPath}/${req.id}`)) {
-    fs.mkdirSync(`${reportsDirPath}/${req.id}`);
+    fs.mkdirSync(`${reportsDirPath}/${req.id}`, { recursive: true });
   }
 
   const form = new formidable.IncomingForm();
