@@ -8,6 +8,7 @@ router.use('*', adminMiddleware, (req, res, next) => {
 });
 
 router.use('/reports', require('./reports'));
+router.use('/users', require('./users'));
 
 router.get('/check', (req, res) => {
   res.send('OK');

@@ -1,20 +1,34 @@
 export const state = () => ({
-  allReport:[],
+  allReports:[],
+  userList:[],
 });
 export const mutations = {
-  setAllReport(s, reports){
-    console.log(reports);
-  }
+  setReports(s,reports){ s.allReports = reports },
+  setUsers(s,users){ s.userList = users}
 }
 export const getters = {
-  getAdmin: s => s.asdf,
+  getReportsList: s => s.allReports,
+  getUsersList: s => s.userList,
 }
 export const actions = {
-  async fetchAllReports({commit, rootGetters}){
+  async fetchReports({commit, rootGetters}, filter){
     const axios = rootGetters.getAxiosWithToken
-    await axios.get('/reports/all').
+    await axios.get('/admin/reports', filter).
     then( res => {
-      commit('setAllReport', res.data)
+      commit('setReports', res.data)
+    })
+  },
+  async fetchUsers({commit, rootGetters}, filter){
+    const axios = rootGetters.getAxiosWithToken
+    let pathFilter = "?"
+    for(let key in filter){
+      pathFilter+=`${key}=${filter[key]}&`
+    }
+    console.log(pathFilter);
+    await axios.get(`/admin/users${pathFilter}`).
+    then( res => {
+      console.log(res.data);
+      commit('setUsers', res.data)
     })
   },
 }
