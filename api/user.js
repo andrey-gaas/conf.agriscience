@@ -4,6 +4,7 @@ const { Router } = require('express');
 const formidable = require('formidable');
 const auth = require('../middleware/auth');
 const Mongo = require('./db/Mongo');
+const { isProduction } = require('./config');
 const router = Router();
 
 router.use('*', auth, (req, res, next) => {
@@ -64,6 +65,13 @@ router.put('/', (req, res) => {
 
 // Загрузка аватара
 router.post('/avatar', (req, res) => {
+  const avatarsDirPath = isProduction ? './upload/avatars' : './api/upload/avatars';
+
+  // Создание папки аватаров
+  if (!fs.existsSync(avatarsDirPath)) {
+    fs.mkdirSync(avatarsDirPath, { recursive: true });
+  }
+
   const form = new formidable.IncomingForm();
   form.keepExtensions = true;
   form.uploadDir = path.join(__dirname, '.', 'upload', 'avatars');
