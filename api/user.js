@@ -43,7 +43,8 @@ router.get('/', (req, res) => {
 
 // Редактировать данные
 router.put('/', (req, res) => {
-  if (req.body.email) {
+  const { email, isAdmin, isEmailConfirmed, code } = req.body;
+  if (email || isAdmin || isEmailConfirmed || code) {
     return res.status(400).send('Bad Request');
   }
 

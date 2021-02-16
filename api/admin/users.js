@@ -3,18 +3,21 @@ const Mongo = require('../db/Mongo');
 const router = Router();
 
 router.get('/', (req, res) => {
-  let filter = req.query
-  for(let key in filter){
+  let filter = req.query;
+  
+  if (filter.id) {
+    filter.id = +filter.id;
+  }
 
+  for (let key in filter) {
     if(filter[key] === 'false'){
-      filter[key] = false
+      filter[key] = false;
     }
 
     if(filter[key] === 'true'){
-      filter[key] = true
+      filter[key] = true;
     }
   }
-  console.log(filter);
 
   Mongo.database
     .db('bibcongress')
@@ -25,5 +28,29 @@ router.get('/', (req, res) => {
     });
 });
 
+router.put('/:id', (req, res) => {
+  Mongo.database
+    .db('bibcongress')
+    .collection('reports')
+    .findOneAndUpdate({ id: +req.params.id }, { $set: req.body })
+    .then(() => {
+      res.send('OK');
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send('Ошибка сервера');
+    });
+});
+
+router.delete('/:id', (req, res) => {
+  Mongo.database
+    .db('bibcongress')
+    .collection('reports')
+    .deleteOne({ id: +req.params.id })
+    .then(() => {
+      res.send('OK');
+    })
+    .catch(error => res.status(500).send(error.message));
+});
 
 module.exports = router;
