@@ -153,7 +153,7 @@ router.get('/send-email/:email', (req, res) => {
     .then(() => res.send('OK'))
     .catch(error => {
       console.log(error.message);
-      res.send('OK');
+      res.send(500);
     });
 });
 

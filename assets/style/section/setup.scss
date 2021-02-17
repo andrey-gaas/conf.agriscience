@@ -38,7 +38,12 @@ li{
 .cursor-pointer{
   cursor: pointer;
 }
-
+.overflow-y-auto{
+  overflow-y: auto !important;
+}
+.overflow-x-hidden{
+  overflow-x: hidden !important;
+}
 // .custom-file-label{
 //   &::after{
 //     content:'Обзор...'

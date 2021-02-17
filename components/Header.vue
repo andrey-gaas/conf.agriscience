@@ -55,8 +55,8 @@ export default {
     async extiPersonArea(){
       await this.$cookies.remove('token')
       await this.$cookies.remove('token', {path: '/en'})
-      await this.$cookies.remove('token', {path: '/personarea'})
-      await this.$cookies.remove('token', {path: '/en/personarea'})
+      await this.$cookies.remove('token', {path: '/personArea'})
+      await this.$cookies.remove('token', {path: '/en/personArea'})
       this.setAuthorizarion()
     },
     async setAuthorizarion(){

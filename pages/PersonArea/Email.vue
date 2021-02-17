@@ -83,12 +83,15 @@ export default {
   methods:{
     localeRout,
     sendMail(){
+      const email = this.$store.getters.getPersonData.email
       const axios = this.$axios.create({
         baseURL: process.env.NODE_ENV === 'production' ? 'https://api.bibcongress.ru/' : 'http://localhost:3101/api/',
       });
 
-      axios.get('/auth/send-email')
-        .then(res => console.log('Ok'))
+      axios.get('/auth/send-email/' + email)
+        .then(res =>{
+          this.$router.push(this.localeRout('/PersonArea'));
+        })
         .catch(error => {
           console.log(error.message);
           alert('Ошибка при отравке письма');

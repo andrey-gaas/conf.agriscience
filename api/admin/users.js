@@ -29,9 +29,13 @@ router.get('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
+
+  if(req.body.id){ res.status(500).send('Нельзя менять id')}
+
+  console.log('id ' + req.params.id, req.body);
   Mongo.database
     .db('bibcongress')
-    .collection('reports')
+    .collection('users')
     .findOneAndUpdate({ id: +req.params.id }, { $set: req.body })
     .then(() => {
       res.send('OK');
@@ -45,7 +49,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   Mongo.database
     .db('bibcongress')
-    .collection('reports')
+    .collection('users')
     .deleteOne({ id: +req.params.id })
     .then(() => {
       res.send('OK');

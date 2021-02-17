@@ -99,7 +99,7 @@ export default{
   "reg_invalid_email_error": "Некорректный e-mail",
   "reg_password": "Пароль",
   "reg_empty_password_field_error": "Придумайте пароль",
-  "reg_length_password_error": "Слишком короткий пороль, минимальная длина {count} символов",
+  "reg_length_password_error": "Слишком короткий пароль, минимальная длина {count} символов",
   "reg_invalid_password_error": "Пароль может содержать только латинские буквы или цифры",
   "reg_consent": "Согласие на обработку персональных данных",
   "reg_consent_required": "Необходимо согласие на обработку персональных данных",

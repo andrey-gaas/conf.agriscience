@@ -3,10 +3,20 @@ const Mongo = require('../db/Mongo');
 const router = Router();
 
 router.get('/', (req, res) => {
+  
+  let filter = req.query;
+  
+  if (filter.id) {
+    filter.id = +filter.id;
+  }
+  if(filter.status){
+    filter.status = +filter.status
+  }
+
   Mongo.database
     .db('bibcongress')
     .collection('reports')
-    .find(req.query)
+    .find(filter)
     .toArray((err, reports) => {
       res.send(reports);
     });
