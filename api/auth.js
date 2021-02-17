@@ -153,18 +153,18 @@ router.get('/email-confirm/:email', (req, res) => {
     .findOne({ email })
     .then(user => {
       if (!user) {
-        res.status(404).send('User not fount');
+        res.status(500).redirect('https://www.bibcongress.ru/notification?type=email-error&message=usernotfound');
       } else if (user.isEmailConfirmed) {
-        res.status(400).send('Email confirmed');
+        res.status(500).redirect('https://www.bibcongress.ru/notification?type=email-error&message=emailisconfirmed');
       } else {
         users
           .findOneAndUpdate({ email }, { $set: { isEmailConfirmed: true } })
           .then(() => {
-            res.redirect(`https://bibcongress.ru/notification?type=email&message=${email}`);
+            res.redirect(`https://www.bibcongress.ru/notification?type=email&message=${email}`);
           })
           .catch(error => {
             console.log(error.message);
-            res.status(500).redirect('https://bibcongress.ru/notification?type=email-error');
+            res.status(500).redirect('https://www.bibcongress.ru/notification?type=server-error');
           });
       }
     })
