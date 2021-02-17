@@ -141,6 +141,22 @@ router.post('/login', (req, res) => {
   })(req, res);
 });
 
+// Повторная отправка письма
+router.get('/send-email/:email', (req, res) => {
+  const { email } = req.params;
+  const message = {
+    email,
+    subject: 'Подтвердите регистрацию на III Международный библиографический конгресс.',
+    text: `Для подтверждения электронной почты, перейдите по ссылке: https://api.bibcongress.ru/auth/email-confirm/${email}`,
+  };
+  sendMail(message, require('./mail/mail')(email))
+    .then(() => res.send('OK'))
+    .catch(error => {
+      console.log(error.message);
+      res.send('OK');
+    });
+});
+
 // Подтверждение почты
 router.get('/email-confirm/:email', (req, res) => {
   const { email } = req.params;

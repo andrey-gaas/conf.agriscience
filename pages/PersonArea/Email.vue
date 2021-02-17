@@ -83,10 +83,16 @@ export default {
   methods:{
     localeRout,
     sendMail(){
-      if(isEmeilConfirm){
-        return
-      }
-      console.log('send');
+      const axios = this.$axios.create({
+        baseURL: process.env.NODE_ENV === 'production' ? 'https://api.bibcongress.ru/' : 'http://localhost:3101/api/',
+      });
+
+      axios.get('/auth/send-email')
+        .then(res => console.log('Ok'))
+        .catch(error => {
+          console.log(error.message);
+          alert('Ошибка при отравке письма');
+        })
     },
     async setAuthorizarion(){
       const token = this.$cookies.get('token')
