@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const bcrypt = require('bcryptjs');
 const Mongo = require('../db/Mongo');
 const router = Router();
 
@@ -34,10 +35,21 @@ router.get('/:id', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
+  const data = req.body;
+
+  if (data.id !== undefined || data._id !== undefined) {
+    return res.status(400).send('Нельзя менять ID');
+  }
+
+  if (data.password) {
+    const salt = bcrypt.genSaltSync(10);
+    data.password = bcrypt.hashSync(data.password, salt);
+  }
+
   Mongo.database
     .db('bibcongress')
     .collection('reports')
-    .findOneAndUpdate({ id: +req.params.id }, { $set: req.body })
+    .findOneAndUpdate({ id: +req.params.id }, { $set: data })
     .then(() => {
       res.send('OK');
     })

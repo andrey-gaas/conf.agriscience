@@ -30,7 +30,7 @@ router.get('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
 
-  if(req.body.id){ res.status(500).send('Нельзя менять id')}
+  if(req.body.id !== undefined || req.body._id !== undefined){ res.status(400).send('Нельзя менять id')}
 
   Mongo.database
     .db('bibcongress')
