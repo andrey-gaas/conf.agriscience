@@ -9,16 +9,6 @@ const jwt = require('jsonwebtoken');
 const { secretKey } = require('./config');
 const router = Router();
 
-const isProduction = process.env.NODE_ENV === 'production';
-
-let successRedirect = '/personarea';
-let failureRedirect = '/login'
-
-if (isProduction) {
-  successRedirect = 'https://www.bibcongress.ru/personarea';
-  failureRedirect = 'https://www.bibcongress.ru/login';
-}
-
 // Регистрация
 router.post('/registration', (req, res) => {
   const {
@@ -139,6 +129,40 @@ router.post('/login', (req, res) => {
       return res.send({ message: 'OK', token: token });
     }
   })(req, res);
+});
+
+// Проверка авторизации
+router.get('/check', (req, res) => {
+  const { headers: { authorization } } = req;
+  if (!authorization) {
+    return res.status(401).send('Token not provided!');
+  }
+
+  try {
+    const user = jwt.verify(authorization, secretKey);
+
+    Mongo.database
+      .db('bibcongress')
+      .collection('users')
+      .findOne({ id: user.id })
+      .then(user => {
+        if (!user) {
+          return res.status(404).send('Пользователь не найден');
+        }
+
+        res.send('OK');
+      })
+      .catch(error => {
+        console.log('Ошибка запроса в базу при проверке авторизации');
+        console.log(error.message);
+        res.status(500).status('Ошибка сервера');
+      });
+  } catch(error) {
+    if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(401).send('Invalid token!');
+    }
+    return res.status(500).send(error.message);
+  }
 });
 
 // Повторная отправка письма
