@@ -43,7 +43,13 @@
       <mdb-row class="m-0" p='2'>
         <mdb-col col='12' p='0'>
 
-          <mdb-tbl responsiveSm bordered
+          <!-- <mdb-datatable
+            v-show="isShowReports"
+            :data="tableDataReport"
+            striped
+            bordered
+          /> -->
+          <!-- <mdb-tbl responsiveSm bordered
             v-if="isShowReports"
           >
             <mdb-tbl-head textWhite class="rounded teal lighten-1">
@@ -80,7 +86,7 @@
                 </th>
                 <th>{{item.email}}</th>
                 <th class='p-0'>
-                  <mdb-btn m='0'
+                  <mdb-btn m='0' size='sm'
                     @click="startEditReport(item.id)"
                   >
                     Открыть
@@ -88,8 +94,14 @@
                 </th>
               </tr>
             </mdb-tbl-body>
-          </mdb-tbl>
-          <mdb-tbl responsiveSm bordered
+          </mdb-tbl> -->
+          <mdb-datatable
+            :data="tabletData"
+            :key="dataTableKey"
+            striped
+            bordered
+          />
+          <!-- <mdb-tbl responsiveSm bordered
             v-if="isShowUsers"
           >
             <mdb-tbl-head textWhite class="rounded teal lighten-1">
@@ -141,12 +153,8 @@
                 </th>
               </tr>
             </mdb-tbl-body>
-          </mdb-tbl>
-            <mdb-btn
-              @click="testAxios"
-            >
-              Тест
-            </mdb-btn>
+          </mdb-tbl> -->
+
         </mdb-col>
       </mdb-row>
     </mdb-container>
@@ -154,6 +162,7 @@
       v-if="isShowUserEdit"
       :closeForm = closeFormEditUser
       :user = userEdit
+      :setUserRows = setUserRows
     />
     <ReportEdit
       v-if="isShowReportEdit"
@@ -166,7 +175,7 @@
 import UserEdit from '@/components/admin/UserEdit';
 import ReportEdit from '@/components/admin/ReportEdit';
 
-import { mdbContainer, mdbInput, mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody } from 'mdbvue';
+import { mdbContainer, mdbInput, mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody, mdbDatatable} from 'mdbvue';
 import { BIconXSquareFill, BIconCheckSquare, BIconQuestionSquare, } from 'bootstrap-vue'
 
 export default {
@@ -174,21 +183,106 @@ export default {
   layout: 'EmptyLayout',
   middleware: ['authenticated','isadminschek'],
   data:()=>({
+    dataTableKey: 0,
     isShowUsers: false,
     isShowReports: false,
     isShowUserEdit: false,
     isShowReportEdit: false,
     filterData:{},
-
     isEmailConfirmed: true,
-
+    QuestionSquare:'<svg data-v-2730f04a="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="question square" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-question-square report__status_icon amber-text b-icon bi"><g data-v-2730f04a=""><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg>',
+    XSquareFill:'<svg data-v-2730f04a="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="x square fill" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-x-square-fill report__status_icon red-text b-icon bi"><g data-v-2730f04a=""><path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"></path></g></svg>',
+    CheckSquare:'<svg data-v-2730f04a="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="check square" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-check-square report__status_icon green-text b-icon bi"><g data-v-2730f04a=""><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path><path d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.235.235 0 0 1 .02-.022z"></path></g></svg>',
+    tableDataUser:{
+      columns: [{
+          label: 'id',
+          field: 'id',
+          sort: 'asc'
+        },{
+          label: 'ФИО',
+          field: 'name',
+          sort: 'asc'
+        },{
+          label: 'Email',
+          field: 'email',
+          sort: 'asc'
+        },{
+          label: 'Статус Почты',
+          field: 'isEmailChecked',
+          sort: 'asc'
+        },{
+          label: 'Проверен',
+          field: 'isUserChecked',
+          sort: 'asc'
+        },{
+          label: 'Открыть',
+          field: 'open',
+          sort: 'asc'
+      }],
+      rows: []
+    },
+    tableDataReport:{
+      columns: [{
+          label: 'id',
+          field: 'id',
+          sort: 'asc'
+        },{
+          label: 'Название',
+          field: 'title',
+          sort: 'asc'
+        },{
+          label: 'Статус',
+          field: 'status',
+          sort: 'asc'
+        },{
+          label: 'Email',
+          field: 'email',
+          sort: 'asc'
+        },{
+          label: 'Проверен',
+          field: 'isReportChecked',
+          sort: 'asc'
+        },{
+          label: 'Открыть',
+          field: 'open',
+          sort: 'asc'
+      }],
+      rows: []
+    }
   }),
   computed:{
+    
     reportList(){return this.$store.getters['admin/getReportsList']},
     userList(){return this.$store.getters['admin/getUsersList']},
     userEdit(){return this.$store.getters['admin/getUsersEdit']},
+    userRows(){
+      return this.$store.getters['admin/getUsersList'].map(el =>{
+        return {
+          id: el.id,
+          name: `${el.surname} ${el.name?el.name[0]+'.':''} ${el.patronymic?el.patronymic[0]+'.':''}`,
+          email: el.email,
+          isEmailChecked: el.isEmailConfirmed ? this.CheckSquare : this.XSquareFill,
+          isUserChecked: el.isUserChecked ? this.CheckSquare : this.XSquareFill,
+          open: `<button data-v-bc7807ae="" type="button" onclick="window.$nuxt.$children[2].$children[1].$children[0].startEditUsers(${el.id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
+        }
+    })},
+    reportRows(){
+      return this.$store.getters['admin/getReportsList'].map(el => {
+        return {
+          id:el.id,
+          title: el.title,
+          email: el.email,
+          status: el.status == 1 ? this.CheckSquare : el.status == 0 ? this.QuestionSquare : this.XSquareFill,
+          isReportChecked: el.isReportChecked ? this.CheckSquare : this.XSquareFill,
+          open: `<button data-v-bc7807ae="" type="button" onclick="window.$nuxt.$children[2].$children[1].$children[0].startEditReport(${el.id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
+        }
+      })
+    }
   },
   methods:{
+    rerenderDataTable(){
+      this.dataTableKey += 1
+    },
     closeFormEditUser(){ this.isShowUserEdit = false },
     closeFormEditReport(){ this.isShowReportEdit = false },
     async startEditUsers(id){
@@ -209,12 +303,18 @@ export default {
     },
     changeCollection(col){
       if(col === "R"){
+        this.tableDataReport.rows = this.reportRows
+        this.tabletData = this.tableDataReport
         this.isShowReports = true
         this.isShowUsers = false
+        this.rerenderDataTable()
       }
       if(col === "U"){
+        this.tableDataUser.rows = this.userRows
+        this.tabletData = this.tableDataUser
         this.isShowReports = false
         this.isShowUsers = true
+        this.rerenderDataTable()
       }
     },
     setFilter(){
@@ -227,12 +327,12 @@ export default {
     this.$store.dispatch('admin/fetchUsers')
   },
   mounted(){
-    //console.log(this.$store);
+    
   },
   components:{
     UserEdit, ReportEdit,
     BIconXSquareFill, BIconCheckSquare, BIconQuestionSquare,
-    mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody
+    mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody, mdbDatatable 
   }
 }
 // GET /admin/reports - получить ВСЕ доклады

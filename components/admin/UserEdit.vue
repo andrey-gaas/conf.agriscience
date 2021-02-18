@@ -115,7 +115,7 @@ import { helpers, required, email, } from 'vuelidate/lib/validators'
 import { mdbContainer, mdbInput,  mdbBtn , mdbBtnGroup, mdbRow, mdbCol } from 'mdbvue';
 
 export default {
-  props:['closeForm','user'],
+  props:['closeForm','user','setUserRows'],
   data: () => ({
     RU, EN,
     editUser:{isUserChecked : false},
@@ -131,6 +131,7 @@ export default {
     async saveUserEdit(){
       await this.$store.dispatch('admin/saveUserEditBD', this.editUser)
       this.$store.commit('admin/saveUserEdit', {...this.editUser, id:this.user.id})
+      this.setUserRows()
       this.closeForm()
     },
     async userIsChecked(){

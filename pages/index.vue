@@ -65,6 +65,7 @@
             :title='item.title'
             :img='item.img'
             :text='item.text'
+            :text2='item.text2'
           />
         </mdb-col>
       </mdb-row>
@@ -94,9 +95,11 @@ export default {
         img:'RBA.jpg'},
       { title:'main_card_organizetion_title_3',
         text:'main_card_organizetion_text_3',
+        text2:'main_card_organizetion_text_3_1',
         img:'RNB.jpg'},
       { title:'main_card_organizetion_title_4',
         text:'main_card_organizetion_text_4',
+        text2:'main_card_organizetion_text_4_1',
         img:'RGB.jpg'},
     ],
     topicData:['main_congress_topic_1','main_congress_topic_2','main_congress_topic_3','main_congress_topic_4','main_congress_topic_5','main_congress_topic_6','main_congress_topic_7','main_congress_topic_8','main_congress_topic_9','main_congress_topic_10','main_congress_topic_11','main_congress_topic_12','main_congress_topic_13','main_congress_topic_14','main_congress_topic_15',],
@@ -118,6 +121,7 @@ export default {
     this.bibCardData.map(el =>{
       el.title = this.$t(el.title)
       el.text = this.$t(el.text)
+      el.text2 = this.$t(el.text2)
     })
   },
 };
