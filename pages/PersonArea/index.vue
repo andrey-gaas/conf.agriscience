@@ -226,7 +226,7 @@ import {localeRout, transliterate, getCookie} from '@/assets/utils'
 
 import Toast from '@/components/Toast';
 import { mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody } from 'mdbvue';
-import { BIcon, BIconPencilSquare, BIconXSquareFill, BIconCheckSquare, BIconQuestionSquare,   } from 'bootstrap-vue'
+import { BIconPencilSquare, BIconXSquareFill, BIconCheckSquare, BIconQuestionSquare,   } from 'bootstrap-vue'
 
 
 export default {

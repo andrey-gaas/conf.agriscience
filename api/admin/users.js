@@ -32,7 +32,6 @@ router.put('/:id', (req, res) => {
 
   if(req.body.id){ res.status(500).send('Нельзя менять id')}
 
-  console.log('id ' + req.params.id, req.body);
   Mongo.database
     .db('bibcongress')
     .collection('users')

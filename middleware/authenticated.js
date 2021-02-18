@@ -5,7 +5,7 @@ export default function ({ app, redirect }) {
     baseURL: process.env.NODE_ENV === 'production' ? 'https://api.bibcongress.ru/' : 'http://localhost:3101/api/',
   });
 
-  return AxiosTooken.get('/user/').catch(()=>{
+  return AxiosTooken.get('/auth/check').catch(()=>{
     app.$cookies.remove('token')
     app.$cookies.remove('token', {path: '/en'})
     app.$cookies.remove('token', {path: '/personarea'})

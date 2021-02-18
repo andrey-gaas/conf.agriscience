@@ -187,6 +187,7 @@ export default{
   'edit_report_enter_title_report':'Please enter a title for the report',
   'edit_report_add_annotation':'Add annotation',
   'edit_report_extended_theses':'Extended theses',
+  'edit_report_err_valid_add_file':'Attach a file with extended abstracts',
   'edit_report_add_file':'Attach a file with extended abstracts, in .docx format, no less than 500 words.',
   
 

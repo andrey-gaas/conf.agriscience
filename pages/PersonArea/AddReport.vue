@@ -208,7 +208,7 @@
           <span class='h6 d-flex red-text'
             v-if="validData.isCheck && !validData.isFileName"
           >
-            Прикрепите файл с расширенными тезисами
+            {{$t('edit_report_err_valid_add_file')}}
           </span>
           <mdb-btn class="teal lighten-2" @click="saveReport()">
             {{$t('edit_report_save')}}

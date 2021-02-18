@@ -99,12 +99,9 @@ import { helpers, required, email, } from 'vuelidate/lib/validators'
 import { mdbContainer, mdbInput,  mdbBtn , mdbBtnGroup, mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon } from 'mdbvue';
 //Валидатор для русского алфавита
 const alphaValid = helpers.regex('alpha', /^[a-zA-Zа-яёА-ЯЁ]*$/)
-//Валидатор истенности
-
 
 export default {
-  name: "Registration",
-  layout: 'EmptyLayout',
+  name: "FormEditAuthor",
   props: ['editAuthor','closeEdit','textBtn', 'loc'],
   data: () => ({
     step: 1,
@@ -185,7 +182,6 @@ export default {
         enPerson = this.formSet
         ruPerson = await this.localize({...enPerson})
       }
-     
       if(this.formSet.num != undefined){
         
         this.$store.commit('setSpeaker', {speaker: ruPerson, ind: this.formSet.num})
