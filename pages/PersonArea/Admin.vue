@@ -16,7 +16,7 @@
             </mdb-btn>
           </mdb-btn-group>
           <div class="filter d-flex align-content-center align-items-center">
-            <mdb-btn
+            <mdb-btn m='0'
               @click="setFilter"
             >Применить
             </mdb-btn>
@@ -48,21 +48,44 @@
           >
             <mdb-tbl-head textWhite class="rounded teal lighten-1">
               <tr>
-                <th colspan="4"><h5 class="mb-0">Доклады</h5></th>
+                <th colspan="40"><h5 class="mb-0">Доклады</h5></th>
               </tr>
             </mdb-tbl-head>
             <mdb-tbl-body>
               <tr>
+                <th>id</th>
                 <th>Название</th>
-                <th>Статуст</th>
+                <th>Статус</th>
                 <th>email</th>
+                <th>Открыть</th>
               </tr>
               <tr
                 v-for="(item, ind) in reportList" :key='ind'
               >
+                <th>{{item.id}}</th>
                 <th>{{item.title}}</th>
-                <th>{{item.status}}</th>
+                <th class="p-0 align-middle text-center">
+                  <BIconXSquareFill
+                    class="report__status_icon red-text"
+                    v-if="item.status == -1"
+                  />
+                  <BIconCheckSquare
+                    class="report__status_icon green-text"
+                    v-if="item.status == 1"
+                  />
+                  <BIconQuestionSquare
+                    class="report__status_icon amber-text"
+                    v-if="item.status == 0"
+                  />
+                </th>
                 <th>{{item.email}}</th>
+                <th class='p-0'>
+                  <mdb-btn m='0'
+                    @click="startEditReport(item.id)"
+                  >
+                    Открыть
+                  </mdb-btn>
+                </th>
               </tr>
             </mdb-tbl-body>
           </mdb-tbl>
@@ -80,7 +103,8 @@
                 <th>ФИО</th>
                 <th>email</th>
                 <th>Статус почты</th>
-                <th>Телефон</th>
+                <th>Проверен</th>
+                <th>Открыть</th>
               </tr>
               <tr
                 v-for="(item, ind) in userList" :key='ind'
@@ -88,8 +112,33 @@
                 <th>{{item.id}}</th>
                 <th>{{`${item.surname} ${item.name?item.name[0]:''}. ${item.patronymic?item.patronymic[0]+'.':''}`}}</th>
                 <th>{{item.email}}</th>
-                <th>{{item.isEmailConfirmed}}</th>
-                <th>{{item.telephone ? item.telephone: ''}}</th>
+                <th class="p-0 align-middle text-center">
+                  <BIconXSquareFill
+                    class="report__status_icon red-text"
+                    v-if="!item.isEmailConfirmed"
+                  />
+                  <BIconCheckSquare
+                    class="report__status_icon green-text"
+                    v-if="item.isEmailConfirmed"
+                  />
+                </th>
+                <th class="p-0 align-middle text-center">
+                  <BIconXSquareFill
+                    class="report__status_icon red-text"
+                    v-if="!item.isUserChecked"
+                  />
+                  <BIconCheckSquare
+                    class="report__status_icon green-text"
+                    v-if="item.isUserChecked"
+                  />
+                </th>
+                <th class='p-0'>
+                  <mdb-btn m='0'
+                    @click="startEditUsers(item.id)"
+                  >
+                    Открыть
+                  </mdb-btn>
+                </th>
               </tr>
             </mdb-tbl-body>
           </mdb-tbl>
@@ -101,19 +150,34 @@
         </mdb-col>
       </mdb-row>
     </mdb-container>
+    <UserEdit
+      v-if="isShowUserEdit"
+      :closeForm = closeFormEditUser
+      :user = userEdit
+    />
+    <ReportEdit
+      v-if="isShowReportEdit"
+      :closeForm = closeFormEditReport
+    />
   </div>
 </template>
 
 <script>
+import UserEdit from '@/components/admin/UserEdit';
+import ReportEdit from '@/components/admin/ReportEdit';
+
 import { mdbContainer, mdbInput, mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody } from 'mdbvue';
+import { BIconXSquareFill, BIconCheckSquare, BIconQuestionSquare, } from 'bootstrap-vue'
 
 export default {
   name: "Admin",
   layout: 'EmptyLayout',
-  middleware: 'authenticated',
+  middleware: ['authenticated','isadminschek'],
   data:()=>({
     isShowUsers: false,
     isShowReports: false,
+    isShowUserEdit: false,
+    isShowReportEdit: false,
     filterData:{},
 
     isEmailConfirmed: true,
@@ -122,8 +186,24 @@ export default {
   computed:{
     reportList(){return this.$store.getters['admin/getReportsList']},
     userList(){return this.$store.getters['admin/getUsersList']},
+    userEdit(){return this.$store.getters['admin/getUsersEdit']},
   },
   methods:{
+    closeFormEditUser(){ this.isShowUserEdit = false },
+    closeFormEditReport(){ this.isShowReportEdit = false },
+    async startEditUsers(id){
+      await this.$store.dispatch('admin/fetchUserById', id)
+      this.isShowUserEdit = true
+    },
+    async startEditReport(id){
+      try {
+        await this.$store.dispatch('admin/fetchReportById', id)
+        //this.$store.commit('admin/setEditReport');
+        this.isShowReportEdit = true
+      } catch (error) {
+        alert('Не удалось загрузть доклад')
+      }
+    },
     testAxios(){
       console.log(this.$store.getters['admin/getReportsList']);
     },
@@ -150,6 +230,8 @@ export default {
     //console.log(this.$store);
   },
   components:{
+    UserEdit, ReportEdit,
+    BIconXSquareFill, BIconCheckSquare, BIconQuestionSquare,
     mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody
   }
 }
@@ -167,5 +249,8 @@ export default {
 </script>
 
 <style>
-
+.report__status_icon{
+  height: 25px;
+  width: 25px;
+}
 </style>
