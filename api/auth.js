@@ -65,6 +65,7 @@ router.post('/registration', (req, res) => {
             isEmailConfirmed: false,
             password: bcrypt.hashSync(password, salt),
             avatar: '',
+            registrationDate: Date.now(),
           };
     
           users.insertOne(user, (error) => {
