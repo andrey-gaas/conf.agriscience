@@ -18,7 +18,7 @@
         </div>
         <div v-show="isAuthorized" class="auth">
           <nuxt-link  :to="localeRout('/personArea')" class="link">{{$t('header_person_area')}}</nuxt-link>
-          <a  @click="extiPersonArea()" class="link">{{$t('header_exit')}}</a>
+          <a @click="logout()" class="link">{{$t('header_exit')}}</a>
         </div>
 
         <div class="flags">
@@ -52,12 +52,18 @@ export default {
   }),
   methods:{
     localeRout,
-    async extiPersonArea(){
-      await this.$cookies.remove('token')
-      await this.$cookies.remove('token', {path: '/en'})
-      await this.$cookies.remove('token', {path: '/personArea'})
-      await this.$cookies.remove('token', {path: '/en/personArea'})
-      this.setAuthorizarion()
+    logout() {
+      const axios = this.$axios.create({
+        baseURL: process.env.NODE_ENV === 'production' ? 'https://api.bibcongress.ru/' : 'http://localhost:3101/api/',
+      });
+      axios.get('/auth/logout')
+        .then(() => {
+          this.isAuthorized = false;
+        })
+        .catch(error => {
+          this.isAuthorized = false;
+          console.log(error.message);
+        })
     },
     async setAuthorizarion(){
       const token = this.$cookies.get('token')
