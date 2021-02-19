@@ -72,7 +72,7 @@ export default {
         headers: { 'Authorization': token },
         baseURL: process.env.NODE_ENV === 'production' ? 'https://api.bibcongress.ru/' : 'http://localhost:3101/api/',
         });
-        this.isAuthorized = await AxiosTooken.get('/user/').then(()=>{
+        this.isAuthorized = await AxiosTooken.get('/auth/check/').then(()=>{
           return  true
         }).catch(()=>{
           return false
