@@ -44,11 +44,6 @@ router.put('/:id', (req, res) => {
     return res.status(400).send('Нельзя менять ID');
   }
 
-  if (data.password) {
-    const salt = bcrypt.genSaltSync(10);
-    data.password = bcrypt.hashSync(data.password, salt);
-  }
-
   Mongo.database
     .db('bibcongress')
     .collection('reports')

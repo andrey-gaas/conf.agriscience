@@ -29,13 +29,21 @@ router.get('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
+  const data = req.body;
 
-  if(req.body.id !== undefined || req.body._id !== undefined){ res.status(400).send('Нельзя менять id')}
+  if(data.id !== undefined || data._id !== undefined) {
+    res.status(400).send('Нельзя менять id');
+  }
+
+  if (data.password) {
+    const salt = bcrypt.genSaltSync(10);
+    data.password = bcrypt.hashSync(data.password, salt);
+  }
 
   Mongo.database
     .db('bibcongress')
     .collection('users')
-    .findOneAndUpdate({ id: +req.params.id }, { $set: req.body })
+    .findOneAndUpdate({ id: +req.params.id }, { $set: data })
     .then(() => {
       res.send('OK');
     })
