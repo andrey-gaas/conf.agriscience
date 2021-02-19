@@ -13,7 +13,7 @@
       </logo>
       <!-- <button @click="testFetch">Тестовый запрос</button> -->
       <div>
-        <mdb-btn v-if="getIsAuth" class="logout-button" @click="logout">Выход</mdb-btn>
+        <mdb-btn v-if="isAuth" class="logout-button" @click="logout">Выход</mdb-btn>
         <dropdown end>
           <dropdown-toggle class="teal lighten-2" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
           <dropdown-menu >
@@ -43,7 +43,6 @@ import { RU, EN } from '@/constants/language';
 export default {
   data: () => ({
     RU, EN,
-    isAuthorized:false,
   }),
   components: {
     'container': mdbContainer,
@@ -66,7 +65,7 @@ export default {
         .then(({ data }) => {
           console.log(data);
           if (data === 'OK') {
-            this.isAuthorized = false;
+            this.$store.commit('setIsAuth', false)
             this.$router.push('/');
           }
         })
@@ -83,14 +82,14 @@ export default {
         });
         AxiosTooken.get('/auth/check')
           .then((res) => {
-            this.isAuthorized = true;
+            this.$store.commit('setIsAuth', true)
           })
           .catch(error => {
-            this.isAuthorized = false;
+            this.$store.commit('setIsAuth', false)
             console.log(error.message);
           })
       } else {
-        this.isAuthorized = false
+        this.$store.commit('setIsAuth', false)
       }
     },
     testFetch() {
@@ -102,11 +101,9 @@ export default {
   created() {
     this.setAuthorizarion();
   },
-  computed: {
-    getIsAuth() {
-      return this.isAuthorized;
-    }
-  },
+  computed:{
+    isAuth(){return this.$store.getters.getIsAuth}
+  }
 }
 </script>
 <style scoped>

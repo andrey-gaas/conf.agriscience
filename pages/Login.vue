@@ -121,10 +121,12 @@ export default {
 
           if (message === 'OK' && token) {
             this.$cookies.set('token', token, { maxAge: 60 * 60 * 24 * 7 });
+            this.$store.commit('setIsAuth', true)
             this.$router.push(this.localeRout('/personarea'));
           }
         })
         .catch((error) => {
+          this.$store.commit('setIsAuth', false)
           this.error = error.message.slice(-3)
         });
     },

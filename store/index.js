@@ -222,6 +222,9 @@ export const mutations = {
       cookieObj[key] = val
     }
     s.cookie = cookieObj
+  },
+  setIsAuth(s, boolean){
+    s.isAuth = boolean
   }
 }
 
@@ -306,6 +309,7 @@ export const getters = {
   getUserToken(s){
     return s.isAuth
   },
+  getIsAuth: s => s.isAuth,
   getLoginData(s){
     return s.loginData
   },
