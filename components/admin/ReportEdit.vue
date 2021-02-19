@@ -46,7 +46,7 @@
                         </div>
                       </th>
                       <th class="p-2">
-                        <mdb-btn class="m-0 p-2" color="warning" @click="startEditAuthor(ind, 'ru')">
+                        <mdb-btn class="m-0 p-2" color="warning" @click="startEditAuthor(ind)">
                           <BIconPencilSquare class="icon-size-lg"/>
                         </mdb-btn>
                         <mdb-btn class="m-0 p-2" color="danger" @click="deletAuthor(ind)">
@@ -56,7 +56,7 @@
                     </tr>
                     <tr>
                       <th colspan="5" class="p-0">
-                        <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="createAuthor('ru')">Добавить автора</mdb-btn>
+                        <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="createAuthor()">Добавить автора</mdb-btn>
                       </th>
                     </tr>
                   </mdb-tbl-body>
@@ -118,7 +118,7 @@
                       </th>
                     
                       <th class="p-2">
-                        <mdb-btn class="m-0 p-2" color="warning" @click="startEditAuthor(ind, 'en')">
+                        <mdb-btn class="m-0 p-2" color="warning" @click="startEditAuthor(ind)">
                           <BIconPencilSquare class="icon-size-lg"/>
                         </mdb-btn>
                         <mdb-btn class="m-0 p-2" color="danger" @click="deletAuthor(ind)">
@@ -128,7 +128,7 @@
                     </tr>
                     <tr>
                       <th colspan="5" class="p-0">
-                        <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="createAuthor('en')">Add author</mdb-btn>
+                        <mdb-btn class="m-1 px-3 py-2 teal lighten-2" @click="createAuthor()">Add author</mdb-btn>
                       </th>
                     </tr>
                   </mdb-tbl-body>
@@ -202,20 +202,17 @@
                 >
                   {{$t('edit_report_err_valid_add_file')}}
                 </span>
-                <mdb-btn class="teal lighten-2" @click="saveReport()">
-                  {{$t('edit_report_save')}}
-                </mdb-btn>
-                <mdb-btn class="teal lighten-2" @click="cancelReport()">
-                  {{$t('edit_report_cancel')}}
-                </mdb-btn>
               </mdb-col>
             </mdb-row>
           </mdb-col>
         </mdb-row>
         <mdb-row>
           <mdb-col>
-            <mdb-btn >
+            <mdb-btn @click="saveReport">
               Cохранить
+            </mdb-btn>
+            <mdb-btn @click="reportIsChecked">
+              Проверен
             </mdb-btn>
             <mdb-btn-group>
               <mdb-btn color="success" @click="approveReport">
@@ -232,15 +229,15 @@
         </mdb-row>
       </div>
     </mdb-container>
-    <!-- <mdb-container
+    <mdb-container
       v-if="isAuthorEdit"
       :class="{editShow: isAuthorEdit}"
     >
       <FormEditAuthor
-        :editAuthor='editAuthor'
-        :closeEdit='closeEdit'
-        :textBtn='$t("edit_report_save")'
-        :loc='locale'
+        :editAuthor="editAuthor"
+        :setAuthor="setAuthor"
+        :reportEdit="reportEdit"
+        :closeForm="closeEditAuthor"
       />
     </mdb-container>
     <mdb-container
@@ -248,12 +245,12 @@
       :class="{editShow: isAuthorCrate}"
     >
       <FormEditAuthor
-        :editAuthor='crateAuthor'
-        :closeEdit='closeCreate'
-        :textBtn='$t("edit_author_add")'
-        :loc='locale'
+        :editAuthor="editAuthor"
+        :setAuthor="setAuthor"
+        :reportEdit="reportEdit"
+        :closeForm="closeEditAuthor"
       />
-    </mdb-container> -->
+    </mdb-container>
     <!-- <transition name="toast">
       <Toast
         v-if="isShowTost"
@@ -268,14 +265,14 @@ import { RU, EN } from '@/constants/language';
 import {localeRout} from '@/assets/utils'
 
 
-import FormEditAuthor from '@/components/FormEditAuthor';
+import FormEditAuthor from '@/components/admin/EditAuthor';
 import Toast from '@/components/Toast';
 
 import { BIcon, BIconCaretDownFill, BIconCaretUpFill, BIconTrashFill, BIconPencilSquare } from 'bootstrap-vue'
 import { mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody} from 'mdbvue';
 
 export default {
-  props:['closeForm'],
+  props:['closeForm', 'reportEdit', 'todo'],
   data: () => ({
     RU, EN,
     author:[],
@@ -286,6 +283,8 @@ export default {
     titleEn:'',
     annotations:'',
     annotationsEn:'',
+    isAuthorEdit: false,
+    isAuthorCrate: false,
     validData:{
       isCheck: false,
       isCountAuthor: false,
@@ -294,18 +293,10 @@ export default {
       isAnnotation: false,
       isFileName: false,
     },
+    editAuthor:{},
   }),
   computed:{
-    reportEdit(){
-      const rep = this.$store.getters['admin/getReportEdit']
-      let speakerList = rep.speakerList.map(el => {
-        return {...el}
-      })
-      let speakerListEn = rep.speakerListEn.map(el => {
-        return {...el}
-      })
-      return {...rep, speakerList, speakerListEn}
-    },
+    
   },
   watch:{
     title(){this.reportEdit.title = this.title},
@@ -325,6 +316,68 @@ export default {
   },
   methods:{
     localeRout,
+    async saveReport(){
+      if(this.todo === 'edit'){
+        await this.$store.dispatch('admin/saveReportEditBD', this.reportEdit)
+        this.closeForm()
+      }
+    },
+    closeEditAuthor(){
+      this.isAuthorEdit = false
+      this.isAuthorCrate = false
+    },
+    createAuthor(){
+      this.isAuthorCrate = true
+      this.editAuthor = {
+        num: this.reportEdit.speakerList.length,
+        email: '',
+        isSpeaker: false,
+        ru:{
+          surname: '',
+          name: '',
+          patronymic: '',
+          position: '',
+          organization: '',
+        },
+        en:{
+          surname: '',
+          name: '',
+          patronymic: '',
+          position: '',
+          organization: '',
+        }
+      }
+    },
+    startEditAuthor(ind){
+      this.isAuthorEdit = true
+      this.editAuthor = {
+        num: this.reportEdit.speakerList[ind].num,
+        isSpeaker: this.reportEdit.speakerList[ind].isSpeaker,
+        email: this.reportEdit.speakerList[ind].email,
+        ru:{
+          surname: this.reportEdit.speakerList[ind].surname,
+          name: this.reportEdit.speakerList[ind].name,
+          patronymic: this.reportEdit.speakerList[ind].patronymic,
+          position: this.reportEdit.speakerList[ind].position,
+          organization: this.reportEdit.speakerList[ind].organization,
+        },
+        en:{
+          surname: this.reportEdit.speakerListEn[ind].surname,
+          name: this.reportEdit.speakerListEn[ind].name,
+          patronymic: this.reportEdit.speakerListEn[ind].patronymic,
+          position: this.reportEdit.speakerListEn[ind].position,
+          organization: this.reportEdit.speakerListEn[ind].organization,
+        }
+      }
+    },
+    async reportIsChecked(){
+      try {
+        await this.$store.dispatch('admin/reportIsChecked')
+        this.closeForm()
+      } catch (error) {
+        aletr('что-то пошло не так, сообщиете программистам')
+      }
+    },
     validation(){
       let isValid = true
       if( this.author.length > 0 ) this.validData.isCountAuthor = true
@@ -333,8 +386,8 @@ export default {
         isValid = false
       }
 
-      //Количество докладчиков
       let count = this.author.reduce((acc, el) => {
+        //Количество докладчиков
         return (el.isSpeaker == true) ? ++acc : acc
       }, 0)
 
@@ -388,22 +441,16 @@ export default {
     },
     async translateReport({from, to}){
       if(from === 'en'){
-        if( (localStorage.reportTitleEn == this.reportNameEn 
-            && localStorage.reportTextEn == this.reportTextEn
-            && localStorage.reportTitleRu == this.reportName
-            && localStorage.reportTexteRu == this.reportText) 
-            || this.reportEdit.titleEn.length > 5000
+        if( 
+            this.reportEdit.titleEn.length > 5000
             || this.reportEdit.annotationsEn.length > 5000
         ){
           console.log('NO NO NO, stop click the button');
           return
         }
       }else{
-        if( localStorage.reportTitleEn == this.reportNameEn 
-            && localStorage.reportTextEn == this.reportTextEn
-            && localStorage.reportTitleRu == this.reportName
-            && localStorage.reportTexteRu == this.reportText
-            || this.title.length > 5000
+        if( 
+            this.title.length > 5000
             || this.annotations.length > 5000
         ){
           console.log('NO NO NO, прекрати тыкать на кнопку');

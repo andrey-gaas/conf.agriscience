@@ -27,7 +27,6 @@ export const mutations = {
         break;
       }
     }
-    console.log(s.userList);
   }
 }
 export const getters = {
@@ -82,11 +81,26 @@ export const actions = {
           id = getters.getUsersEdit.id
     await axios.put('/admin/users/'+id, user)
   },
+  async saveReportEditBD({rootGetters, getters}, report){
+    const axios = rootGetters.getAxiosWithToken,
+          id = report.id
+    delete report.id;
+    delete report._id;
+    delete report.url;
+    delete report.fileName;
+    await axios.put('/admin/reports/'+id, report)
+  },
   async userIsChecked({rootGetters, getters}){
     const axios = rootGetters.getAxiosWithToken,
           id = getters.getUsersEdit.id;
-
     await axios.put('/admin/users/'+id, {isUserChecked:true})
+  },
+  async reportIsChecked({rootGetters, getters}){
+    const axios = rootGetters.getAxiosWithToken,
+          id = getters.getReportEdit.id;
+    try {
+      await axios.put('/admin/reports/'+id, {isReportChecked:true})
+    }catch(e){}
   },
   async failureReport({rootGetters, getters}){
     const axios = rootGetters.getAxiosWithToken,

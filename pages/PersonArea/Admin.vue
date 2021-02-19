@@ -15,6 +15,15 @@
             >Люди
             </mdb-btn>
           </mdb-btn-group>
+          <mdb-btn-group m='0'>
+            <mdb-btn m='0'
+              @click='createReport()'
+            >Новый доклад</mdb-btn>
+            <mdb-btn m='0'
+              @click='createUser()'
+            >Новый пользователь
+            </mdb-btn>
+          </mdb-btn-group>
           <div class="filter d-flex align-content-center align-items-center">
             <mdb-btn m='0'
               @click="setFilter"
@@ -25,7 +34,7 @@
               <input type="checkbox" class="custom-control-input" id="isEmailConfirmed"
                 v-model="isEmailConfirmed"
               >
-              <label class="custom-control-label" for="isEmailConfirmed">1</label>
+              <label class="custom-control-label" for="isEmailConfirmed">Email</label>
             </div>
             <!-- Default inline 2-->
             <div class="custom-control custom-checkbox custom-control">
@@ -42,131 +51,38 @@
       </mdb-row>
       <mdb-row class="m-0" p='2'>
         <mdb-col col='12' p='0'>
-
-          <!-- <mdb-datatable
-            v-show="isShowReports"
-            :data="tableDataReport"
-            striped
-            bordered
-          /> -->
-          <!-- <mdb-tbl responsiveSm bordered
-            v-if="isShowReports"
-          >
-            <mdb-tbl-head textWhite class="rounded teal lighten-1">
-              <tr>
-                <th colspan="40"><h5 class="mb-0">Доклады</h5></th>
-              </tr>
-            </mdb-tbl-head>
-            <mdb-tbl-body>
-              <tr>
-                <th>id</th>
-                <th>Название</th>
-                <th>Статус</th>
-                <th>email</th>
-                <th>Открыть</th>
-              </tr>
-              <tr
-                v-for="(item, ind) in reportList" :key='ind'
-              >
-                <th>{{item.id}}</th>
-                <th>{{item.title}}</th>
-                <th class="p-0 align-middle text-center">
-                  <BIconXSquareFill
-                    class="report__status_icon red-text"
-                    v-if="item.status == -1"
-                  />
-                  <BIconCheckSquare
-                    class="report__status_icon green-text"
-                    v-if="item.status == 1"
-                  />
-                  <BIconQuestionSquare
-                    class="report__status_icon amber-text"
-                    v-if="item.status == 0"
-                  />
-                </th>
-                <th>{{item.email}}</th>
-                <th class='p-0'>
-                  <mdb-btn m='0' size='sm'
-                    @click="startEditReport(item.id)"
-                  >
-                    Открыть
-                  </mdb-btn>
-                </th>
-              </tr>
-            </mdb-tbl-body>
-          </mdb-tbl> -->
           <mdb-datatable
             :data="tabletData"
             :key="dataTableKey"
             striped
             bordered
           />
-          <!-- <mdb-tbl responsiveSm bordered
-            v-if="isShowUsers"
-          >
-            <mdb-tbl-head textWhite class="rounded teal lighten-1">
-              <tr>
-                <th colspan="50"><h5 class="mb-0">Пользователи</h5></th>
-              </tr>
-            </mdb-tbl-head>
-            <mdb-tbl-body>
-              <tr>
-                <th>id</th>
-                <th>ФИО</th>
-                <th>email</th>
-                <th>Статус почты</th>
-                <th>Проверен</th>
-                <th>Открыть</th>
-              </tr>
-              <tr
-                v-for="(item, ind) in userList" :key='ind'
-              >
-                <th>{{item.id}}</th>
-                <th>{{`${item.surname} ${item.name?item.name[0]:''}. ${item.patronymic?item.patronymic[0]+'.':''}`}}</th>
-                <th>{{item.email}}</th>
-                <th class="p-0 align-middle text-center">
-                  <BIconXSquareFill
-                    class="report__status_icon red-text"
-                    v-if="!item.isEmailConfirmed"
-                  />
-                  <BIconCheckSquare
-                    class="report__status_icon green-text"
-                    v-if="item.isEmailConfirmed"
-                  />
-                </th>
-                <th class="p-0 align-middle text-center">
-                  <BIconXSquareFill
-                    class="report__status_icon red-text"
-                    v-if="!item.isUserChecked"
-                  />
-                  <BIconCheckSquare
-                    class="report__status_icon green-text"
-                    v-if="item.isUserChecked"
-                  />
-                </th>
-                <th class='p-0'>
-                  <mdb-btn m='0'
-                    @click="startEditUsers(item.id)"
-                  >
-                    Открыть
-                  </mdb-btn>
-                </th>
-              </tr>
-            </mdb-tbl-body>
-          </mdb-tbl> -->
-
         </mdb-col>
       </mdb-row>
     </mdb-container>
     <UserEdit
       v-if="isShowUserEdit"
-      :closeForm = closeFormEditUser
+      :closeForm = closeForm
       :user = userEdit
-      :setUserRows = setUserRows
+      :todo="todo"
+    />
+    <UserEdit
+      v-if="isShowUserAdd"
+      :closeForm = closeForm
+      :user = dataUserAdd
+      :todo="todo"
     />
     <ReportEdit
       v-if="isShowReportEdit"
-      :closeForm = closeFormEditReport
+      :closeForm="closeForm"
+      :reportEdit="reportEdit"
+      :todo="todo"
+    />
+    <ReportEdit
+      v-if="isShowReportAdd"
+      :closeForm="closeForm"
+      :reportEdit="dataReportAdd"
+      :todo="todo"
     />
   </div>
 </template>
@@ -183,11 +99,14 @@ export default {
   layout: 'EmptyLayout',
   middleware: ['authenticated','isadminschek'],
   data:()=>({
+    todo: '',
     dataTableKey: 0,
     isShowUsers: false,
     isShowReports: false,
     isShowUserEdit: false,
+    isShowUserAdd: false,
     isShowReportEdit: false,
+    isShowReportAdd: false,
     filterData:{},
     isEmailConfirmed: true,
     QuestionSquare:'<svg data-v-2730f04a="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="question square" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-question-square report__status_icon amber-text b-icon bi"><g data-v-2730f04a=""><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg>',
@@ -248,13 +167,58 @@ export default {
           sort: 'asc'
       }],
       rows: []
-    }
+    },
+    tabletData:{},
+    dataReportAdd:{
+      annotations: "",
+      annotationsEn: "",
+      email: "",
+      fileName: "",
+      isReportChecked: false,
+      speakerList: [],
+      speakerListEn: [],
+      status: 1,
+      title: "",
+      titleEn: "",
+    },
+    dataUserAdd:{
+      name:"",
+      nameEn:"",
+      surname:"",
+      surnameEn:"",
+      patronymic:"",
+      patronymicEn:"",
+      organization:"",
+      organizationEn:"",
+      position:"",
+      positionEn:"",
+      place:"",
+      placeEn:"",
+      aboutMe:"",
+      aboutMeEn:"",
+      email:"",
+      telephone:"",
+      isEmailConfirmed:false,
+      isUserChecked:false
+    },
   }),
   computed:{
     
     reportList(){return this.$store.getters['admin/getReportsList']},
     userList(){return this.$store.getters['admin/getUsersList']},
     userEdit(){return this.$store.getters['admin/getUsersEdit']},
+
+    reportEdit(){
+      const rep = this.$store.getters['admin/getReportEdit']
+      let speakerList = rep.speakerList.map(el => {
+        return {...el}
+      })
+      let speakerListEn = rep.speakerListEn.map(el => {
+        return {...el}
+      })
+      return {...rep, speakerList, speakerListEn}
+    },
+
     userRows(){
       return this.$store.getters['admin/getUsersList'].map(el =>{
         return {
@@ -280,19 +244,65 @@ export default {
     }
   },
   methods:{
+    createReport(){
+      this.todo = 'create'
+      this.isShowReportAdd = true
+    },
+    createUser(){
+      this.todo = 'create'
+      this.isShowUserAdd = true
+    },
     rerenderDataTable(){
       this.dataTableKey += 1
     },
-    closeFormEditUser(){ this.isShowUserEdit = false },
-    closeFormEditReport(){ this.isShowReportEdit = false },
+    closeForm(){ 
+      this.isShowUserEdit = false 
+      this.isShowUserAdd = false 
+      this.isShowReportEdit = false
+      this.isShowReportAdd = false
+      this.dataReportAdd = {
+        annotations: "",
+        annotationsEn: "",
+        email: "",
+        fileName: "",
+        isReportChecked: false,
+        speakerList: [],
+        speakerListEn: [],
+        status: 1,
+        title: "",
+        titleEn: "",
+      }
+      this.dataUserAdd={
+        name:"",
+        nameEn:"",
+        surname:"",
+        surnameEn:"",
+        patronymic:"",
+        patronymicEn:"",
+        organization:"",
+        organizationEn:"",
+        position:"",
+        positionEn:"",
+        place:"",
+        placeEn:"",
+        aboutMe:"",
+        aboutMeEn:"",
+        email:"",
+        telephone:"",
+        isEmailConfirmed:false,
+        isUserChecked:false
+      }
+    },
+    
     async startEditUsers(id){
       await this.$store.dispatch('admin/fetchUserById', id)
+      this.todo = 'edit'
       this.isShowUserEdit = true
     },
     async startEditReport(id){
       try {
         await this.$store.dispatch('admin/fetchReportById', id)
-        //this.$store.commit('admin/setEditReport');
+        this.todo = 'edit'
         this.isShowReportEdit = true
       } catch (error) {
         alert('Не удалось загрузть доклад')

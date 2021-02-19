@@ -89,7 +89,7 @@
         </mdb-row>
         <mdb-row>
           <mdb-col>
-            <mdb-btn @click="saveUserEdit">
+            <mdb-btn @click="saveUser">
               Cохранить
             </mdb-btn>
             <mdb-btn @click="userIsChecked">
@@ -115,7 +115,7 @@ import { helpers, required, email, } from 'vuelidate/lib/validators'
 import { mdbContainer, mdbInput,  mdbBtn , mdbBtnGroup, mdbRow, mdbCol } from 'mdbvue';
 
 export default {
-  props:['closeForm','user','setUserRows'],
+  props:['closeForm','user','todo'],
   data: () => ({
     RU, EN,
     editUser:{isUserChecked : false},
@@ -128,11 +128,12 @@ export default {
   },
   methods:{
     transliterate,
-    async saveUserEdit(){
-      await this.$store.dispatch('admin/saveUserEditBD', this.editUser)
-      this.$store.commit('admin/saveUserEdit', {...this.editUser, id:this.user.id})
-      this.setUserRows()
-      this.closeForm()
+    async saveUser(){
+      if(this.todo === 'edit'){
+        await this.$store.dispatch('admin/saveUserEditBD', this.editUser)
+        this.$store.commit('admin/saveUserEdit', {...this.editUser, id:this.user.id})
+        this.closeForm()
+      }
     },
     async userIsChecked(){
       this.editUser.isUserChecked = true
