@@ -13,7 +13,7 @@
       </logo>
       <!-- <button @click="testFetch">Тестовый запрос</button> -->
       <div>
-        <mdb-btn class="logout-button" @click="logout">Выход</mdb-btn>
+        <mdb-btn v-if="getIsAuth" class="logout-button" @click="logout">Выход</mdb-btn>
         <dropdown end>
           <dropdown-toggle class="teal lighten-2" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
           <dropdown-menu >
@@ -41,6 +41,10 @@ import { setLocale, localeRout} from '@/assets/utils';
 import { RU, EN } from '@/constants/language';
 
 export default {
+  data: () => ({
+    RU, EN,
+    isAuthorized:false,
+  }),
   components: {
     'container': mdbContainer,
     'navbar': mdbNavbar,
@@ -58,7 +62,6 @@ export default {
       const axios = this.$axios.create({
         baseURL: process.env.NODE_ENV === 'production' ? 'https://api.bibcongress.ru/' : 'http://localhost:3101/api/',
       })
-
       axios.get('/auth/logout')
         .then(({ data }) => {
           console.log(data);
@@ -71,13 +74,39 @@ export default {
           console.log(error.message);
         });
     },
+    setAuthorizarion() {
+      const token = this.$cookies.get('token');
+      if (token) {
+        const AxiosTooken = this.$axios.create({
+          headers: { 'Authorization': token },
+          baseURL: process.env.NODE_ENV === 'production' ? 'https://api.bibcongress.ru/' : 'http://localhost:3101/api/',
+        });
+        AxiosTooken.get('/auth/check')
+          .then((res) => {
+            this.isAuthorized = true;
+          })
+          .catch(error => {
+            this.isAuthorized = false;
+            console.log(error.message);
+          })
+      } else {
+        this.isAuthorized = false
+      }
+    },
     testFetch() {
       this.$axios.get('/auth/check', { headers: { 'Authorization': this.$cookies.get('token') } })
         .then(res => console.log(res))
         .catch(({ response }) => console.log(response));
+    },
+  },
+  created() {
+    this.setAuthorizarion();
+  },
+  computed: {
+    getIsAuth() {
+      return this.isAuthorized;
     }
   },
-  data: () => ({ RU, EN }),
 }
 </script>
 <style scoped>
