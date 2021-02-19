@@ -12,13 +12,16 @@
         </nuxt-link>
       </logo>
       <!-- <button @click="testFetch">Тестовый запрос</button> -->
-      <dropdown end>
-        <dropdown-toggle class="teal lighten-2" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
-        <dropdown-menu >
-          <nuxt-link class='dropdown-item locale_btn' tabindex="0" :to="switchLocalePath(RU)">Русский</nuxt-link>
-          <nuxt-link class='dropdown-item locale_btn' tabindex="0" :to="switchLocalePath(EN)">English</nuxt-link>
-        </dropdown-menu>
-      </dropdown>
+      <div>
+        <mdb-btn class="logout-button" @click="logout">Выход</mdb-btn>
+        <dropdown end>
+          <dropdown-toggle class="teal lighten-2" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
+          <dropdown-menu >
+            <nuxt-link class='dropdown-item locale_btn' tabindex="0" :to="switchLocalePath(RU)">Русский</nuxt-link>
+            <nuxt-link class='dropdown-item locale_btn' tabindex="0" :to="switchLocalePath(EN)">English</nuxt-link>
+          </dropdown-menu>
+        </dropdown>
+      </div>
     </container>
   </nav>
 </template>
@@ -32,14 +35,12 @@ import {
   mdbDropdownItem,
   mdbDropdownMenu,
   mdbDropdownToggle,
+  mdbBtn,
 } from 'mdbvue';
 import { setLocale, localeRout} from '@/assets/utils';
 import { RU, EN } from '@/constants/language';
 
 export default {
-  data:()=>({
-    RU,EN
-  }),
   components: {
     'container': mdbContainer,
     'navbar': mdbNavbar,
@@ -48,10 +49,28 @@ export default {
     'dropdown-item': mdbDropdownItem,
     'dropdown-menu': mdbDropdownMenu,
     'dropdown-toggle': mdbDropdownToggle,
+    'mdb-btn': mdbBtn,
   },
   methods:{
     setLocale,
     localeRout,
+    logout() {
+      const axios = this.$axios.create({
+        baseURL: process.env.NODE_ENV === 'production' ? 'https://api.bibcongress.ru/' : 'http://localhost:3101/api/',
+      })
+
+      axios.get('/auth/logout')
+        .then(({ data }) => {
+          console.log(data);
+          if (data === 'OK') {
+            this.isAuthorized = false;
+            this.$router.push('/');
+          }
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    },
     testFetch() {
       this.$axios.get('/auth/check', { headers: { 'Authorization': this.$cookies.get('token') } })
         .then(res => console.log(res))
@@ -67,5 +86,8 @@ export default {
 }
 .locale_btn{
   z-index: 100;
+}
+.logout-button {
+  margin-right: 20px;
 }
 </style>

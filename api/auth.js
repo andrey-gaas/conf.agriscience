@@ -166,6 +166,12 @@ router.get('/check', (req, res) => {
   }
 });
 
+// Выход из аккаунта
+router.get('/logout', (req, res) => {
+  res.clearCookie('token');
+  res.send('OK');
+});
+
 // Повторная отправка письма
 router.get('/send-email/:email', (req, res) => {
   const { email } = req.params;
