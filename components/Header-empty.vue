@@ -13,7 +13,12 @@
       </logo>
       <!-- <button @click="testFetch">Тестовый запрос</button> -->
       <div>
-        <mdb-btn v-if="isAdmin" class="logout-button">Админка</mdb-btn>
+        <nuxt-link :to="localeRout('/personarea/admin')" v-if="isAuth && isAdmin">
+          <mdb-btn class="logout-button">Админка</mdb-btn>
+        </nuxt-link>
+        <nuxt-link :to="localeRout('/personarea')" v-if="isAuth">
+          <mdb-btn class="logout-button">Личный кабинет</mdb-btn>
+        </nuxt-link>
         <mdb-btn v-if="isAuth" class="logout-button" @click="logout">Выход</mdb-btn>
         <dropdown end>
           <dropdown-toggle class="teal lighten-2" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
