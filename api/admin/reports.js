@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const Mongo = require('../db/Mongo');
 const router = Router();
 
+// Список докладов (с фильтром и без)
 router.get('/', (req, res) => {
   
   let filter = req.query;
@@ -23,6 +24,7 @@ router.get('/', (req, res) => {
     });
 });
 
+// Получить конкретный доклад
 router.get('/:id', (req, res) => {
   Mongo.database
     .db('bibcongress')
@@ -34,6 +36,7 @@ router.get('/:id', (req, res) => {
     })
 });
 
+// Редактировать доклад
 router.put('/:id', (req, res) => {
   const data = req.body;
 
@@ -59,6 +62,7 @@ router.put('/:id', (req, res) => {
     });
 });
 
+// Удалить доклад
 router.delete('/:id', (req, res) => {
   Mongo.database
     .db('bibcongress')
@@ -68,6 +72,21 @@ router.delete('/:id', (req, res) => {
       res.send('OK');
     })
     .catch(error => res.status(500).send(error.message));
+});
+
+// Перенести доклад в подтвержденный
+router.post('/move-to-confirm', (req, res) => {
+  Mongo.database
+    .db('bibcongress')
+    .collection('confirmed-reports')
+    .insertOne(report)
+    .then(() => {
+      res.send('OK');
+    })
+    .catch(error => {
+      console.log(error.message);
+      res.status(500).send('Ошибка сервера')
+    });
 });
 
 module.exports = router;
