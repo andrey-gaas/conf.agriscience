@@ -123,6 +123,17 @@ export default {
             this.$cookies.set('token', token, { maxAge: 60 * 60 * 24 * 7 });
             this.$store.commit('setIsAuth', true)
             this.$router.push(this.localeRout('/personarea'));
+
+            const AxiosTooken = this.$axios.create({
+              headers: { 'Authorization': token },
+            });
+
+            AxiosTooken.get('/admin/check')
+              .then(({ data }) => {
+                if (data === 'OK') {
+                  this.$store.commit('setIsAdmin', true);
+                }
+              });
           }
         })
         .catch((error) => {

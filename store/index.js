@@ -3,6 +3,7 @@ import Axios from 'axios';
 export const state = () => ({
   loginData: {},
   isAuth: false,
+  isAdmin: false,
   personData:{},
   personDataEn:{},
   personAboutMeRu:'',
@@ -225,6 +226,9 @@ export const mutations = {
   },
   setIsAuth(s, boolean){
     s.isAuth = boolean
+  },
+  setIsAdmin(s, boolean) {
+    s.isAdmin = boolean;
   }
 }
 
@@ -310,6 +314,7 @@ export const getters = {
     return s.isAuth
   },
   getIsAuth: s => s.isAuth,
+  getIsAdmin: s => s.isAdmin,
   getLoginData(s){
     return s.loginData
   },

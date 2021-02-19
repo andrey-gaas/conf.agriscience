@@ -13,6 +13,7 @@
       </logo>
       <!-- <button @click="testFetch">Тестовый запрос</button> -->
       <div>
+        <mdb-btn v-if="isAdmin" class="logout-button">Админка</mdb-btn>
         <mdb-btn v-if="isAuth" class="logout-button" @click="logout">Выход</mdb-btn>
         <dropdown end>
           <dropdown-toggle class="teal lighten-2" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
@@ -65,7 +66,8 @@ export default {
         .then(({ data }) => {
           console.log(data);
           if (data === 'OK') {
-            this.$store.commit('setIsAuth', false)
+            this.$store.commit('setIsAuth', false);
+            this.$store.commit('setIsAdmin', false);
             this.$router.push('/');
           }
         })
@@ -82,7 +84,8 @@ export default {
         });
         AxiosTooken.get('/auth/check')
           .then((res) => {
-            this.$store.commit('setIsAuth', true)
+            this.$store.commit('setIsAuth', true);
+            this.checkAdmin(AxiosTooken);
           })
           .catch(error => {
             this.$store.commit('setIsAuth', false)
@@ -91,6 +94,15 @@ export default {
       } else {
         this.$store.commit('setIsAuth', false)
       }
+    },
+    checkAdmin(axios) {
+      axios.get('/admin/check')
+        .then(({ data }) => {
+          if (data === 'OK') {
+            this.$store.commit('setIsAdmin', true);
+          }
+        })
+        .catch(({ response }) => console.log(response));
     },
     testFetch() {
       this.$axios.get('/auth/check', { headers: { 'Authorization': this.$cookies.get('token') } })
@@ -102,7 +114,8 @@ export default {
     this.setAuthorizarion();
   },
   computed:{
-    isAuth(){return this.$store.getters.getIsAuth}
+    isAuth(){return this.$store.getters.getIsAuth},
+    isAdmin(){return this.$store.getters.getIsAdmin},
   }
 }
 </script>
