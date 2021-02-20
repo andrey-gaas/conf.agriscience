@@ -83,16 +83,19 @@
               >
               <label class="custom-control-label" for="isUserConfirm">Пользователь проверен</label>
             </div>
+            <span class="d-flex red-text" v-if="$v.editUser.$invalid && $v.editUser.$dirty">
+              Ошибка в заполнении полей
+            </span>
           </mdb-col>
           <!--  -->
-          
         </mdb-row>
+        
         <mdb-row>
           <mdb-col>
             <mdb-btn @click="saveUser">
               Cохранить
             </mdb-btn>
-            <mdb-btn @click="userIsChecked">
+            <mdb-btn @click="userIsChecked"  v-if="todo !== 'create'">
               Проверен
             </mdb-btn>
             <mdb-btn @click="closeForm">
@@ -114,8 +117,13 @@ import { transliterate} from '@/assets/utils'
 import { helpers, required, email, } from 'vuelidate/lib/validators'
 import { mdbContainer, mdbInput,  mdbBtn , mdbBtnGroup, mdbRow, mdbCol } from 'mdbvue';
 
+//Валидатор для русского алфавита
+const alphaValid = helpers.regex('alpha', /^[a-zA-Zа-яёА-ЯЁ]*$/)
+//Валидатор телефона
+const phoneValid = helpers.regex('alpha', /^\+?[0-9]{0,3}(\s|-| |\s|\(|\s\(|-\()?\d{3}(\s|-| |\s|\)|\)\s|\)\-)?(\d|\d\s|\d\-){3,8}$/)
+
 export default {
-  props:['closeForm','user','todo'],
+  props:['closeForm','user','todo', 'userRows', 'appDataUserRows'],
   data: () => ({
     RU, EN,
     editUser:{isUserChecked : false},
@@ -124,24 +132,40 @@ export default {
     
   },
   validations:{
-    
+    editUser:{
+      surname: {alphaValid, required},
+      surnameEn: {alphaValid, required},
+      name: {alphaValid, required},
+      nameEn: {alphaValid, required},
+      patronymic: {alphaValid},
+      patronymicEn: {alphaValid},
+      organization: {required},
+      organizationEn: {required},
+      position: {required},
+      positionEn: {required},
+      place: {required},
+      placeEn: {required},
+      email: {email, required},
+      telephone: {phoneValid},
+    }
   },
   methods:{
     transliterate,
     async saveUser(){
+      this.$v.editUser.$touch()
+      if(this.$v.editUser.$invalid) return
       if(this.todo === 'edit'){
         await this.$store.dispatch('admin/saveUserEditBD', this.editUser)
-        this.$store.commit('admin/saveUserEdit', {...this.editUser, id:this.user.id})
+        this.appDataUserRows(this.editUser, this.$store.getters['admin/getUsersEdit'].id)
         this.closeForm()
       }
     },
     async userIsChecked(){
       this.editUser.isUserChecked = true
       await this.$store.dispatch('admin/userIsChecked')
-      this.$store.commit('admin/saveUserEdit', {...this.editUser, id:this.user.id})
+      this.appDataUserRows(this.editUser, this.$store.getters['admin/getUsersEdit'].id)
       this.closeForm()
     },
-    
   },
   mounted(){
     

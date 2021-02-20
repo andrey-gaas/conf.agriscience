@@ -38,6 +38,9 @@
             <label class="custom-control-label" for="isSpeaker">Докладчик</label>
           </div>
         </mdb-col>
+        <span class="d-flex red-text" v-if="$v.editAuthor.$invalid && $v.editAuthor.$dirty">
+          Ошибка в заполнении полей
+        </span>
       </mdb-row>
       <div>
           <mdb-btn class="mt-4 mb-0 teal lighten-2" @click="saveAuthor"
@@ -72,7 +75,19 @@ export default {
     
   },
   validations:{
-    
+    editAuthor:{
+      ru:{
+        surname: {alphaValid, required},
+        name: {alphaValid, required},
+        patronymic: {alphaValid},
+      },
+      en:{
+        surname: {alphaValid, required},
+        name: {alphaValid, required},
+        patronymic: {alphaValid},
+      },
+      email: {email},
+    }
   },
   methods:{
     localeRout,transliterate,
@@ -90,7 +105,6 @@ export default {
       let dataRu = this.editAuthor.ru
       let dataEn = this.editAuthor.en
       let res
-      console.log('hello', dataRu, dataEn);
       if(loc === 'ru'){
         res = await this.axiosTranslete({position:dataRu.position, organization:dataRu.organization}, {from:'ru', to:'en'});
         dataEn = {
@@ -101,7 +115,6 @@ export default {
           position: res.position,
         }
         this.editAuthor.en = dataEn
-        console.log(dataEn);
       }else{
         res = await this.axiosTranslete({position:dataEn.position, organization:dataEn.organization}, {from:'en', to:'ru'});
         dataRu = {
@@ -115,6 +128,10 @@ export default {
       }
     },
     saveAuthor(){
+      this.$v.editAuthor.$touch()
+
+      if(this.$v.editAuthor.$invalid) return
+      
       let num = this.editAuthor.num
       let email = this.editAuthor.email
       let speakerRu = {...this.editAuthor.ru, isSpeaker: this.editAuthor.isSpeaker, email, num}

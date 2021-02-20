@@ -17,34 +17,53 @@
           </mdb-btn-group>
           <mdb-btn-group m='0'>
             <mdb-btn m='0'
+              v-if="isShowReports"
               @click='createReport()'
             >Новый доклад</mdb-btn>
             <mdb-btn m='0'
+              v-if="isShowUsers"
               @click='createUser()'
             >Новый пользователь
             </mdb-btn>
           </mdb-btn-group>
           <div class="filter d-flex align-content-center align-items-center">
             <mdb-btn m='0'
-              @click="setFilter"
-            >Применить
+              @click='isShowFilter =!isShowFilter'
+            >Фильтры
             </mdb-btn>
-            <div>фильтры </div>
-            <div class="custom-control custom-checkbox custom-control">
-              <input type="checkbox" class="custom-control-input" id="isEmailConfirmed"
-                v-model="isEmailConfirmed"
-              >
-              <label class="custom-control-label" for="isEmailConfirmed">Email</label>
-            </div>
-            <!-- Default inline 2-->
-            <div class="custom-control custom-checkbox custom-control">
-              <input type="checkbox" class="custom-control-input" id="defaultInline2">
-              <label class="custom-control-label" for="defaultInline2">2</label>
-            </div>
-            <!-- Default inline 3-->
-            <div class="custom-control custom-checkbox custom-control-inline">
-              <input type="checkbox" class="custom-control-input" id="defaultInline3">
-              <label class="custom-control-label" for="defaultInline3">3</label>
+            <div class="filter__drop-menu"
+              v-if="isShowFilter"
+            >
+              <div class="filter__drop_item d-flex">
+                <span class="m-2 h6">
+                  Почта:
+                </span>
+                <select class="browser-default custom-select"
+                  v-model="filterData.isEmailConfirmed"
+                >
+                  <option :value="undefined" selected>Неважно</option>
+                  <option :value="true">Подтверждена</option>
+                  <option :value="false">Не подтверждена</option>
+                </select>
+              </div>
+              <div class="filter__drop_item d-flex">
+                <span class="m-2 h6">
+                  Проверен:
+                </span>
+                <select class="browser-default custom-select"
+                  v-model="filterData.isUserChecked"
+                >
+                  <option :value="undefined" selected>Неважно</option>
+                  <option :value="true">Проверен</option>
+                  <option :value="false">Не проверен</option>
+                </select>
+              </div>
+              <div class="filter__drop_item d-flex">
+                <mdb-btn m='0'
+                  @click='setFilter'
+                >Применить
+                </mdb-btn>
+              </div>
             </div>
           </div>
         </mdb-col>
@@ -64,24 +83,30 @@
       v-if="isShowUserEdit"
       :closeForm = closeForm
       :user = userEdit
+      :userRows = userRows
+      :appDataUserRows = appDataUserRows
       :todo="todo"
     />
     <UserEdit
       v-if="isShowUserAdd"
       :closeForm = closeForm
       :user = dataUserAdd
+      :userRows = userRows
+      :appDataUserRows = appDataUserRows
       :todo="todo"
     />
     <ReportEdit
       v-if="isShowReportEdit"
       :closeForm="closeForm"
       :reportEdit="reportEdit"
+      :appDataReportRows = appDataReportRows
       :todo="todo"
     />
     <ReportEdit
       v-if="isShowReportAdd"
       :closeForm="closeForm"
       :reportEdit="dataReportAdd"
+      :appDataReportRows = appDataReportRows
       :todo="todo"
     />
   </div>
@@ -91,7 +116,7 @@
 import UserEdit from '@/components/admin/UserEdit';
 import ReportEdit from '@/components/admin/ReportEdit';
 
-import { mdbContainer, mdbInput, mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody, mdbDatatable} from 'mdbvue';
+import { mdbContainer, mdbInput, mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody, mdbDatatable,} from 'mdbvue';
 import { BIconXSquareFill, BIconCheckSquare, BIconQuestionSquare, } from 'bootstrap-vue'
 
 export default {
@@ -107,7 +132,11 @@ export default {
     isShowUserAdd: false,
     isShowReportEdit: false,
     isShowReportAdd: false,
-    filterData:{},
+    isShowFilter: false,
+    filterData:{
+      isEmailConfirmed: undefined,
+      isUserChecked: undefined,
+    },
     isEmailConfirmed: true,
     QuestionSquare:'<svg data-v-2730f04a="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="question square" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-question-square report__status_icon amber-text b-icon bi"><g data-v-2730f04a=""><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg>',
     XSquareFill:'<svg data-v-2730f04a="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="x square fill" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-x-square-fill report__status_icon red-text b-icon bi"><g data-v-2730f04a=""><path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"></path></g></svg>',
@@ -207,7 +236,6 @@ export default {
     reportList(){return this.$store.getters['admin/getReportsList']},
     userList(){return this.$store.getters['admin/getUsersList']},
     userEdit(){return this.$store.getters['admin/getUsersEdit']},
-
     reportEdit(){
       const rep = this.$store.getters['admin/getReportEdit']
       let speakerList = rep.speakerList.map(el => {
@@ -254,6 +282,31 @@ export default {
     },
     rerenderDataTable(){
       this.dataTableKey += 1
+    },
+    appDataUserRows(user, id){
+      this.userRows.map(el => {
+        if(el.id === id){
+          el.name = `${user.surname} ${user.name?user.name[0]+'.':''} ${user.patronymic?user.patronymic[0]+'.':''}`
+          el.email = user.email
+          el.isEmailChecked = user.isEmailConfirmed ? this.CheckSquare : this.XSquareFill
+          el.isUserChecked = user.isUserChecked ? this.CheckSquare : this.XSquareFill
+
+        }
+      })
+    },
+    appDataReportRows(report){
+      
+      console.log(report);
+      this.reportRows.map(el => {
+        if(el.id === report.id){
+          console.log('in inside');
+          el.title = report.title
+          el.email = report.email
+          el.status = report.status == 1 ? this.CheckSquare : report.status == 0 ? this.QuestionSquare : this.XSquareFill
+          el.isReportChecked = report.isReportChecked ? this.CheckSquare : this.XSquareFill
+        }
+      })
+      this.rerenderDataTable()
     },
     closeForm(){ 
       this.isShowUserEdit = false 
@@ -327,8 +380,17 @@ export default {
         this.rerenderDataTable()
       }
     },
-    setFilter(){
-      this.$store.dispatch('admin/fetchUsers',{isEmailConfirmed: this.isEmailConfirmed})
+    async setFilter(){
+      //this.userRows[0].name = 'Рабоай'
+      let filter = {}
+      for(let key in this.filterData){
+        if(this.filterData[key] !== undefined){
+          filter[key] = this.filterData[key]
+        }
+      }
+      console.log(filter);
+      await this.$store.dispatch('admin/fetchUsers',filter)
+      this.rerenderDataTable()
     }
   },
   created(){
@@ -342,7 +404,8 @@ export default {
   components:{
     UserEdit, ReportEdit,
     BIconXSquareFill, BIconCheckSquare, BIconQuestionSquare,
-    mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody, mdbDatatable 
+    mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody, mdbDatatable,
+
   }
 }
 // GET /admin/reports - получить ВСЕ доклады
@@ -362,5 +425,14 @@ export default {
 .report__status_icon{
   height: 25px;
   width: 25px;
+}
+.filter__drop-menu{
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  border: 2px solid #ddd;
+  z-index: 101;
 }
 </style>

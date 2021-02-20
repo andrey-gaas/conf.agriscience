@@ -1,6 +1,6 @@
 <template>
   <div class="wrap__edit-author d-flex align-items-center min-h-100 flex-grow-1">
-    <mdb-container class="grey user-edit__conteiner lighten-5 d-flex justify-content-center flex-column rounded-lg overflow-hidden" p="0" m='t5'>
+    <mdb-container class="grey overflow-y-auto report-edit__form lighten-5 d-flex justify-content-center flex-column rounded-lg overflow-hidden" p="0" m='t4'>
       <div class="overflow-y-auto overflow-x-hidden">
         <mdb-row p='3'>
           <mdb-col sm='12' lg='12'>
@@ -211,10 +211,10 @@
             <mdb-btn @click="saveReport">
               Cохранить
             </mdb-btn>
-            <mdb-btn @click="reportIsChecked">
+            <mdb-btn @click="reportIsChecked" v-if="todo !== 'create'">
               Проверен
             </mdb-btn>
-            <mdb-btn-group>
+            <mdb-btn-group  v-if="todo !== 'create'">
               <mdb-btn color="success" @click="approveReport">
                 Одобрить
               </mdb-btn>
@@ -272,7 +272,7 @@ import { BIcon, BIconCaretDownFill, BIconCaretUpFill, BIconTrashFill, BIconPenci
 import { mdbContainer, mdbInput,  mdbBtn, mdbBtnGroup, mdbRow, mdbCol, mdbTbl, mdbTblHead, mdbTblBody} from 'mdbvue';
 
 export default {
-  props:['closeForm', 'reportEdit', 'todo'],
+  props:['closeForm', 'reportEdit', 'todo', 'appDataReportRows'],
   data: () => ({
     RU, EN,
     author:[],
@@ -286,12 +286,12 @@ export default {
     isAuthorEdit: false,
     isAuthorCrate: false,
     validData:{
-      isCheck: false,
-      isCountAuthor: false,
-      isCountSpeaker: false,
-      isTitle: false,
-      isAnnotation: false,
-      isFileName: false,
+      isCheck: true,
+      isCountAuthor: true,
+      isCountSpeaker: true,
+      isTitle: true,
+      isAnnotation: true,
+      isFileName: true,
     },
     editAuthor:{},
   }),
@@ -317,7 +317,11 @@ export default {
   methods:{
     localeRout,
     async saveReport(){
+
+      if(!this.validation()) return
+
       if(this.todo === 'edit'){
+        this.appDataReportRows(this.reportEdit)
         await this.$store.dispatch('admin/saveReportEditBD', this.reportEdit)
         this.closeForm()
       }
@@ -373,6 +377,10 @@ export default {
     async reportIsChecked(){
       try {
         await this.$store.dispatch('admin/reportIsChecked')
+
+        this.reportEdit.isReportChecked = true,
+        this.appDataReportRows(this.reportEdit)
+
         this.closeForm()
       } catch (error) {
         aletr('что-то пошло не так, сообщиете программистам')
@@ -419,14 +427,17 @@ export default {
 
     },
     async failureReport(){
+      this.reportEdit.status = -1
+      this.appDataReportRows(this.reportEdit)
       await this.$store.dispatch('admin/failureReport')
-      this.$store.commit('admin/setReportEditStatus', -1)
-      
+      //this.$store.commit('admin/setReportEditStatus', -1)
       this.closeForm()
     },
     async approveReport(){
+      this.reportEdit.status = 1
+      this.appDataReportRows(this.reportEdit)
       await this.$store.dispatch('admin/approveReport')
-      this.$store.commit('admin/setReportEditStatus', 1)
+      //this.$store.commit('admin/setReportEditStatus', 1)
       this.closeForm()
     },
     async axiosTranslete(textData, {from, to}){
@@ -588,5 +599,8 @@ export default {
       content:'Survey...';
       cursor: pointer;
     }
-  }
+}
+.report-edit__form{
+  max-height: 98vh;
+}
 </style>

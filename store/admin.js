@@ -15,15 +15,15 @@ export const mutations = {
     for(let elem of s.allReports){
       if(elem.id === id){
         elem.status = status
-        console.log({...s.reportEdit}, 7);
         break
       }
     }
   },
   saveUserEdit(s, user){
-    for(let item of s.userList){
-      if(item.id == user.id){;
-        item = {...user}
+    const id = s.userEdit.id
+    for(let i = 0; i < s.userList.length; i++){
+      if(s.userList[i].id === id){;
+        s.userList[i] = {...s.userList[i], ...user}
         break;
       }
     }
@@ -73,6 +73,7 @@ export const actions = {
 
     await axios.get(`/admin/users${pathFilter}`).
     then( res => {
+      console.log(res.data);
       commit('setUsers', res.data)
     })
   },
