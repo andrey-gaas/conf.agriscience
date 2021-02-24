@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
     }
   }
 
-  if (filter.isUserChecked && filter.isUserChecked !== undefined) {
+  if (filter.isUserChecked !== undefined) {
     filter.isUserChecked = { '$exists': filter.isUserChecked };
   }
 
