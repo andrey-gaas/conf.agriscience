@@ -175,7 +175,13 @@
                 </div>
               </mdb-col>
               <mdb-col col='12' m="t2">
-                <span class="d-flex">Почта: {{reportEdit.email}}</span>
+                <span class="d-flex" v-if="todo === 'edit'">Почта: {{reportEdit.email}}</span>
+                <mdb-input size="sm" m='y2'
+                  type="email"
+                  v-if="todo === 'create'"
+                  label="E-mail" 
+                  v-model="email" 
+                />
               </mdb-col>
             </mdb-row>
             <mdb-row class="m-0" p='x2'>
@@ -204,6 +210,11 @@
                   v-if="validData.isCheck && !validData.isFileName"
                 >
                   {{$t('edit_report_err_valid_add_file')}}
+                </span>
+                <span class='h6 d-flex red-text'
+                  v-if="validData.isCheck && !validData.isEmail"
+                >
+                  Укажите E-mail
                 </span>
               </mdb-col>
             </mdb-row>
@@ -288,6 +299,7 @@ export default {
     annotationsEn:'',
     isAuthorEdit: false,
     isAuthorCrate: false,
+    email:'',
     validData:{
       isCheck: true,
       isCountAuthor: true,
@@ -295,6 +307,7 @@ export default {
       isTitle: true,
       isAnnotation: true,
       isFileName: true,
+      isEmail:true,
     },
     editAuthor:{},
   }),
@@ -326,6 +339,12 @@ export default {
       if(this.todo === 'edit'){
         this.appDataReportRows(this.reportEdit)
         await this.$store.dispatch('admin/saveReportEditBD', this.reportEdit)
+        this.closeForm()
+      }
+      if(this.todo === 'create'){
+        this.reportEdit.email = this.email
+        
+        await this.$store.dispatch('admin/createReportBD', this.reportEdit)
         this.closeForm()
       }
     },
@@ -424,6 +443,12 @@ export default {
       else{
         isValid = false
         this.validData.isFileName = false
+      }
+
+      if(this.todo === 'create' && this.email !== '') this.validData.isEmail = true
+      else{
+        isValid = false
+        this.validData.isEmail = false
       }
 
       return isValid

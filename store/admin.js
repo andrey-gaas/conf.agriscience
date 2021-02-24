@@ -117,8 +117,13 @@ export const actions = {
           id = getters.getReportEdit.id;
     await axios.put('/admin/reports/'+id, {status:1})
   },
-  async crateUserBD({rootGetters}, user){
+  async createUserBD({rootGetters}, user){
     const axios = rootGetters.getAxiosWithToken
     await axios.post('/admin/users/', user)
+  },
+  async createReportBD({rootGetters}, report){
+    const axios = rootGetters.getAxiosWithToken
+    console.log(report);
+    await axios.post('/admin/reports/', report)
   },
 }

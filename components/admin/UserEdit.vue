@@ -251,7 +251,7 @@ export default {
 
         this.editUser.password = this.password
 
-        await this.$store.dispatch('admin/crateUserBD', this.editUser)
+        await this.$store.dispatch('admin/createUserBD', this.editUser)
         this.closeForm()
         
       }

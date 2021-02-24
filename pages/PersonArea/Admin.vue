@@ -243,7 +243,7 @@ export default {
       isReportChecked: false,
       speakerList: [],
       speakerListEn: [],
-      status: 1,
+      status: 0,
       title: "",
       titleEn: "",
     },
