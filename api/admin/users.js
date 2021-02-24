@@ -1,6 +1,10 @@
 const { Router } = require('express');
 const Mongo = require('../db/Mongo');
 const router = Router();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const sendMail = require('./mail/sendmail');
+const { secretKey } = require('./config');
 
 router.get('/', (req, res) => {
   let filter = req.query;
@@ -34,6 +38,7 @@ router.get('/', (req, res) => {
 
 // Добавить пользователя
 router.post('/', (req, res) => {
+  console.log(req.body);
   const {
     name,
     nameEn,
@@ -47,10 +52,13 @@ router.post('/', (req, res) => {
     positionEn,
     place,
     placeEn,
+    aboutMe,
+    aboutMeEn,
     email,
     telephone,
     password,
     isSendLetter,
+    isUserChecked,
   } = req.body;
 
   const users = Mongo.database.db('bibcongress').collection('users');
@@ -86,9 +94,12 @@ router.post('/', (req, res) => {
             positionEn,
             place,
             placeEn,
+            aboutMe,
+            aboutMeEn,
             email,
             telephone,
             isEmailConfirmed: isSendLetter ? false : true,
+            isUserChecked,
             password: bcrypt.hashSync(password, salt),
             avatar: '',
             registrationDate,
