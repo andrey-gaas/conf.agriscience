@@ -123,7 +123,6 @@ export const actions = {
   },
   async createReportBD({rootGetters}, report){
     const axios = rootGetters.getAxiosWithToken
-    console.log(report);
     await axios.post('/admin/reports/', report)
   },
 }

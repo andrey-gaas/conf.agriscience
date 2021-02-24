@@ -343,6 +343,7 @@ export default {
       }
       if(this.todo === 'create'){
         this.reportEdit.email = this.email
+        this.reportEdit.fileName = this.fileName
         
         await this.$store.dispatch('admin/createReportBD', this.reportEdit)
         this.closeForm()
