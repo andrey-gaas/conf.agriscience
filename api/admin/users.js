@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const Mongo = require('../db/Mongo');
+const sendMail = require('../mail/sendmail');
 const router = Router();
 
 router.get('/', (req, res) => {
