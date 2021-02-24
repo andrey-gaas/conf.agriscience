@@ -14,7 +14,10 @@ router.get('/', (req, res) => {
   if(filter.status){
     filter.status = +filter.status
   }
-
+  if(filter.isReportChecked){
+    if(filter.isReportChecked === 'false') filter.isReportChecked = false
+    if(filter.isReportChecked === 'true') filter.isReportChecked = true
+  }
   Mongo.database
     .db('bibcongress')
     .collection('reports')
