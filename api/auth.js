@@ -207,11 +207,13 @@ router.get('/email-confirm/:email', (req, res) => {
       if (!user) {
         res.status(500).redirect('https://www.bibcongress.ru/notification?type=email-error&message=usernotfound');
       } else if (user.isEmailConfirmed) {
+        console.log(user);
         res.status(500).redirect('https://www.bibcongress.ru/notification?type=email-error&message=emailisconfirmed');
       } else {
         users
           .findOneAndUpdate({ email }, { $set: { isEmailConfirmed: true } })
           .then(() => {
+            setLog(user.id, 'Подтверждение почты');
             res.redirect(`https://www.bibcongress.ru/notification?type=email&message=${email}`);
           })
           .catch(error => {
@@ -234,7 +236,7 @@ router.post('/email-recovery', (req, res) => {
   const { email } = req.body;
 
   if (!email || !emailValidator.validate(email)) {
-    return res.status(400).send('Введите валидный E-Mail.')
+    return res.status(400).send('Введите валидный E-Mail.');
   }
 
   const users = Mongo.database.db('bibcongress').collection('users');
@@ -244,6 +246,7 @@ router.post('/email-recovery', (req, res) => {
       if (!user) {
         res.status(500).send('error_user_not_found');
       } else {
+        setLog(user.id, 'Попытка восстановления пароля');
         const code = phoneToken(4, {type: 'number'});
         const message = {
           email,
@@ -307,6 +310,7 @@ router.post('/email-recovery/code', (req, res) => {
       users
         .findOneAndUpdate({ email }, { $set: { code: '', password: newPasswrod } })
         .then(() => {
+          setLog(user.id, 'Изменен пароль');
           res.send('OK');
         })
         .catch(error => {
