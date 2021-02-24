@@ -88,7 +88,7 @@ router.post('/', (req, res) => {
             placeEn,
             email,
             telephone,
-            isEmailConfirmed: false,
+            isEmailConfirmed: isSendLetter ? false : true,
             password: bcrypt.hashSync(password, salt),
             avatar: '',
             registrationDate,
