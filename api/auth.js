@@ -30,6 +30,7 @@ router.post('/registration', (req, res) => {
   } = req.body;
 
   const users = Mongo.database.db('bibcongress').collection('users');
+  const actions = Mongo.database.db('bibcongress').collection('actions');
 
   users.find().limit(1).sort({ $natural: -1 }).toArray((error, lastUser) => {
     let id = 0;
@@ -45,6 +46,7 @@ router.post('/registration', (req, res) => {
           res.status(500).send('Server error');
         } else if (result !== null) res.status(400).send('E-Mail занят.');
         else {
+          const registrationDate = Date.now();
           const salt = bcrypt.genSaltSync(10);
           const user = {
             id,
@@ -65,7 +67,7 @@ router.post('/registration', (req, res) => {
             isEmailConfirmed: false,
             password: bcrypt.hashSync(password, salt),
             avatar: '',
-            registrationDate: Date.now(),
+            registrationDate,
           };
     
           users.insertOne(user, (error) => {
@@ -74,6 +76,17 @@ router.post('/registration', (req, res) => {
               res.status(500).send('Server error');
             }
             else {
+              const action = {
+                id: user.id,
+                email: user.email,
+                registration: registrationDate,
+              };
+              actions.insertOne(action, error => {
+                if (error) {
+                  console.log('Ошибка сохранения действия: Регистрация');
+                  console.log(error.message);
+                }
+              });
               const token = jwt.sign({
                 email,
                 id,

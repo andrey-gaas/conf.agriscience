@@ -28,6 +28,115 @@ router.get('/', (req, res) => {
     });
 });
 
+// Добавить пользователя
+router.post('/', (req, res) => {
+  const {
+    name,
+    nameEn,
+    surname,
+    surnameEn,
+    patronymic,
+    patronymicEn,
+    organization,
+    organizationEn,
+    position,
+    positionEn,
+    place,
+    placeEn,
+    email,
+    telephone,
+    password,
+    isSendLetter,
+  } = req.body;
+
+  const users = Mongo.database.db('bibcongress').collection('users');
+  const actions = Mongo.database.db('bibcongress').collection('actions');
+
+  users.find().limit(1).sort({ $natural: -1 }).toArray((error, lastUser) => {
+    let id = 0;
+    if (error) {
+      console.log(error.message);
+      res.status(500).send('Ошибка сервера');
+    } else {
+      if (lastUser && lastUser.length) id = lastUser[0].id + 1;
+
+      users.findOne({ email: email }, (error, result) => {
+        if (error) {
+          console.log(error);
+          res.status(500).send('Server error');
+        } else if (result !== null) res.status(400).send('E-Mail занят.');
+        else {
+          const registrationDate = Date.now();
+          const salt = bcrypt.genSaltSync(10);
+          const user = {
+            id,
+            name,
+            nameEn,
+            surname,
+            surnameEn,
+            patronymic,
+            patronymicEn,
+            organization,
+            organizationEn,
+            position,
+            positionEn,
+            place,
+            placeEn,
+            email,
+            telephone,
+            isEmailConfirmed: false,
+            password: bcrypt.hashSync(password, salt),
+            avatar: '',
+            registrationDate,
+          };
+    
+          users.insertOne(user, (error) => {
+            if (error) {
+              console.log(error);
+              res.status(500).send('Server error');
+            }
+            else {
+              const action = {
+                id: user.id,
+                email: user.email,
+                registration: registrationDate,
+              };
+              actions.insertOne(action, error => {
+                if (error) {
+                  console.log('Ошибка сохранения действия: Регистрация');
+                  console.log(error.message);
+                }
+              });
+              const token = jwt.sign({
+                email,
+                id,
+                admin: false,
+              }, secretKey);
+        
+              res.cookie('token', token, { expires: new Date(Date.now() + 31536000000) });
+              //res.send({ message: 'OK', token: token });
+    
+              if (isSendLetter) {
+                const message = {
+                  email,
+                  subject: 'Подтвердите регистрацию на III Международный библиографический конгресс.',
+                  text: `Для подтверждения электронной почты, перейдите по ссылке: https://api.bibcongress.ru/auth/email-confirm/${email}`,
+                };
+                sendMail(message, require('./mail/mail')(email))
+                  .then(() => res.send({ message: 'OK', token }))
+                  .catch(error => {
+                    console.log(error.message);
+                    res.send('OK');
+                  });
+              }
+            }
+          });
+        }
+      });
+    }
+  });
+});
+
 router.put('/:id', (req, res) => {
   const data = req.body;
 
