@@ -5,61 +5,67 @@
         <mdb-row p='3'>
           <mdb-col sm='12' lg='6'>
             <mdb-input size="sm" m='y2'
-              label="name" 
-              v-model="editUser.name" 
-            />
-            <mdb-input size="sm" m='y2'
-              label="surname" 
+              label="Фамилия" 
               v-model="editUser.surname" 
             />
             <mdb-input size="sm" m='y2'
-              label="patronymic" 
+              label="Имя" 
+              v-model="editUser.name" 
+            />
+            <mdb-input size="sm" m='y2'
+              label="Отчество" 
               v-model="editUser.patronymic" 
             />
             <mdb-input size="sm" m='y2'
-              label="organization" 
+              label="Организация" 
               v-model="editUser.organization" 
             />
             <mdb-input size="sm" m='y2'
-              label="position" 
+              label="Должность" 
               v-model="editUser.position" 
             />
             <mdb-input size="sm" m='y2'
-              label="place" 
+              label="Город, страна" 
               v-model="editUser.place" 
             />
-            <mdb-input type="textarea" label="About me" :rows="5"
+            <mdb-input type="textarea" label="О себе" :rows="5"
               v-model="editUser.aboutMe"
             />
+            <mdb-btn class="teal lighten-2 m-0" @click="translateUser({from:'ru', to:'en'})">
+              Перевести на английский
+            </mdb-btn>
           </mdb-col>
           <mdb-col sm='12' lg='6'>
             <mdb-input size="sm" m='y2'
-              label="nameEn" 
-              v-model="editUser.nameEn" 
-            />
-            <mdb-input size="sm" m='y2'
-              label="surnameEn" 
+              label="Surname" 
               v-model="editUser.surnameEn" 
             />
             <mdb-input size="sm" m='y2'
-              label="patronymicEn" 
+              label="Name" 
+              v-model="editUser.nameEn" 
+            />
+            <mdb-input size="sm" m='y2'
+              label="Middle name" 
               v-model="editUser.patronymicEn" 
             />
             <mdb-input size="sm" m='y2'
-              label="organizationEn" 
+              label="Organization" 
               v-model="editUser.organizationEn" 
             />
             <mdb-input size="sm" m='y2'
-              label="positionEn" 
+              label="Position" 
               v-model="editUser.positionEn" 
             />
             <mdb-input size="sm" m='y2'
-              label="placeEn" 
+              label="City, country" 
               v-model="editUser.placeEn" 
             />
-            <mdb-input type="textarea" label="About me En" :rows="5"
+            <mdb-input type="textarea" label="About me" :rows="5"
               v-model="editUser.aboutMeEn"
             />
+            <mdb-btn class="teal lighten-2 m-0" @click="translateUser({from:'en', to:'ru'})">
+              Translate on Russian
+            </mdb-btn>
           </mdb-col>
           <!--  -->
           <mdb-col sm='12' lg='6'>
@@ -68,12 +74,12 @@
               v-model="editUser.email" 
             />
             <mdb-input size="sm" m='y2'
-              label="telephone" 
+              label="Телефон" 
               v-model="editUser.telephone" 
             />
             <mdb-input size="sm" m='y2'
               v-if="this.todo === 'create'"
-              label="Password" 
+              label="Пароль" 
               v-model="password" 
             />
             <div class="custom-control custom-checkbox"
@@ -84,30 +90,35 @@
               >
               <label class="custom-control-label" for="EmailConfirmed">Отправить письмо для подтверждения почты</label>
             </div>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="EmailConfirmed"
-                v-model="editUser.isUserChecked"
-              >
-              <label class="custom-control-label" for="EmailConfirmed">Пользователь проверен</label>
-            </div>
             <div class="custom-control custom-checkbox"
-              v-if="todo === 'create'"
+              v-if="todo === 'edit'"
             >
               <input type="checkbox" class="custom-control-input" id="EmailConfirmed"
                 v-model="editUser.isEmailConfirmed"
               >
               <label class="custom-control-label" for="EmailConfirmed">Почта подтверждена</label>
             </div>
-            <div class="custom-control custom-checkbox"
-              v-if="todo === 'edit'"
-            >
+            <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="isUserConfirm"
                 v-model="editUser.isUserChecked"
               >
               <label class="custom-control-label" for="isUserConfirm">Пользователь проверен</label>
             </div>
             <span class="d-flex red-text" v-if="$v.editUser.$invalid && $v.editUser.$dirty">
-              Ошибка в заполнении полей
+              Ошибка в заполнении полей:
+              {{$v.editUser.surname.$invalid? 'Фамилия, ': ''}}
+              {{$v.editUser.surnameEn.$invalid? 'Surname, ': ''}}
+              {{$v.editUser.name.$invalid? 'Имя, ': ''}}
+              {{$v.editUser.nameEn.$invalid? 'Name, ': ''}}
+              {{$v.editUser.patronymic.$invalid? 'Отчество, ': ''}}
+              {{$v.editUser.patronymicEn.$invalid? 'Middle name, ': ''}}
+              {{$v.editUser.organization.$invalid? 'Организация, ': ''}}
+              {{$v.editUser.organizationEn.$invalid? 'Organization, ': ''}}
+              {{$v.editUser.place.$invalid? 'Должность, ': ''}}
+              {{$v.editUser.placeEn.$invalid? 'Place, ': ''}}
+              {{$v.editUser.email.$invalid? 'E-mail, ': ''}}
+              {{$v.editUser.telephone.$invalid? 'Телефон, ': ''}}
+              {{$v.password.$invalid? 'Пароль, ': ''}}
             </span>
           </mdb-col>
           <!--  -->
@@ -137,13 +148,15 @@
 import { RU, EN } from '@/constants/language';
 import { transliterate} from '@/assets/utils'
 
-import { helpers, required, email, } from 'vuelidate/lib/validators'
+import { helpers, required, email, minLength} from 'vuelidate/lib/validators'
 import { mdbContainer, mdbInput,  mdbBtn , mdbBtnGroup, mdbRow, mdbCol } from 'mdbvue';
 
 //Валидатор для русского алфавита
 const alphaValid = helpers.regex('alpha', /^[a-zA-Zа-яёА-ЯЁ]*$/)
 //Валидатор телефона
 const phoneValid = helpers.regex('alpha', /^\+?[0-9]{0,3}(\s|-| |\s|\(|\s\(|-\()?\d{3}(\s|-| |\s|\)|\)\s|\)\-)?(\d|\d\s|\d\-){3,8}$/)
+//Валидатор пароля
+const passwordValid = helpers.regex('alpha', /^[a-zA-Zа-яёА-ЯЁ0-9_!@#$%^&*]*$/)
 
 export default {
   props:['closeForm','user','todo', 'userRows', 'appDataUserRows'],
@@ -172,21 +185,72 @@ export default {
       placeEn: {required},
       email: {email, required},
       telephone: {phoneValid},
-    }
+    },
+    password:{ passwordValid, minLength:minLength(6), required }
   },
   methods:{
     transliterate,
+    async axiosTranslete(textData, {from, to}){
+      let res = await this.$axios.post('/translate', {language: {from, to}, fields:textData})
+      let result = {}
+      let i = 0
+      for(let key in textData){
+        result[key] = res.data[i]
+        i++
+      }
+      return result
+    },
+    async translateUser({from, to}){
+      if(to === 'en'){
+        let dataTranslate = await this.axiosTranslete({
+          organizationEn: this.editUser.organization? this.editUser.organization: '',
+          positionEn: this.editUser.position? this.editUser.position: '',
+          placeEn: this.editUser.place? this.editUser.place: '',
+          aboutMeEn: this.editUser.aboutMe? this.editUser.aboutMe: '',
+        }, {from, to})
+        
+        this.editUser.surnameEn = this.transliterate()(this.editUser.surname? this.editUser.surname: '')
+        this.editUser.nameEn = this.transliterate()(this.editUser.name? this.editUser.name: '')
+        this.editUser.patronymicEn = this.transliterate()(this.editUser.patronymic? this.editUser.patronymic: '')
+        this.editUser.organizationEn = dataTranslate.organizationEn
+        this.editUser.positionEn = dataTranslate.positionEn
+        this.editUser.placeEn = dataTranslate.placeEn
+        this.editUser.aboutMeEn = dataTranslate.aboutMeEn
+      }
+      if(to === 'ru'){
+        console.log('hello');
+        let dataTranslate = await this.axiosTranslete({
+          organization: this.editUser.organizationEn? this.editUser.organizationEn: '',
+          position: this.editUser.positionEn? this.editUser.positionEn: '',
+          place: this.editUser.placeEn? this.editUser.placeEn: '',
+          aboutMe: this.editUser.aboutMeEn? this.editUser.aboutMeEn: '',
+        }, {from, to})
+        
+        this.editUser.surname = this.transliterate()(this.editUser.surnameEn? this.editUser.surnameEn: '', true)
+        this.editUser.name = this.transliterate()(this.editUser.nameEn? this.editUser.nameEn: '', true)
+        this.editUser.patronymic = this.transliterate()(this.editUser.patronymicEn? this.editUser.patronymicEn: '', true)
+        this.editUser.organization = dataTranslate.organization
+        this.editUser.position = dataTranslate.position
+        this.editUser.place = dataTranslate.place
+        this.editUser.aboutMe = dataTranslate.aboutMe
+      }
+    },
     async saveUser(){
       this.$v.editUser.$touch()
       if(this.$v.editUser.$invalid) return
+      console.log('1');
       if(this.todo === 'edit'){
         await this.$store.dispatch('admin/saveUserEditBD', this.editUser)
         this.appDataUserRows(this.editUser, this.$store.getters['admin/getUsersEdit'].id)
         this.closeForm()
         return
       }
-      if(this.todo === 'create' && this.password !== ''){
-        
+      if(this.todo === 'create'){
+        this.$v.password.$touch()
+        if(this.$v.password.$invalid) return 
+
+        this.editUser.password = this.password
+
         await this.$store.dispatch('admin/crateUserBD', this.editUser)
         this.closeForm()
         
@@ -204,13 +268,13 @@ export default {
   },
   created(){
     const {
-      email,isEmailConfirmed, isUserConfirm, name, nameEn,organization,
+      email,isEmailConfirmed, name, nameEn,organization,
       organizationEn, patronymic, patronymicEn, place,placeEn,
       position,positionEn,surname, surnameEn, telephone, isUserChecked,
     } = this.user
     this.editUser = {
       isUserChecked : isUserChecked ? isUserChecked: false,
-      email, isEmailConfirmed, isUserConfirm,name, nameEn,organization,
+      email, isEmailConfirmed,name, nameEn,organization,
       organizationEn,patronymic,patronymicEn,place,placeEn,position,
       positionEn,surname,surnameEn,telephone,
     }

@@ -119,7 +119,6 @@ export const actions = {
   },
   async crateUserBD({rootGetters}, user){
     const axios = rootGetters.getAxiosWithToken
-
     await axios.post('/admin/users/', user)
   },
 }
