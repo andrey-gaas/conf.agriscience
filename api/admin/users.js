@@ -5,8 +5,12 @@ const router = Router();
 router.get('/', (req, res) => {
   let filter = req.query;
   
-  if (filter.id) {
+  if (filter.id && filter.id !== undefined) {
     filter.id = +filter.id;
+  }
+
+  if (filter.isUserChecked && filter.isUserChecked !== undefined) {
+    filter.isUserChecked = { '$exists': !!filter.isUserChecked };
   }
 
   for (let key in filter) {

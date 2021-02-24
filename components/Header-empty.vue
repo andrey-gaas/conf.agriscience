@@ -110,7 +110,7 @@ export default {
         .catch(({ response }) => console.log(response));
     },
     testFetch() {
-      this.$axios.get('/admin/reports/move-to-confirm', { test: 'test' }, { headers: { 'Authorization': this.$cookies.get('token') } })
+      this.$axios.get('/test')
         .then(res => console.log(res))
         .catch(({ response }) => console.log(response));
     },
