@@ -9,10 +9,6 @@ router.get('/', (req, res) => {
     filter.id = +filter.id;
   }
 
-  if (filter.isUserChecked && filter.isUserChecked !== undefined) {
-    filter.isUserChecked = { '$exists': !!filter.isUserChecked };
-  }
-
   for (let key in filter) {
     if(filter[key] === 'false'){
       filter[key] = false;
@@ -21,6 +17,10 @@ router.get('/', (req, res) => {
     if(filter[key] === 'true'){
       filter[key] = true;
     }
+  }
+
+  if (filter.isUserChecked && filter.isUserChecked !== undefined) {
+    filter.isUserChecked = { '$exists': filter.isUserChecked };
   }
 
   Mongo.database
