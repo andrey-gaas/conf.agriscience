@@ -1,11 +1,10 @@
 const { Router } = require('express');
 const Mongo = require('../db/Mongo');
-const sendMail = require('../mail/sendmail');
 const router = Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const sendMail = require('./mail/sendmail');
-const { secretKey } = require('./config');
+const sendMail = require('../mail/sendmail');
+const { secretKey } = require('../config');
 
 router.get('/', (req, res) => {
   let filter = req.query;
