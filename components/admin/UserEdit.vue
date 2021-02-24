@@ -71,13 +71,36 @@
               label="telephone" 
               v-model="editUser.telephone" 
             />
+            <mdb-input size="sm" m='y2'
+              v-if="this.todo === 'create'"
+              label="Password" 
+              v-model="password" 
+            />
+            <div class="custom-control custom-checkbox"
+              v-if="todo === 'create'"
+            >
+              <input type="checkbox" class="custom-control-input" id="EmailConfirmed"
+                v-model="editUser.isSendLetter"
+              >
+              <label class="custom-control-label" for="EmailConfirmed">Отправить письмо для подтверждения почты</label>
+            </div>
             <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="EmailConfirmed"
+                v-model="editUser.isUserChecked"
+              >
+              <label class="custom-control-label" for="EmailConfirmed">Пользователь проверен</label>
+            </div>
+            <div class="custom-control custom-checkbox"
+              v-if="todo === 'create'"
+            >
               <input type="checkbox" class="custom-control-input" id="EmailConfirmed"
                 v-model="editUser.isEmailConfirmed"
               >
               <label class="custom-control-label" for="EmailConfirmed">Почта подтверждена</label>
             </div>
-            <div class="custom-control custom-checkbox">
+            <div class="custom-control custom-checkbox"
+              v-if="todo === 'edit'"
+            >
               <input type="checkbox" class="custom-control-input" id="isUserConfirm"
                 v-model="editUser.isUserChecked"
               >
@@ -127,6 +150,8 @@ export default {
   data: () => ({
     RU, EN,
     editUser:{isUserChecked : false},
+    password: '',
+    
   }),
   computed:{
     
@@ -158,6 +183,13 @@ export default {
         await this.$store.dispatch('admin/saveUserEditBD', this.editUser)
         this.appDataUserRows(this.editUser, this.$store.getters['admin/getUsersEdit'].id)
         this.closeForm()
+        return
+      }
+      if(this.todo === 'create' && this.password !== ''){
+        
+        await this.$store.dispatch('admin/crateUserBD', this.editUser)
+        this.closeForm()
+        
       }
     },
     async userIsChecked(){

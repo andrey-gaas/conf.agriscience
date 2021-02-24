@@ -174,8 +174,11 @@
                   </div>
                 </div>
               </mdb-col>
+              <mdb-col col='12' m="t2">
+                <span class="d-flex">Почта: {{reportEdit.email}}</span>
+              </mdb-col>
             </mdb-row>
-            <mdb-row class="m-0" p='2'>
+            <mdb-row class="m-0" p='x2'>
               <mdb-col col="12" sm='12' md='6' lg='6' class=''>
                 <span class='h6 d-flex red-text'
                   v-if="validData.isCheck && !validData.isCountAuthor"

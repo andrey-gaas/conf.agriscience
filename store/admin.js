@@ -43,8 +43,13 @@ export const getters = {
 }
 export const actions = {
   async fetchReports({commit, rootGetters}, filter){
+    let pathFilter = "?"
+    for(let key in filter){
+      pathFilter+=`${key}=${filter[key]}&`
+    }
+    
     const axios = rootGetters.getAxiosWithToken
-    await axios.get('/admin/reports', filter).
+    await axios.get(`/admin/reports${pathFilter}`, filter).
     then( res => {
       commit('setReports', res.data)
     })
@@ -73,7 +78,6 @@ export const actions = {
 
     await axios.get(`/admin/users${pathFilter}`).
     then( res => {
-      console.log(res.data);
       commit('setUsers', res.data)
     })
   },
@@ -112,6 +116,10 @@ export const actions = {
     const axios = rootGetters.getAxiosWithToken,
           id = getters.getReportEdit.id;
     await axios.put('/admin/reports/'+id, {status:1})
-    
+  },
+  async crateUserBD({rootGetters}, user){
+    const axios = rootGetters.getAxiosWithToken
+
+    await axios.post('/admin/users/', user)
   },
 }
