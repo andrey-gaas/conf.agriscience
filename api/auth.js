@@ -7,6 +7,7 @@ const Mongo = require('./db/Mongo');
 const sendMail = require('./mail/sendmail');
 const jwt = require('jsonwebtoken');
 const { secretKey } = require('./config');
+const { setLog } = require('./utils');
 const router = Router();
 
 // Регистрация
@@ -30,7 +31,6 @@ router.post('/registration', (req, res) => {
   } = req.body;
 
   const users = Mongo.database.db('bibcongress').collection('users');
-  const actions = Mongo.database.db('bibcongress').collection('actions');
 
   users.find().limit(1).sort({ $natural: -1 }).toArray((error, lastUser) => {
     let id = 0;
@@ -76,17 +76,7 @@ router.post('/registration', (req, res) => {
               res.status(500).send('Server error');
             }
             else {
-              const action = {
-                id: user.id,
-                email: user.email,
-                registration: registrationDate,
-              };
-              actions.insertOne(action, error => {
-                if (error) {
-                  console.log('Ошибка сохранения действия: Регистрация');
-                  console.log(error.message);
-                }
-              });
+              setLog(user.id, 'Регистрация');
               const token = jwt.sign({
                 email,
                 id,
@@ -132,12 +122,14 @@ router.post('/login', (req, res) => {
       res.status(401).send('Введены неверные E-Mail или пароль.');
     }
 
-    if(passportUser) {
+    if (passportUser) {
       const token = jwt.sign({
         email: passportUser.email,
         id: passportUser.id,
         admin: passportUser.isAdmin || false,
       }, secretKey);
+
+      setLog(passportUser.id, 'Авторизация');
 
       res.cookie('token', token, { expires: new Date(Date.now() + 31536000000) });
       return res.send({ message: 'OK', token: token });
