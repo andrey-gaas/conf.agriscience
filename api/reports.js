@@ -95,8 +95,10 @@ router.put('/:id', (req, res) => {
       };
 
       for (let key in req.body) {
-        if (req.body[key] !== oldData[key]) {
-          logConfig.changes.push({ before: oldData[key], after: req.body[key] });
+        if (!Array.isArray(req.body[key])) {
+          if (req.body[key] !== oldData[key]) {
+            logConfig.changes.push({ field: key, before: oldData[key], after: req.body[key] });
+          }
         }
       }
 
