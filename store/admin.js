@@ -104,7 +104,7 @@ export const actions = {
     const axios = rootGetters.getAxiosWithToken,
           id = getters.getReportEdit.id;
     try {
-      await axios.put('/admin/reports/'+id, {isReportChecked:true})
+      await axios.get('/admin/reports/confirm/'+id)
     }catch(e){}
   },
   async failureReport({rootGetters, getters}){

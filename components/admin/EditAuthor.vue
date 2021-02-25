@@ -6,7 +6,7 @@
           <mdb-input class="my-0" size="sm"
             v-for="(item, key) in editAuthor.ru" :key="key"
             v-model="editAuthor.ru[key]"
-            :label="key"
+            :label="ruText[key]"
           />
           <mdb-btn
             @click="localize('ru')"
@@ -18,7 +18,7 @@
           <mdb-input class="my-0" size="sm"
             v-for="(item, key) in editAuthor.ru" :key="key"
             v-model="editAuthor.en[key]"
-            :label="key"
+            :label="enText[key]"
           />
           <mdb-btn
             @click="localize('en')"
@@ -40,6 +40,11 @@
         </mdb-col>
         <span class="d-flex red-text" v-if="$v.editAuthor.$invalid && $v.editAuthor.$dirty">
           Ошибка в заполнении полей
+          {{$v.editAuthor.ru.surname.$invalid? 'Фамилия, ': ''}}
+          {{$v.editAuthor.ru.name.$invalid? 'Имя, ': ''}}
+          {{$v.editAuthor.en.surname.$invalid? 'Surname, ': ''}}
+          {{$v.editAuthor.en.surname.$invalid? 'Name, ': ''}}
+          {{$v.email.$invalid? 'E-mail': ''}}
         </span>
       </mdb-row>
       <div>
@@ -70,6 +75,20 @@ export default {
   props: ['editAuthor','closeForm','reportEdit','setAuthor'],
   data: () => ({
     RU, EN,
+    ruText:{
+      surname:'Фамилия',
+      name:'Имя',
+      patronymic:'Отчество',
+      position:'Должность',
+      organization:'Организация',
+    },
+    enText:{
+      surname:'Surname',
+      name:'Name',
+      patronymic:'Middle name',
+      position:'Position',
+      organization:'Organization',
+    },
   }),
   computed:{
     

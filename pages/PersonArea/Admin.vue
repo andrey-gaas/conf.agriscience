@@ -132,6 +132,7 @@
       v-if="isShowReportEdit"
       :closeForm="closeForm"
       :reportEdit="reportEdit"
+      :reportRows="reportRows"
       :appDataReportRows = appDataReportRows
       :todo="todo"
     />
@@ -139,6 +140,7 @@
       v-if="isShowReportAdd"
       :closeForm="closeForm"
       :reportEdit="dataReportAdd"
+      :reportRows="reportRows"
       :appDataReportRows = appDataReportRows
       :todo="todo"
     />
@@ -336,7 +338,6 @@ export default {
       console.log(report);
       this.reportRows.map(el => {
         if(el.id === report.id){
-          console.log('in inside');
           el.title = report.title
           el.email = report.email
           el.status = report.status == 1 ? this.CheckSquare : report.status == 0 ? this.QuestionSquare : this.XSquareFill
