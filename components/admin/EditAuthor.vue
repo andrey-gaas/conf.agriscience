@@ -44,7 +44,7 @@
           {{$v.editAuthor.ru.name.$invalid? 'Имя, ': ''}}
           {{$v.editAuthor.en.surname.$invalid? 'Surname, ': ''}}
           {{$v.editAuthor.en.surname.$invalid? 'Name, ': ''}}
-          {{$v.email.$invalid? 'E-mail': ''}}
+          {{$v.editAuthor.email.$invalid ? 'E-mail': ''}}
         </span>
       </mdb-row>
       <div>
@@ -125,21 +125,21 @@ export default {
       let dataEn = this.editAuthor.en
       let res
       if(loc === 'ru'){
-        res = await this.axiosTranslete({position:dataRu.position, organization:dataRu.organization}, {from:'ru', to:'en'});
+        res = await this.axiosTranslete({position:dataRu.position? dataRu.position: '', organization:dataRu.organization? dataRu.organization: ''}, {from:'ru', to:'en'});
         dataEn = {
-          surname: this.transliterate()(dataRu.surname),
-          name: this.transliterate()(dataRu.name),
-          patronymic: this.transliterate()(dataRu.patronymic),
+          surname: this.transliterate()(dataRu.surname? dataRu.surname: ''),
+          name: this.transliterate()(dataRu.name? dataRu.name: ''),
+          patronymic: this.transliterate()(dataRu.patronymic? dataRu.patronymic: ''),
           organization: res.organization,
           position: res.position,
         }
         this.editAuthor.en = dataEn
       }else{
-        res = await this.axiosTranslete({position:dataEn.position, organization:dataEn.organization}, {from:'en', to:'ru'});
+        res = await this.axiosTranslete({position:dataEn.position? dataEn.position: '', organization:dataEn.organization? dataEn.organization: ''}, {from:'en', to:'ru'});
         dataRu = {
-          surname: this.transliterate()(dataEn.surname, true),
-          name: this.transliterate()(dataEn.name, true),
-          patronymic: this.transliterate()(dataEn.patronymic, true),
+          surname: this.transliterate()(dataEn.surname? dataEn.surname: '', true),
+          name: this.transliterate()(dataEn.name? dataEn.name: '', true),
+          patronymic: this.transliterate()(dataEn.patronymic? dataEn.patronymic: '', true),
           organization: res.organization,
           position: res.position,
         }
