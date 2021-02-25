@@ -1,11 +1,13 @@
 const { Router } = require('express');
 const Mongo = require('../db/Mongo');
+const { setLog } = require('../utils');
 const router = Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const sendMail = require('../mail/sendmail');
 const { secretKey } = require('../config');
 
+// Получить пользователя
 router.get('/', (req, res) => {
   let filter = req.query;
   
@@ -152,6 +154,7 @@ router.post('/', (req, res) => {
   });
 });
 
+// Редактировать пользователя
 router.put('/:id', (req, res) => {
   const data = req.body;
 
@@ -177,6 +180,7 @@ router.put('/:id', (req, res) => {
     });
 });
 
+// Удалить пользователя
 router.delete('/:id', (req, res) => {
   Mongo.database
     .db('bibcongress')
@@ -186,6 +190,29 @@ router.delete('/:id', (req, res) => {
       res.send('OK');
     })
     .catch(error => res.status(500).send(error.message));
+});
+
+// Одобрить пользователя
+router.get('/confirm/:id', (req, res) => {
+  const { id } = req.params.id;
+
+  Mongo.database
+    .db('bibcongress')
+    .collection('users')
+    .findOneAndUpdate({ id: +id }, { $set: { isReportChecked: true } })
+    .then(() => {
+      const logConfin = {
+        userId: req.id,
+        action: 'Одобрение пользователя',
+        confirmedUserId: id,
+      };
+      setLog(logConfin);
+      res.send('OK');
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send('Ошибка сервера');
+    });
 });
 
 module.exports = router;

@@ -117,7 +117,7 @@ router.get('/confirm/:id', (req, res) => {
     .findOneAndUpdate({ id: +id }, { $set: { isReportChecked: true } })
     .then(() => {
       const logConfin = {
-        id: req.id,
+        userId: req.id,
         action: 'Подтверждение доклада',
         reportId: id,
       };
