@@ -64,6 +64,13 @@ router.post('/', (req, res) => {
 
       reports.insertOne(report)
         .then(report => {
+          const logConfig = {
+            email: report.ops[0].email,
+            id: report.ops[0].id,
+            action: 'Создание доклада (админ)',
+            editorId: req.id,
+          };
+          setLog(logConfig);
           res.send(report.ops[0]);
         })
         .catch(error => {
@@ -86,7 +93,25 @@ router.put('/:id', (req, res) => {
     .db('bibcongress')
     .collection('reports')
     .findOneAndUpdate({ id: +req.params.id }, { $set: data })
-    .then(() => {
+    .then(({ value: oldData }) => {
+      const logConfig = {
+        email: oldData.email,
+        id: oldData.id,
+        action: 'Редактирование доклада (Админ)',
+        changes: [],
+        editorId: req.id,
+      };
+
+      for (let key in req.body) {
+        if (!Array.isArray(req.body[key])) {
+          if (req.body[key] !== oldData[key]) {
+            logConfig.changes.push({ field: key, before: oldData[key], after: req.body[key] });
+          }
+        }
+      }
+
+      setLog(logConfig);
+
       res.send('OK');
     })
     .catch(err => {
