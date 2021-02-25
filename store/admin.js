@@ -125,4 +125,11 @@ export const actions = {
     const axios = rootGetters.getAxiosWithToken
     await axios.post('/admin/reports/', report)
   },
+
+
+  async getDataUersBD({rootGetters}){
+    const axios = rootGetters.getAxiosWithToken
+    const res = await axios.get('/admin/users/')
+    return res.data
+  },
 }

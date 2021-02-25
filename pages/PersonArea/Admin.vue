@@ -27,10 +27,16 @@
             </mdb-btn>
           </mdb-btn-group>
           <div class="filter d-flex align-content-center align-items-center">
-            <mdb-btn m='0'
-              @click='isShowFilter =!isShowFilter'
-            >Фильтры
-            </mdb-btn>
+            <mdb-btn-group m='0'>
+              <mdb-btn m='0'
+                @click='appData'
+              >Обновить
+              </mdb-btn>
+              <mdb-btn m='0'
+                @click='isShowFilter =!isShowFilter'
+              >Фильтры
+              </mdb-btn>
+            </mdb-btn-group>
             <div class="filter__drop-menu"
               v-if="isShowFilter && isShowUsers"
             >
@@ -311,6 +317,30 @@ export default {
     }
   },
   methods:{
+    async appData(){
+      await this.$store.dispatch('admin/fetchUsers')
+      await this.$store.dispatch('admin/fetchReports')
+
+      this.tableDataReport.rows = this.reportRows
+      this.tableDataUser.rows = this.userRows
+
+     
+      // let users = await this.$store.dispatch('admin/getDataUersBD')
+      // console.log(users);
+      // users.map((el, ind) => {
+      //   this.$set(this.userRows, ind, {
+      //     id: el.id,
+      //     name: `${el.surname} ${el.name?el.name[0]+'.':''} ${el.patronymic?el.patronymic[0]+'.':''}`,
+      //     email: el.email,
+      //     isEmailChecked: el.isEmailConfirmed ? this.CheckSquare : this.XSquareFill,
+      //     isUserChecked: el.isUserChecked ? this.CheckSquare : this.XSquareFill,
+      //     open: `<button data-v-bc7807ae="" type="button" onclick="window.$nuxt.$children[2].$children[1].$children[0].startEditUsers(${el.id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
+      //   })
+      // })
+
+      this.rerenderDataTable()
+      
+    },
     createReport(){
       this.todo = 'create'
       this.isShowReportAdd = true
@@ -334,8 +364,6 @@ export default {
       })
     },
     appDataReportRows(report){
-      
-      console.log(report);
       this.reportRows.map(el => {
         if(el.id === report.id){
           el.title = report.title

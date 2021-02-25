@@ -243,7 +243,6 @@ export default {
     async saveUser(){
       this.$v.editUser.$touch()
       if(this.$v.editUser.$invalid) return
-      console.log('1');
       if(this.todo === 'edit'){
         await this.$store.dispatch('admin/saveUserEditBD', this.editUser)
         this.appDataUserRows(this.editUser, this.$store.getters['admin/getUsersEdit'].id)
