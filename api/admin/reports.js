@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const bcrypt = require('bcryptjs');
 const Mongo = require('../db/Mongo');
+const { setLog } = require('../utils');
 const router = Router();
 
 // Список докладов (с фильтром и без)
@@ -106,8 +107,31 @@ router.delete('/:id', (req, res) => {
     .catch(error => res.status(500).send(error.message));
 });
 
+// Подтвердить доклад
+router.get('/confirm/:id', (req, res) => {
+  const { id } = req.params;
+
+  Mongo.database
+    .db('bibcongress')
+    .collection('reports')
+    .findOneAndUpdate({ id: +id }, { $set: { isReportChecked: true } })
+    .then(() => {
+      const logConfin = {
+        id: req.id,
+        action: 'Подтверждение доклада',
+        reportId: id,
+      };
+      setLog(logConfin);
+      res.send('OK');
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send('Ошибка сервера');
+    });
+});
+
 // Перенести доклад в подтвержденный
-router.post('/move-to-confirm', (req, res) => {
+/* router.post('/move-to-confirm', (req, res) => {
   Mongo.database
     .db('bibcongress')
     .collection('confirmed-reports')
@@ -119,6 +143,6 @@ router.post('/move-to-confirm', (req, res) => {
       console.log(error.message);
       res.status(500).send('Ошибка сервера')
     });
-});
+}); */
 
 module.exports = router;

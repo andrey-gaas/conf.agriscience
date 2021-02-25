@@ -105,6 +105,12 @@ router.delete('/:id', (req, res) => {
     .collection('reports')
     .deleteOne({ id })
     .then(() => {
+      const logConfig = {
+        userId: req.id,
+        action: 'Удаление доклада',
+        reportId: id,
+      };
+      setLog(logConfig);
       res.send('OK');
     })
     .catch(error => res.status(500).send(error.message));
