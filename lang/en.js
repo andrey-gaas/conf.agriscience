@@ -192,6 +192,7 @@ export default{
   'edit_report_add_annotation':'Add annotation',
   'edit_report_extended_theses':'Extended theses',
   'edit_report_err_valid_add_file':'Attach a file with extended abstracts',
+  'edit_report_err_valid_format_file':'The file must be in .docx format',
   'edit_report_add_file':'Attach a file with extended abstracts, in .docx format, no less than 500 words.',
   
 
