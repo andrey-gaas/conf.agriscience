@@ -7,12 +7,12 @@ exports.checkExtension = function(extension, extensionsList) {
   return false;
 };
 
-exports.setLog = function(id, actionTitle, data = []) {
+exports.setLog = function(id, actionTitle, changes = []) {
   const action = {
     id,
     action: actionTitle,
     timestamp: Date.now(),
-    data,
+    changes,
   };
 
   Mongo.database

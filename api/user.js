@@ -57,15 +57,15 @@ router.put('/', (req, res) => {
       { $set: req.body },
     )
     .then(({ value: oldData }) => {
-      const logData = [];
+      const changes = [];
 
       for (let key in req.body) {
         if (req.body[key] !== oldData[key]) {
-          logData.push({ before: oldData[key], after: req.body[key] });
+          changes.push({ before: oldData[key], after: req.body[key] });
         }
       }
 
-      setLog(req.id, 'Изменение данных', logData);
+      setLog(req.id, 'Изменение данных', changes);
 
       res.send('OK');
     })
