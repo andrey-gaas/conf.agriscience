@@ -87,8 +87,24 @@ router.put('/:id', (req, res) => {
     .db('bibcongress')
     .collection('reports')
     .findOneAndUpdate({ id }, { $set: req.body })
-    .then((result) => {
-      res.send({ message: 'OK', oldReport: result });
+    .then(({ value: oldData }) => {
+      const logConfig = {
+        userId: req.id,
+        action: 'Редактирование доклада',
+        changes: [],
+      };
+
+      for (let key in req.body) {
+        if (!Array.isArray(req.body[key])) {
+          if (req.body[key] !== oldData[key]) {
+            logConfig.changes.push({ field: key, before: oldData[key], after: req.body[key] });
+          }
+        }
+      }
+
+      setLog(logConfig);
+
+      res.send('OK');
     })
     .catch(err => {
       console.log(err);

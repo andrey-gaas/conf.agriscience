@@ -113,17 +113,13 @@ router.post('/', (req, res) => {
               res.status(500).send('Server error');
             }
             else {
-              const action = {
-                id: user.id,
-                email: user.email,
-                registration: registrationDate,
+              const logConfig = {
+                userId: id,
+                action: 'Создание пользователя (Админ)',
+                editorId: id,
               };
-              actions.insertOne(action, error => {
-                if (error) {
-                  console.log('Ошибка сохранения действия: Регистрация');
-                  console.log(error.message);
-                }
-              });
+              setLog(logConfig);
+
               const token = jwt.sign({
                 email,
                 id,
@@ -157,6 +153,7 @@ router.post('/', (req, res) => {
 // Редактировать пользователя
 router.put('/:id', (req, res) => {
   const data = req.body;
+  const { id } = req.params;
 
   if(data.id !== undefined || data._id !== undefined) {
     res.status(400).send('Нельзя менять id');
@@ -170,8 +167,23 @@ router.put('/:id', (req, res) => {
   Mongo.database
     .db('bibcongress')
     .collection('users')
-    .findOneAndUpdate({ id: +req.params.id }, { $set: data })
-    .then(() => {
+    .findOneAndUpdate({ id: +id }, { $set: data })
+    .then(({ value: oldData }) => {
+      const logConfig = {
+        userId: +id,
+        action: 'Изменение данных (Админ)',
+        editorId: +req.id,
+        changes: [],
+      };
+
+      for (let key in req.body) {
+        if (req.body[key] !== oldData[key]) {
+          logConfig.changes.push({ before: oldData[key], after: req.body[key] });
+        }
+      }
+
+      setLog(logConfig);
+
       res.send('OK');
     })
     .catch(err => {
@@ -182,11 +194,17 @@ router.put('/:id', (req, res) => {
 
 // Удалить пользователя
 router.delete('/:id', (req, res) => {
+  const { id } = req.params;
   Mongo.database
     .db('bibcongress')
     .collection('users')
-    .deleteOne({ id: +req.params.id })
+    .deleteOne({ id: +id })
     .then(() => {
+      const logConfig = {
+        userId: +id,
+        action: 'Удаление пользователя',
+        editorId: +req.id,
+      };
       res.send('OK');
     })
     .catch(error => res.status(500).send(error.message));
@@ -201,9 +219,9 @@ router.get('/confirm/:id', (req, res) => {
     .findOneAndUpdate({ id: +id }, { $set: { isUserChecked: true } })
     .then(() => {
       const logConfin = {
-        userId: req.id,
+        userId: +id,
         action: 'Одобрение пользователя',
-        confirmedUserId: id,
+        editorId: +req.id,
       };
       setLog(logConfin);
       res.send('OK');
