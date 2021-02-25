@@ -76,7 +76,11 @@ router.post('/registration', (req, res) => {
               res.status(500).send('Server error');
             }
             else {
-              setLog(user.id, 'Регистрация');
+              const logConfig = {
+                userId: user.id,
+                action: 'Регистрация',
+              };
+              setLog(logConfig);
               const token = jwt.sign({
                 email,
                 id,
@@ -129,7 +133,11 @@ router.post('/login', (req, res) => {
         admin: passportUser.isAdmin || false,
       }, secretKey);
 
-      setLog(passportUser.id, 'Авторизация');
+      const logConfig = {
+        userId: passportUser.id,
+        action: 'Авторизация',
+      };
+      setLog(logConfig);
 
       res.cookie('token', token, { expires: new Date(Date.now() + 31536000000) });
       return res.send({ message: 'OK', token: token });
@@ -213,7 +221,11 @@ router.get('/email-confirm/:email', (req, res) => {
         users
           .findOneAndUpdate({ email }, { $set: { isEmailConfirmed: true } })
           .then(() => {
-            setLog(user.id, 'Подтверждение почты');
+            const logConfig = {
+              userId: user.id,
+              action: 'Подтверждение почты',
+            };
+            setLog(logConfig);
             res.redirect(`https://www.bibcongress.ru/notification?type=email&message=${email}`);
           })
           .catch(error => {
@@ -246,7 +258,11 @@ router.post('/email-recovery', (req, res) => {
       if (!user) {
         res.status(500).send('error_user_not_found');
       } else {
-        setLog(user.id, 'Попытка восстановления пароля');
+        const logConfig = {
+          userId: user.id,
+          action: 'Попытка восстановления пароля',
+        };
+        setLog(logConfig);
         const code = phoneToken(4, {type: 'number'});
         const message = {
           email,
@@ -310,7 +326,11 @@ router.post('/email-recovery/code', (req, res) => {
       users
         .findOneAndUpdate({ email }, { $set: { code: '', password: newPasswrod } })
         .then(() => {
-          setLog(user.id, 'Изменен пароль');
+          const logConfig = {
+            userId: user.id,
+            action: 'Изменен пароль',
+          };
+          setLog(logConfig);
           res.send('OK');
         })
         .catch(error => {
