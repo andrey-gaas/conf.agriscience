@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const Mongo = require('./db/Mongo');
 const { isProduction } = require('./config');
+const { setLog } = require('./utils');
 const auth = require('../middleware/auth');
 const router = Router();
 
@@ -58,6 +59,12 @@ router.post('/', (req, res) => {
   
         reports.insertOne(report)
           .then(report => {
+            const logConfig = {
+              userId: req.id,
+              action: 'Создан доклад',
+              reportId: report.ops[0].id,
+            };
+            setLog(logConfig);
             res.send(report.ops[0]);
           })
           .catch(error => {
