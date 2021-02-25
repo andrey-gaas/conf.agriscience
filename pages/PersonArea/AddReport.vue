@@ -210,6 +210,11 @@
           >
             {{$t('edit_report_err_valid_add_file')}}
           </span>
+          <span class='h6 d-flex red-text'
+            v-if="validData.isCheck && !validData.isDocx"
+          >
+            {{$t('edit_report_err_valid_format_file')}}
+          </span>
           <mdb-btn class="teal lighten-2" @click="saveReport()">
             {{$t('edit_report_save')}}
           </mdb-btn>
@@ -302,6 +307,7 @@ export default {
       isTitle: false,
       isAnnotation: false,
       isFileName: false,
+      isDocx:false,
     },
     toastMessage: 'asdf',
     isShowTost: false,
@@ -456,12 +462,22 @@ export default {
           indReport = this.$store.getters.getReportList[ind].id
         }
 
-        if(this.wordFile !== ''){
+        if(this.fileName !== ''){
+          if(this.wordFile !== ''){
+            const fileDoc = new FormData();
+            await fileDoc.append('word', this.wordFile, this.fileName);
+            await this.$axios.post(
+                'reports/file/'+indReport, 
+                fileDoc,
+                { headers: {
+                  'Content-Type': 'multipart/form-data',
+                  'Authorization': this.$store.getters.getCookie.token,
+                }}
+              )
+          }
+        }else{
           const fileDoc = new FormData();
-          
           await fileDoc.append('word', this.wordFile, this.fileName);
-          
-  
           await this.$axios.post(
               'reports/file/'+indReport, 
               fileDoc,
@@ -470,9 +486,6 @@ export default {
                 'Authorization': this.$store.getters.getCookie.token,
               }}
             )
-        }else{
-          this.showTost('Ошибка загрузки файла')
-          return
         }
       }catch(e){
         this.showTost(e.message)
@@ -578,6 +591,12 @@ export default {
       else{
         isValid = false
         this.validData.isFileName = false
+      }
+
+      if( this.fileName.slice(-5) === '.docx') this.validData.isDocx = true
+      else{
+        isValid = false
+        this.validData.isDocx = false
       }
 
       return isValid
