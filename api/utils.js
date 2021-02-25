@@ -7,12 +7,14 @@ exports.checkExtension = function(extension, extensionsList) {
   return false;
 };
 
-exports.setLog = function(id, actionTitle) {
+exports.setLog = function(id, actionTitle, data = []) {
   const action = {
     id,
     action: actionTitle,
     timestamp: Date.now(),
+    data,
   };
+
   Mongo.database
     .db('bibcongress')
     .collection('actions')
