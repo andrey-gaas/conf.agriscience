@@ -354,19 +354,74 @@ export default {
       if(!this.validation()) return
 
       if(this.todo === 'edit'){
-        this.appDataReportRows(this.reportEdit)
-        await this.$store.dispatch('admin/saveReportEditBD', this.reportEdit)
-        this.closeForm()
-        return
+        let userId = null
+        let userList = this.$store.getters['admin/getUsersList']
+
+        for(let el of userList){
+          if(el.email === this.reportEdit.email) userId = el.id
+        }
+        
+        if(!userId){
+          alert('Такой E-mail не найден')
+          return
+        }
+        
+        try {
+          await this.$store.dispatch('admin/saveReportEditBD', this.reportEdit)
+          if(this.fileName !== ''){
+            if(this.wordFile !== ''){
+              const fileDoc = new FormData();
+              await fileDoc.append('word', this.wordFile, this.fileName);
+              await this.$axios.post(
+                  `/admin/reports/file/${userId}/${this.reportEdit.id}`, 
+                  fileDoc,
+                  { headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': this.$store.getters.getCookie.token,
+                  }}
+                )
+            }
+          }else{
+            const fileDoc = new FormData();
+            await fileDoc.append('word', this.wordFile, this.fileName);
+            await this.$axios.post(
+                `/admin/reports/file/${userId}/${this.reportEdit.id}`, 
+                fileDoc,
+                { headers: {
+                  'Content-Type': 'multipart/form-data',
+                  'Authorization': this.$store.getters.getCookie.token,
+                }}
+              )
+          }
+          this.appDataReportRows(this.reportEdit)
+          this.closeForm()
+        } catch (error) {
+          alert('Что-то пошло не так', error)
+          return
+        }
+        
       }
       if(this.todo === 'create'){
         this.$v.email.$touch()
         if(this.$v.email.$invalid) return
 
+        let userId = null
+        let userList = this.$store.getters['admin/getUsersList']
+
+        for(let el of userList){
+          if(el.email === this.email) userId = el.id
+        }
+        
+        if(!userId){
+          alert('Такой E-mail не найден')
+          return
+        }
+
         this.reportEdit.email = this.email
         this.reportEdit.fileName = this.fileName
 
         let id = this.reportRows[this.reportRows.length - 1].id + 1
+        
         let arrItem = {
           id: id,
           title: this.reportEdit.title,
@@ -375,8 +430,28 @@ export default {
           isReportChecked: this.reportEdit.isReportChecked ? this.CheckSquare : this.XSquareFill,
           open: `<button data-v-bc7807ae="" type="button" onclick="window.$nuxt.$children[2].$children[1].$children[0].startEditReport(${id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
         }
+        try {
+          await this.$store.dispatch('admin/createReportBD', this.reportEdit)
+          if(this.wordFile !== ''){
+            const fileDoc = new FormData();
+            await fileDoc.append('word', this.wordFile, this.fileName);
+
+            await this.$axios.post(
+                `/admin/reports/file/${userId}/${id}`, 
+                fileDoc,
+                { headers: {
+                  'Content-Type': 'multipart/form-data',
+                  'Authorization': this.$store.getters.getCookie.token,
+                }}
+              )
+            }else{
+              alert('Доавьте файл с расширенными тезисами')
+            }
+        } catch (error) {
+          alert('Упс', error)
+          return
+        }
         this.$set(this.reportRows, this.reportRows.length, arrItem)
-        await this.$store.dispatch('admin/createReportBD', this.reportEdit)
         this.closeForm()
       }
     },

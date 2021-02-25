@@ -324,20 +324,6 @@ export default {
       this.tableDataReport.rows = this.reportRows
       this.tableDataUser.rows = this.userRows
 
-     
-      // let users = await this.$store.dispatch('admin/getDataUersBD')
-      // console.log(users);
-      // users.map((el, ind) => {
-      //   this.$set(this.userRows, ind, {
-      //     id: el.id,
-      //     name: `${el.surname} ${el.name?el.name[0]+'.':''} ${el.patronymic?el.patronymic[0]+'.':''}`,
-      //     email: el.email,
-      //     isEmailChecked: el.isEmailConfirmed ? this.CheckSquare : this.XSquareFill,
-      //     isUserChecked: el.isUserChecked ? this.CheckSquare : this.XSquareFill,
-      //     open: `<button data-v-bc7807ae="" type="button" onclick="window.$nuxt.$children[2].$children[1].$children[0].startEditUsers(${el.id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
-      //   })
-      // })
-
       this.rerenderDataTable()
       
     },
