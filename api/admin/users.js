@@ -212,12 +212,11 @@ router.delete('/:id', (req, res) => {
 
 // Одобрить пользователя
 router.get('/confirm/:id', (req, res) => {
-  const { id } = req.params.id;
-
+  const { id } = req.params;
   Mongo.database
     .db('bibcongress')
     .collection('users')
-    .findOneAndUpdate({ id: +id }, { $set: { isReportChecked: true } })
+    .findOneAndUpdate({ id: +id }, { $set: { isUserChecked: true } })
     .then(() => {
       const logConfin = {
         userId: +id,

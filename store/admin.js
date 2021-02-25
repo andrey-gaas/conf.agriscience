@@ -98,13 +98,13 @@ export const actions = {
   async userIsChecked({rootGetters, getters}){
     const axios = rootGetters.getAxiosWithToken,
           id = getters.getUsersEdit.id;
-    await axios.put('/admin/users/'+id, {isUserChecked:true})
+    await axios.get('/admin/users/confirm/'+id,)
   },
   async reportIsChecked({rootGetters, getters}){
     const axios = rootGetters.getAxiosWithToken,
           id = getters.getReportEdit.id;
     try {
-      await axios.put('/admin/reports/'+id, {isReportChecked:true})
+      await axios.get('/admin/reports/confirm/'+id)
     }catch(e){}
   },
   async failureReport({rootGetters, getters}){
