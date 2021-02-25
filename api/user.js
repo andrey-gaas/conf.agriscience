@@ -5,6 +5,7 @@ const formidable = require('formidable');
 const auth = require('../middleware/auth');
 const Mongo = require('./db/Mongo');
 const { isProduction } = require('./config');
+const { setLog } = require('./utils');
 const router = Router();
 
 router.use('*', auth, (req, res, next) => {
@@ -55,7 +56,21 @@ router.put('/', (req, res) => {
       { email: req.email },
       { $set: req.body },
     )
-    .then(() => {
+    .then(({ value: oldData }) => {
+      const logConfig = {
+        userId: req.id,
+        action: 'Изменение данных',
+        changes: [],
+      };
+
+      for (let key in req.body) {
+        if (req.body[key] !== oldData[key]) {
+          logConfig.changes.push({ before: oldData[key], after: req.body[key] });
+        }
+      }
+
+      setLog(logConfig);
+
       res.send('OK');
     })
     .catch(err => {
