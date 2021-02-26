@@ -124,12 +124,13 @@ export const mutations = {
   setReportText(state, text){
     state.reportText = text
   },
-  saveReport(state, {report, ind}){
+  saveReport(state, {report, ind, id}){
     const ruReport = {
       title: report.title,
       annotations: report.annotations, 
       status: report.status,
       speakerList: report.speakerList,
+      id
     }
     const enReport = {
       title: report.titleEn,
@@ -360,7 +361,6 @@ export const actions = {
   async editReportBD({getters}, {report}){
     const axios = getters.getAxiosWithToken
     let id = getters.getReportList[getters.getReportInd].id
-    
     await axios.put('/reports/'+id, report)
   },
   async sevePersonAboutMeBD({getters}, aboutData){

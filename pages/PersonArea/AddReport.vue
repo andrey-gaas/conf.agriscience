@@ -491,8 +491,7 @@ export default {
         this.showTost(e.message)
         return
       }
-
-      this.$store.commit('saveReport', {report, ind})
+      this.$store.commit('saveReport', {report, ind, id:indReport})
       this.$router.push(this.localeRout('/personarea'))
     },
     howCountSpeaker(){

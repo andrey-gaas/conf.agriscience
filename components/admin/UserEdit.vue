@@ -223,7 +223,6 @@ export default {
         this.editUser.aboutMeEn = dataTranslate.aboutMeEn
       }
       if(to === 'ru'){
-        console.log('hello');
         let dataTranslate = await this.axiosTranslete({
           organization: this.editUser.organizationEn? this.editUser.organizationEn: '',
           position: this.editUser.positionEn? this.editUser.positionEn: '',

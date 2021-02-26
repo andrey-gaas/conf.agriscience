@@ -356,7 +356,7 @@ export default {
       if(this.todo === 'edit'){
         let userId = null
         let userList = this.$store.getters['admin/getUsersList']
-
+        
         for(let el of userList){
           if(el.email === this.reportEdit.email) userId = el.id
         }

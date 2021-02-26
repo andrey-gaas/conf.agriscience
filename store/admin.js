@@ -88,12 +88,12 @@ export const actions = {
   },
   async saveReportEditBD({rootGetters, getters}, report){
     const axios = rootGetters.getAxiosWithToken,
-          id = report.id
-    delete report.id;
-    delete report._id;
-    delete report.url;
-    delete report.fileName;
-    await axios.put('/admin/reports/'+id, report)
+          id = report.id,
+          rep = {...report}
+    delete rep.id;
+    delete rep._id;
+    delete rep.url;
+    await axios.put('/admin/reports/'+id, rep)
   },
   async userIsChecked({rootGetters, getters}){
     const axios = rootGetters.getAxiosWithToken,
@@ -123,7 +123,7 @@ export const actions = {
   },
   async createReportBD({rootGetters}, report){
     const axios = rootGetters.getAxiosWithToken
-    console.log('hello');
+    
     await axios.post('/admin/reports/', report)
   },
 

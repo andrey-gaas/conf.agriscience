@@ -300,7 +300,7 @@ export default {
           email: el.email,
           isEmailChecked: el.isEmailConfirmed ? this.CheckSquare : this.XSquareFill,
           isUserChecked: el.isUserChecked ? this.CheckSquare : this.XSquareFill,
-          open: `<button data-v-bc7807ae="" type="button" onclick="window.$nuxt.$children[2].$children[1].$children[0].startEditUsers(${el.id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
+          open: `<button data-v-bc7807ae="" type="button" onclick="window.$nuxt.$children[1].$children[1].$children[0].startEditUsers(${el.id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
         }
     })},
     reportRows(){
@@ -311,7 +311,7 @@ export default {
           email: el.email,
           status: el.status == 1 ? this.CheckSquare : el.status == 0 ? this.QuestionSquare : this.XSquareFill,
           isReportChecked: el.isReportChecked ? this.CheckSquare : this.XSquareFill,
-          open: `<button data-v-bc7807ae="" type="button" onclick="window.$nuxt.$children[2].$children[1].$children[0].startEditReport(${el.id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
+          open: `<button data-v-bc7807ae="" type="button" onclick="window.$nuxt.$children[1].$children[1].$children[0].startEditReport(${el.id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
         }
       })
     }
@@ -350,6 +350,7 @@ export default {
       })
     },
     appDataReportRows(report){
+      console.log(report);
       this.reportRows.map(el => {
         if(el.id === report.id){
           el.title = report.title
@@ -358,7 +359,9 @@ export default {
           el.isReportChecked = report.isReportChecked ? this.CheckSquare : this.XSquareFill
         }
       })
-      this.rerenderDataTable()
+      setTimeout(() => {
+        this.rerenderDataTable()
+      }, 1000);
     },
     closeForm(){ 
       this.isShowUserEdit = false 
