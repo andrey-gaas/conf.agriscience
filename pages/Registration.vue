@@ -324,7 +324,7 @@ export default {
             this.$router.push(this.localeRout('/PersonArea'));
           }
         })
-        .catch(error => console.log(error));
+        .catch(({response}) => alert(response.data));
     },
     saveInLocalStorage(){
       //Сохроняем данные в localStorage,
