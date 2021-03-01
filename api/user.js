@@ -65,7 +65,7 @@ router.put('/', (req, res) => {
 
       for (let key in req.body) {
         if (req.body[key] !== oldData[key]) {
-          logConfig.changes.push({ before: oldData[key], after: req.body[key] });
+          logConfig.changes.push({ field: key, before: oldData[key], after: req.body[key] });
         }
       }
 
