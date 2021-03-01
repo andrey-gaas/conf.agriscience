@@ -159,6 +159,59 @@ router.get('/confirm/:id', (req, res) => {
     });
 });
 
+router.post('/file/:user/:id', (req, res) => {
+  const { user, id } = req.params;
+
+  const reportsDirPath = isProduction ? './upload/reports' : './api/upload/reports';
+  
+  // Создание папки пользователя
+  if (!fs.existsSync(`${reportsDirPath}/${user}`)) {
+    fs.mkdirSync(`${reportsDirPath}/${user}`, { recursive: true });
+  }
+
+  const form = new formidable.IncomingForm();
+  form.keepExtensions = true;
+  form.uploadDir = path.join(__dirname, '..', 'upload', 'reports', `${user}`);
+  form.multiples = true;
+  form.onPart = function (part) {
+    if(!part.filename || part.filename.match(/\.docx$/i)) {
+      this.handlePart(part);
+    }
+  }
+  
+  form.parse(req, (err, fields, file) => {
+    if (err) {
+      console.log(err.message);
+      console.log('Ошибка parse');
+      return res.status(500).send('Server Error');
+    }
+    if (!file.word) {
+      console.log('Неправильный формат файла');
+      return res.status(400).send('Допустим только формат: DOCX.');
+    }
+
+    const newFileName = `${id}.docx`;
+    
+    fs.rename(file.word.path, path.join(form.uploadDir, newFileName), (err, img) => {
+      if (err) {
+        console.log(err.message);
+        console.log('Ошибка переименовывания файла');
+        return res.status(500).send('Server Error');
+      }
+
+      const url = `https://api.bibcongress.ru/api/upload/reports/${user}/${newFileName}`;
+
+      Mongo.database
+        .db('bibcongress')
+        .collection('reports')
+        .findOneAndUpdate({ id: +id }, { $set: { url } })
+        .then(result => {
+          res.send('OK');
+        });
+    });
+  });
+});
+
 // Перенести доклад в подтвержденный
 /* router.post('/move-to-confirm', (req, res) => {
   Mongo.database
