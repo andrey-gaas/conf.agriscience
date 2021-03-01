@@ -299,7 +299,6 @@ export default {
       function setPath(path, pathStr, ind){
         if(path.$children[ind].startEditUsers) return pathStr + `.$children[${ind}]`
         if(path.$children[ind+1] && (path.$children[ind].$children.length > 0)){
-          console.log(11);
           return setPath(path, pathStr, ind+1) || setPath(path.$children[ind], pathStr+`.$children[${ind}]`, 0)
         }
         if(path.$children[ind+1]){ return setPath(path, pathStr, ind+1)}
@@ -326,7 +325,6 @@ export default {
       function setPath(path, pathStr, ind){
         if(path.$children[ind].startEditReport) return pathStr + `.$children[${ind}]`
         if(path.$children[ind+1] && (path.$children[ind].$children.length > 0)){
-          console.log(11);
           return setPath(path, pathStr, ind+1) || setPath(path.$children[ind], pathStr+`.$children[${ind}]`, 0)
         }
         if(path.$children[ind+1]){ return setPath(path, pathStr, ind+1)}
@@ -382,7 +380,6 @@ export default {
       })
     },
     appDataReportRows(report){
-      console.log(report);
       this.reportRows.map(el => {
         if(el.id === report.id){
           el.title = report.title

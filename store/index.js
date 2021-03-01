@@ -333,7 +333,6 @@ export const getters = {
 
 export const actions = {
   async fetchPersonData({commit, getters}){
-    console.log('/user/');
     const axios = getters.getAxiosWithToken
     await axios.get('/user/')
       .then( res => {
