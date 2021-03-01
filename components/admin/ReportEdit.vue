@@ -356,7 +356,7 @@ export default {
       if(this.todo === 'edit'){
         let userId = null
         let userList = this.$store.getters['admin/getUsersList']
-        
+
         for(let el of userList){
           if(el.email === this.reportEdit.email) {userId = el.id; break}
         }
@@ -420,14 +420,30 @@ export default {
         this.reportEdit.fileName = this.fileName
 
         let id = this.reportRows[this.reportRows.length - 1].id + 1
-        
+
+        //Поиск пути
+        let path = window.$nuxt,
+            pathStr = '';
+        function setPath(path, pathStr, ind){
+          if(path.$children[ind].startEditReport) return pathStr + `.$children[${ind}]`
+          if(path.$children[ind+1] && (path.$children[ind].$children.length > 0)){
+            console.log(11);
+            return setPath(path, pathStr, ind+1) || setPath(path.$children[ind], pathStr+`.$children[${ind}]`, 0)
+          }
+          if(path.$children[ind+1]){ return setPath(path, pathStr, ind+1)}
+          if(path.$children[ind].$children.length > 0){ return setPath(path.$children[ind], pathStr+`.$children[${ind}]`, 0)}
+          return null
+        };
+        pathStr = setPath(path, 'window.$nuxt', 0)
+        //---
+
         let arrItem = {
           id: id,
           title: this.reportEdit.title,
           email: this.reportEdit.email,
           status: this.reportEdit.status == 1 ? this.CheckSquare : this.reportEdit.status == 0 ? this.QuestionSquare : this.XSquareFill,
           isReportChecked: this.reportEdit.isReportChecked ? this.CheckSquare : this.XSquareFill,
-          open: `<button data-v-bc7807ae="" type="button" onclick="window.$nuxt.$children[2].$children[1].$children[0].startEditReport(${id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
+          open: `<button data-v-bc7807ae="" type="button" onclick="${pathStr}.startEditReport(${id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
         }
         try {
           await this.$store.dispatch('admin/createReportBD', this.reportEdit)

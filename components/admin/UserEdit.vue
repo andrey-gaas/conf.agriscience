@@ -256,13 +256,30 @@ export default {
 
         await this.$store.dispatch('admin/createUserBD', this.editUser)
         let id  = this.userRows[this.userRows.length - 1].id + 1
+
+        //Поиск пути
+        let path = window.$nuxt,
+            pathStr = '';
+        function setPath(path, pathStr, ind){
+          if(path.$children[ind].startEditUsers) return pathStr + `.$children[${ind}]`
+          if(path.$children[ind+1] && (path.$children[ind].$children.length > 0)){
+            console.log(11);
+            return setPath(path, pathStr, ind+1) || setPath(path.$children[ind], pathStr+`.$children[${ind}]`, 0)
+          }
+          if(path.$children[ind+1]){ return setPath(path, pathStr, ind+1)}
+          if(path.$children[ind].$children.length > 0){ return setPath(path.$children[ind], pathStr+`.$children[${ind}]`, 0)}
+          return null
+        };
+        pathStr = setPath(path, 'window.$nuxt', 0)
+        //---
+
         let itemArr = {
           id,
           name: `${this.editUser.surname} ${this.editUser.name?this.editUser.name[0]+'.':''} ${this.editUser.patronymic?this.editUser.patronymic[0]+'.':''}`,
           email: this.editUser.email,
           isEmailChecked: this.editUser.isEmailConfirmed ? this.CheckSquare : this.XSquareFill,
           isUserChecked: this.editUser.isUserChecked ? this.CheckSquare : this.XSquareFill,
-          open: `<button data-v-bc7807ae="" type="button" onclick="window.$nuxt.$children[2].$children[1].$children[0].startEditUsers(${id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
+          open: `<button data-v-bc7807ae="" type="button" onclick="${pathStr}.startEditUsers(${id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
         }
         this.$set(this.userRows, this.userRows.length, itemArr)
         this.closeForm()

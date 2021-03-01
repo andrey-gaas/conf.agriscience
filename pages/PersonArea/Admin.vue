@@ -293,6 +293,22 @@ export default {
     },
 
     userRows(){
+      let path = window.$nuxt,
+          pathStr = '';
+
+      function setPath(path, pathStr, ind){
+        if(path.$children[ind].startEditUsers) return pathStr + `.$children[${ind}]`
+        if(path.$children[ind+1] && (path.$children[ind].$children.length > 0)){
+          console.log(11);
+          return setPath(path, pathStr, ind+1) || setPath(path.$children[ind], pathStr+`.$children[${ind}]`, 0)
+        }
+        if(path.$children[ind+1]){ return setPath(path, pathStr, ind+1)}
+        if(path.$children[ind].$children.length > 0){ return setPath(path.$children[ind], pathStr+`.$children[${ind}]`, 0)}
+        return null
+      };
+
+      pathStr = setPath(path, 'window.$nuxt', 0)
+
       return this.$store.getters['admin/getUsersList'].map(el =>{
         return {
           id: el.id,
@@ -300,10 +316,26 @@ export default {
           email: el.email,
           isEmailChecked: el.isEmailConfirmed ? this.CheckSquare : this.XSquareFill,
           isUserChecked: el.isUserChecked ? this.CheckSquare : this.XSquareFill,
-          open: `<button data-v-bc7807ae="" type="button" onclick="window.$nuxt.$children[1].$children[1].$children[0].startEditUsers(${el.id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
+          open: `<button data-v-bc7807ae="" type="button" onclick="${pathStr}.startEditUsers(${el.id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
         }
     })},
     reportRows(){
+      let path = window.$nuxt,
+          pathStr = '';
+
+      function setPath(path, pathStr, ind){
+        if(path.$children[ind].startEditReport) return pathStr + `.$children[${ind}]`
+        if(path.$children[ind+1] && (path.$children[ind].$children.length > 0)){
+          console.log(11);
+          return setPath(path, pathStr, ind+1) || setPath(path.$children[ind], pathStr+`.$children[${ind}]`, 0)
+        }
+        if(path.$children[ind+1]){ return setPath(path, pathStr, ind+1)}
+        if(path.$children[ind].$children.length > 0){ return setPath(path.$children[ind], pathStr+`.$children[${ind}]`, 0)}
+        return null
+      };
+
+      pathStr = setPath(path, 'window.$nuxt', 0)
+
       return this.$store.getters['admin/getReportsList'].map(el => {
         return {
           id:el.id,
@@ -311,7 +343,7 @@ export default {
           email: el.email,
           status: el.status == 1 ? this.CheckSquare : el.status == 0 ? this.QuestionSquare : this.XSquareFill,
           isReportChecked: el.isReportChecked ? this.CheckSquare : this.XSquareFill,
-          open: `<button data-v-bc7807ae="" type="button" onclick="window.$nuxt.$children[1].$children[1].$children[0].startEditReport(${el.id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
+          open: `<button data-v-bc7807ae="" type="button" onclick="${pathStr}.startEditReport(${el.id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
         }
       })
     }
