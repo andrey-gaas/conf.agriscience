@@ -358,10 +358,10 @@ export default {
         let userList = this.$store.getters['admin/getUsersList']
         
         for(let el of userList){
-          if(el.email === this.reportEdit.email) userId = el.id
+          if(el.email === this.reportEdit.email) {userId = el.id; break}
         }
         
-        if(!userId){
+        if(userId === null){
           alert('Такой E-mail не найден')
           return
         }
@@ -409,14 +409,13 @@ export default {
         let userList = this.$store.getters['admin/getUsersList']
 
         for(let el of userList){
-          if(el.email === this.email) userId = el.id
+          if(el.email === this.email) {userId = el.id; break}
         }
-        
-        if(!userId){
+
+        if(userId === null){
           alert('Такой E-mail не найден')
           return
         }
-
         this.reportEdit.email = this.email
         this.reportEdit.fileName = this.fileName
 
