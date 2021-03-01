@@ -199,7 +199,7 @@ router.post('/file/:user/:id', (req, res) => {
         return res.status(500).send('Server Error');
       }
 
-      const url = `https://api.bibcongress.ru/api/upload/reports/${user}/${newFileName}`;
+      const url = `https://api.bibcongress.ru/upload/reports/${user}/${newFileName}`;
 
       Mongo.database
         .db('bibcongress')
