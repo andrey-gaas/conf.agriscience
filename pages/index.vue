@@ -66,6 +66,7 @@
             :img='item.img'
             :text='item.text'
             :text2='item.text2'
+            :href='item.href'
           />
         </mdb-col>
       </mdb-row>
@@ -89,17 +90,21 @@ export default {
     bibCardData:[
       { title:'main_card_organizetion_title_1',
         text:'main_card_organizetion_text_1',
+        href:'http://www.spsl.nsc.ru/',
         img:'GPNTB_SO_RAN.jpg'},
       { title:'main_card_organizetion_title_2',
         text:'main_card_organizetion_text_2',
+        href:'http://www.rba.ru/',
         img:'RBA.jpg'},
       { title:'main_card_organizetion_title_3',
         text:'main_card_organizetion_text_3',
         text2:'main_card_organizetion_text_3_1',
+        href:'http://nlr.ru/',
         img:'RNB.jpg'},
       { title:'main_card_organizetion_title_4',
         text:'main_card_organizetion_text_4',
         text2:'main_card_organizetion_text_4_1',
+        href:'https://www.rsl.ru/',
         img:'RGB.jpg'},
     ],
     topicData:['main_congress_topic_1','main_congress_topic_2','main_congress_topic_3','main_congress_topic_4','main_congress_topic_5','main_congress_topic_6','main_congress_topic_7','main_congress_topic_8','main_congress_topic_9','main_congress_topic_10','main_congress_topic_11','main_congress_topic_12','main_congress_topic_13','main_congress_topic_14','main_congress_topic_15',],

@@ -1,7 +1,7 @@
 <template>
   <mdb-card class='m-sm-2 m-lg-3'>
     <mdb-view hover>
-      <a href="#!">
+      <a :href='href'>
         <mdb-card-image
           :src="'/assets/img/'+img"
           alt="Card image cap"/>
@@ -32,7 +32,7 @@ import {
 } from 'mdbvue';
 
 export default {
-  props:['title','text','text2','img'],
+  props:['title','text','text2','img', 'href'],
   data:()=>({
     isShowMore: false,
   }),
