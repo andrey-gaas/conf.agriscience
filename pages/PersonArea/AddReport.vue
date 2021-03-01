@@ -215,6 +215,11 @@
           >
             {{$t('edit_report_err_valid_format_file')}}
           </span>
+          <span class='h6 d-flex red-text'
+            v-if="isShowErrorMessage"
+          >
+            Запрос отправлен, подождите немного.
+          </span>
           <mdb-btn class="teal lighten-2" @click="saveReport()">
             {{$t('edit_report_save')}}
           </mdb-btn>
@@ -277,6 +282,8 @@ export default {
     isAuthorCrate: false,
     isAuthorEdit: false,
     isShowEditor: false,
+    isClickBtnAddReport: false,
+    isShowErrorMessage: false,
     editAuthor: { 
       surname: '',
       name: '',
@@ -438,7 +445,11 @@ export default {
     async saveReport(){
       this.validData.isCheck = true
       if(!this.validation()) return
-      
+
+      if(this.isClickBtnAddReport) { this.isShowErrorMessage = true
+        return}
+      this.isClickBtnAddReport = true
+
       const ind = this.$store.getters.getReportInd
       const speakerList = this.$store.getters.getSpeakers
       const speakerListEn = this.$store.getters.getSpeakersEn
@@ -492,6 +503,8 @@ export default {
         return
       }
       this.$store.commit('saveReport', {report, ind, id:indReport})
+      this.isClickBtnAddReport = false
+      this.isShowErrorMessage = false
       this.$router.push(this.localeRout('/personarea'))
     },
     howCountSpeaker(){
