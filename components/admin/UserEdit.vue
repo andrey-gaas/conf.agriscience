@@ -136,6 +136,9 @@
             <mdb-btn @click="userIsChecked"  v-if="todo !== 'create'">
               Проверен
             </mdb-btn>
+            <mdb-btn @click="hides(user.id)"  v-if="todo !== 'create'">
+              Скрыть
+            </mdb-btn>
             <mdb-btn @click="closeForm">
               Отмена
             </mdb-btn>
@@ -163,7 +166,7 @@ const phoneValid = helpers.regex('alpha', /^\+?[0-9]{0,3}(\s|-| |\s|\(|\s\(|-\()
 const passwordValid = helpers.regex('alpha', /^[a-zA-Zа-яёА-ЯЁ0-9_!@#$%^&*]*$/)
 
 export default {
-  props:['closeForm','user','todo', 'userRows', 'appDataUserRows'],
+  props:['closeForm','user','todo', 'userRows', 'appDataUserRows', 'hideUser'],
   data: () => ({
     RU, EN,
     editUser:{isUserChecked : false},
@@ -195,6 +198,9 @@ export default {
   },
   methods:{
     transliterate,
+    hides(id){
+      this.hideUser(id)
+    },
     async axiosTranslete(textData, {from, to}){
       let res = await this.$axios.post('/translate', {language: {from, to}, fields:textData})
       let result = {}

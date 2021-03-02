@@ -65,6 +65,17 @@
                 </select>
               </div>
               <div class="filter__drop_item d-flex">
+                <span class="m-2 h6">
+                  Показать скрытых:
+                </span>
+                <select class="browser-default custom-select"
+                  v-model="filterDataUser.isHide"
+                >
+                  <option :value="undefined" selected>Нет</option>
+                  <option :value="false">Да</option>
+                </select>
+              </div>
+              <div class="filter__drop_item d-flex">
                 <mdb-btn m='0'
                   @click='setFilterUser'
                 >Применить
@@ -99,6 +110,17 @@
                   <option :value="false">Не проверен</option>
                 </select>
               </div>
+              <div class="filter__drop_item d-flex">
+                <span class="m-2 h6">
+                  Показать скрытых:
+                </span>
+                <select class="browser-default custom-select"
+                  v-model="filterDataReport.isHide"
+                >
+                  <option :value="undefined" selected>Нет</option>
+                  <option :value="false">Да</option>
+                </select>
+              </div>
               <mdb-btn m='2' size='sm'
                   @click='setFilterReport'
                 >Применить
@@ -123,6 +145,7 @@
       :closeForm = closeForm
       :user = userEdit
       :userRows = userRows
+      :hideUser = hideUser
       :appDataUserRows = appDataUserRows
       :todo="todo"
     />
@@ -131,6 +154,7 @@
       :closeForm = closeForm
       :user = dataUserAdd
       :userRows = userRows
+      :hideUser = hideUser
       :appDataUserRows = appDataUserRows
       :todo="todo"
     />
@@ -177,10 +201,12 @@ export default {
     filterDataUser:{
       isEmailConfirmed: undefined,
       isUserChecked: undefined,
+      isHide: undefined,
     },
     filterDataReport:{
       status: undefined,
       isReportChecked: undefined,
+      isHide:undefined,
     },
     isEmailConfirmed: true,
     QuestionSquare:'<svg data-v-2730f04a="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="question square" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-question-square report__status_icon amber-text b-icon bi"><g data-v-2730f04a=""><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg>',
@@ -317,6 +343,7 @@ export default {
           isUserChecked: el.isUserChecked ? this.CheckSquare : this.XSquareFill,
           open: `<button data-v-bc7807ae="" type="button" onclick="${pathStr}.startEditUsers(${el.id})" class="btn btn-default btn-sm ripple-parent m-0" data-v-2730f04a="">Откр</button>`,
         }
+        
     })},
     reportRows(){
       let path = window.$nuxt,
@@ -430,7 +457,17 @@ export default {
         isUserChecked:false
       }
     },
-    
+    hideUser(id){
+    for(let i = 0; i < this.userRows.length; i++){
+        if(this.userRows[i].id === id){
+          this.tabletData.rows.splice(i, 1)
+          break;
+        }
+      }
+      this.rerenderDataTable()
+      this.closeForm()
+      this.$store.dispatch('admin/hideUser')
+  },
     async startEditUsers(id){
       await this.$store.dispatch('admin/fetchUserById', id)
       this.todo = 'edit'
@@ -485,14 +522,11 @@ export default {
           filter[key] = this.filterDataReport[key]
         }
       }
-      
       await this.$store.dispatch('admin/fetchReports',filter)
-
       this.tableDataReport.rows = this.reportRows
       this.tabletData = this.tableDataReport
       this.rerenderDataTable()
       this.isShowFilter = false
-      
     },
   },
   created(){

@@ -117,6 +117,16 @@ export const actions = {
           id = getters.getReportEdit.id;
     await axios.put('/admin/reports/'+id, {status:1})
   },
+  async hideReport({rootGetters, getters}){
+    const axios = rootGetters.getAxiosWithToken,
+          id = getters.getReportEdit.id;
+    await axios.put('/admin/reports/'+id, {isHide:true})
+  },
+  async hideUser({rootGetters, getters}){
+    const axios = rootGetters.getAxiosWithToken,
+          id = getters.getUsersEdit.id
+    await axios.put('/admin/users/'+id, {isHide:true})
+  },
   async createUserBD({rootGetters}, user){
     const axios = rootGetters.getAxiosWithToken
     await axios.post('/admin/users/', user)
@@ -126,8 +136,6 @@ export const actions = {
     
     await axios.post('/admin/reports/', report)
   },
-
-
   async getDataUersBD({rootGetters}){
     const axios = rootGetters.getAxiosWithToken
     const res = await axios.get('/admin/users/')

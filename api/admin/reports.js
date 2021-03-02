@@ -23,6 +23,14 @@ router.get('/', (req, res) => {
     if(filter.isReportChecked === 'false') filter.isReportChecked = false
     if(filter.isReportChecked === 'true') filter.isReportChecked = true
   }
+
+  if (filter.isHide === undefined) {
+    filter['$or'] = [{isHide:{'$exists': false}}, {isHide:false}];
+  }
+  if (filter.isHide === 'false') {
+    delete filter.isHide;
+  }
+
   Mongo.database
     .db('bibcongress')
     .collection('reports')

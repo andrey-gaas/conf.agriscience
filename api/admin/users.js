@@ -24,9 +24,16 @@ router.get('/', (req, res) => {
       filter[key] = true;
     }
   }
-
+  
   if (filter.isUserChecked !== undefined) {
     filter.isUserChecked = { '$exists': filter.isUserChecked };
+  }
+
+  if (filter.isHide === undefined) {
+    filter['$or'] = [{isHide:{'$exists': false}}, {isHide:false}];
+  }
+  if (filter.isHide === false) {
+    delete filter.isHide;
   }
 
   Mongo.database

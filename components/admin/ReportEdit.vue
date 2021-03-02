@@ -239,6 +239,9 @@
             <mdb-btn @click="reportIsChecked" v-if="todo !== 'create'">
               Проверен
             </mdb-btn>
+            <mdb-btn @click="hideReport" v-if="todo !== 'create'">
+              Скрыть
+            </mdb-btn>
             <mdb-btn-group  v-if="todo !== 'create'">
               <mdb-btn color="success" @click="approveReport">
                 Одобрить
@@ -349,6 +352,10 @@ export default {
   },
   methods:{
     localeRout,
+    hideReport(){
+      this.$store.dispatch('admin/hideReport')
+      this.closeForm()
+    },
     async saveReport(){
 
       if(!this.validation()) return
