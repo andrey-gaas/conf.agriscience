@@ -10,11 +10,9 @@ const { secretKey } = require('../config');
 // Получить пользователя
 router.get('/', (req, res) => {
   let filter = req.query;
-  
   if (filter.id && filter.id !== undefined) {
     filter.id = +filter.id;
   }
-
   for (let key in filter) {
     if(filter[key] === 'false'){
       filter[key] = false;
@@ -35,7 +33,6 @@ router.get('/', (req, res) => {
   if (filter.isHide === false) {
     delete filter.isHide;
   }
-
   Mongo.database
     .db('bibcongress')
     .collection('users')

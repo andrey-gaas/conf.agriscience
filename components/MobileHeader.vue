@@ -79,10 +79,21 @@ export default {
   methods:{
     localeRout,
     async extiPersonArea(){
-      await this.$cookies.remove('token')
-      await this.$cookies.remove('token', {path: '/en'})
-      await this.$cookies.remove('token', {path: '/personArea'})
-      await this.$cookies.remove('token', {path: '/en/personArea'})
+      const axios = this.$axios.create({
+        baseURL: process.env.NODE_ENV === 'production' ? 'https://api.bibcongress.ru/' : 'http://localhost:3101/api/',
+      })
+      await axios.get('/auth/logout')
+        .then(({ data }) => {
+          console.log(data);
+          if (data === 'OK') {
+            this.$store.commit('setIsAuth', false);
+            this.$store.commit('setIsAdmin', false);
+            this.$router.push('/');
+          }
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
       this.setAuthorizarion()
     },
     async setAuthorizarion(){

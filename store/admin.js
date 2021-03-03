@@ -56,14 +56,14 @@ export const actions = {
   },
   async fetchUserById({commit, rootGetters}, id){
     const axios = rootGetters.getAxiosWithToken
-    await axios.get(`/admin/users?id=${id}`).
+    await axios.get(`/admin/users?isHide=false&id=${id}`).
     then( res => {
       commit('setUsersEdit', res.data[0])
     })
   },
   async fetchReportById({commit, rootGetters}, id){
     const axios = rootGetters.getAxiosWithToken
-    await axios.get(`/admin/reports?id=${id}`).
+    await axios.get(`/admin/reports?isHide=false&id=${id}`).
     then( res => {
       commit('setReportEdit', res.data[0])
     })
