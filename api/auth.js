@@ -87,7 +87,14 @@ router.post('/registration', (req, res) => {
                 admin: false,
               }, secretKey);
         
-              res.cookie('token', token, { expires: new Date(Date.now() + 31536000000) });
+              res.cookie(
+                'token',
+                token,
+                {
+                  expires: new Date(Date.now() + 31536000000),
+                  path: '/',
+                },
+              );
               //res.send({ message: 'OK', token: token });
     
               const message = {
@@ -139,7 +146,14 @@ router.post('/login', (req, res) => {
       };
       setLog(logConfig);
 
-      res.cookie('token', token, { expires: new Date(Date.now() + 31536000000) });
+      res.cookie(
+        'token',
+        token,
+        {
+          expires: new Date(Date.now() + 31536000000),
+          path: '/'
+        }
+      );
       return res.send({ message: 'OK', token: token });
     }
   })(req, res);
