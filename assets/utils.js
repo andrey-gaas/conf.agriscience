@@ -40,3 +40,11 @@ export function getCookie(){
     }
     return cookieObj
 }
+export function deletCookieToken(){
+  this.$cookies.remove('token')
+  this.$cookies.remove('token', {path: '/en'})
+  this.$cookies.remove('token', {path: '/personArea'})
+  this.$cookies.remove('token', {path: '/personarea'})
+  this.$cookies.remove('token', {path: '/en/personArea'})
+  this.$cookies.remove('token', {path: '/en/personarea'})
+}

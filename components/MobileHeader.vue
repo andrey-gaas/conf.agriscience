@@ -60,7 +60,7 @@
 
 <script>
 import { RU, EN } from '@/constants/language';
-import {localeRout} from '@/assets/utils'
+import {localeRout, deletCookieToken} from '@/assets/utils'
 
 export default {
   data:()=>({
@@ -77,7 +77,7 @@ export default {
     ],
   }),
   methods:{
-    localeRout,
+    localeRout,deletCookieToken,
     async extiPersonArea(){
       const axios = this.$axios.create({
         baseURL: process.env.NODE_ENV === 'production' ? 'https://api.bibcongress.ru/' : 'http://localhost:3101/api/',
@@ -88,7 +88,8 @@ export default {
           if (data === 'OK') {
             this.$store.commit('setIsAuth', false);
             this.$store.commit('setIsAdmin', false);
-            this.$router.push('/');
+            this.$router.push(this.localeRout('/'));
+            this.deletCookieToken()
           }
         })
         .catch(error => {

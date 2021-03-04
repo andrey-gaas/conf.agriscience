@@ -14,14 +14,14 @@
       <!-- <button @click="testFetch">Тестовый запрос</button> -->
       <div>
         <nuxt-link :to="localeRout('/personarea/admin')" v-if="isAuth && isAdmin">
-          <mdb-btn class="logout-button">Админка</mdb-btn>
+          <mdb-btn class="logout-button">{{$t('header_admin')}}</mdb-btn>
         </nuxt-link>
         <nuxt-link :to="localeRout('/personarea')" v-if="isAuth">
-          <mdb-btn class="logout-button">Личный кабинет</mdb-btn>
+          <mdb-btn class="logout-button">{{$t('header_person_area')}}</mdb-btn>
         </nuxt-link>
-        <mdb-btn v-if="isAuth" class="logout-button" @click="logout">Выход</mdb-btn>
+        <mdb-btn v-if="isAuth" class="logout-button" @click="logout">{{$t('header_exit')}}</mdb-btn>
         <dropdown end>
-          <dropdown-toggle class="teal lighten-2" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
+          <dropdown-toggle class="teal lighten-2 white-text" slot="toggle">{{$t('header_language')}}</dropdown-toggle>
           <dropdown-menu >
             <nuxt-link class='dropdown-item locale_btn' tabindex="0" :to="switchLocalePath(RU)">Русский</nuxt-link>
             <nuxt-link class='dropdown-item locale_btn' tabindex="0" :to="switchLocalePath(EN)">English</nuxt-link>
@@ -43,7 +43,7 @@ import {
   mdbDropdownToggle,
   mdbBtn,
 } from 'mdbvue';
-import { setLocale, localeRout} from '@/assets/utils';
+import { setLocale, localeRout, deletCookieToken} from '@/assets/utils';
 import { RU, EN } from '@/constants/language';
 
 export default {
@@ -61,6 +61,7 @@ export default {
     'mdb-btn': mdbBtn,
   },
   methods:{
+    deletCookieToken,
     setLocale,
     localeRout,
     logout() {
@@ -73,6 +74,7 @@ export default {
           if (data === 'OK') {
             this.$store.commit('setIsAuth', false);
             this.$store.commit('setIsAdmin', false);
+            this.deletCookieToken()
             this.$router.push('/');
           }
         })

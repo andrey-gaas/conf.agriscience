@@ -3,6 +3,7 @@ export default{
   "header_registration": "Registration",
   "header_login": "Login",
   "header_exit": "Exit",
+  "header_admin": "Admin",
   "header_person_area": "Person area",
   "mobile_menu_language": "Language",
 

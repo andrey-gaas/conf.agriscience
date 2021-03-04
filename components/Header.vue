@@ -39,7 +39,7 @@ import {
   mdbContainer, mdbNavbarBrand,
 } from 'mdbvue';
 import { RU, EN } from '@/constants/language';
-import {localeRout} from '@/assets/utils'
+import {localeRout, deletCookieToken} from '@/assets/utils'
 
 export default {
   components: {
@@ -51,7 +51,7 @@ export default {
     isAuthorized:false,
   }),
   methods:{
-    localeRout,
+    localeRout,deletCookieToken,
     logout() {
       const axios = this.$axios.create({
         baseURL: process.env.NODE_ENV === 'production' ? 'https://api.bibcongress.ru/' : 'http://localhost:3101/api/',
@@ -59,6 +59,9 @@ export default {
       axios.get('/auth/logout')
         .then(() => {
           this.isAuthorized = false;
+          this.$store.commit('setIsAuth', false);
+          this.$store.commit('setIsAdmin', false);
+          this.deletCookieToken()
         })
         .catch(error => {
           this.isAuthorized = false;

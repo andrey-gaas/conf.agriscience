@@ -3,6 +3,7 @@ export default{
   "header_registration": "Регистрация",
   "header_login": "Вход",
   "header_exit": "Выход",
+  "header_admin": "Админка",
   "header_person_area": "Личный кабинет",
   "mobile_menu_language": "Язык",
 
