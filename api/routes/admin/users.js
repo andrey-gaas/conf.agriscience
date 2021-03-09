@@ -1,11 +1,11 @@
 const { Router } = require('express');
-const Mongo = require('../db/Mongo');
-const { setLog } = require('../utils');
+const Mongo = require('../../db/Mongo');
+const { setLog } = require('../../utils');
 const router = Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const sendMail = require('../mail/sendmail');
-const { secretKey } = require('../config');
+const sendMail = require('../../mail/sendmail');
+const { secretKey } = require('../../config');
 
 // Получить пользователя
 router.get('/', (req, res) => {

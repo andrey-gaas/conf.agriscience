@@ -3,11 +3,11 @@ const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const emailValidator = require('email-validator');
 const phoneToken = require('generate-sms-verification-code');
-const Mongo = require('./db/Mongo');
-const sendMail = require('./mail/sendmail');
+const Mongo = require('../db/Mongo');
+const sendMail = require('../mail/sendmail');
 const jwt = require('jsonwebtoken');
-const { secretKey } = require('./config');
-const { setLog } = require('./utils');
+const { secretKey } = require('../config');
+const { setLog } = require('../utils');
 const router = Router();
 
 // Регистрация

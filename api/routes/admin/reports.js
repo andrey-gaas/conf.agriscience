@@ -3,9 +3,9 @@ const bcrypt = require('bcryptjs');
 const formidable = require('formidable');
 const fs = require('fs');
 const path = require('path');
-const Mongo = require('../db/Mongo');
-const { isProduction } = require('../config');
-const { setLog } = require('../utils');
+const Mongo = require('../../db/Mongo');
+const { isProduction } = require('../../config');
+const { setLog } = require('../../utils');
 const router = Router();
 
 // Список докладов (с фильтром и без)
@@ -179,7 +179,7 @@ router.post('/file/:user/:id', (req, res) => {
 
   const form = new formidable.IncomingForm();
   form.keepExtensions = true;
-  form.uploadDir = path.join(__dirname, '..', 'upload', 'reports', `${user}`);
+  form.uploadDir = path.join(__dirname, '..', '..', 'upload', 'reports', `${user}`);
   form.multiples = true;
   form.onPart = function (part) {
     if(!part.filename || part.filename.match(/\.docx$/i)) {

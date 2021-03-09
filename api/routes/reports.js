@@ -2,10 +2,10 @@ const { Router } = require('express');
 const formidable = require('formidable');
 const fs = require('fs');
 const path = require('path');
-const Mongo = require('./db/Mongo');
-const { isProduction } = require('./config');
-const { setLog } = require('./utils');
-const auth = require('../middleware/auth');
+const Mongo = require('../db/Mongo');
+const { isProduction } = require('../config');
+const { setLog } = require('../utils');
+const auth = require('../../middleware/auth');
 const router = Router();
 
 router.use('*', auth, (req, res, next) => {
@@ -146,7 +146,7 @@ router.post('/file/:id', (req, res) => {
 
   const form = new formidable.IncomingForm();
   form.keepExtensions = true;
-  form.uploadDir = path.join(__dirname, '.', 'upload', 'reports', `${req.id}`);
+  form.uploadDir = path.join(__dirname, '..', 'upload', 'reports', `${req.id}`);
   form.multiples = true;
   form.onPart = function (part) {
     if(!part.filename || part.filename.match(/\.docx$/i)) {

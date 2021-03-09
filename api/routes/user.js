@@ -2,10 +2,10 @@ const path = require('path');
 const fs = require('fs');
 const { Router } = require('express');
 const formidable = require('formidable');
-const auth = require('../middleware/auth');
-const Mongo = require('./db/Mongo');
-const { isProduction } = require('./config');
-const { setLog } = require('./utils');
+const auth = require('../../middleware/auth');
+const Mongo = require('../db/Mongo');
+const { isProduction } = require('../config');
+const { setLog } = require('../utils');
 const router = Router();
 
 router.use('*', auth, (req, res, next) => {
@@ -90,7 +90,7 @@ router.post('/avatar', (req, res) => {
 
   const form = new formidable.IncomingForm();
   form.keepExtensions = true;
-  form.uploadDir = path.join(__dirname, '.', 'upload', 'avatars');
+  form.uploadDir = path.join(__dirname, '..', 'upload', 'avatars');
   form.multiples = true;
   form.onPart = function (part) {
     if(!part.filename || part.filename.match(/\.(jpg|jpeg|png)$/i)) {

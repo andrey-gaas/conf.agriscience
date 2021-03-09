@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const Mongo = require('./db/Mongo');
+const Mongo = require('../db/Mongo');
 const router = Router();
 
 router.get('/', (req, res) => {

@@ -18,13 +18,13 @@ app.use(passport.initialize());
 
 require('./passport').init();
 
-app.use('/auth', require('./auth'));
-app.use('/user', require('./user'));
-app.use('/reports', require('./reports'));
-app.use('/translate', require('./translate'));
-app.use('/admin', require('./admin'));
+app.use('/auth', require('./routes/auth'));
+app.use('/user', require('./routes/user'));
+app.use('/reports', require('./routes/reports'));
+app.use('/translate', require('./routes/translate'));
+app.use('/admin', require('./routes/admin'));
 
-app.use('/test', require('./test'));
+app.use('/test', require('./routes/test'));
 
 if (require.main === module) {
   const port = 3100;
