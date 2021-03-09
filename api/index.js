@@ -23,6 +23,7 @@ app.use('/user', require('./routes/user'));
 app.use('/reports', require('./routes/reports'));
 app.use('/translate', require('./routes/translate'));
 app.use('/admin', require('./routes/admin'));
+app.use('/events', require('./routes/events'));
 
 app.use('/test', require('./routes/test'));
 

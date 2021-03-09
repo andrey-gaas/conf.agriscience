@@ -11,7 +11,7 @@
           >
         </nuxt-link>
       </logo>
-      <!-- <button @click="testFetch">Тестовый запрос</button> -->
+      <button @click="testFetch">Тестовый запрос</button>
       <div>
         <nuxt-link :to="localeRout('/personarea/admin')" v-if="isAuth && isAdmin">
           <mdb-btn class="logout-button">{{$t('header_admin')}}</mdb-btn>
@@ -112,7 +112,7 @@ export default {
         .catch(({ response }) => console.log(response));
     },
     testFetch() {
-      this.$axios.get('/test')
+      this.$axios.get('/events/2')
         .then(res => console.log(res))
         .catch(({ response }) => console.log(response));
     },
