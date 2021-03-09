@@ -1,6 +1,7 @@
 import Axios from 'axios';
 
 export const state = () => ({
+  normalizeHeight: -1,
   loginData: {},
   isAuth: false,
   isAdmin: false,
@@ -37,6 +38,9 @@ export const mutations = {
     s.fileNameReportList = list.map(el => {
       return el.fileName
     })
+  },
+  setNormalizeHeight(s, height){
+    s.normalizeHeight = height
   },
   setAddReportID(s, rep){
     s.addReportID = rep.id

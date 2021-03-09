@@ -14,19 +14,20 @@
       </span>
     </p> -->
 
-
-    <h3 class="title">{{$t('main_сoordinators_text_1')}}</h3>
-    <p class="font-ubuntu">
-      <span class='font-weight-bold'>{{$t('main_сoordinators_text_2')}}</span><br>
-      {{$t('main_сoordinators_text_3')}}<br>
-      {{$t('main_сoordinators_text_4')}}<br>
-      {{$t('main_сoordinators_text_5')}}
-    </p>
-    <p class="font-ubuntu">
-      <span class='font-weight-bold'>{{$t('main_сoordinators_text_6')}}</span><br>
-      {{$t('main_сoordinators_text_7')}}<br>
-      e-mail: nklelikova@ya.ru
-    </p>
+    <div>
+      <h3 class="title_coordinators">{{$t('main_сoordinators_text_1')}}</h3>
+      <p class="font-ubuntu">
+        <span class='font-weight-bold'>{{$t('main_сoordinators_text_2')}}</span><br>
+        {{$t('main_сoordinators_text_3')}}<br>
+        {{$t('main_сoordinators_text_4')}}<br>
+        {{$t('main_сoordinators_text_5')}}
+      </p>
+      <p class="font-ubuntu">
+        <span class='font-weight-bold'>{{$t('main_сoordinators_text_6')}}</span><br>
+        {{$t('main_сoordinators_text_7')}}<br>
+        e-mail: nklelikova@ya.ru
+      </p>
+    </div>
   </div>
 </template>
 
@@ -39,5 +40,10 @@ export default {
 <style>
 .sekretar{
   line-height: 25px;
+}
+.title_coordinators{
+  font-family: Arsenal;
+  font-size: 1rem;
+  font-weight: bold;
 }
 </style>

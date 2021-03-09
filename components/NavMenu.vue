@@ -1,5 +1,5 @@
 <template>
-  <menu class='nav__menu w-100 h-100 m-0 p-0'>
+  <menu class='nav__menu w-100 m-0 p-0'>
     <ul class='menu__l m-0 p-0'>
       <nuxt-link  class="menu__i d-flex px-lg-4 py-lg-3 px-md-3 py-md-2"
         active-class="activ" exact
@@ -55,5 +55,8 @@ a.menu__i {
   &.disabled{
     color:rgb(122, 122, 122) !important;
   }
+}
+.nav__menu{
+  background-color: #82d8d5;
 }
 </style>

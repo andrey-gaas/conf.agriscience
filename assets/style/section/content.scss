@@ -65,9 +65,7 @@
 }
 
 .menu__l{
-  height: 100%;
   width: 100%;
-  background-color: #82d8d5;
 }
 .menu__i{
   padding: 15px 20px;
@@ -115,7 +113,6 @@
   line-height: 0.9rem;
   //font-size: 16px;
   font-size: 13px;
-  height: 100%;
 
   @include size(xs){
     display: none !important;
