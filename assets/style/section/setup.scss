@@ -50,3 +50,14 @@ li{
 //   }
 // }
 
+.circle__img{
+  background: silver;
+  overflow: hidden; /* clearfix */
+  background-size: cover;
+  background-position: center;
+  &:before {
+    content: "";
+    padding-top: 100%;
+    float: left;
+  }
+}

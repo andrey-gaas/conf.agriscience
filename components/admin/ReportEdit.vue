@@ -567,16 +567,33 @@ export default {
         this.validData.isAnnotation = false
       }
 
-      if( this.fileName !== '') this.validData.isFileName = true
-      else{
-        isValid = false
-        this.validData.isFileName = false
+      // if( this.fileName !== '') this.validData.isFileName = true
+      // else{
+      //   isValid = false
+      //   this.validData.isFileName = false
+      // }
+      // if( this.fileName.slice(-5) === '.docx') this.validData.isDocx = true
+      // else{
+      //   isValid = false
+      //   this.validData.isDocx = false
+      // }
+
+      if( this.fileName !== '') {
+        this.validData.isFileName = true
+
+        if( this.fileName.slice(-5) === '.docx') this.validData.isDocx = true
+        else{
+          isValid = false
+          this.validData.isDocx = false
+        }
+
+      }else{
+        this.validData.isDocx = true
+        this.validData.isFileName = true
+        //isValid = false
+        //this.validData.isFileName = false
       }
-      if( this.fileName.slice(-5) === '.docx') this.validData.isDocx = true
-      else{
-        isValid = false
-        this.validData.isDocx = false
-      }
+      
       return isValid
 
     },
