@@ -11,7 +11,7 @@
           >
         </nuxt-link>
       </logo>
-      <button @click="testFetch">Тестовый запрос</button>
+      <!-- <button @click="testFetch">Тестовый запрос</button> -->
       <div>
         <nuxt-link :to="localeRout('/personarea/admin')" v-if="isAuth && isAdmin">
           <mdb-btn class="logout-button">{{$t('header_admin')}}</mdb-btn>

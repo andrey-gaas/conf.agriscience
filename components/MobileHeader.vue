@@ -124,6 +124,7 @@ export default {
   .header {
     position: fixed;
     width: 100%;
+    height: 70px;
     z-index: 9999;
     @media (min-width: 768px) {
       display: none;
