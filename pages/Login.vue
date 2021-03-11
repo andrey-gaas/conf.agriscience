@@ -119,6 +119,7 @@ export default {
           const { message, token } = res.data;
 
           if (message === 'OK' && token) {
+            this.$cookies.set('token', token, { maxAge: 60 * 60 * 24 * 7 });
             this.$store.commit('setIsAuth', true)
             this.$router.push(this.localeRout('/personarea'));
 
