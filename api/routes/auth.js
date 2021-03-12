@@ -102,7 +102,7 @@ router.post('/registration', (req, res) => {
                 subject: 'Подтвердите регистрацию на III Международный библиографический конгресс.',
                 text: `Для подтверждения электронной почты, перейдите по ссылке: https://api.bibcongress.ru/auth/email-confirm/${email}`,
               };
-              sendMail(message, require('./mail/mail')(email))
+              sendMail(message, require('../mail/mail')(email))
                 .then(() => res.send({ message: 'OK', token }))
                 .catch(error => {
                   console.log(error.message);
@@ -207,7 +207,7 @@ router.get('/send-email/:email', (req, res) => {
     subject: 'Подтвердите регистрацию на III Международный библиографический конгресс.',
     text: `Для подтверждения электронной почты, перейдите по ссылке: https://api.bibcongress.ru/auth/email-confirm/${email}`,
   };
-  sendMail(message, require('./mail/mail')(email))
+  sendMail(message, require('../mail/mail')(email))
     .then(() => res.send('OK'))
     .catch(error => {
       console.log(error.message);
